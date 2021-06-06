@@ -1,11 +1,9 @@
 import * as React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout } from 'antd';
 import StudioHeader from './mods/header';
 import SiderLeft from './mods/sider-left';
 import SiderRight from './mods/sider-right';
-
-const { SubMenu } = Menu;
-const {Content, Sider } = Layout;
+import StudioContent from './mods/content';
 
 type TypeProps = {
   customStyle?: React.HTMLAttributes<HTMLDivElement>['style']
@@ -19,11 +17,7 @@ function Studio(props: TypeProps) {
         <StudioHeader />
         <Layout>
           <SiderLeft />
-          <Content
-            className="site-layout-background"
-            style={{}} >
-            Content
-          </Content>
+          <StudioContent />
           <SiderRight />
         </Layout>
       </Layout>
