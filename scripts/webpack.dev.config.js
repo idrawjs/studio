@@ -6,6 +6,7 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const babelConfig = {
   cacheDirectory: true,
   presets: [
+    '@babel/preset-react',
     [
       '@babel/preset-env',
       {
@@ -46,7 +47,7 @@ const babelConfig = {
 module.exports = {
   mode: 'development',
   entry: {
-    app: './examples/dev/index.js',
+    app: './examples/dev/index.tsx',
   },
   stats: {
     warningsFilter: /export .* was not found in/,
