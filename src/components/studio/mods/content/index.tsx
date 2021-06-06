@@ -3,7 +3,7 @@ import { useEffect, useRef } from 'react';
 import { Layout } from 'antd'; 
 import IDraw from 'idraw';
 import { TypeData } from '@idraw/types';
-
+import eventHub from './../../util/event-hub';
 
 const { Content } = Layout;
 
@@ -28,6 +28,11 @@ function StudioContent(props: TypeProps) {
       idraw.initData(props.data);
     }
     idraw.draw();
+
+    eventHub.on('scaleScreen', (num) => {
+      idraw.scale(num);
+      idraw.draw();
+    })
   }, []);
 
   return (
