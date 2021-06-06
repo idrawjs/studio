@@ -1,15 +1,20 @@
 // import React from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import Dashboard from './../../src/components/dashboard';
 import Studio from './../../src/components/studio';
-import './../../src/components/dashboard/style/index'
 import './../../src/components/studio/style/index'
 
 ReactDOM.render(
-  (<div>
-    <Dashboard></Dashboard>
-    <Studio></Studio>
+  (<div style={{
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+  }}>
+    <div style={{display: 'flex'}}>
+      <Studio customStyle={{ width: 960, height: 720}}></Studio>
+    </div>
   </div>),
   document.querySelector('#app')
 )
