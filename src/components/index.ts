@@ -17,3 +17,4 @@ if (
 /* @remove-on-es-build-end */
 
 export { default as Dashboard } from './dashboard';
+export { default as Studio } from './studio';
