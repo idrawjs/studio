@@ -2,7 +2,7 @@ import * as React from 'react';
 
 function Dashboard() {
   return (
-    <div>hello dashboard</div>
+    <div className="dashoboard-container">hello dashboard</div>
   )
 }
 

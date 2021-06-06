@@ -4,8 +4,13 @@
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
-  "unpkg": "dist/antd.min.js",
+  "unpkg": "dist/idraw-studio.min.js",
   "typings": "lib/index.d.ts",
+  "files": [
+    "dist",
+    "lib",
+    "es"
+  ],
   "scripts": {
     "dev": "webpack serve --host 0.0.0.0 -c ./scripts/webpack.dev.config.js",
     "build": "npm run build:compile && npm run build:dist",
@@ -89,5 +94,8 @@
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
     "webpackbar": "^5.0.0-3"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
