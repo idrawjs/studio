@@ -1,14 +1,17 @@
 import * as React from 'react';
 import { Layout } from 'antd';
+import { TypeData } from '@idraw/types';
 import StudioHeader from './mods/header';
 import SiderLeft from './mods/sider-left';
 import SiderRight from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 
+
 type TypeProps = {
   width?: number;
   height?: number;
+  data?: TypeData;
 }
 
 
@@ -23,6 +26,7 @@ function Studio(props: TypeProps) {
         <Layout>
           <SiderLeft width={layoutConfig.siderLeft.width} />
           <StudioContent
+            data={props.data}
             width={props.width - layoutConfig.siderLeft.width - layoutConfig.siderRight.width}
             height={props.height - layoutConfig.header.height}
           />

@@ -102,6 +102,7 @@
     "access": "public"
   },
   "dependencies": {
+    "@idraw/types": "^0.0.4-alpha.3",
     "antd": "^4.16.1",
     "idraw": "^0.0.4-alpha.3"
   }

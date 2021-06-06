@@ -1,7 +1,9 @@
 // import React from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
+import { TypeData } from '@idraw/types';
 import Studio from './../../src/components/studio';
+import data from './lib/data';
 import './../../src/components/studio/style/index'
 
 ReactDOM.render(
@@ -13,7 +15,7 @@ ReactDOM.render(
     justifyContent: 'center',
   }}>
     <div style={{display: 'flex'}}>
-      <Studio {...{width: 960, height: 720}}></Studio>
+      <Studio {...{width: 960, height: 720, data: data as TypeData}}></Studio>
     </div>
   </div>),
   document.querySelector('#app')
