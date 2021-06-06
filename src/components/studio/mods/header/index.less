@@ -9,7 +9,7 @@
 .idraw-studio-header-box {
   display: flex;
   padding: 0 8px;
-  min-width: 50px;
+  min-width: 40px;
   text-align: center;
   align-items: center;
   justify-content: center;
@@ -25,8 +25,10 @@
     bottom: 8px;
   }
 
-  .no-border {
-    border-right: none;
+  &.no-border {
+    &::after {
+      display: none;
+    }
   }
 }
 
