@@ -13,7 +13,7 @@ ReactDOM.render(
     justifyContent: 'center',
   }}>
     <div style={{display: 'flex'}}>
-      <Studio customStyle={{ width: 960, height: 720}}></Studio>
+      <Studio {...{width: 960, height: 720}}></Studio>
     </div>
   </div>),
   document.querySelector('#app')

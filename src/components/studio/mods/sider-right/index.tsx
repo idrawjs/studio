@@ -3,12 +3,14 @@ import { Layout, Menu } from 'antd';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
+type TypeProps = {
+  width: number
+}
 
-
-function SiderRight() {
+function SiderRight(props: TypeProps) {
 
   return (
-    <Sider width={200} className="idraw-studio-siderright">
+    <Sider width={props.width} className="idraw-studio-siderright">
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}

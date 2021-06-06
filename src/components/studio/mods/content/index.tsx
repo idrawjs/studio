@@ -1,15 +1,35 @@
 import * as React from 'react';
+import { useEffect, useRef } from 'react';
 import { Layout } from 'antd'; 
+import IDraw from 'idraw';
 
 const { Content } = Layout;
 
-function StudioContent() {
+type TypeProps = {
+  height: number;
+  width: number;
+}
+
+function StudioContent(props: TypeProps) {
+
+  const mount = useRef(null);
+
+  useEffect(() => {
+    const mountDiv = mount.current as HTMLDivElement;
+    const idraw = new IDraw(mountDiv, {
+      width: props.width,
+      height: props.height,
+      devicePixelRatio: 4,
+    }, {});
+    idraw.draw();
+  }, []);
 
   return (
-    <Content
-      className="site-layout-background"
-      style={{}} >
-      Studio Content
+    <Content >
+      <div style={{
+        width: props.width,
+        height: props.height,
+      }} ref={mount}></div>
     </Content>
   )
 }
