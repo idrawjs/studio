@@ -1,24 +1,28 @@
 import * as React from 'react';
 import { Layout, Collapse } from 'antd';
+import { TypeData } from '@idraw/types';
 import Elements from './../elements';
+
 
 const { Panel } = Collapse;
 const { Sider } = Layout;
 type TypeProps = {
-  width: number
+  width: number,
+  data: TypeData,
+  selectedElementUUID: string
 }
 
 function SiderRight(props: TypeProps) {
-
+  const { data, width } = props;
   return (
-    <Sider width={props.width} className="idraw-studio-siderright">
+    <Sider width={width} className="idraw-studio-siderright">
       <Collapse
         bordered={false} 
         defaultActiveKey={['1']}
         expandIconPosition={'right'}
       >
         <Panel header="Elements" key="1" >
-          <Elements />
+          <Elements elements={data.elements} />
         </Panel>
         <Panel header="Attribute" key="2" >
           <div>attribute</div>

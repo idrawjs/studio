@@ -28,11 +28,17 @@ function StudioContent(props: TypeProps) {
       idraw.initData(props.data);
     }
     idraw.draw();
-
+    idraw.on('changeData', (data) => {
+      eventHub.trigger('changeData', data);
+    });
+    idraw.on('screenSelectElement', (elem) => {
+      console.log('selectElement ===', elem.uuid);
+      eventHub.trigger('selectElement', elem.uuid)
+    });
     eventHub.on('scaleScreen', (num) => {
       idraw.scale(num);
       idraw.draw();
-    })
+    });
   }, []);
 
   return (

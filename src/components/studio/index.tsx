@@ -6,7 +6,9 @@ import SiderLeft from './mods/sider-left';
 import SiderRight from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
+import eventHub from './util/event-hub';
 
+const { useState, useEffect } = React;
 
 type TypeProps = {
   width?: number;
@@ -14,8 +16,20 @@ type TypeProps = {
   data?: TypeData;
 }
 
-
 function Studio(props: TypeProps) {
+
+  const [data, setData] = useState<TypeData>({elements: []});
+  const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
+
+  useEffect(() => {
+    if (props.data) {
+      setData(props.data);
+    }
+    eventHub.on('selectElement', (uuid) => {
+      setSelectedElementUUID(uuid);
+      // console.log('selectedElementUUID ===', selectedElementUUID);
+    });
+  }, [selectedElementUUID]);
 
   return (
     <div className="studio-container" 
@@ -30,7 +44,11 @@ function Studio(props: TypeProps) {
             width={props.width - layoutConfig.siderLeft.width - layoutConfig.siderRight.width}
             height={props.height - layoutConfig.header.height}
           />
-          <SiderRight width={layoutConfig.siderRight.width} />
+          <SiderRight
+            width={layoutConfig.siderRight.width}
+            data={data}
+            selectedElementUUID={selectedElementUUID}
+          />
         </Layout>
       </Layout>
 

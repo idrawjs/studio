@@ -1,22 +1,30 @@
 import * as React from 'react';
 import { List } from 'antd';
+import {
+  TypeElement, TypeElemDesc
+} from '@idraw/types';
 
-const data = [
-  1,2,3,4,5,6,7
-]
 
-const Mod = () => {
+type TypeProps = {
+  elements: TypeElement<keyof TypeElemDesc>[]
+  selectedUUID?: string
+}
+
+const Elements = (props: TypeProps) => {
+
+  const { elements } = props;
+
   return (
     <div>
       <List
         size="small"
-        // header={<div>Header</div>}
-        // footer={<div>Footer</div>}
-        dataSource={data}
-        renderItem={item => <List.Item>{item}</List.Item>}
+        dataSource={elements}
+        renderItem={(item) => {
+          return (<List.Item>{item.name || 'Unnamed'}</List.Item>)
+        }}
       />
     </div>
   )
 }
 
-export default Mod
+export default Elements
