@@ -27,7 +27,7 @@ function Studio(props: TypeProps) {
     }
     eventHub.on('selectElement', (uuid) => {
       setSelectedElementUUID(uuid);
-      // console.log('selectedElementUUID ===', selectedElementUUID);
+      console.log('selectedElementUUID ===', selectedElementUUID);
     });
   }, [selectedElementUUID]);
 

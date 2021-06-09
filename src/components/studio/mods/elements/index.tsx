@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { List } from 'antd';
+import classnames from 'classnames';
 import {
   TypeElement, TypeElemDesc
 } from '@idraw/types';
@@ -7,20 +8,30 @@ import {
 
 type TypeProps = {
   elements: TypeElement<keyof TypeElemDesc>[]
-  selectedUUID?: string
+  selectedUUID: string
 }
 
 const Elements = (props: TypeProps) => {
 
-  const { elements } = props;
+  const { elements, selectedUUID } = props;
 
   return (
-    <div>
+    <div className="idraw-studio-element">
       <List
         size="small"
         dataSource={elements}
         renderItem={(item) => {
-          return (<List.Item>{item.name || 'Unnamed'}</List.Item>)
+          return (
+          <List.Item>
+            <span
+              className={classnames({
+                'idraw-studio-element-item': true,
+                'element-item-active': item.uuid === selectedUUID
+              })}
+            >
+              {item.name || 'Unnamed'}
+            </span>
+          </List.Item>)
         }}
       />
     </div>

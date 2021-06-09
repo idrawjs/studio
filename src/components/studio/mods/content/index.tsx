@@ -22,6 +22,8 @@ function StudioContent(props: TypeProps) {
     const idraw = new IDraw(mountDiv, {
       width: props.width,
       height: props.height,
+      contextWidth: props.width,
+      contextHeight: props.height,
       devicePixelRatio: 4,
     }, {});
     if (props.data) {
@@ -32,7 +34,6 @@ function StudioContent(props: TypeProps) {
       eventHub.trigger('changeData', data);
     });
     idraw.on('screenSelectElement', (elem) => {
-      console.log('selectElement ===', elem.uuid);
       eventHub.trigger('selectElement', elem.uuid)
     });
     eventHub.on('scaleScreen', (num) => {
