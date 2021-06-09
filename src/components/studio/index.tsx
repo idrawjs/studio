@@ -22,14 +22,19 @@ function Studio(props: TypeProps) {
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
 
   useEffect(() => {
+    eventHub.on('studioSelectElement', (uuid) => {
+      setSelectedElementUUID(uuid);
+    });
+    eventHub.on('studioChangeData', (data) => {
+      console.log('data ====', JSON.stringify(data));
+      setData(data);
+    });
+
     if (props.data) {
       setData(props.data);
     }
-    eventHub.on('selectElement', (uuid) => {
-      setSelectedElementUUID(uuid);
-      console.log('selectedElementUUID ===', selectedElementUUID);
-    });
-  }, [selectedElementUUID]);
+    
+  }, []);
 
   return (
     <div className="studio-container" 

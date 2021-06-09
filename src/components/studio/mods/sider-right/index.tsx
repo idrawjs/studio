@@ -13,7 +13,7 @@ type TypeProps = {
 }
 
 function SiderRight(props: TypeProps) {
-  const { data, width } = props;
+  const { data, width, selectedElementUUID } = props;
   return (
     <Sider width={width} className="idraw-studio-siderright">
       <Collapse
@@ -22,7 +22,7 @@ function SiderRight(props: TypeProps) {
         expandIconPosition={'right'}
       >
         <Panel header="Elements" key="1" >
-          <Elements elements={data.elements} />
+          <Elements elements={data.elements} selectedUUID={selectedElementUUID} />
         </Panel>
         <Panel header="Attribute" key="2" >
           <div>attribute</div>

@@ -1,15 +1,16 @@
 import * as React from 'react';
 import { List } from 'antd';
 import classnames from 'classnames';
+import eventHub from './../../util/event-hub';
 import {
   TypeElement, TypeElemDesc
 } from '@idraw/types';
 
-
 type TypeProps = {
   elements: TypeElement<keyof TypeElemDesc>[]
-  selectedUUID: string
+  selectedUUID: string | null
 }
+
 
 const Elements = (props: TypeProps) => {
 
@@ -22,16 +23,18 @@ const Elements = (props: TypeProps) => {
         dataSource={elements}
         renderItem={(item) => {
           return (
-          <List.Item>
-            <span
+            <List.Item
               className={classnames({
-                'idraw-studio-element-item': true,
-                'element-item-active': item.uuid === selectedUUID
+              'idraw-studio-element-item': true,
+              'element-item-active': (item.uuid && selectedUUID && item.uuid === selectedUUID)
               })}
+              onClick={() => {
+                eventHub.trigger('studioSelectElement', item.uuid);
+              }}
             >
               {item.name || 'Unnamed'}
-            </span>
-          </List.Item>)
+            </List.Item>
+          )
         }}
       />
     </div>

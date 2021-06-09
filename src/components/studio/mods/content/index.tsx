@@ -26,20 +26,26 @@ function StudioContent(props: TypeProps) {
       contextHeight: props.height,
       devicePixelRatio: 4,
     }, {});
+
+    idraw.on('changeData', (data) => {
+      eventHub.trigger('studioChangeData', data);
+    });
+    idraw.on('screenSelectElement', (elem) => {
+      eventHub.trigger('studioSelectElement', elem.uuid)
+    });
+    
+    eventHub.on('studioScaleScreen', (num) => {
+      idraw.scale(num);
+      idraw.draw();
+    });
+    eventHub.on('studioSelectElement', (uuid: string) => {
+      idraw.selectElementByUUID(uuid);
+    })
+
     if (props.data) {
       idraw.initData(props.data);
     }
     idraw.draw();
-    idraw.on('changeData', (data) => {
-      eventHub.trigger('changeData', data);
-    });
-    idraw.on('screenSelectElement', (elem) => {
-      eventHub.trigger('selectElement', elem.uuid)
-    });
-    eventHub.on('scaleScreen', (num) => {
-      idraw.scale(num);
-      idraw.draw();
-    });
   }, []);
 
   return (
