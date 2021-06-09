@@ -26,7 +26,6 @@ function Studio(props: TypeProps) {
       setSelectedElementUUID(uuid);
     });
     eventHub.on('studioChangeData', (data) => {
-      console.log('data ====', JSON.stringify(data));
       setData(data);
     });
 

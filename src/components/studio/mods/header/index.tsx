@@ -21,7 +21,7 @@ function StudioHeader(props: TypeProps) {
 
   const onChangeScale = useCallback((num) => {
     setScale(num);
-    eventHub.trigger('scaleScreen', num);
+    eventHub.trigger('studioScaleScreen', num);
   }, []);
 
   return (
