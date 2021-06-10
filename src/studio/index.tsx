@@ -11,15 +11,21 @@ import eventHub from './util/event-hub';
 const { useState, useEffect } = React;
 
 type TypeProps = {
-  width?: number;
-  height?: number;
+  studioWidth?: number;
+  studioHeight?: number;
+  contextWidth?: number;
+  contextHeight?: number;
   data?: TypeData;
 }
 
-function Studio(props: TypeProps) {
+function Studio(p: TypeProps) {
+
+  const props = createProps(p);
 
   const [data, setData] = useState<TypeData>({elements: []});
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
+
+  const contentSize = createContentSize(props);
 
   useEffect(() => {
     eventHub.on('studioSelectElement', (uuid) => {
@@ -45,8 +51,10 @@ function Studio(props: TypeProps) {
           <SiderLeft width={layoutConfig.siderLeft.width} />
           <StudioContent
             data={props.data}
-            width={props.width - layoutConfig.siderLeft.width - layoutConfig.siderRight.width}
-            height={props.height - layoutConfig.header.height}
+            width={contentSize.width}
+            height={contentSize.height}
+            contextWidth={contentSize.contextWidth}
+            contextHeight={contentSize.contextHeight}
           />
           <SiderRight
             width={layoutConfig.siderRight.width}
@@ -63,17 +71,40 @@ function Studio(props: TypeProps) {
 function createStyle(
   props: TypeProps
 ): React.HTMLAttributes<HTMLDivElement>['style'] {
-  const style = {
-    width: 800,
-    height: 600,
-  };
-  if (props.width > 0) {
-    style.width = props.width;
+  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
+  if (props.studioWidth > 0) {
+    style.width = props.studioWidth;
   }
-  if (props.height > 0) {
-    style.height = props.height;
+  if (props.studioHeight > 0) {
+    style.height = props.studioHeight;
   }
   return style;
+}
+
+function createProps (props: TypeProps) {
+  const defaultProps: TypeProps = {
+    studioWidth: 960,
+    studioHeight: 720,
+    contextWidth: 400,
+    contextHeight: 300,
+  };
+  return {
+    ...defaultProps,
+    ...props
+  }
+}
+
+function createContentSize(props: TypeProps) {
+  const width = props.studioWidth - layoutConfig.siderLeft.width - layoutConfig.siderRight.width
+  const height = props.studioHeight - layoutConfig.header.height;
+  const contextWidth = props.contextWidth || width;
+  const contextHeight = props.contextHeight || height;
+  return {
+    width,
+    height,
+    contextWidth,
+    contextHeight
+  }
 }
 
 export default Studio

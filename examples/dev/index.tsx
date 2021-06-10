@@ -15,7 +15,13 @@ ReactDOM.render(
     justifyContent: 'center',
   }}>
     <div style={{display: 'flex'}}>
-      <Studio {...{width: 960, height: 720, data: data as TypeData}}></Studio>
+      <Studio {...{ 
+        studioWidth: 960,
+        studioHeight: 720,
+        contextWidth: 1000,
+        contextHeight: 900,
+        data: data as TypeData
+      }}></Studio>
     </div>
   </div>),
   document.querySelector('#app')
