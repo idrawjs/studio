@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout } from 'antd';
+import { Layout } from '../ui/antd';
 import { TypeData } from '@idraw/types';
 import StudioHeader from './mods/header';
 import SiderLeft from './mods/sider-left';

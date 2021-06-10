@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { List } from 'antd';
+import { List } from '../../../ui/antd';
 import classnames from 'classnames';
-import eventHub from './../../util/event-hub';
+import eventHub from '../../util/event-hub';
 import {
   TypeElement, TypeElemDesc
 } from '@idraw/types';

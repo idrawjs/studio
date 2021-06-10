@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback } from 'react';
-import { Layout, Select } from 'antd';
+import { Layout, Select } from '../../../ui/antd';
 import classnames from 'classnames';
 import { ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
-import eventHub from './../../util/event-hub';
+import eventHub from '../../util/event-hub';
 
 const { Header, } = Layout;
 

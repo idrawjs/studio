@@ -29,7 +29,7 @@ function getWebpackConfig(modules) {
   const pluginImportOptions = {
     style: true,
     libraryName: distFileBaseName,
-    libraryDirectory: 'src/components',
+    libraryDirectory: 'src',
   };
   babelConfig.plugins.push([resolve('babel-plugin-import'), pluginImportOptions]);
 
@@ -193,6 +193,12 @@ All rights reserved.
         commonjs2: 'react-dom',
         commonjs: 'react-dom',
         amd: 'react-dom',
+      },
+      'antd': {
+        root: 'antd',
+        commonjs2: 'antd',
+        commonjs: 'antd',
+        amd: 'antd',
       },
     };
     config.output.library = distFileBaseName;

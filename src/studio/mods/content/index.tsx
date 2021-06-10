@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useRef } from 'react';
-import { Layout } from 'antd'; 
+import { Layout } from '../../../ui/antd'; 
 import IDraw from 'idraw';
 import { TypeData } from '@idraw/types';
-import eventHub from './../../util/event-hub';
+import eventHub from '../../util/event-hub';
 
 const { Content } = Layout;
 

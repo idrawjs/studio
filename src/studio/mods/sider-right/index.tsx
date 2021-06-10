@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { Layout, Collapse } from 'antd';
+import { Layout, Collapse } from '../../../ui/antd';
 import { TypeData } from '@idraw/types';
-import Elements from './../elements';
+import Elements from '../elements';
 
 
 const { Panel } = Collapse;

@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "pote": ["src/components/index.tsx"],
-      "pote/es/*": ["src/components/*"]
+      "pote": ["components/index.tsx"],
+      "pote/es/*": ["components/*"]
     },
     "strictNullChecks": false,
     "strict": true,

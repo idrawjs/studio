@@ -2,9 +2,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { TypeData } from '@idraw/types';
-import Studio from './../../src/components/studio';
+import Studio from '../../src/studio';
 import data from './libs/data';
-import './../../src/components/studio/style/index'
+import './style';
 
 ReactDOM.render(
   (<div style={{
