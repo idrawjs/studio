@@ -54,7 +54,14 @@ function StudioContent(props: TypeProps) {
 
   return (
     <Content className="idraw-studio-content">
-      <ScrollBox>
+      <ScrollBox
+        onScrollX={() => {
+
+        }}
+        onScrollY={() => {
+          
+        }}
+      >
         <div style={{
           width: props.width,
           height: props.height,

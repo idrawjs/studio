@@ -106,6 +106,7 @@
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
     "@idraw/types": "0.0.4-alpha.8",
+    "@idraw/util": "^0.0.4-alpha.8",
     "classnames": "^2.3.1",
     "idraw": "0.0.4-alpha.8"
   }
