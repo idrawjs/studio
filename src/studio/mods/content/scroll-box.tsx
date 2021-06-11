@@ -16,7 +16,7 @@ type TypeProps = {
 
 const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
   const sliderMinSize = 50;
-  const { position, width, height } = props;
+  const { position, width, height, onScrollY, onScrollX } = props;
   const [canMoveX, setCanMoveX] = useState<boolean>(false);
   const [canMoveY, setCanMoveY] = useState<boolean>(false);
   const [distanceX, setDistanceX] = useState<number>(0);
@@ -54,6 +54,10 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveX === true) {
       const num = calcDistanceX(refScrollX, event);
       const _dx = Math.min(Math.max(0, num - xSize / 2), width - xSize);
+      if (typeof onScrollX === 'function') {
+        const scrollX = calcScreenScroll(position.left,  position.right, xSize, width, _dx);
+        onScrollX(scrollX)
+      }
       setDistanceX(_dx);
     }
   }, [canMoveX]);
@@ -62,6 +66,10 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveX === true) {
       const num = calcDistanceX(refScrollX, event);
       const _dx = Math.min(Math.max(0, num - xSize / 2), width - xSize);
+      if (typeof onScrollX === 'function') {
+        const scrollX = calcScreenScroll(position.left,  position.right, xSize, width, _dx);
+        onScrollX(scrollX)
+      }
       setDistanceX(_dx);
     }
     setCanMoveX(false);
@@ -79,6 +87,10 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveY === true) {
       const num = calcDistanceY(refScrollY, event);
       const _dy = Math.min(Math.max(0, num - ySize / 2), height - ySize);
+      if (typeof onScrollY === 'function') {
+        const scrollY = calcScreenScroll(position.top,  position.bottom, ySize, height, _dy);
+        onScrollY(scrollY)
+      }
       setDistanceY(_dy);
     }
   }, [canMoveY]);
@@ -87,6 +99,10 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveY === true) {
       const num = calcDistanceY(refScrollY, event);
       const _dy = Math.min(Math.max(0, num - ySize / 2), height - ySize);
+      if (typeof onScrollY === 'function') {
+        const scrollY = calcScreenScroll(position.top,  position.bottom, ySize, height, _dy);
+        onScrollY(scrollY)
+      }
       setDistanceY(_dy);
     }
     setCanMoveY(false);
@@ -139,6 +155,26 @@ function calcDistanceX(ref: React.MutableRefObject<any>, event: MouseEvent): num
 
 function calcDistanceY(ref: React.MutableRefObject<any>, event: MouseEvent): number {
   return event.clientY - ref?.current?.getBoundingClientRect()?.top;
+}
+
+function calcScreenScroll(
+  start: number,
+  end: number,
+  sliderSize: number,
+  limitLen: number, 
+  moveDistance: number
+): number {
+  let scrollDistance = start;
+  let scrollLen = limitLen - sliderSize;
+  if (start <= 0 && end <= 0) {
+    scrollLen = Math.abs(start) + Math.abs(end);
+  }
+  let unit = 1;
+  if (scrollLen > 0) {
+    unit = scrollLen / (limitLen - sliderSize);
+  }
+  scrollDistance = 0 - unit * moveDistance; 
+  return scrollDistance;
 }
 
 export default ScrollBox;

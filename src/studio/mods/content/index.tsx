@@ -48,7 +48,7 @@ function StudioContent(props: TypeProps) {
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
       const screenInfo = idraw.scale(num);
-      console.log('screenInfo ===', screenInfo);
+      // console.log('screenInfo ===', screenInfo);
       setPosition(screenInfo.position);
       idraw.draw();
     });
@@ -71,16 +71,12 @@ function StudioContent(props: TypeProps) {
         height={height}
         position={position}
         onScrollX={(scrollX: number) => {
-          if (idraw) {
-            const result = idraw.scrollX(scrollX);
-            setPosition(result.position);
-          }
+          idraw.scrollX(scrollX);
+          idraw.draw();
         }}
         onScrollY={(scrollY: number) => {
-          if (idraw) {
-            const result = idraw.scrollY(scrollY);
-            setPosition(result.position);
-          }
+          idraw.scrollY(scrollY);
+          idraw.draw();
         }}
       >
         <div style={{
