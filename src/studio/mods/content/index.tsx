@@ -48,6 +48,7 @@ function StudioContent(props: TypeProps) {
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
       const screenInfo = idraw.scale(num);
+      console.log('screenInfo ===', screenInfo);
       setPosition(screenInfo.position);
       idraw.draw();
     });

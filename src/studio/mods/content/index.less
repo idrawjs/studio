@@ -6,12 +6,14 @@
 
 .idraw-studio-content-scroll {
 
+  @slider-size: 12px;
+
   .content-scroll-y {
     position: absolute;
     top: 0;
     bottom: 0;
     right: 0;
-    width: 16px;
+    width: @slider-size;
     background: #f0f0f087;
 
     .content-scroll-slider {
@@ -22,6 +24,13 @@
       cursor: pointer;
       transform: translateY(0);
       transition: 100ms;
+      opacity: 0.6;
+    }
+
+    &:hover {
+      .content-scroll-slider {
+        opacity: 1;
+      }
     }
   }
 
@@ -30,7 +39,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    height: 16px;
+    height: @slider-size;
     background: #f0f0f087;
 
     .content-scroll-slider {
@@ -41,6 +50,13 @@
       cursor: pointer;
       transform: translateX(0);
       transition: 50ms;
+      opacity: 0.4;
+    }
+
+    &:hover {
+      .content-scroll-slider {
+        opacity: 1;
+      }
     }
   }
 }

@@ -26,11 +26,21 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
   
   let xSize = 0;
   let ySize = 0;
-  if (position.left <= 0 && position.right <= 0) {
-    xSize = Math.max(sliderMinSize, width - (Math.abs(position.left) + Math.abs(position.right)));
+  if (position.left <= 0 || position.right <= 0) {
+    xSize = Math.max(
+      sliderMinSize, width - (
+        Math.abs(position.left < 0 ? position.left : 0) + Math.abs(position.right < 0 ? position.right : 0)
+      )
+    );
+    if (xSize >= width) xSize = 0;
   }
-  if (position.top <= 0 && position.bottom <= 0) {
-    ySize = Math.max(sliderMinSize, height - (Math.abs(position.top) + Math.abs(position.bottom)));
+  if (position.top <= 0 || position.bottom <= 0) {
+    ySize = Math.max(
+      sliderMinSize, height - (
+        Math.abs(position.top < 0 ? position.top : 0) + Math.abs(position.bottom < 0 ? position.bottom : 0)
+      )
+    );
+    if (ySize >= height) ySize = 0;
   }
   
   // scroll x
