@@ -7,8 +7,10 @@ import SiderRight from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
+import { StudioContext } from './context';
 
 const { useState, useEffect } = React;
+
 
 type TypeProps = {
   studioWidth?: number;
@@ -22,7 +24,7 @@ function Studio(p: TypeProps) {
 
   const props = createProps(p);
 
-  const [data, setData] = useState<TypeData>({elements: []});
+  const [data, setData] = useState<TypeData>(props.data || {elements: []});
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
 
   const contentSize = createContentSize(props);
@@ -34,37 +36,33 @@ function Studio(p: TypeProps) {
     eventHub.on('studioChangeData', (data) => {
       setData(data);
     });
-
-    if (props.data) {
-      setData(props.data);
-    }
-    
   }, []);
 
   return (
-    <div className="studio-container" 
-      style={createStyle(props)}
-    >
-      <Layout style={{height: '100%'}}>
-        <StudioHeader height={layoutConfig.header.height} />
-        <Layout>
-          <SiderLeft width={layoutConfig.siderLeft.width} />
-          <StudioContent
-            data={props.data}
-            width={contentSize.width}
-            height={contentSize.height}
-            contextWidth={contentSize.contextWidth}
-            contextHeight={contentSize.contextHeight}
-          />
-          <SiderRight
-            width={layoutConfig.siderRight.width}
-            data={data}
-            selectedElementUUID={selectedElementUUID}
-          />
+    <StudioContext.Provider value={{
+      data,
+      selectedElementUUID,
+    }}>
+      <div className="studio-container" 
+        style={createStyle(props)}
+      >
+        <Layout style={{height: '100%'}}>
+          <StudioHeader height={layoutConfig.header.height} />
+          <Layout>
+            <SiderLeft width={layoutConfig.siderLeft.width} />
+            <StudioContent
+              width={contentSize.width}
+              height={contentSize.height}
+              contextWidth={contentSize.contextWidth}
+              contextHeight={contentSize.contextHeight}
+            />
+            <SiderRight
+              width={layoutConfig.siderRight.width}
+            />
+          </Layout>
         </Layout>
-      </Layout>
-
-    </div>
+      </div>
+    </StudioContext.Provider>
   )
 }
 

@@ -26,4 +26,3 @@ ReactDOM.render(
   </div>),
   document.querySelector('#app')
 )
-

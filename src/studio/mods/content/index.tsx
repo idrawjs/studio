@@ -1,10 +1,11 @@
 import * as React from 'react';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState, useContext } from 'react';
 import IDraw from 'idraw';
 import { TypeData, TypeScreenPosition } from '@idraw/types';
 import { Layout } from '../../../ui/antd'; 
 import eventHub from '../../util/event-hub';
 import ScrollBox from './scroll-box';
+import { StudioContext } from './../../context';
 
 const { Content } = Layout;
 
@@ -13,10 +14,11 @@ type TypeProps = {
   width: number;
   contextWidth: number;
   contextHeight: number;
-  data?: TypeData;
 }
 
 function StudioContent(props: TypeProps) {
+  const context = useContext(StudioContext);
+  const { data } = context;
   const { width, height } = props;
   const mount = useRef(null);
   const [idraw, setIDraw] = useState<IDraw>(null);
@@ -56,8 +58,8 @@ function StudioContent(props: TypeProps) {
       idraw.selectElementByUUID(uuid);
     });
 
-    if (props.data) {
-      idraw.initData(props.data);
+    if (data) {
+      idraw.initData(data);
     }
     const screenInfo = idraw.scale(1);
     setPosition(screenInfo.position);
