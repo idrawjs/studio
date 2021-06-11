@@ -42,6 +42,25 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     );
     if (ySize >= height) ySize = 0;
   }
+
+
+  const doScrollX = (dx: number) => {
+    if (dx > (width - xSize) || dx < 0) return;
+    if (typeof onScrollX === 'function') {
+      const scrollX = calcScreenScroll(position.left,  position.right, xSize, width, dx);
+      onScrollX(scrollX)
+    }
+    setDistanceX(dx);
+  }
+
+  const doScrollY = (dy: number) => {
+    if (dy > (height - ySize) || dy < 0) return;
+    if (typeof onScrollY === 'function') {
+      const scrollY = calcScreenScroll(position.top,  position.bottom, ySize, height, dy);
+      onScrollY(scrollY)
+    }
+    setDistanceY(dy);
+  }
   
   // scroll x
   const onSliderXMouseDown = useCallback((event) => {
@@ -54,11 +73,7 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveX === true) {
       const num = calcDistanceX(refScrollX, event);
       const _dx = Math.min(Math.max(0, num - xSize / 2), width - xSize);
-      if (typeof onScrollX === 'function') {
-        const scrollX = calcScreenScroll(position.left,  position.right, xSize, width, _dx);
-        onScrollX(scrollX)
-      }
-      setDistanceX(_dx);
+      doScrollX(_dx);
     }
   }, [canMoveX]);
   const onSliderXMouseUp = useCallback((event) => {
@@ -66,11 +81,7 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveX === true) {
       const num = calcDistanceX(refScrollX, event);
       const _dx = Math.min(Math.max(0, num - xSize / 2), width - xSize);
-      if (typeof onScrollX === 'function') {
-        const scrollX = calcScreenScroll(position.left,  position.right, xSize, width, _dx);
-        onScrollX(scrollX)
-      }
-      setDistanceX(_dx);
+      doScrollX(_dx);
     }
     setCanMoveX(false);
   }, [canMoveX]);
@@ -87,11 +98,7 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveY === true) {
       const num = calcDistanceY(refScrollY, event);
       const _dy = Math.min(Math.max(0, num - ySize / 2), height - ySize);
-      if (typeof onScrollY === 'function') {
-        const scrollY = calcScreenScroll(position.top,  position.bottom, ySize, height, _dy);
-        onScrollY(scrollY)
-      }
-      setDistanceY(_dy);
+      doScrollY(_dy);
     }
   }, [canMoveY]);
   const onSliderYMouseUp = useCallback((event) => {
@@ -99,18 +106,24 @@ const ScrollBox: React.FC<TypeProps> = (props: TypeProps) => {
     if (canMoveY === true) {
       const num = calcDistanceY(refScrollY, event);
       const _dy = Math.min(Math.max(0, num - ySize / 2), height - ySize);
-      if (typeof onScrollY === 'function') {
-        const scrollY = calcScreenScroll(position.top,  position.bottom, ySize, height, _dy);
-        onScrollY(scrollY)
-      }
-      setDistanceY(_dy);
+      doScrollY(_dy);
     }
     setCanMoveY(false);
   }, [canMoveY]);
 
+
+  const onWheel = (event) => {
+    const { deltaY, deltaX } = event;
+    if (deltaY > 0 || deltaY < 0) {
+      doScrollY(distanceY + deltaY);
+    } else if (deltaX > 0 || deltaX < 0) {
+      doScrollX(distanceX + deltaX);
+    }
+  };
+
   return (
     <div className="idraw-studio-content-scroll">
-      <div>
+      <div onWheelCapture={throttle(onWheel, 16)}>
         {props.children}
       </div>
       {(xSize > 0) && (
