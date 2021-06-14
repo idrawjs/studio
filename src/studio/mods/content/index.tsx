@@ -4,7 +4,7 @@ import IDraw from 'idraw';
 import { TypeData, TypeScreenPosition } from '@idraw/types';
 import { Layout } from '../../../ui/antd'; 
 import eventHub from '../../util/event-hub';
-import ScrollBox from './scroll-box';
+// import ScrollBox from './scroll-box';
 import { StudioContext } from './../../context';
 
 const { Content } = Layout;
@@ -37,7 +37,13 @@ function StudioContent(props: TypeProps) {
       contextWidth: props.contextWidth,
       contextHeight: props.contextHeight,
       devicePixelRatio: 4,
-    }, {});
+    }, {
+      scrollWrapper: {
+        use: true,
+        color: '#999999',
+        lineWidth: 12,
+      }
+    });
     setIDraw(idraw);
 
     idraw.on('changeData', (data) => {
@@ -68,7 +74,7 @@ function StudioContent(props: TypeProps) {
 
   return (
     <Content className="idraw-studio-content">
-      <ScrollBox
+      {/* <ScrollBox
         width={width}
         height={height}
         position={position}
@@ -85,7 +91,11 @@ function StudioContent(props: TypeProps) {
           width: props.width,
           height: props.height,
         }} ref={mount}></div>
-      </ScrollBox>
+      </ScrollBox> */}
+      <div style={{
+          width: props.width,
+          height: props.height,
+        }} ref={mount}></div>
     </Content>
   )
 }
