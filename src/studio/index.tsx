@@ -30,8 +30,8 @@ function Studio(p: TypeProps) {
   const contentSize = createContentSize(props);
 
   useEffect(() => {
-    eventHub.on('studioSelectElement', (uuid) => {
-      setSelectedElementUUID(uuid);
+    eventHub.on('studioSelectElement', (data) => {
+      setSelectedElementUUID(data.uuid);
     });
     eventHub.on('studioChangeData', (data) => {
       setData(data);

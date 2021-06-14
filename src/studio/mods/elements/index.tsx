@@ -1,35 +1,33 @@
 import * as React from 'react';
 import { List } from '../../../ui/antd';
 import classnames from 'classnames';
-import eventHub from '../../util/event-hub';
-import {
-  TypeElement, TypeElemDesc
-} from '@idraw/types';
+import eventHub from '../../util/event-hub';import { StudioContext } from './../../context';
 
-type TypeProps = {
-  elements: TypeElement<keyof TypeElemDesc>[]
-  selectedUUID: string | null
-}
+const { useContext } = React;
 
 
-export const Elements = (props: TypeProps) => {
+// type TypeProps = {}
 
-  const { elements, selectedUUID } = props;
+
+export const Elements = () => {
+
+const context = useContext(StudioContext);
+const { data, selectedElementUUID } = context;
 
   return (
-    <div className="idraw-studio-element">
+    <div className="idraw-studio-mod-element">
       <List
         size="small"
-        dataSource={elements}
+        dataSource={data.elements}
         renderItem={(item) => {
           return (
             <List.Item
               className={classnames({
-              'idraw-studio-element-item': true,
-              'element-item-active': (item.uuid && selectedUUID && item.uuid === selectedUUID)
+                'idraw-studio-element-item': true,
+                'element-item-active': (item.uuid && selectedElementUUID && item.uuid === selectedElementUUID)
               })}
               onClick={() => {
-                eventHub.trigger('studioSelectElement', item.uuid);
+                eventHub.trigger('studioSelectElement', { uuid: item.uuid });
               }}
             >
               {item.name || 'Unnamed'}

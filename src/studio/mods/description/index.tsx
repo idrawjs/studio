@@ -3,11 +3,11 @@ import { StudioContext } from './../../context';
 
 const { useContext } = React;
 
-export const Attribute = () => {
+export const Description = () => {
   const context = useContext(StudioContext);
   const { selectedElementUUID } = context;
   return (
-    <div className="idraw-studio-mod-attribute">
+    <div className="idraw-studio-mod-desc">
       {selectedElementUUID ? (
         <div>{selectedElementUUID}</div>
       ) : (

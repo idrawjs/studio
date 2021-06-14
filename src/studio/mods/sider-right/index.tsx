@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Layout, Collapse } from '../../../ui/antd';
 import { Elements } from '../elements';
-import { StudioContext } from './../../context';
+import { Attribute } from '../attribute';
+import { Description } from '../description';
 
-const { useContext } = React;
 const { Panel } = Collapse;
 const { Sider } = Layout;
 type TypeProps = {
@@ -12,8 +12,6 @@ type TypeProps = {
 
 function SiderRight(props: TypeProps) {
   const { width } = props;
-  const context = useContext(StudioContext);
-  const { data, selectedElementUUID } = context;
   return (
     <Sider width={width} className="idraw-studio-siderright">
       <Collapse
@@ -22,13 +20,13 @@ function SiderRight(props: TypeProps) {
         expandIconPosition={'right'}
       >
         <Panel header="Elements" key="elements" >
-          <Elements elements={data.elements} selectedUUID={selectedElementUUID} />
+          <Elements />
         </Panel>
         <Panel header="Attribute" key="attribute" >
-          <div>attribute</div>
+          <Attribute />
         </Panel>
         <Panel header="Description" key="description" >
-          <div>description</div>
+          <Description />
         </Panel>
       </Collapse>
     </Sider>

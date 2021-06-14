@@ -42,17 +42,24 @@ function StudioContent(props: TypeProps) {
     idraw.on('changeData', (data) => {
       eventHub.trigger('studioChangeData', data);
     });
-    // idraw.on('screenSelectElement', (elem) => {
-    //   eventHub.trigger('studioSelectElement', elem.uuid)
-    // });
+
+    idraw.on('screenSelectElement', (elem) => {
+      idraw.selectElementByUUID(elem.uuid, {
+        useMode: true,
+      });
+      eventHub.trigger('studioSelectElement', {
+        uuid: elem.uuid,
+        useMode: true,
+      })
+    });
     
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
       idraw.scale(num);
       idraw.draw();
     });
-    eventHub.on('studioSelectElement', (uuid: string) => {
-      idraw.selectElementByUUID(uuid);
+    eventHub.on('studioSelectElement', (data) => {
+      idraw.selectElementByUUID(data.uuid, { useMode: data.useMode });
     });
 
     if (data) {

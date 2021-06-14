@@ -2,7 +2,7 @@ import { TypeData } from "@idraw/types";
 
 export type TypeIDrawEventArgMap  = {
   'studioScaleScreen': number;
-  'studioSelectElement': string;
+  'studioSelectElement': { uuid: string, useMode?: boolean };
   'studioChangeData': TypeData;
 }
   
