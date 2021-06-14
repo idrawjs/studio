@@ -49,9 +49,9 @@ function StudioContent(props: TypeProps) {
     idraw.on('changeData', (data) => {
       eventHub.trigger('studioChangeData', data);
     });
-    idraw.on('screenSelectElement', (elem) => {
-      eventHub.trigger('studioSelectElement', elem.uuid)
-    });
+    // idraw.on('screenSelectElement', (elem) => {
+    //   eventHub.trigger('studioSelectElement', elem.uuid)
+    // });
     
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
