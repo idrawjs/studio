@@ -1,6 +1,6 @@
-const studio = require('./src/components');
+const studio = require('./src');
 
-const req = require.context('./src/components', true, /^\.\/locale\/.+_.+\.tsx$/);
+const req = require.context('./src/', true, /^\.\/locale\/.+_.+\.tsx$/);
 
 antd.locales = {};
 

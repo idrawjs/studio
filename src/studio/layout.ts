@@ -3,9 +3,9 @@ export const layoutConfig = {
     height: 40,
   },
   siderLeft: {
-    width: 180,
+    width: 220,
   },
   siderRight: {
-    width: 180,
+    width: 220,
   }
 }

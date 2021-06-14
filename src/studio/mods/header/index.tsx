@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { useEffect, useState, useCallback } from 'react';
-import { Layout, Select } from 'antd';
+import { Layout, Select } from '../../../ui/antd';
 import classnames from 'classnames';
-import { ZoomInOutlined, ZoomOutOutlined } from '@ant-design/icons';
-import eventHub from './../../util/event-hub';
+import { ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined } from '@ant-design/icons';
+import eventHub from '../../util/event-hub';
 
 const { Header, } = Layout;
 
@@ -11,7 +11,7 @@ type TypeProps = {
   height: number;
 }
 
-function StudioHeader(props: TypeProps) {
+export function StudioHeader(props: TypeProps) {
 
   const [scale, setScale] = useState<number>(1);
 
@@ -21,7 +21,7 @@ function StudioHeader(props: TypeProps) {
 
   const onChangeScale = useCallback((num) => {
     setScale(num);
-    eventHub.trigger('scaleScreen', num);
+    eventHub.trigger('studioScaleScreen', num);
   }, []);
 
   return (
@@ -45,11 +45,17 @@ function StudioHeader(props: TypeProps) {
             {label: '400%', value: 4},
           ]}/>
       </Box>
-      <Box>
+      <Box noBoarder={true}>
         <ZoomInOutlined className="idraw-studio-header-icon" />
       </Box>
       <Box>
         <ZoomOutOutlined className="idraw-studio-header-icon"/>
+      </Box>
+      <Box noBoarder={true}>
+        <UndoOutlined className="idraw-studio-header-icon"/>
+      </Box>
+      <Box>
+        <RedoOutlined className="idraw-studio-header-icon"/>
       </Box>
     </Header>
   )
@@ -65,5 +71,4 @@ const Box: React.FC<{noBoarder?: boolean}> = (props) => {
     </div>
   )
 }
-
-export default StudioHeader
+ 

@@ -2,9 +2,9 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { TypeData } from '@idraw/types';
-import Studio from './../../src/components/studio';
-import data from './lib/data';
-import './../../src/components/studio/style/index'
+import Studio from '../../src/studio';
+import data from './libs/data';
+import './style';
 
 ReactDOM.render(
   (<div style={{
@@ -15,9 +15,14 @@ ReactDOM.render(
     justifyContent: 'center',
   }}>
     <div style={{display: 'flex'}}>
-      <Studio {...{width: 960, height: 720, data: data as TypeData}}></Studio>
+      <Studio {...{ 
+        studioWidth: window.innerWidth,
+        studioHeight: window.innerHeight,
+        contextWidth: 1000,
+        contextHeight: 900,
+        data: data as TypeData
+      }}></Studio>
     </div>
   </div>),
   document.querySelector('#app')
 )
-

@@ -9,7 +9,7 @@ function camelCase(name) {
 }
 
 // Just import style for https://github.com/ant-design/ant-design/issues/3745
-const req = require.context('./src/components', true, /^\.\/[^_][\w-]+\/style\/index\.tsx?$/);
+const req = require.context('./src/', true, /^\.\/[^_][\w-]+\/style\/index\.tsx?$/);
 
 req.keys().forEach(mod => {
   let v = req(mod);
@@ -27,4 +27,4 @@ req.keys().forEach(mod => {
   }
 });
 
-module.exports = require('./src/components');
+module.exports = require('./src');

@@ -1,16 +1,17 @@
 import * as React from 'react';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu } from '../../../ui/antd';
 
 const { SubMenu } = Menu;
 const { Sider } = Layout;
+
 type TypeProps = {
   width: number
 }
 
-function SiderRight(props: TypeProps) {
+export function SiderLeft(props: TypeProps) {
 
   return (
-    <Sider width={props.width} className="idraw-studio-siderright">
+    <Sider width={props.width} className="idraw-studio-siderleft">
       <Menu
         mode="inline"
         defaultSelectedKeys={['1']}
@@ -39,5 +40,4 @@ function SiderRight(props: TypeProps) {
     </Sider>
   )
 }
-
-export default SiderRight
+ 
