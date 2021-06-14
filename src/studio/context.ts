@@ -1,12 +1,12 @@
 import { createContext } from 'react';
-import { TypeData } from '@idraw/types';
+import { TypeData, TypeElemDesc, TypeElement } from '@idraw/types';
 
 type TypeContext = {
   data: TypeData,
-  selectedElementUUID: string | null,
+  selectedElement: TypeElement<keyof TypeElemDesc> | null,
 };
 
 export const StudioContext = createContext<TypeContext>({
   data: { elements: [] },
-  selectedElementUUID: null,
+  selectedElement: null,
 });

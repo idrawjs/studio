@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from '../ui/antd';
-import { TypeData } from '@idraw/types';
+import { TypeData, TypeElement, TypeElemDesc } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { SiderLeft } from './mods/sider-left';
 import SiderRight from './mods/sider-right';
@@ -8,9 +8,9 @@ import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext } from './context';
+import { getElement } from './util/data';
 
 const { useState, useEffect } = React;
-
 
 type TypeProps = {
   studioWidth?: number;
@@ -25,23 +25,23 @@ function Studio(p: TypeProps) {
   const props = createProps(p);
 
   const [data, setData] = useState<TypeData>(props.data || {elements: []});
-  const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
+  const [selectedElement, setSelectedElement] = useState<TypeElement<keyof TypeElemDesc>>(null);
 
   const contentSize = createContentSize(props);
 
   useEffect(() => {
-    eventHub.on('studioSelectElement', (data) => {
-      setSelectedElementUUID(data.uuid);
+    eventHub.on('studioSelectElement', (e) => {
+      setSelectedElement(getElement(data, e.uuid));
     });
-    eventHub.on('studioChangeData', (data) => {
-      setData(data);
+    eventHub.on('studioChangeData', (e) => {
+      setData(e);
     });
   }, []);
 
   return (
     <StudioContext.Provider value={{
       data,
-      selectedElementUUID,
+      selectedElement,
     }}>
       <div className="studio-container" 
         style={createStyle(props)}
