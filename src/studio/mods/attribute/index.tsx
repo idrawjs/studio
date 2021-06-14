@@ -5,11 +5,11 @@ const { useContext } = React;
 
 export const Attribute = () => {
   const context = useContext(StudioContext);
-  const { selectedElement } = context;
+  const { selectedElementUUID } = context;
   return (
     <div className="idraw-studio-mod-attribute">
-      {selectedElement?.uuid ? (
-        <div>{selectedElement?.uuid}</div>
+      {selectedElementUUID ? (
+        <div>{selectedElementUUID}</div>
       ) : (
         <div className="no-select-data">No Data</div>
       )}

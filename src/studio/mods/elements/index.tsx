@@ -12,7 +12,7 @@ const { useContext } = React;
 export const Elements = () => {
 
 const context = useContext(StudioContext);
-const { data, selectedElement } = context;
+const { data, selectedElementUUID } = context;
 
   return (
     <div className="idraw-studio-mod-element">
@@ -24,7 +24,7 @@ const { data, selectedElement } = context;
             <List.Item
               className={classnames({
                 'idraw-studio-element-item': true,
-                'element-item-active': (item.uuid && selectedElement?.uuid && item.uuid === selectedElement?.uuid)
+                'element-item-active': (item.uuid && selectedElementUUID && item.uuid === selectedElementUUID)
               })}
               onClick={() => {
                 eventHub.trigger('studioSelectElement', { uuid: item.uuid });
