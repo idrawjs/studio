@@ -11,7 +11,7 @@ type TypeProps = {
   height: number;
 }
 
-function StudioHeader(props: TypeProps) {
+export function StudioHeader(props: TypeProps) {
 
   const [scale, setScale] = useState<number>(1);
 
@@ -71,5 +71,4 @@ const Box: React.FC<{noBoarder?: boolean}> = (props) => {
     </div>
   )
 }
-
-export default StudioHeader
+ 

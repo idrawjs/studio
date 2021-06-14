@@ -12,7 +12,7 @@ type TypeProps = {
 }
 
 
-const Elements = (props: TypeProps) => {
+export const Elements = (props: TypeProps) => {
 
   const { elements, selectedUUID } = props;
 
@@ -40,5 +40,4 @@ const Elements = (props: TypeProps) => {
     </div>
   )
 }
-
-export default Elements
+ 

@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout, Collapse } from '../../../ui/antd';
-import Elements from '../elements';
+import { Elements } from '../elements';
 import { StudioContext } from './../../context';
 
 const { useContext } = React;
@@ -18,16 +18,16 @@ function SiderRight(props: TypeProps) {
     <Sider width={width} className="idraw-studio-siderright">
       <Collapse
         bordered={false} 
-        defaultActiveKey={['1']}
+        defaultActiveKey={['elements', 'attribute', 'description']}
         expandIconPosition={'right'}
       >
-        <Panel header="Elements" key="1" >
+        <Panel header="Elements" key="elements" >
           <Elements elements={data.elements} selectedUUID={selectedElementUUID} />
         </Panel>
-        <Panel header="Attribute" key="2" >
+        <Panel header="Attribute" key="attribute" >
           <div>attribute</div>
         </Panel>
-        <Panel header="Description" key="3" >
+        <Panel header="Description" key="description" >
           <div>description</div>
         </Panel>
       </Collapse>

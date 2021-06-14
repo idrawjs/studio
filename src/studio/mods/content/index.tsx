@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useEffect, useRef, useState, useContext } from 'react';
+import { useEffect, useRef, useContext } from 'react';
 import IDraw from 'idraw';
-import { TypeData, TypeScreenPosition } from '@idraw/types';
+// import { TypeData, TypeScreenPosition } from '@idraw/types';
 import { Layout } from '../../../ui/antd'; 
 import eventHub from '../../util/event-hub';
 // import ScrollBox from './scroll-box';
@@ -20,14 +20,7 @@ function StudioContent(props: TypeProps) {
   const context = useContext(StudioContext);
   const { data } = context;
   const { width, height } = props;
-  const mount = useRef(null);
-  const [idraw, setIDraw] = useState<IDraw>(null);
-  const [position, setPosition] = useState<TypeScreenPosition>({
-    left: 0,
-    right: 0,
-    top: 0,
-    bottom: 0,
-  })
+  const mount = useRef(null); 
   
   useEffect(() => {
     const mountDiv = mount.current as HTMLDivElement;
@@ -44,7 +37,7 @@ function StudioContent(props: TypeProps) {
         lineWidth: 12,
       }
     });
-    setIDraw(idraw);
+    // setIDraw(idraw);
 
     idraw.on('changeData', (data) => {
       eventHub.trigger('studioChangeData', data);
@@ -55,9 +48,7 @@ function StudioContent(props: TypeProps) {
     
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
-      const screenInfo = idraw.scale(num);
-      // console.log('screenInfo ===', screenInfo);
-      setPosition(screenInfo.position);
+      idraw.scale(num);
       idraw.draw();
     });
     eventHub.on('studioSelectElement', (uuid: string) => {
@@ -67,31 +58,12 @@ function StudioContent(props: TypeProps) {
     if (data) {
       idraw.initData(data);
     }
-    const screenInfo = idraw.scale(1);
-    setPosition(screenInfo.position);
+    idraw.scale(1);
     idraw.draw();
   }, []);
 
   return (
     <Content className="idraw-studio-content">
-      {/* <ScrollBox
-        width={width}
-        height={height}
-        position={position}
-        onScrollX={(scrollX: number) => {
-          idraw.scrollX(scrollX);
-          idraw.draw();
-        }}
-        onScrollY={(scrollY: number) => {
-          idraw.scrollY(scrollY);
-          idraw.draw();
-        }}
-      >
-        <div style={{
-          width: props.width,
-          height: props.height,
-        }} ref={mount}></div>
-      </ScrollBox> */}
       <div style={{
           width: props.width,
           height: props.height,

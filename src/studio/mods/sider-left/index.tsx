@@ -8,7 +8,7 @@ type TypeProps = {
   width: number
 }
 
-function SiderLeft(props: TypeProps) {
+export function SiderLeft(props: TypeProps) {
 
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
@@ -40,5 +40,4 @@ function SiderLeft(props: TypeProps) {
     </Sider>
   )
 }
-
-export default SiderLeft
+ 

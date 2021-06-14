@@ -16,8 +16,8 @@ ReactDOM.render(
   }}>
     <div style={{display: 'flex'}}>
       <Studio {...{ 
-        studioWidth: 960,
-        studioHeight: 720,
+        studioWidth: window.innerWidth,
+        studioHeight: window.innerHeight,
         contextWidth: 1000,
         contextHeight: 900,
         data: data as TypeData
