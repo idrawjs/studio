@@ -17,3 +17,20 @@ export function getElement(
   }
   return null;
 }
+
+export function checkElementAttrs(
+  attrs: { x: number, y: number, w: number, h: number, angle: number }
+): boolean {
+  const { x, y, w, h, angle } = attrs;
+  if (!(isNumber(x) && isNumber(y) && isNumber(w) && isNumber(h) && isNumber(angle))) {
+    return false;
+  }
+  if (!(angle >= -360 && angle <= 360 )) {
+    return false;
+  }
+  return true;
+}
+
+function isNumber(data: any) {
+  return (typeof data === 'number' && (data > 0 || data <= 0))
+}
