@@ -1,38 +1,38 @@
 import * as React from 'react';
 import { Form, Input, Col, Row, } from 'antd';
-import { TypeElement } from '@idraw/types';
+import { TypeElement, TypeElemDesc } from '@idraw/types';
+import util from '@idraw/util';
+import { FieldData } from './base';
+import { checkRectDesc } from './../../util/data';
 
-interface FieldData {
-  name: string | number | (string | number)[];
-  value?: any;
-  touched?: boolean;
-  validating?: boolean;
-  errors?: string[];
-}
+const { isColorStr } = util.color;
 
 interface DescFormProps {
   elem: TypeElement<'rect'>
-  onChange?: (fields: FieldData[]) => void;
+  onChange?: (desc: TypeElemDesc['rect']) => void;
 }
 
 export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
-
-  console.log('elem ===', elem)
 
   const fields = [
     { name: ['borderWidth'], value: elem.desc.borderWidth || 0 },
     { name: ['borderRadius'], value: elem.desc.borderRadius || 0 },
     { name: ['borderColor'], value: elem.desc.borderColor || '' },
-    { name: ['color'], value: elem.desc.borderColor || '' },
+    { name: ['color'], value: elem.desc.color || '' },
   ];
 
   return (<Form
       name="rect-desc"
       layout="inline"
       fields={fields}
-      onFieldsChange={(_, allFields) => {
+      onFieldsChange={(_, allFields: FieldData[]) => {
         if (typeof onChange === 'function') {
-          onChange(allFields);
+          const newDesc = parseFiledsData(allFields);
+          if (checkRectDesc(newDesc)) {
+            const desc = {...elem.desc, ...newDesc};
+            // console.log('desc =====', desc);
+            onChange(desc);
+          }
         }
       }}
     >
@@ -41,7 +41,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="color"
             label="Color" >
-            <Input type="number" size="small" />
+            <Input type="string" size="small" />
           </Form.Item>
         </Col>
       </Row>
@@ -69,7 +69,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="borderColor"
             label="Border Color">
-            <Input type="number" size="small" />
+            <Input type="string" size="small" />
           </Form.Item>
         </Col>
       </Row>
@@ -77,3 +77,48 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
     </Form>
   )
 };
+
+function parseFiledsData(fields: FieldData[]) {
+  const desc = {
+    // color: '#ffffff',
+    // borderColor: '',
+    // borderRadius: 0,
+    // borderWidth: 0,
+  };
+  // TODO
+  const attrKeys = ['color', 'borderColor', 'borderRadius', 'borderWidth'];
+  fields.forEach((item: FieldData) => {
+    if (attrKeys.includes(item.name[0])) {
+      switch (item.name[0]) {
+        case 'color': {
+          if (isColorStr(item.value)) {
+            desc[item.name[0]] = item.value; 
+          }
+          break;
+        }
+        case 'borderColor': {
+          if (isColorStr(item.value)) {
+            desc[item.name[0]] = item.value; 
+          }
+          break;
+        }
+        case 'borderRadius': {
+          if (parseFloat(item.value) >= 0) {
+            desc[item.name[0]] = parseFloat(item.value); 
+          }
+          break;
+        }
+        case 'borderWidth': {
+          if (parseFloat(item.value) >= 0) {
+            desc[item.name[0]] = parseFloat(item.value); 
+          }
+          break;
+        }
+        default: {
+          break;
+        }
+      }
+    }
+  });
+  return desc;
+}

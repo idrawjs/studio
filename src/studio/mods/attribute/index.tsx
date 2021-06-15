@@ -19,7 +19,6 @@ export const Attribute = () => {
     { name: ['angle'], value: elem?.angle || 0 },
   ]
 
-
   return (
     <div className="idraw-studio-mod-attribute">
       {selectedElementUUID ? (
