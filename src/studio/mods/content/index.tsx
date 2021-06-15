@@ -33,8 +33,8 @@ function StudioContent(props: TypeProps) {
     }, {
       scrollWrapper: {
         use: true,
-        color: '#999999',
-        lineWidth: 12,
+        color: '#bbbbbb',
+        lineWidth: 10,
       }
     });
     // setIDraw(idraw);
@@ -61,6 +61,9 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioSelectElement', (data) => {
       idraw.selectElementByUUID(data.uuid, { useMode: data.useMode });
     });
+    eventHub.on('studioUpdateElement', (elem) => {
+      idraw.updateElement(elem);
+    })
 
     if (data) {
       idraw.initData(data);
