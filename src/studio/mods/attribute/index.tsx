@@ -6,7 +6,6 @@ import eventHub from './../../util/event-hub';
 
 const { useContext, } = React;
 
-
 export const Attribute = () => {
   const context = useContext(StudioContext);
   const { data, selectedElementUUID } = context;
