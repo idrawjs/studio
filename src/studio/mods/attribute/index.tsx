@@ -7,10 +7,18 @@ import { limitNum } from './../../util/value';
 
 const { useContext, } = React;
 
-export const Attribute = () => {
+type TypeProps = {
+  maxHeight?: number
+}
+
+export const Attribute = (props: TypeProps) => {
   const context = useContext(StudioContext);
   const { data, selectedElementUUID } = context;
   const elem = getElement(data, selectedElementUUID);
+  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
+  if (props.maxHeight > 0) {
+    style.maxHeight = props.maxHeight;
+  }
 
   const fields = [
     { name: ['x'], value: elem?.x || 0 },
@@ -21,7 +29,7 @@ export const Attribute = () => {
   ]
 
   return (
-    <div className="idraw-studio-mod-attribute">
+    <div className="idraw-studio-mod-attribute" style={style}>
       {selectedElementUUID ? (
         <div>
           <AttrForm

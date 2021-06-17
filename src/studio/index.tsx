@@ -59,6 +59,7 @@ function Studio(p: TypeProps) {
             />
             <SiderRight
               width={layoutConfig.siderRight.width}
+              height={contentSize.height}
             />
           </Layout>
           <StudioFooter height={layoutConfig.footer.height}/>
