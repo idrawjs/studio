@@ -17,8 +17,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
     onChange?.(changedValue.color || value);
   };
 
-  const onColorChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const newColor = e.target.value || '';
+  const onColorChange = (newColor: string) => {
     if (is.color(newColor)) {
       setColorValue(newColor);
     }
@@ -26,11 +25,18 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
   };
 
   return (
-    <span>
+    <span >
       <Popover
         content={() => (
         <div>
-          <SketchPicker color={colorValue} />
+          <SketchPicker
+            color={colorValue}
+            onChangeComplete={(data) => {
+              if (is.color(data.hex)) {
+                onColorChange(data.hex);
+              }
+            }}
+          />
         </div>)}
         trigger="click"
       >
@@ -38,7 +44,6 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
           type="button"
           size="small"
           value={value || colorValue}
-          onChange={onColorChange}
           style={{ width: 100 }}
         />
       </Popover>
