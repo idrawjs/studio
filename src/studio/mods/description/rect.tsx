@@ -1,11 +1,10 @@
 import * as React from 'react';
 import { Form, Input, Col, Row, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
-import util from '@idraw/util';
+import idraw from 'idraw';
 import { FieldData } from './base';
-import { checkRectDesc } from './../../util/data';
-
-const { isColorStr } = util.color;
+import { ColorPicker } from './color';
+import { limitNum } from './../../util/value';
 
 interface DescFormProps {
   elem: TypeElement<'rect'>
@@ -28,7 +27,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       onFieldsChange={(_, allFields: FieldData[]) => {
         if (typeof onChange === 'function') {
           const newDesc = parseFiledsData(allFields);
-          if (checkRectDesc(newDesc)) {
+          if (idraw.check.rectDesc(newDesc)) {
             const desc = {...elem.desc, ...newDesc};
             // console.log('desc =====', desc);
             onChange(desc);
@@ -41,7 +40,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="color"
             label="Color" >
-            <Input type="string" size="small" />
+            <ColorPicker />
           </Form.Item>
         </Col>
       </Row>
@@ -69,7 +68,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="borderColor"
             label="Border Color">
-            <Input type="string" size="small" />
+            <ColorPicker />
           </Form.Item>
         </Col>
       </Row>
@@ -86,31 +85,31 @@ function parseFiledsData(fields: FieldData[]) {
     // borderWidth: 0,
   };
   // TODO
-  const attrKeys = ['color', 'borderColor', 'borderRadius', 'borderWidth'];
+  const attrKeys = [ 'color', 'borderColor', 'borderRadius', 'borderWidth'];
   fields.forEach((item: FieldData) => {
     if (attrKeys.includes(item.name[0])) {
       switch (item.name[0]) {
         case 'color': {
-          if (isColorStr(item.value)) {
+          if (idraw.is.color(item.value)) {
             desc[item.name[0]] = item.value; 
           }
           break;
         }
         case 'borderColor': {
-          if (isColorStr(item.value)) {
+          if (idraw.is.color(item.value)) {
             desc[item.name[0]] = item.value; 
           }
           break;
         }
         case 'borderRadius': {
-          if (parseFloat(item.value) >= 0) {
-            desc[item.name[0]] = parseFloat(item.value); 
+          if (idraw.is.borderRadius(parseFloat(item.value))) {
+            desc[item.name[0]] = limitNum(parseFloat(item.value)); 
           }
           break;
         }
         case 'borderWidth': {
-          if (parseFloat(item.value) >= 0) {
-            desc[item.name[0]] = parseFloat(item.value); 
+          if (idraw.is.borderWidth(parseFloat(item.value))) {
+            desc[item.name[0]] = limitNum(parseFloat(item.value)); 
           }
           break;
         }

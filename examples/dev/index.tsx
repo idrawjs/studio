@@ -18,6 +18,8 @@ ReactDOM.render(
       <Studio {...{ 
         studioWidth: window.innerWidth,
         studioHeight: window.innerHeight,
+        // studioWidth: 800,
+        // studioHeight: 640,
         contextWidth: 1000,
         contextHeight: 900,
         data: data as TypeData

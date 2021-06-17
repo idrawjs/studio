@@ -3,13 +3,22 @@ import { StudioContext } from './../../context';
 import { Form, Input, Col, Row, } from 'antd';
 import { getElement, checkElementAttrs } from './../../util/data';
 import eventHub from './../../util/event-hub';
+import { limitNum } from './../../util/value';
 
 const { useContext, } = React;
 
-export const Attribute = () => {
+type TypeProps = {
+  maxHeight?: number
+}
+
+export const Attribute = (props: TypeProps) => {
   const context = useContext(StudioContext);
   const { data, selectedElementUUID } = context;
   const elem = getElement(data, selectedElementUUID);
+  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
+  if (props.maxHeight > 0) {
+    style.maxHeight = props.maxHeight;
+  }
 
   const fields = [
     { name: ['x'], value: elem?.x || 0 },
@@ -20,7 +29,7 @@ export const Attribute = () => {
   ]
 
   return (
-    <div className="idraw-studio-mod-attribute">
+    <div className="idraw-studio-mod-attribute" style={style}>
       {selectedElementUUID ? (
         <div>
           <AttrForm
@@ -48,7 +57,7 @@ function parseFiledsData(fields: FieldData[]): {
   const attrKeys = Object.keys(attrs);
   fields.forEach((item: FieldData) => {
     if (attrKeys.includes(item.name[0])) {
-      attrs[item.name[0]] = parseFloat(item.value);
+      attrs[item.name[0]] = limitNum(parseFloat(item.value));
     }
   });
   return attrs;

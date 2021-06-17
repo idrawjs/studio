@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Layout } from '../ui/antd';
 import { TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
+import { StudioFooter } from './mods/footer';
 import { SiderLeft } from './mods/sider-left';
 import SiderRight from './mods/sider-right';
 import StudioContent from './mods/content';
@@ -58,8 +59,10 @@ function Studio(p: TypeProps) {
             />
             <SiderRight
               width={layoutConfig.siderRight.width}
+              height={contentSize.height}
             />
           </Layout>
+          <StudioFooter height={layoutConfig.footer.height}/>
         </Layout>
       </div>
     </StudioContext.Provider>
@@ -94,7 +97,7 @@ function createProps (props: TypeProps) {
 
 function createContentSize(props: TypeProps) {
   const width = props.studioWidth - layoutConfig.siderLeft.width - layoutConfig.siderRight.width
-  const height = props.studioHeight - layoutConfig.header.height;
+  const height = props.studioHeight - layoutConfig.header.height - layoutConfig.footer.height;
   const contextWidth = props.contextWidth || width;
   const contextHeight = props.contextHeight || height;
   return {

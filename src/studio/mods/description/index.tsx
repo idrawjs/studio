@@ -4,12 +4,17 @@ import { StudioContext } from './../../context';
 import { getElement } from './../../util/data';
 import eventHub from './../../util/event-hub';
 import { RectDescForm } from './rect';
+import { TextDescForm } from './text';
 
 const { useContext, useCallback } = React;
 
-const supportElemList = ['rect']; // TODO 
+const supportElemList = ['rect', 'text']; // TODO 
 
-export const Description = () => {
+type TypeProps = {
+  maxHeight?: number,
+}
+
+export const Description = (props: TypeProps) => {
   const context = useContext(StudioContext);
   const { data, selectedElementUUID } = context;
   const elem: TypeElement<keyof TypeElemDesc> = getElement(data, selectedElementUUID);
@@ -21,13 +26,24 @@ export const Description = () => {
     }
   }, [selectedElementUUID]);
 
+  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
+  if (props.maxHeight > 0) {
+    style.maxHeight = props.maxHeight;
+  }
+
   return (
-    <div className="idraw-studio-mod-desc">
+    <div className="idraw-studio-mod-desc" style={style}>
       {supportElemList.includes(elem?.type) ? (
         <>
           {elem?.type === 'rect' && (
             <RectDescForm
               elem={elem as TypeElement<'rect'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          {elem?.type === 'text' && (
+            <TextDescForm
+              elem={elem as TypeElement<'text'>}
               onChange={onChangeElementDesc}
             />
           )}

@@ -6,16 +6,22 @@ import eventHub from '../../util/event-hub';import { StudioContext } from './../
 const { useContext } = React;
 
 
-// type TypeProps = {}
+type TypeProps = {
+  maxHeight?: number
+}
 
 
-export const Elements = () => {
+export const Elements = (props: TypeProps) => {
 
-const context = useContext(StudioContext);
-const { data, selectedElementUUID } = context;
+  const context = useContext(StudioContext);
+  const { data, selectedElementUUID } = context;
+  const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
+  if (props.maxHeight > 0) {
+    style.maxHeight = props.maxHeight;
+  }
 
   return (
-    <div className="idraw-studio-mod-element">
+    <div className="idraw-studio-mod-element" style={style}>
       <List
         size="small"
         dataSource={data.elements}

@@ -13,11 +13,14 @@
 // }
 
 
-import {Layout,
+import {
+  Layout,
   Select,
   Menu,
   Collapse,
-  List, } from 'antd';
+  Modal,
+  List,
+} from 'antd';
 
  
 
@@ -27,4 +30,5 @@ export {
   Menu,
   Collapse,
   List,
+  Modal,
 }
