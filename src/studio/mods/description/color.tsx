@@ -53,6 +53,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
 
   return (
     <Popover
+      overlayClassName={'idraw-studio-mod-desc-color'}
       content={() => (
       <div>
         <SketchPicker
