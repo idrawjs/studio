@@ -18,6 +18,7 @@ export const Elements = (props: TypeProps) => {
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
   if (props.maxHeight > 0) {
     style.maxHeight = props.maxHeight;
+    style.height = props.maxHeight;
   }
 
   return (

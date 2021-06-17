@@ -18,6 +18,7 @@ export const Attribute = (props: TypeProps) => {
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
   if (props.maxHeight > 0) {
     style.maxHeight = props.maxHeight;
+    style.height = props.maxHeight;
   }
 
   const fields = [
@@ -43,7 +44,9 @@ export const Attribute = (props: TypeProps) => {
           />
         </div>
       ) : (
-        <div className="no-select-data">No Data</div>
+        <>
+          {/* <div className="no-select-data">No Attribute</div> */}
+        </>
       )}
     </div>
   )

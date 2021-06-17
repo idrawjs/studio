@@ -51,7 +51,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="text"
             label="Text" >
-            <TextArea rows={10} />
+            <TextArea rows={4} />
           </Form.Item>
         </Col>
       </Row>

@@ -16,9 +16,8 @@ const panelHeaderHeight = 30;
 
 function SiderRight(props: TypeProps) {
   const { width, height } = props;
-  const panelContentMaxHeight = (height / 3) - 30;
+  const panelContentMaxHeight = (height / 2) - 30;
   const [elemMaxHeight, setElemMaxHeight] = useState(panelContentMaxHeight);
-  const [attrMaxHeight, setAttrMaxHeight] = useState(panelContentMaxHeight);
   const [descMaxHeight, setDescMaxHeight] = useState(panelContentMaxHeight);
 
   const onCollapseChange = useCallback((key: string|string[]) => {
@@ -29,27 +28,22 @@ function SiderRight(props: TypeProps) {
       keys = key;
     }
     if (keys.length > 0) {
-      const maxHeight = (height - panelHeaderHeight * 3) / keys.length;
+      const maxHeight = (height - panelHeaderHeight * 2) / keys.length;
       if (keys.includes('elements')) {
         setElemMaxHeight(maxHeight);
-      }
-      if (keys.includes('attribute')) {
-        setAttrMaxHeight(maxHeight);
       }
       if (keys.includes('description')) {
         setDescMaxHeight(maxHeight);
       }
-      console.log('keys =', keys, maxHeight)
     }
     
-  }, [elemMaxHeight, attrMaxHeight, descMaxHeight]);
-
+  }, [elemMaxHeight, descMaxHeight]);
 
   return (
     <Sider width={width} className="idraw-studio-siderright">
       <Collapse
         bordered={false} 
-        defaultActiveKey={['elements', 'attribute', 'description']}
+        defaultActiveKey={['elements', 'description']}
         expandIconPosition={'right'}
         className="idraw-studio-siderright-collapse"
         onChange={onCollapseChange}
@@ -57,11 +51,11 @@ function SiderRight(props: TypeProps) {
         <Panel header="Elements" key="elements" className="idraw-studio-siderright-panel">
           <Elements maxHeight={elemMaxHeight}/>
         </Panel>
-        <Panel header="Attribute" key="attribute" className="idraw-studio-siderright-panel">
-          <Attribute maxHeight={attrMaxHeight}/>
-        </Panel>
         <Panel header="Description" key="description" className="idraw-studio-siderright-panel" >
-          <Description maxHeight={descMaxHeight} />
+          <div style={{height: descMaxHeight, overflow: 'scroll'}}>
+            <Attribute />
+            <Description />
+          </div>
         </Panel>
       </Collapse>
     </Sider>
