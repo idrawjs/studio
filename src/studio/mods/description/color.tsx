@@ -45,54 +45,59 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
   };
 
   const onColorChange = (newColor: string) => {
+    setColorValue(newColor);
+
     if (is.color(newColor)) {
-      setColorValue(newColor);
+      triggerChange({ color: newColor });
     }
-    triggerChange({ color: newColor });
   };
 
   return (
-    <Popover
-      overlayClassName={'idraw-studio-mod-desc-color'}
-      content={() => (
-      <div>
-        <SketchPicker
-          color={parseColor(colorValue || value)}
-          // disableAlpha={true}
-          onChangeComplete={(data) => {
-            // console.log('onChangeComplete =', data)
-            const hex = parseRGBA2Hex(data.rgb);
-            if (is.color(hex)) {
-              onColorChange(hex);
-            }
-          }}
-        />
-      </div>)}
-      trigger="click"
-      >
+    
       <span style={{
         position: 'relative',
         display: 'inline-block',
         cursor: 'pointer',
       }}>
-        <span style={{
-          position: 'absolute',
-          left: 4,
-          top: 4,
-          bottom: 4,
-          display: 'inline-block',
-          width: 16,
-          backgroundColor: colorValue || value,
-          zIndex: 1,
-        }}></span>
-        
+        <Popover
+          overlayClassName={'idraw-studio-mod-desc-color'}
+          content={() => (
+          <div>
+            <SketchPicker
+              color={parseColor(colorValue || value)}
+              // disableAlpha={true}
+              onChangeComplete={(data) => {
+                // console.log('onChangeComplete =', data)
+                const hex = parseRGBA2Hex(data.rgb);
+                if (is.color(hex)) {
+                  onColorChange(hex);
+                }
+              }}
+            />
+          </div>)}
+          trigger="click"
+          >
+            <span style={{
+              position: 'absolute',
+              left: 4,
+              top: 4,
+              bottom: 4,
+              display: 'inline-block',
+              width: 16,
+              backgroundColor: colorValue || value,
+              zIndex: 1,
+            }}></span>
+
+          </Popover>
           <Input
-            type="button"
+            type="text"
             size="small"
-            value={value || colorValue}
-            style={{ width: 120, paddingLeft: 16, cursor: 'pointer', }}
+            value={colorValue || value}
+            style={{ width: 120, paddingLeft: 24 }}
+            onChange={(e)=> {
+              onColorChange(e.target.value)
+            }}
           /> 
       </span>
-    </Popover>
   );
 };

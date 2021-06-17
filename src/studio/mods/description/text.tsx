@@ -3,18 +3,18 @@ import { Form, Input, Col, Row, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import util from '@idraw/util';
 import { FieldData } from './base';
-import { checkRectDesc } from './../../util/data';
+import { checkRectDesc } from '../../util/data';
 import { ColorPicker } from './color';
-import { limitNum } from './../../util/value';
+import { limitNum } from '../../util/value';
 
 const { isColorStr } = util.color;
 
 interface DescFormProps {
-  elem: TypeElement<'rect'>
-  onChange?: (desc: TypeElemDesc['rect']) => void;
+  elem: TypeElement<'text'>
+  onChange?: (desc: TypeElemDesc['text']) => void;
 }
 
-export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
+export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
 
   const fields = [
     { name: ['borderWidth'], value: elem.desc.borderWidth || 0 },

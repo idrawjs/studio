@@ -3,6 +3,7 @@ import { StudioContext } from './../../context';
 import { Form, Input, Col, Row, } from 'antd';
 import { getElement, checkElementAttrs } from './../../util/data';
 import eventHub from './../../util/event-hub';
+import { limitNum } from './../../util/value';
 
 const { useContext, } = React;
 
@@ -48,7 +49,7 @@ function parseFiledsData(fields: FieldData[]): {
   const attrKeys = Object.keys(attrs);
   fields.forEach((item: FieldData) => {
     if (attrKeys.includes(item.name[0])) {
-      attrs[item.name[0]] = parseFloat(item.value);
+      attrs[item.name[0]] = limitNum(parseFloat(item.value));
     }
   });
   return attrs;

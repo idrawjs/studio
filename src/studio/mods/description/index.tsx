@@ -4,10 +4,11 @@ import { StudioContext } from './../../context';
 import { getElement } from './../../util/data';
 import eventHub from './../../util/event-hub';
 import { RectDescForm } from './rect';
+import { TextDescForm } from './text';
 
 const { useContext, useCallback } = React;
 
-const supportElemList = ['rect']; // TODO 
+const supportElemList = ['rect', 'text']; // TODO 
 
 export const Description = () => {
   const context = useContext(StudioContext);
@@ -28,6 +29,12 @@ export const Description = () => {
           {elem?.type === 'rect' && (
             <RectDescForm
               elem={elem as TypeElement<'rect'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          {elem?.type === 'text' && (
+            <TextDescForm
+              elem={elem as TypeElement<'text'>}
               onChange={onChangeElementDesc}
             />
           )}
