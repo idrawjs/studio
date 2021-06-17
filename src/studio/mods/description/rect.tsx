@@ -70,7 +70,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="borderColor"
             label="Border Color">
-            <Input type="string" size="small" />
+            <ColorPicker />
           </Form.Item>
         </Col>
       </Row>
