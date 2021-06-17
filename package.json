@@ -108,6 +108,7 @@
     "@idraw/types": "0.0.4-alpha.11",
     "@idraw/util": "^0.0.4-alpha.11",
     "classnames": "^2.3.1",
-    "idraw": "0.0.4-alpha.11"
+    "idraw": "0.0.4-alpha.11",
+    "react-color": "^2.19.3"
   }
 }

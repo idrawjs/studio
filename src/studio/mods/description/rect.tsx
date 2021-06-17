@@ -4,6 +4,7 @@ import { TypeElement, TypeElemDesc } from '@idraw/types';
 import util from '@idraw/util';
 import { FieldData } from './base';
 import { checkRectDesc } from './../../util/data';
+import { ColorPicker } from './color';
 
 const { isColorStr } = util.color;
 
@@ -41,7 +42,7 @@ export const RectDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="color"
             label="Color" >
-            <Input type="string" size="small" />
+            <ColorPicker />
           </Form.Item>
         </Col>
       </Row>

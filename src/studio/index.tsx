@@ -63,7 +63,6 @@ function Studio(p: TypeProps) {
           </Layout>
           <StudioFooter height={layoutConfig.footer.height}/>
         </Layout>
-        
       </div>
     </StudioContext.Provider>
   )
