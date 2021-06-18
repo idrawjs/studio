@@ -51,9 +51,6 @@ export function SiderLeftBtn(props: { style?: React.HTMLAttributes<HTMLDivElemen
     >
       <DoubleRightOutlined
         className="siderleft-open-btn-icon"
-        onClick={() => {
-          eventHub.trigger('studioCloseLeftSider', true);
-        }}
       />
     </div>
   )

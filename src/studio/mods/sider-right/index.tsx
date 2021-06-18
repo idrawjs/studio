@@ -1,8 +1,10 @@
 import * as React from 'react';
-import { Layout, Collapse } from '../../../ui/antd';
+import { Layout, Collapse,  } from 'antd';
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Elements } from '../elements';
 import { Attribute } from '../attribute';
 import { Description } from '../description';
+import eventHub from './../../util/event-hub';
 
 const { useState, useCallback } = React;
 const { Panel } = Collapse;
@@ -13,10 +15,11 @@ type TypeProps = {
 }
 
 const panelHeaderHeight = 30;
+const siderHeaderHeight = 24;
 
-function SiderRight(props: TypeProps) {
+export function SiderRight(props: TypeProps) {
   const { width, height } = props;
-  const panelContentMaxHeight = (height / 2) - 30;
+  const panelContentMaxHeight = ((height - siderHeaderHeight) / 2) - 30;
   const [elemMaxHeight, setElemMaxHeight] = useState(panelContentMaxHeight);
   const [descMaxHeight, setDescMaxHeight] = useState(panelContentMaxHeight);
 
@@ -28,7 +31,7 @@ function SiderRight(props: TypeProps) {
       keys = key;
     }
     if (keys.length > 0) {
-      const maxHeight = (height - panelHeaderHeight * 2) / keys.length;
+      const maxHeight = ((height - siderHeaderHeight) - panelHeaderHeight * 2) / keys.length;
       if (keys.includes('elements')) {
         setElemMaxHeight(maxHeight);
       }
@@ -41,6 +44,14 @@ function SiderRight(props: TypeProps) {
 
   return (
     <Sider width={width} className="idraw-studio-siderright">
+      <div className="idraw-studio-siderright-header" style={{height: siderHeaderHeight}}>
+        <DoubleRightOutlined
+          className="studio-siderright-header-icon  siderright-close-btn"
+          onClick={() => {
+            eventHub.trigger('studioCloseRightSider', true);
+          }}
+        />
+      </div>
       <Collapse
         bordered={false} 
         defaultActiveKey={['elements', 'description']}
@@ -61,5 +72,21 @@ function SiderRight(props: TypeProps) {
     </Sider>
   )
 }
+ 
 
-export default SiderRight
+
+export function SiderRightBtn(props: { style?: React.HTMLAttributes<HTMLDivElement>['style'] }) {
+  return (
+    <div
+      style={props.style}
+      className="idraw-studio-siderright-open-btn"
+      onClick={() => {
+        eventHub.trigger('studioCloseRightSider', false);
+      }}
+    >
+      <DoubleLeftOutlined
+        className="siderright-open-btn-icon"
+      />
+    </div>
+  )
+}
