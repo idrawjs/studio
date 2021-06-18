@@ -3,7 +3,7 @@ import { Layout } from '../ui/antd';
 import { TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
-import { SiderLeft } from './mods/sider-left';
+import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
 import SiderRight from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
@@ -24,11 +24,13 @@ type TypeProps = {
 function Studio(p: TypeProps) {
 
   const props = createProps(p);
+  const contentSize = createContentSize(props);
 
   const [data, setData] = useState<TypeData>(props.data || {elements: []});
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
-
-  const contentSize = createContentSize(props);
+  const [contentWidth, setContentWidth] = useState(contentSize.width);
+  const [closeSiderLeft, setCloseSiderLeft] = useState(false);
+  const [closeSiderRight, setCloseSiderRight] = useState(false);
 
   useEffect(() => {
     eventHub.on('studioSelectElement', (data) => {
@@ -36,6 +38,18 @@ function Studio(p: TypeProps) {
     });
     eventHub.on('studioChangeData', (data) => {
       setData(data);
+    });
+    eventHub.on('studioCloseLeftSider', (status: boolean) => {
+      const newContentWidth = calcContentWidth(props, { closeSiderLeft: status,  closeSiderRight});
+      setCloseSiderLeft(status);
+      setContentWidth(newContentWidth);
+      console.log('newContentWidth ===', status, newContentWidth);
+      eventHub.trigger('studioIDrawResetWidth', newContentWidth);
+    });
+    eventHub.on('studioCloseRightSider', (status: boolean) => {
+      const newContentWidth = calcContentWidth(props, { closeSiderLeft,  closeSiderRight: status});
+      setCloseSiderRight(status);
+      setContentWidth(newContentWidth);
     });
   }, []);
 
@@ -49,16 +63,22 @@ function Studio(p: TypeProps) {
       >
         <Layout style={{height: '100%'}}>
           <StudioHeader height={layoutConfig.header.height} />
-          <Layout>
-            <SiderLeft width={layoutConfig.siderLeft.width} />
+          <Layout style={{position: 'relative'}}>
+            {closeSiderLeft && (
+              <SiderLeftBtn style={{position: 'absolute', left: 0, top: 0, zIndex: 1,}} />
+            )}
+            <SiderLeft
+              width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
+              // height={contentSize.height}
+            />
             <StudioContent
-              width={contentSize.width}
+              width={contentWidth}
               height={contentSize.height}
               contextWidth={contentSize.contextWidth}
               contextHeight={contentSize.contextHeight}
             />
             <SiderRight
-              width={layoutConfig.siderRight.width}
+              width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
               height={contentSize.height}
             />
           </Layout>
@@ -106,6 +126,20 @@ function createContentSize(props: TypeProps) {
     contextWidth,
     contextHeight
   }
+}
+
+function calcContentWidth(
+  props: TypeProps,
+  opts: { closeSiderLeft: boolean, closeSiderRight: boolean
+}): number {
+  let contentWidth = props.studioWidth;
+  if (opts.closeSiderLeft !== true) {
+    contentWidth = contentWidth - layoutConfig.siderLeft.width;
+  }
+  if (opts.closeSiderRight !== true) {
+    contentWidth = contentWidth - layoutConfig.siderRight.width;
+  }
+  return contentWidth;
 }
 
 export default Studio

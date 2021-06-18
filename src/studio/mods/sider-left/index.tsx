@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Layout, Menu } from '../../../ui/antd';
+import { Layout, Collapse } from '../../../ui/antd';
+import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import eventHub from './../../util/event-hub';
 
-const { SubMenu } = Menu;
+const { Panel } = Collapse;
 const { Sider } = Layout;
 
 type TypeProps = {
@@ -12,32 +14,48 @@ export function SiderLeft(props: TypeProps) {
 
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
-      <Menu
-        mode="inline"
-        defaultSelectedKeys={['1']}
-        defaultOpenKeys={['sub1']}
-        style={{ height: '100%', borderRight: 0 }}
+      <div className="idraw-studio-siderleft-header">
+        <DoubleLeftOutlined
+          className="studio-siderleft-header-icon  siderleft-close-btn"
+          onClick={() => {
+            eventHub.trigger('studioCloseLeftSider', true);
+          }}
+        />
+      </div>
+      <Collapse
+        bordered={false} 
+        defaultActiveKey={['1', '2']}
+        expandIconPosition={'right'}
+        className="idraw-studio-siderleft-collapse"
       >
-        <SubMenu key="sub1"  title="subnav 1">
-          <Menu.Item key="1">option1</Menu.Item>
-          <Menu.Item key="2">option2</Menu.Item>
-          <Menu.Item key="3">option3</Menu.Item>
-          <Menu.Item key="4">option4</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2"   title="subnav 2">
-          <Menu.Item key="5">option5</Menu.Item>
-          <Menu.Item key="6">option6</Menu.Item>
-          <Menu.Item key="7">option7</Menu.Item>
-          <Menu.Item key="8">option8</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub3"  title="subnav 3">
-          <Menu.Item key="9">option9</Menu.Item>
-          <Menu.Item key="10">option10</Menu.Item>
-          <Menu.Item key="11">option11</Menu.Item>
-          <Menu.Item key="12">option12</Menu.Item>
-        </SubMenu>
-      </Menu>
+        <Panel header="001" key="1" className="idraw-studio-siderleft-panel">
+          001
+        </Panel>
+        <Panel header="002" key="2" className="idraw-studio-siderleft-panel" >
+          002
+        </Panel>
+      </Collapse>
     </Sider>
+  )
+}
+
+
+export function SiderLeftBtn(props: { style?: React.HTMLAttributes<HTMLDivElement>['style'] }) {
+  return (
+    <div
+      style={props.style}
+      className="idraw-studio-siderleft-open-btn"
+      onClick={() => {
+        eventHub.trigger('studioCloseLeftSider', false);
+      }}
+    >
+      <DoubleRightOutlined
+        className="siderleft-open-btn-icon"
+        onClick={() => {
+          eventHub.trigger('studioCloseLeftSider', true);
+        }}
+      />
+    </div>
   )
 }
  

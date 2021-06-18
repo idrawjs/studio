@@ -4,7 +4,10 @@ export type TypeIDrawEventArgMap  = {
   'studioScaleScreen': number;
   'studioSelectElement': { uuid: string, useMode?: boolean };
   'studioChangeData': TypeData;
-  'studioUpdateElement': TypeElement<keyof TypeElemDesc> 
+  'studioUpdateElement': TypeElement<keyof TypeElemDesc>;
+  'studioCloseLeftSider': boolean;
+  'studioCloseRightSider': boolean;
+  'studioIDrawResetWidth': number;
 }
   
 export interface TypeIDrawEvent {
