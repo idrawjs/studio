@@ -5,10 +5,12 @@ import { getElement } from './../../util/data';
 import eventHub from './../../util/event-hub';
 import { RectDescForm } from './rect';
 import { TextDescForm } from './text';
+import { ImageDescForm } from './image';
+import { SVGDescForm } from './svg';
 
 const { useContext, useCallback } = React;
 
-const supportElemList = ['rect', 'text']; // TODO 
+const supportElemList = ['rect', 'text', 'image', 'svg']; // TODO 
 
 type TypeProps = {
   maxHeight?: number,
@@ -45,6 +47,18 @@ export const Description = (props: TypeProps) => {
           {elem?.type === 'text' && (
             <TextDescForm
               elem={elem as TypeElement<'text'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          {elem?.type === 'image' && (
+            <ImageDescForm
+              elem={elem as TypeElement<'image'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          {elem?.type === 'svg' && (
+            <SVGDescForm
+              elem={elem as TypeElement<'svg'>}
               onChange={onChangeElementDesc}
             />
           )}
