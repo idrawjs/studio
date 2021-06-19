@@ -21,7 +21,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
     { name: ['color'], value: elem.desc.color || '' },
     { name: ['fontSize'], value: elem.desc.fontSize || 12 },
     { name: ['fontFamily'], value: elem.desc.fontFamily || 'sans-serif' },
-    { name: ['textAlign'], value: elem.desc.textAlign || 'left' },
+    { name: ['textAlign'], value: elem.desc.textAlign || 'center' },
     { name: ['lineHeight'], value: elem.desc.lineHeight || elem.desc.fontSize },
     { name: ['borderWidth'], value: elem.desc.borderWidth || 0 },
     { name: ['borderRadius'], value: elem.desc.borderRadius || 0 },
@@ -35,10 +35,6 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       onFieldsChange={(_, allFields: FieldData[]) => {
         if (typeof onChange === 'function') {
           const newDesc = parseFiledsData(allFields);
-
-          console.log('newDesc ===', newDesc)
-          console.log('idraw.check.textDesc(newDesc) =====', idraw.check.textDesc(newDesc));
-         
           if (idraw.check.textDesc(newDesc)) {
             const desc = {...elem.desc, ...newDesc};
             onChange(desc);
@@ -51,7 +47,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="text"
             label="Text" >
-            <TextArea rows={10} />
+            <TextArea rows={4} />
           </Form.Item>
         </Col>
       </Row>
@@ -78,6 +74,18 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item name="fontFamily" label="Font Family" >
             <Select style={{ width: 120 }} size="small">
               <Option value="sans-serif">sans-serif</Option>
+            </Select>
+          </Form.Item>
+        </Col>
+      </Row>
+
+      <Row>
+        <Col span="24">
+          <Form.Item name="textAlign" label="Text Align" >
+            <Select style={{ width: 120 }} size="small">
+              <Option value="left">left</Option>
+              <Option value="center">center</Option>
+              <Option value="right">right</Option>
             </Select>
           </Form.Item>
         </Col>

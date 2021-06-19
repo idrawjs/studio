@@ -5,10 +5,12 @@ import { getElement } from './../../util/data';
 import eventHub from './../../util/event-hub';
 import { RectDescForm } from './rect';
 import { TextDescForm } from './text';
+import { ImageDescForm } from './image';
+import { SVGDescForm } from './svg';
 
 const { useContext, useCallback } = React;
 
-const supportElemList = ['rect', 'text']; // TODO 
+const supportElemList = ['rect', 'text', 'image', 'svg']; // TODO 
 
 type TypeProps = {
   maxHeight?: number,
@@ -29,6 +31,7 @@ export const Description = (props: TypeProps) => {
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
   if (props.maxHeight > 0) {
     style.maxHeight = props.maxHeight;
+    style.height = props.maxHeight;
   }
 
   return (
@@ -47,9 +50,21 @@ export const Description = (props: TypeProps) => {
               onChange={onChangeElementDesc}
             />
           )}
+          {elem?.type === 'image' && (
+            <ImageDescForm
+              elem={elem as TypeElement<'image'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          {elem?.type === 'svg' && (
+            <SVGDescForm
+              elem={elem as TypeElement<'svg'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
         </>
       ) : (
-        <div className="no-select-data">No Data</div>
+        <div className="no-select-data">No Description</div>
       )}
     </div>
   )

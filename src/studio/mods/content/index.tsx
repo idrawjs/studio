@@ -63,6 +63,9 @@ function StudioContent(props: TypeProps) {
     });
     eventHub.on('studioUpdateElement', (elem) => {
       idraw.updateElement(elem);
+    });
+    eventHub.on('studioIDrawResetWidth', (width: number) => {
+      idraw.resetSize({ width })
     })
 
     if (data) {
