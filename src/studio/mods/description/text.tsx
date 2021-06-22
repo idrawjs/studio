@@ -3,7 +3,7 @@ import { Form, Input, Col, Row, Select, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import idraw from 'idraw';
 import { FieldData } from './base';
-import { ColorPicker } from './color';
+import { ColorPicker } from './color-picker';
 import { limitNum } from '../../util/value';
 
 const { Option } = Select;
