@@ -61,6 +61,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
       }}>
         <Popover
           overlayClassName={'idraw-studio-mod-desc-color'}
+          trigger="click"
           content={() => (
           <div>
             <SketchPicker
@@ -75,7 +76,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
               }}
             />
           </div>)}
-          trigger="click"
+          
           >
             <span style={{
               position: 'absolute',
