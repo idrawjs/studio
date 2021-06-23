@@ -3,7 +3,7 @@ import { Form, Col, Row, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import idraw from 'idraw';
 import { FieldData } from './base';
-import { ImagePicker } from './image-picker';
+import { ImagePicker } from './field-image-picker';
 
 interface DescFormProps {
   elem: TypeElement<'image'>
@@ -34,7 +34,7 @@ export const ImageDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
         <Col span="24">
           <Form.Item
             name="src"
-            label="Src" >
+            label="Image" >
             <ImagePicker />
           </Form.Item>
         </Col>

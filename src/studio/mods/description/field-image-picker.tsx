@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Input, Popover, message, } from 'antd';
 import IDraw from 'idraw';
-import { pickFile, parseFileToBase64 } from './../../util/file';
+import { pickFile, parseFileToBase64 } from '../../util/file';
 
 const is = IDraw.is;
 const { TextArea } = Input;
