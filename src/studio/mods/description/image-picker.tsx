@@ -44,7 +44,7 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
     if (actionStatus === 'picking') {
       return;
     }
-    setActionStatus('picking')
+    
     pickFile({
       success: async (data) => {
         if (supportTypes.includes(data.file.type) !== true) {
@@ -63,7 +63,11 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
         console.log(err);
         setActionStatus('free');
       }
-    })
+    });
+    setActionStatus('picking');
+    setTimeout(() => {
+      setActionStatus('free');
+    }, 500)
   }, [actionStatus]);
 
 
