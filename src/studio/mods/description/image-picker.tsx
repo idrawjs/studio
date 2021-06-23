@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { Input, Popover, } from 'antd';
+import { Input, Popover, message, } from 'antd';
 import IDraw from 'idraw';
+import { pickFile, parseFileToBase64 } from './../../util/file';
 
 const is = IDraw.is;
 const { TextArea } = Input;
@@ -11,10 +12,11 @@ interface ImagePickerProps {
 }
 
 const { useCallback } = React;
-
+const supportTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/png'];
  
 export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }) => {
   const [imageSrc, setImageSrc] = useState<string>(value);
+  const [actionStatus, setActionStatus] = useState<'free'|'picking'>('free')
 
   const calcTextAreaSize = useCallback((str) => {
     const _str = str || '';
@@ -33,11 +35,36 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
 
   const onImageSrcChange = (src: string) => {
     setImageSrc(src);
-
     if (is.imageSrc(src)) {
       triggerChange(src);
     }
   };
+
+  const onPickImage = useCallback(() => {
+    if (actionStatus === 'picking') {
+      return;
+    }
+    setActionStatus('picking')
+    pickFile({
+      success: async (data) => {
+        if (supportTypes.includes(data.file.type) !== true) {
+          message.error(`File's type "${data.file.type}" is not supported!`);
+          return;
+        }
+        try {
+          const base64 = await parseFileToBase64(data.file);
+          onImageSrcChange(base64.toString());
+        } catch (err) {
+          message.error(`Failed to parse file ${data.file.name}`);
+        }
+        setActionStatus('free');
+      },
+      error: (err) => {
+        console.log(err);
+        setActionStatus('free');
+      }
+    })
+  }, [actionStatus]);
 
 
   return (
@@ -69,7 +96,11 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
                   }}>URL</span>
                 </Popover>
               </div>
-              <div className="imagepicker-action imagepicker-action-upload">Upload</div>
+              <div
+                onClick={onPickImage}
+                className="imagepicker-action imagepicker-action-upload">
+                  <span>Upload</span>
+              </div>
             </div>
           </div>
         
