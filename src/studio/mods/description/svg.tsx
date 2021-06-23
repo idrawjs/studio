@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Form, Input, Col, Row, } from 'antd';
+import { Form, Col, Row, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import idraw from 'idraw';
 import { FieldData } from './base';
-
-const { TextArea } = Input;
+import { SVGPicker } from './field-svg-picker';
 
 interface DescFormProps {
   elem: TypeElement<'svg'>
@@ -36,7 +35,7 @@ export const SVGDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="svg"
             label="SVG" >
-            <TextArea rows={10}/>
+            <SVGPicker />
           </Form.Item>
         </Col>
       </Row>

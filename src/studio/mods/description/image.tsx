@@ -1,10 +1,9 @@
 import * as React from 'react';
-import { Form, Input, Col, Row, } from 'antd';
+import { Form, Col, Row, } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import idraw from 'idraw';
 import { FieldData } from './base';
-
-const { TextArea } = Input;
+import { ImagePicker } from './field-image-picker';
 
 interface DescFormProps {
   elem: TypeElement<'image'>
@@ -35,8 +34,8 @@ export const ImageDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
         <Col span="24">
           <Form.Item
             name="src"
-            label="Src" >
-            <TextArea rows={10}/>
+            label="Image" >
+            <ImagePicker />
           </Form.Item>
         </Col>
       </Row>
