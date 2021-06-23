@@ -41,3 +41,23 @@ export function parseFileToBase64(file: File): Promise<string | ArrayBuffer> {
     reader.readAsDataURL(file);
   })
 } 
+
+export function parseFileToText(file: File): Promise<string | ArrayBuffer> {
+  return new Promise(function(resolve, reject) {
+    let reader = new FileReader();
+    reader.addEventListener('load', function() {
+      resolve(this.result);
+      reader = null;
+    });
+    reader.addEventListener('error', function(err) {
+      // reader.abort();
+      reject(err);
+      reader = null;
+    });
+    reader.addEventListener('abort', function() {
+      reject(new Error('abort'));
+      reader = null;
+    })
+    reader.readAsText(file);
+  })
+} 

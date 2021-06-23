@@ -56,7 +56,7 @@
       align-items: center;
       color: #000000;
       font-size: 14px;
-
+      cursor: pointer;
       &:hover {
         color: #ffffff;
       }
@@ -68,6 +68,60 @@
   }
 }
 
-// .idraw-studio-mod-desc-imagepicker-popover {
-//   display: flex;
-// }
+
+.idraw-studio-mod-desc-svgpicker {
+  display: inline-block;
+  cursor: pointer;
+
+  .desc-svgpicker-box {
+    position: relative;
+    display: flex;
+    width: 120px;
+    height: 120px;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid #d9d9d9;
+    background: #ffffff;
+  }
+
+  .desc-svgpicker-entity {
+    max-width: 120px;
+    max-height: 120px;
+    display: flex;
+
+    svg {
+      max-width: 120px;
+      max-height: 120px;
+    }
+  }
+
+  .desc-svgpicker-action {
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    height: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: #0000003d;
+    border-top: 1px solid #d9d9d9;
+
+    .svgpicker-action {
+      display: flex;
+      flex: 1;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+      color: #000000;
+      font-size: 14px;
+      cursor: pointer;
+      &:hover {
+        color: #ffffff;
+      }
+    }
+
+    .svgpicker-action:first-child {
+      border-right: 1px solid #d9d9d9;
+    }
+  }
+}
