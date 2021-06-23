@@ -18,22 +18,12 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
   const [svgText, setSvgText] = useState<string>(value);
   const [actionStatus, setActionStatus] = useState<'free'|'picking'>('free')
 
-  const calcTextAreaSize = useCallback((str) => {
-    // const _str = str || '';
-    let rows = 3;
-    let width = 300;
-    // if (_str.length > 128) {
-    //   rows = 10;
-    // }
-    return { rows, width };
-  }, [svgText]);
-
 
   const triggerChange = (val) => {
     onChange?.(val || value);
   };
 
-  const onSVGSrcChange = (svg: string) => {
+  const onSVGChange = (svg: string) => {
     setSvgText(svg);
     if (is.svg(svg)) {
       triggerChange(svg);
@@ -54,7 +44,7 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
         try {
           let newSVGText: string = (await parseFileToText(data.file)).toString();
           newSVGText = newSVGText.substring(newSVGText.indexOf('<svg'));
-          onSVGSrcChange(newSVGText);
+          onSVGChange(newSVGText);
         } catch (err) {
           message.error(`Failed to parse file ${data.file.name}`);
         }
@@ -84,10 +74,10 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
                   <div>
                     <TextArea
                       value={svgText || value}
-                      style={{width: calcTextAreaSize(svgText || value).width}}
-                      rows={calcTextAreaSize(svgText || value).rows}
+                      style={{width: 300}}
+                      rows={10}
                       onChange={(e) => {
-                        onSVGSrcChange(e.target.value || '')
+                        onSVGChange(e.target.value || '')
                       }}
                     />
                   </div>)}

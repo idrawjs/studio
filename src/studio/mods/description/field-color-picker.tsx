@@ -65,7 +65,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
           content={() => (
           <div>
             <SketchPicker
-              color={parseColor(colorValue || value)}
+              color={parseColor(value || colorValue)}
               // disableAlpha={true}
               onChangeComplete={(data) => {
                 // console.log('onChangeComplete =', data)
@@ -85,7 +85,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
               bottom: 4,
               display: 'inline-block',
               width: 16,
-              backgroundColor: colorValue || value,
+              backgroundColor: value || colorValue,
               zIndex: 1,
             }}></span>
 
@@ -93,7 +93,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
           <Input
             type="text"
             size="small"
-            value={colorValue || value}
+            value={value || colorValue}
             style={{ width: 120, paddingLeft: 24 }}
             onChange={(e)=> {
               onColorChange(e.target.value)

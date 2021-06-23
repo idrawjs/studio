@@ -5,6 +5,7 @@ import idraw from 'idraw';
 import { FieldData } from './base';
 import { ColorPicker } from './field-color-picker';
 import { limitNum } from '../../util/value';
+import { FieldText } from './field-text';
 
 const { Option } = Select;
 const { TextArea } = Input;
@@ -47,7 +48,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item
             name="text"
             label="Text" >
-            <TextArea rows={4} />
+            <FieldText />
           </Form.Item>
         </Col>
       </Row>

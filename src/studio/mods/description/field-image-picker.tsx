@@ -75,16 +75,16 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
       <div className="idraw-studio-mod-desc-imagepicker">
         
           <div className="desc-imagepicker-box">
-            <img className="desc-imagepicker-entity" src={imageSrc || value} />
+            <img className="desc-imagepicker-entity" src={value || imageSrc} />
             <div className="desc-imagepicker-action">
               <div className="imagepicker-action imagepicker-action-text" >
                 <Popover
                   content={() => (
                   <div>
                     <TextArea
-                      value={imageSrc || value}
-                      style={{width: calcTextAreaSize(imageSrc || value).width}}
-                      rows={calcTextAreaSize(imageSrc || value).rows}
+                      value={value || imageSrc}
+                      style={{width: calcTextAreaSize(value || imageSrc).width}}
+                      rows={calcTextAreaSize(value || imageSrc).rows}
                       onChange={(e) => {
                         onImageSrcChange(e.target.value || '')
                       }}
