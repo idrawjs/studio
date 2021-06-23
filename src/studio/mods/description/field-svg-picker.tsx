@@ -47,7 +47,6 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
     
     pickFile({
       success: async (data) => {
-        console.log('data ===', data);
         if (supportTypes.includes(data.file.type) !== true) {
           message.error(`File's type "${data.file.type}" is not supported!`);
           return;
