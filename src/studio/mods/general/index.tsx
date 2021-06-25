@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { BorderOutlined, FileTextOutlined, FileImageOutlined } from '@ant-design/icons';
 import { IconSVG } from './../icon';
+import { VirtualDrag } from './../virtual-drag';
 
 const generalElements: {
   name: string,
@@ -20,7 +21,7 @@ const generalElements: {
   },
   {
     name: 'SVG',
-    icon: <IconSVG width={40} height={40} size={28} color={'#999999'} />
+    icon: <IconSVG width={40} height={40} size={28} color={'#666666'} />
   }
 ];
 
@@ -34,7 +35,9 @@ export const General = () => {
 
           return (
             <div className="studio-general-element-item" key={i}>
-              {icon}
+              <VirtualDrag >
+                {icon}
+              </VirtualDrag>
             </div>
           )
         })}
