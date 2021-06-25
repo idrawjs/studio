@@ -1,6 +1,8 @@
 import * as React from 'react';
 import { Layout, Collapse } from '../../../ui/antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { General } from './../general';
+import { Advanced } from './../Advanced';
 import eventHub from './../../util/event-hub';
 
 const { Panel } = Collapse;
@@ -24,15 +26,15 @@ export function SiderLeft(props: TypeProps) {
       </div>
       <Collapse
         bordered={false} 
-        defaultActiveKey={['1', '2']}
+        defaultActiveKey={['general', 'advanced']}
         expandIconPosition={'right'}
         className="idraw-studio-siderleft-collapse"
       >
-        <Panel header="001" key="1" className="idraw-studio-siderleft-panel">
-          001
+        <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
+          <General />
         </Panel>
-        <Panel header="002" key="2" className="idraw-studio-siderleft-panel" >
-          002
+        <Panel header="Advanced" key="advanced" className="idraw-studio-siderleft-panel" >
+          <Advanced />
         </Panel>
       </Collapse>
     </Sider>
