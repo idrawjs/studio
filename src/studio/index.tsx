@@ -10,7 +10,7 @@ import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext } from './context';
 
-const { useState, useEffect, useCallback } = React;
+const { useState, useEffect } = React;
 
 
 type TypeProps = {
