@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, useCallback } from 'react';
 import IDraw from 'idraw';
 // import { TypeData, TypeScreenPosition } from '@idraw/types';
 import { Layout } from '../../../ui/antd'; 
 import eventHub from '../../util/event-hub';
 // import ScrollBox from './scroll-box';
 import { StudioContext } from './../../context';
+import { onDragOver } from './../../mods/global';
 
 const { Content } = Layout;
 
@@ -75,12 +76,19 @@ function StudioContent(props: TypeProps) {
     idraw.draw();
   }, []);
 
+  const onDragFeekback = useCallback((e) => {
+    // e.preventDefault();
+  }, [])
+
   return (
     <Content className="idraw-studio-content">
       <div style={{
           width: props.width,
           height: props.height,
-        }} ref={mount}></div>
+        }} ref={mount}
+        onDrop={onDragFeekback}
+        onDragOver={onDragOver}
+      ></div>
     </Content>
   )
 }
