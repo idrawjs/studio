@@ -76,7 +76,7 @@ function StudioContent(props: TypeProps) {
     idraw.draw();
   }, []);
 
-  const onDragFeekback = useCallback((e) => {
+  const onDragFeekback = useCallback(() => {
     // e.preventDefault();
   }, [])
 

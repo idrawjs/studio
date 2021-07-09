@@ -125,6 +125,7 @@ module.exports = {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.md'],
   },
   devServer: {
+    port: 6001,
     historyApiFallback: {
       rewrites: [{ from: /./, to: '/index.html' }],
     },
