@@ -1,19 +1,19 @@
 import * as React from 'react';
 import classnames from 'classnames';
 import { onDragOver } from './../../mods/global';
-import eventHub from './../../util/event-hub'
 
 const { useState, useCallback } = React;
 
 type TypeProps = {
   className?: string;
   style?: React.StyleHTMLAttributes<HTMLDivElement>
-  children?: React.ReactChild
+  children?: React.ReactChild,
+  onActionEnd?: (params: { clientX: number, clientY: number }) => void,
 }
 
 
 const VirtualDrag = (props: TypeProps) => {
-
+  const { onActionEnd } = props;
   const [isDragging, setIsDragging] = useState<boolean>(false); 
 
   const onMouseDown = useCallback((e) => {
@@ -23,23 +23,9 @@ const VirtualDrag = (props: TypeProps) => {
 
   const onMouseUp = useCallback((e) => {
     setIsDragging(false);
-    eventHub.trigger('studioDragNewElement', {
-      clientX: e.clientX,
-      clientY: e.clientY,
-      element: {
-        uuid: '',
-        x: 0,
-        y: 0,
-        w: 100,
-        h: 80,
-        angle: 0,
-        type: 'rect',
-        desc: {
-          borderColor: '#999999',
-          borderWidth: 10,
-        }
-      },
-    })
+    if (typeof onActionEnd === 'function') {
+      onActionEnd({ clientX: e.clientX,  clientY: e.clientY})
+    }
   }, [isDragging])
 
 

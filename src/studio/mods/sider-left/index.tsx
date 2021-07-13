@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Layout, Collapse } from '../../../ui/antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { General } from './../general';
-import { Advanced } from './../Advanced';
+import { Advanced } from '../advanced';
 import eventHub from './../../util/event-hub';
 
 const { Panel } = Collapse;

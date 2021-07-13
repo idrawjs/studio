@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { BorderOutlined, FileTextOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG } from './../icon';
+import { FileImageOutlined } from '@ant-design/icons';
+// import { IconSVG } from '../icon';
 
 const advancedElements: {
   name: string,
