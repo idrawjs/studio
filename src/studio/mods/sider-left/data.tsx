@@ -39,9 +39,10 @@ export const generalDataList: {
       type: 'text',
       desc: {
         text: 'Text',
+        color: '#333333',
         fontSize: 20,
         borderColor: '#999999',
-        borderWidth: 2,
+        borderWidth: 1,
       }
     }
   },
