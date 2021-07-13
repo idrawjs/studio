@@ -68,6 +68,21 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
     })
+    eventHub.on('studioDragNewElement', (params) => {
+      const { clientX, clientY, element } = params;
+      const mountDOM = mount.current as HTMLDivElement;
+      const mountRect = mountDOM.getBoundingClientRect();
+      const dragX = clientX - mountRect.x;
+      const dragY = clientY - mountRect.y;
+
+      element.x = dragX;
+      element.y = dragY;
+      
+      // TODO
+      console.log({dragX, dragY});
+
+      idraw.addElement(element);
+    })
 
     if (data) {
       idraw.initData(data);

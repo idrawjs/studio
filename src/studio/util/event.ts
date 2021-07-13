@@ -8,6 +8,11 @@ export type TypeIDrawEventArgMap  = {
   'studioCloseLeftSider': boolean;
   'studioCloseRightSider': boolean;
   'studioIDrawResetWidth': number;
+  'studioDragNewElement': {
+    clientX: number,
+    clientY: number,
+    element: TypeElement<keyof TypeElemDesc>
+  }
 }
   
 export interface TypeIDrawEvent {
