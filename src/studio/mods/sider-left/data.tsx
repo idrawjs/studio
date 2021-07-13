@@ -1,11 +1,9 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import { BorderOutlined, FileTextOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG } from './../icon';
-import { VirtualDrag } from './../virtual-drag';
-import eventHub from './../../util/event-hub';
+import { IconSVG } from '../icon';
 
-const generalElements: {
+export const generalDataList: {
   name: string,
   icon: React.ReactElement,
   defaultElement: TypeElement<keyof TypeElemDesc>
@@ -84,33 +82,3 @@ const generalElements: {
     }
   }
 ];
-
-export const General = () => {
-
-  const onActionEnd = React.useCallback((e, element: TypeElement<keyof TypeElemDesc>) => {
-    eventHub.trigger('studioDragNewElement', {
-      clientX: e.clientX,
-      clientY: e.clientY,
-      element: element,
-    })
-  }, []);
-
-  return (
-    <div className="idraw-studio-mod-general">
-      <div className="studio-general-element-list">
-        {generalElements.map((elem, i) => {
-          const { icon, defaultElement } = elem;
-          return (
-            <div className="studio-general-element-item" key={i}>
-              <VirtualDrag onActionEnd={(e) => {
-                onActionEnd(e, defaultElement);
-              }}>
-                {icon}
-              </VirtualDrag>
-            </div>
-          )
-        })}
-      </div>
-    </div>
-  )
-}
