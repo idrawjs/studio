@@ -109,3 +109,7 @@ dist/
 ./examples/demo/
 
 package-lock.json
+
+/test.html
+
+.DS_Store

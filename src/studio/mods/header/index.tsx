@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useEffect, useState, useCallback } from 'react';
+import { useState, useCallback } from 'react';
 import { Layout, Select } from '../../../ui/antd';
 import classnames from 'classnames';
 import {
@@ -13,17 +13,79 @@ type TypeProps = {
   height: number;
 }
 
+const zoomData = [
+  {label: '25%', value: 0.25},
+  {label: '50%', value: 0.5},
+  {label: '75%', value: 0.75},
+  {label: '100%', value: 1},
+  {label: '125%', value: 1.25},
+  {label: '150%', value: 1.5},
+  {label: '200%', value: 2},
+  {label: '300%', value: 3},
+  {label: '400%', value: 4},
+]
+
+function getZoomInValue(value): number | null {
+  let val: number | null = null;
+  for (let i = 0; i < zoomData.length; i++) {
+    const item = zoomData[i];
+    if (item.value === value) {
+      if (zoomData[i + 1]) {
+        val = zoomData[i + 1].value
+      }
+      break;
+    }
+  }
+  return val;
+}
+
+function getZoomOutValue(value): number | null {
+  let val: number | null = null;
+  for (let i = 0; i < zoomData.length; i++) {
+    const item = zoomData[i];
+    if (item.value === value) {
+      if (zoomData[i - 1]) {
+        val = zoomData[i - 1].value
+      }
+      break;
+    }
+  }
+  return val;
+}
+
 export function StudioHeader(props: TypeProps) {
 
   const [scale, setScale] = useState<number>(1);
-
-  useEffect(() => {
-    
-  }, []);
+  const [ableUndo, setAbleUndo] = useState<boolean>(true);
+  const [ableRedo, setAbleRedo] = useState<boolean>(true);
 
   const onChangeScale = useCallback((num) => {
     setScale(num);
     eventHub.trigger('studioScaleScreen', num);
+  }, [scale]);
+
+  const onClickZoomIn = useCallback(() => {
+    const num = getZoomInValue(scale);
+    if (num > 0) {
+      setScale(num);
+      eventHub.trigger('studioScaleScreen', num);
+    }
+  }, [scale]);
+
+  const onClickZoomOut = useCallback(() => {
+    const num = getZoomOutValue(scale);
+    if (num > 0) {
+      setScale(num);
+      eventHub.trigger('studioScaleScreen', num);
+    }
+  }, [scale]);
+
+  const onClickUndo = useCallback(() => {
+    eventHub.trigger('studioUndo', undefined);
+  }, []);
+
+  const onClickRedo = useCallback(() => {
+    eventHub.trigger('studioRedo', undefined);
   }, []);
 
   return (
@@ -35,29 +97,35 @@ export function StudioHeader(props: TypeProps) {
           style={{width: 100}}
           value={scale}
           onChange={onChangeScale}
-          options={[
-            {label: '25%', value: 0.25},
-            {label: '50%', value: 0.5},
-            {label: '75%', value: 0.75},
-            {label: '100%', value: 1},
-            {label: '125%', value: 1.25},
-            {label: '150%', value: 1.5},
-            {label: '200%', value: 2},
-            {label: '300%', value: 3},
-            {label: '400%', value: 4},
-          ]}/>
+          options={zoomData}/>
       </Box>
       <Box noBoarder={true}>
-        <ZoomInOutlined className="idraw-studio-header-icon" />
+        <ZoomInOutlined
+          onClick={onClickZoomIn}
+          className={classnames({
+            'idraw-studio-header-icon': true,
+            'icon-disable': getZoomInValue(scale) === null,
+          })} 
+        />
       </Box>
       <Box>
-        <ZoomOutOutlined className="idraw-studio-header-icon"/>
+        <ZoomOutOutlined
+          onClick={onClickZoomOut}
+          className={classnames({
+            'idraw-studio-header-icon': true,
+            'icon-disable': getZoomOutValue(scale) === null,
+          })} 
+        />
       </Box>
       <Box noBoarder={true}>
-        <UndoOutlined className="idraw-studio-header-icon"/>
+        <UndoOutlined
+          onClick={onClickUndo}
+          className="idraw-studio-header-icon"/>
       </Box>
       <Box>
-        <RedoOutlined className="idraw-studio-header-icon"/>
+        <RedoOutlined
+          onClick={onClickRedo}
+          className="idraw-studio-header-icon"/>
       </Box>
     </Header>
   )

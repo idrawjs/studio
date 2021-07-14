@@ -1,9 +1,10 @@
 import * as React from 'react';
 import { Layout, Collapse } from '../../../ui/antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { General } from './../general';
-import { Advanced } from './../Advanced';
+import { Selector } from '../selector';
+import { Advanced } from '../advanced';
 import eventHub from './../../util/event-hub';
+import { generalDataList } from './data';
 
 const { Panel } = Collapse;
 const { Sider } = Layout;
@@ -31,7 +32,7 @@ export function SiderLeft(props: TypeProps) {
         className="idraw-studio-siderleft-collapse"
       >
         <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
-          <General />
+          <Selector dataList={generalDataList} />
         </Panel>
         <Panel header="Advanced" key="advanced" className="idraw-studio-siderleft-panel" >
           <Advanced />

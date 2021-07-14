@@ -5,7 +5,7 @@ import { getElement, checkElementAttrs } from './../../util/data';
 import eventHub from './../../util/event-hub';
 import { limitNum } from './../../util/value';
 
-const { useContext, } = React;
+const { useContext, useCallback} = React;
 
 type TypeProps = {
   maxHeight?: number
@@ -29,18 +29,20 @@ export const Attribute = (props: TypeProps) => {
     { name: ['angle'], value: elem?.angle || 0 },
   ]
 
+  const onChange = useCallback(newFields => {
+    const attrs = parseFiledsData(newFields);
+    if (checkElementAttrs(attrs)) {
+      eventHub.trigger('studioUpdateElement', {...elem, ...attrs});
+    }
+  }, [data, selectedElementUUID, elem])
+
   return (
     <div className="idraw-studio-mod-attribute" style={style}>
       {selectedElementUUID ? (
         <div>
           <AttrForm
             fields={fields}
-            onChange={newFields => {
-              const attrs = parseFiledsData(newFields);
-              if (checkElementAttrs(attrs)) {
-                eventHub.trigger('studioUpdateElement', {...elem, ...attrs});
-              }
-            }}
+            onChange={onChange}
           />
         </div>
       ) : (

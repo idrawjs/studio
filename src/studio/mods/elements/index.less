@@ -4,7 +4,8 @@
   
   .idraw-studio-element-item {
     cursor: pointer;
-  
+    display: flex;
+    
     &:hover {
       color: #1890ff;
     }
@@ -12,6 +13,36 @@
     &.element-item-active {
       color: #1890ff;
       background: #e6f7ff;
+    }
+  }
+
+  .studio-element-item-name {
+    width: 140px;
+    height: 22px;
+    line-height: 22px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .studio-element-item-action {
+    height: 22px;
+    line-height: 22px;
+  }
+
+  .idraw-studio-element-icon {
+    color: #888888;
+    line-height: 22px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-left: 6px;
+  
+    &.icon-active {
+      color: #1890ff;
+    }
+    
+    &:hover {
+      color: #1890ff;
     }
   }
 }

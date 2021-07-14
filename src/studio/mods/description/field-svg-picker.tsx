@@ -13,11 +13,35 @@ interface SVGPickerProps {
 
 const { useCallback } = React;
 const supportTypes = ['image/svg+xml'];
+
+function createMarkup(svg) {
+  const div = document.createElement('div');
+  div.innerHTML = svg;
+  const svgDOM = document.querySelector('svg');
+  svgDOM.setAttribute('_t', Date.now() + '');
+  return {__html: div.innerHTML};
+}
+
+
+// function loadSVGBase64(svg: string): Promise<string> {
+//   return new Promise((resolve, reject) => {
+//     const _svg = svg;
+//     const blob = new Blob([_svg], { type: 'image/svg+xml;charset=utf-8'});
+//     const reader = new FileReader();
+//     reader.readAsDataURL(blob);
+//     reader.onload = function (event: ProgressEvent<FileReader>) {
+//       const base64: string = event?.target?.result as string;
+//       resolve(base64)
+//     };
+//     reader.onerror = function(err) {
+//       reject(err);
+//     };
+//   });
+// }
  
 export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) => {
   const [svgText, setSvgText] = useState<string>(value);
-  const [actionStatus, setActionStatus] = useState<'free'|'picking'>('free')
-
+  const [actionStatus, setActionStatus] = useState<'free'|'picking'>('free');
 
   const triggerChange = (val) => {
     onChange?.(val || value);
@@ -65,39 +89,42 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
   return (
       <div className="idraw-studio-mod-desc-svgpicker">
         
-          <div className="desc-svgpicker-box">
-            <div className="desc-svgpicker-entity" dangerouslySetInnerHTML = {{ __html: svgText || value}} />
-            <div className="desc-svgpicker-action">
-              <div className="svgpicker-action svgpicker-action-text" >
-                <Popover
-                  content={() => (
-                  <div>
-                    <TextArea
-                      value={svgText || value}
-                      style={{width: 300}}
-                      rows={10}
-                      onChange={(e) => {
-                        onSVGChange(e.target.value || '')
-                      }}
-                    />
-                  </div>)}
-                  trigger="click"
-                > 
-                  <span style={{
-                    display: 'inline-block',
-                    width: '100%',
-                    height: '100%',
-                    lineHeight: '50px'
-                  }}>URL</span>
-                </Popover>
-              </div>
-              <div
-                onClick={onPickSVG}
-                className="svgpicker-action svgpicker-action-upload">
-                  <span>Upload</span>
-              </div>
+        <div className="desc-svgpicker-box">
+          {/* <div className="desc-svgpicker-entity">
+            <img src={svgBase64} />
+          </div> */}
+          <div className="desc-svgpicker-entity" dangerouslySetInnerHTML={createMarkup(value || svgText)} />
+          <div className="desc-svgpicker-action">
+            <div className="svgpicker-action svgpicker-action-text" >
+              <Popover
+                content={() => (
+                <div>
+                  <TextArea
+                    value={value || svgText}
+                    style={{width: 300}}
+                    rows={10}
+                    onChange={(e) => {
+                      onSVGChange(e.target.value || '')
+                    }}
+                  />
+                </div>)}
+                trigger="click"
+              > 
+                <span style={{
+                  display: 'inline-block',
+                  width: '100%',
+                  height: '100%',
+                  lineHeight: '50px'
+                }}>Code</span>
+              </Popover>
+            </div>
+            <div
+              onClick={onPickSVG}
+              className="svgpicker-action svgpicker-action-upload">
+                <span>Upload</span>
             </div>
           </div>
+        </div>
         
       </div>
   );

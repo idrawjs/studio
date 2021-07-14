@@ -8,7 +8,6 @@ import { limitNum } from '../../util/value';
 import { FieldText } from './field-text';
 
 const { Option } = Select;
-const { TextArea } = Input;
 
 interface DescFormProps {
   elem: TypeElement<'text'>

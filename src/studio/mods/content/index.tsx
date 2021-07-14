@@ -1,11 +1,12 @@
 import * as React from 'react';
-import { useEffect, useRef, useContext } from 'react';
+import { useEffect, useRef, useContext, useCallback } from 'react';
 import IDraw from 'idraw';
 // import { TypeData, TypeScreenPosition } from '@idraw/types';
 import { Layout } from '../../../ui/antd'; 
 import eventHub from '../../util/event-hub';
 // import ScrollBox from './scroll-box';
 import { StudioContext } from './../../context';
+import { onDragOver } from './../../mods/global';
 
 const { Content } = Layout;
 
@@ -64,8 +65,33 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioUpdateElement', (elem) => {
       idraw.updateElement(elem);
     });
+    eventHub.on('studioDeleteElement', (uuid: string) => {
+      idraw.deleteElement(uuid);
+    });
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
+    });
+    eventHub.on('studioDragNewElement', (params) => {
+      const { clientX, clientY, element } = params;
+      const mountDOM = mount.current as HTMLDivElement;
+      const mountRect = mountDOM.getBoundingClientRect();
+      const dragX = clientX - mountRect.x;
+      const dragY = clientY - mountRect.y;
+
+      element.x = dragX;
+      element.y = dragY;
+      
+      // TODO
+      console.log({dragX, dragY});
+
+      idraw.addElement(element);
+    });
+
+    eventHub.on('studioUndo', () => {
+      return idraw.undo();
+    });
+    eventHub.on('studioRedo', () => {
+      return idraw.redo();
     })
 
     if (data) {
@@ -75,12 +101,19 @@ function StudioContent(props: TypeProps) {
     idraw.draw();
   }, []);
 
+  const onDragFeekback = useCallback(() => {
+    // e.preventDefault();
+  }, [])
+
   return (
     <Content className="idraw-studio-content">
       <div style={{
           width: props.width,
           height: props.height,
-        }} ref={mount}></div>
+        }} ref={mount}
+        onDrop={onDragFeekback}
+        onDragOver={onDragOver}
+      ></div>
     </Content>
   )
 }

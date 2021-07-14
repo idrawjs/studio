@@ -20,13 +20,13 @@ export const Description = (props: TypeProps) => {
   const context = useContext(StudioContext);
   const { data, selectedElementUUID } = context;
   const elem: TypeElement<keyof TypeElemDesc> = getElement(data, selectedElementUUID);
-
+  
   const onChangeElementDesc = useCallback((desc: TypeElemDesc[keyof TypeElemDesc]) => {
     if (elem) {
       elem.desc = { ...elem.desc, ...desc };
       eventHub.trigger('studioUpdateElement', elem);
     }
-  }, [selectedElementUUID]);
+  }, [selectedElementUUID, elem]);
 
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
   if (props.maxHeight > 0) {
