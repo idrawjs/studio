@@ -12,7 +12,7 @@ export type TypeIDrawEventArgMap  = {
     clientX: number,
     clientY: number,
     element: TypeElement<keyof TypeElemDesc>
-  }
+  },
 }
   
 export interface TypeIDrawEvent {

@@ -1,7 +1,7 @@
 const data = {
   "bgColor": "#ffffff",
   "elements": [{
-    "name": "rect-001",
+    "name": "rect-001-abcdefghijklmn",
     "x": 20,
     "y": 20,
     "w": 200,
