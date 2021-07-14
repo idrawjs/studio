@@ -67,10 +67,10 @@ function StudioContent(props: TypeProps) {
     });
     eventHub.on('studioDeleteElement', (uuid: string) => {
       idraw.deleteElement(uuid);
-    })
+    });
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
-    })
+    });
     eventHub.on('studioDragNewElement', (params) => {
       const { clientX, clientY, element } = params;
       const mountDOM = mount.current as HTMLDivElement;
@@ -85,6 +85,13 @@ function StudioContent(props: TypeProps) {
       console.log({dragX, dragY});
 
       idraw.addElement(element);
+    });
+
+    eventHub.on('studioUndo', () => {
+      return idraw.undo();
+    });
+    eventHub.on('studioRedo', () => {
+      return idraw.redo();
     })
 
     if (data) {

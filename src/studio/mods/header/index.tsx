@@ -56,8 +56,8 @@ function getZoomOutValue(value): number | null {
 export function StudioHeader(props: TypeProps) {
 
   const [scale, setScale] = useState<number>(1);
-
-  console.log('rerender |scale = ', scale);
+  const [ableUndo, setAbleUndo] = useState<boolean>(true);
+  const [ableRedo, setAbleRedo] = useState<boolean>(true);
 
   const onChangeScale = useCallback((num) => {
     setScale(num);
@@ -79,6 +79,14 @@ export function StudioHeader(props: TypeProps) {
       eventHub.trigger('studioScaleScreen', num);
     }
   }, [scale]);
+
+  const onClickUndo = useCallback(() => {
+    eventHub.trigger('studioUndo', undefined);
+  }, []);
+
+  const onClickRedo = useCallback(() => {
+    eventHub.trigger('studioRedo', undefined);
+  }, []);
 
   return (
     <Header className="idraw-studio-header"
@@ -110,10 +118,14 @@ export function StudioHeader(props: TypeProps) {
         />
       </Box>
       <Box noBoarder={true}>
-        <UndoOutlined className="idraw-studio-header-icon"/>
+        <UndoOutlined
+          onClick={onClickUndo}
+          className="idraw-studio-header-icon"/>
       </Box>
       <Box>
-        <RedoOutlined className="idraw-studio-header-icon"/>
+        <RedoOutlined
+          onClick={onClickRedo}
+          className="idraw-studio-header-icon"/>
       </Box>
     </Header>
   )

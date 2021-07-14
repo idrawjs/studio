@@ -14,12 +14,28 @@ export type TypeIDrawEventArgMap  = {
     clientY: number,
     element: TypeElement<keyof TypeElemDesc>
   },
+  'studioUndo': void;
+  'studioRedo': void;
+}
+
+export type TypeIDrawEventTriggerResult = {
+  'studioScaleScreen': void;
+  'studioSelectElement': void;
+  'studioChangeData': void;
+  'studioUpdateElement': void;
+  'studioDeleteElement': void;
+  'studioCloseLeftSider': void;
+  'studioCloseRightSider': void;
+  'studioIDrawResetWidth': void;
+  'studioDragNewElement': void;
+  'studioUndo': number;
+  'studioRedo': number;
 }
   
 export interface TypeIDrawEvent {
-  on<T extends keyof TypeIDrawEventArgMap >(key: T, callback: (p: TypeIDrawEventArgMap[T]) => void): void
-  off<T extends keyof TypeIDrawEventArgMap >(key: T, callback: (p: TypeIDrawEventArgMap[T]) => void): void
-  trigger<T extends keyof TypeIDrawEventArgMap >(key: T, p: TypeIDrawEventArgMap[T]): void
+  on<T extends keyof TypeIDrawEventArgMap >(key: T, callback: (p: TypeIDrawEventArgMap[T]) => void): void;
+  off<T extends keyof TypeIDrawEventArgMap >(key: T, callback: (p: TypeIDrawEventArgMap[T]) => void): void;
+  trigger<T extends keyof TypeIDrawEventArgMap >(key: T, p: TypeIDrawEventArgMap[T]): Array<TypeIDrawEventTriggerResult[T]> | null;
 }
 
 
@@ -56,15 +72,19 @@ export class IDrawEvent implements TypeIDrawEvent {
     }
   }
 
-  trigger<T extends keyof TypeIDrawEventArgMap >(eventKey: T, arg: TypeIDrawEventArgMap[T]) {
+  trigger<T extends keyof TypeIDrawEventArgMap >(
+    eventKey: T, arg: TypeIDrawEventArgMap[T]
+  ): TypeIDrawEventTriggerResult[T][]|null {
     const callbacks = this._listeners.get(eventKey);
     if (Array.isArray(callbacks)) {
+      const results: TypeIDrawEventTriggerResult[T][] = []
       callbacks.forEach((cb) => {
-        cb(arg);
+        const result = cb(arg) as TypeIDrawEventTriggerResult[T];
+        results.push(result);
       });
-      return true;
+      return results;
     } else {
-      return false;
+      return null;
     }
   }
 
