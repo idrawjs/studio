@@ -1,7 +1,10 @@
 import * as React from 'react';
 import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
-import { EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined } from '@ant-design/icons';
+import {
+  EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined,
+  DeleteOutlined,
+} from '@ant-design/icons';
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
@@ -46,6 +49,10 @@ export const Item = (props: TypeProps) => {
     setIsEdit(false);
   }, [element]);
 
+  const onClickDelete = useCallback(() => {
+    eventHub.trigger('studioDeleteElement', element.uuid);
+  }, [element]);
+
   return (
     <div
       className={classnames({
@@ -58,7 +65,7 @@ export const Item = (props: TypeProps) => {
     >
       {isEdit === true ? (
         <Input 
-          size="small" value={elemName} style={{width: 150}}
+          size="small" value={elemName} style={{width: 140}}
           onChange={onChangeInput}
         />
       ) : (
@@ -89,9 +96,10 @@ export const Item = (props: TypeProps) => {
             className="idraw-studio-element-icon"
             onClick={onClickSwitchLock} />
         )}
-
-
-        
+        <DeleteOutlined
+          className="idraw-studio-element-icon"
+          onClick={onClickDelete}
+        />         
       </span>
       
     </div>

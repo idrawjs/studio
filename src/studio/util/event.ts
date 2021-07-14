@@ -5,6 +5,7 @@ export type TypeIDrawEventArgMap  = {
   'studioSelectElement': { uuid: string, useMode?: boolean };
   'studioChangeData': TypeData;
   'studioUpdateElement': TypeElement<keyof TypeElemDesc>;
+  'studioDeleteElement': string;
   'studioCloseLeftSider': boolean;
   'studioCloseRightSider': boolean;
   'studioIDrawResetWidth': number;
