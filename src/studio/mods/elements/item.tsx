@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
-import { EditOutlined, LockOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
@@ -40,6 +40,12 @@ export const Item = (props: TypeProps) => {
     setIsEdit(false);
   }, [elemName, element]);
 
+  const onClickSwitchLock = useCallback(() => {
+    element.lock = !element.lock;
+    eventHub.trigger('studioUpdateElement', element);
+    setIsEdit(false);
+  }, [element]);
+
   return (
     <div
       className={classnames({
@@ -62,18 +68,30 @@ export const Item = (props: TypeProps) => {
       )}
 
       <span className="studio-element-item-action">
-      {isEdit === true ? (
-        <CheckCircleOutlined
-          className="idraw-studio-element-icon"
-          onClick={onConfirmElemName}
-        />
-      ) : (
-        <EditOutlined
-          className="idraw-studio-element-icon"
-          onClick={onClickEdit}
-        />
-      )}
-        <LockOutlined className="idraw-studio-element-icon" />
+        {isEdit === true ? (
+          <CheckCircleOutlined
+            className="idraw-studio-element-icon"
+            onClick={onConfirmElemName}
+          />
+        ) : (
+          <EditOutlined
+            className="idraw-studio-element-icon"
+            onClick={onClickEdit}
+          />
+        )}
+
+        {element.lock === true ? (
+          <LockFilled
+            className="idraw-studio-element-icon icon-active"
+            onClick={onClickSwitchLock} />
+        ) : (
+          <LockOutlined
+            className="idraw-studio-element-icon"
+            onClick={onClickSwitchLock} />
+        )}
+
+
+        
       </span>
       
     </div>
