@@ -86,10 +86,18 @@ function StudioContent(props: TypeProps) {
     });
 
     eventHub.on('studioUndo', () => {
-      return idraw.undo();
+      const { data, doRecordCount } = idraw.undo();
+      if (data) {
+        eventHub.trigger('studioChangeData', data);
+      }
+      return doRecordCount;
     });
     eventHub.on('studioRedo', () => {
-      return idraw.redo();
+      const { data, undoRecordCount } = idraw.redo();
+      if (data) {
+        eventHub.trigger('studioChangeData', data);
+      }
+      return undoRecordCount;
     })
 
     if (data) {
