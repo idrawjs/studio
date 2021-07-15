@@ -105,10 +105,10 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "^0.0.4-alpha.14",
-    "@idraw/util": "^0.0.4-alpha.14",
+    "@idraw/types": "^0.0.4-alpha.15",
+    "@idraw/util": "^0.0.4-alpha.15",
     "classnames": "^2.3.1",
-    "idraw": "^0.0.4-alpha.14",
+    "idraw": "^0.0.4-alpha.15",
     "react-color": "^2.19.3"
   }
 }
