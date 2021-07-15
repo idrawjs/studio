@@ -78,20 +78,26 @@ function StudioContent(props: TypeProps) {
       const dragX = clientX - mountRect.x;
       const dragY = clientY - mountRect.y;
 
-      element.x = dragX;
-      element.y = dragY;
-      
-      // TODO
-      console.log({dragX, dragY});
+      const ctxPoint = idraw.pointScreenToContext({ x: dragX, y: dragY })
+      element.x = ctxPoint.x;
+      element.y = ctxPoint.y;
 
       idraw.addElement(element);
     });
 
     eventHub.on('studioUndo', () => {
-      return idraw.undo();
+      const { data, doRecordCount } = idraw.undo();
+      if (data) {
+        eventHub.trigger('studioChangeData', data);
+      }
+      return doRecordCount;
     });
     eventHub.on('studioRedo', () => {
-      return idraw.redo();
+      const { data, undoRecordCount } = idraw.redo();
+      if (data) {
+        eventHub.trigger('studioChangeData', data);
+      }
+      return undoRecordCount;
     })
 
     if (data) {
