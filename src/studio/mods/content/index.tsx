@@ -45,7 +45,7 @@ function StudioContent(props: TypeProps) {
     });
 
     idraw.on('screenSelectElement', (elem) => {
-      idraw.selectElementByUUID(elem.uuid, {
+      idraw.selectElement(elem.uuid, {
         useMode: true,
       });
       eventHub.trigger('studioSelectElement', {
@@ -57,10 +57,9 @@ function StudioContent(props: TypeProps) {
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
       idraw.scale(num);
-      idraw.draw();
     });
     eventHub.on('studioSelectElement', (data) => {
-      idraw.selectElementByUUID(data.uuid, { useMode: data.useMode });
+      idraw.selectElement(data.uuid, { useMode: data.useMode });
     });
     eventHub.on('studioUpdateElement', (elem) => {
       idraw.updateElement(elem);
@@ -101,10 +100,11 @@ function StudioContent(props: TypeProps) {
     })
 
     if (data) {
-      idraw.initData(data);
+      idraw.setData(data, { 
+        triggerChangeEvent: true
+      });
     }
     idraw.scale(1);
-    idraw.draw();
   }, []);
 
   const onDragFeekback = useCallback(() => {
