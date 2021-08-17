@@ -14,65 +14,159 @@ const data = {
       "borderColor": "#bd0b64"
     },
     "uuid": "06416184-2ecf-10ad-1c08-3715aece35b5"
-  }, {
-    "name": "text-002",
-    "x": 80,
-    "y": 80,
-    "w": 200,
-    "h": 120,
-    "type": "text",
-    "desc": {
-      "fontSize": 20,
-      "text": "Hello Text",
-      "color": "#666666",
-      "borderRadius": 60,
-      "borderWidth": 2,
-      "borderColor": "#bd0b64"
-    },
-    "uuid": "8f02436a-0c56-d7ec-3f13-20bc2b622b39"
-  }, {
-    "name": "svg-004",
-    "x": 390,
-    "y": 200,
-    "w": 200,
-    "h": 200,
-    "type": "svg",
-    "desc": {
-      "svg": "<svg t=\"1622524892065\" class=\"icon\" viewBox=\"0 0 1024 1024\" version=\"1.1\" xmlns=\"http://www.w3.org/2000/svg\" p-id=\"9337\" width=\"200\" height=\"200\"><path d=\"M511.6 76.3C264.3 76.2 64 276.4 64 523.5 64 718.9 189.3 885 363.8 946c23.5 5.9 19.9-10.8 19.9-22.2v-77.5c-135.7 15.9-141.2-73.9-150.3-88.9C215 726 171.5 718 184.5 703c30.9-15.9 62.4 4 98.9 57.9 26.4 39.1 77.9 32.5 104 26 5.7-23.5 17.9-44.5 34.7-60.8-140.6-25.2-199.2-111-199.2-213 0-49.5 16.3-95 48.3-131.7-20.4-60.5 1.9-112.3 4.9-120 58.1-5.2 118.5 41.6 123.2 45.3 33-8.9 70.7-13.6 112.9-13.6 42.4 0 80.2 4.9 113.5 13.9 11.3-8.6 67.3-48.8 121.3-43.9 2.9 7.7 24.7 58.3 5.5 118 32.4 36.8 48.9 82.7 48.9 132.3 0 102.2-59 188.1-200 212.9 23.5 23.2 38.1 55.4 38.1 91v112.5c0.8 9 0 17.9 15 17.9 177.1-59.7 304.6-227 304.6-424.1 0-247.2-200.4-447.3-447.5-447.3z\" p-id=\"9338\"></path></svg>"
-    },
-    "uuid": "ee25af54-a94b-a456-626e-681b778afceb"
-  }, {
-    "name": "text-003",
-    "x": 400,
-    "y": 400,
-    "w": 300,
-    "h": 120,
-    "type": "text",
-    "desc": {
-      "fontSize": 20,
-      "text": "生活就像海洋，只有意志坚强的人，才能到达彼岸。",
-      "color": "#666666",
-      "borderRadius": 60,
-      "borderWidth": 2,
-      "borderColor": "#bd0b64"
-    },
-    "uuid": "8f02436a-0c56-d7ec-3f13-20bc2b622001"
-  }, {
-    "name": "text-004",
-    "x": 500,
-    "y": 600,
-    "w": 400,
-    "h": 120,
-    "type": "text",
-    "desc": {
-      "fontSize": 20,
-      "text": "Life is like the ocean, only a strong-willed person can reach the other shore.",
-      "color": "#666666",
-      "borderRadius": 20,
-      "borderWidth": 2,
-      "borderColor": "#bd0b64"
-    },
-    "uuid": "8f02436a-0c56-d7ec-3f13-20bc2b622002"
+  }, 
+  {
+    x: 0,
+    y: 0,
+    w: 720,
+    h: 540,
+    type: 'html',
+    desc: {
+      width: 720,
+      height: 540,
+      html: `
+      <style>
+      .container {
+        margin: 0;
+        width: 720px;
+        height: 540px;
+        perspective: 1500px;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .menu {
+        margin: 100px auto;
+        position: relative;
+        background: #62278d;
+        background: -moz-linear-gradient(top,  #62278d 0%, #2cc09b 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#62278d), color-stop(100%,#2cc09b));
+        background: -webkit-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: -o-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: -ms-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: linear-gradient(to bottom,  #62278d 0%,#2cc09b 100%);
+        width: 300px;
+        border-width: 20px 0;
+        border-style: solid;
+        border-color: #fff;
+        color: #fff;
+        height: 540px;
+        transform-style: preserve-3d;
+        box-shadow: 0 0 50px 0 #444;
+      }
+      .menu-tranform.menu {
+        transform: translateY(-150px) rotateX(45deg) rotateZ(45deg);
+      }
+      .menu:before {
+        content: '';
+        position: absolute;
+        height: 30px;
+        width: 300px;
+        top: 520px;
+        left: 0px;
+        transform: rotateX(90deg) translateY(-15px) translateZ(15px);
+        background: #fff;
+        pointer-events: none;
+      }
+      .menu:after {
+        content: '';
+        position: absolute;
+        height: 540px;
+        width: 30px;
+        top: -20px;
+        right: -30px;
+        transform: rotateY(90deg) translateZ(-15px) translateX(15px);
+        border-width: 20px 0;
+        border-style: solid;
+        border-color: #fff;
+        background: #62278d;
+        background: -moz-linear-gradient(top,  #62278d 0%, #2cc09b 100%);
+        background: -webkit-gradient(linear, left top, left bottom, color-stop(0%,#62278d), color-stop(100%,#2cc09b));
+        background: -webkit-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: -o-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: -ms-linear-gradient(top,  #62278d 0%,#2cc09b 100%);
+        background: linear-gradient(to bottom,  #62278d 0%,#2cc09b 100%);
+        pointer-events: none;
+      }
+
+
+      .menu .middle {
+        position: relative;
+        min-height: 40px;
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        text-transform: uppercase;
+        font-weight: bold;
+        font-size: 15px;
+        transform-style: preserve-3d;
+      }
+      .menu .middle li {
+        margin: 0;
+        padding: 15px 0 15px 40px;
+        outline: 0 none;
+        position: relative;
+        transform-style: preserve-3d;
+        transform: translateZ(1px);
+        z-index: 1;
+      }
+
+
+      .menu .middle li .fa {
+        padding-right: 15px;
+      }
+      .menu .bottom {
+        height: 40px;
+      }
+      .menu-back {
+        position: absolute;
+        background: transparent;
+        top: -20px;
+        left: 0;
+        width: 300px;
+        height: 540px;
+        transform: translateZ(-29px);
+        /* box-shadow: 100px 100px 50px -30px #111; */
+        box-shadow: 50px 60px 60px -60px #111;
+        z-index: 0;
+      }
+      .glass-reflection {
+        position: absolute;
+        transform: rotateZ(-1deg) translateZ(1px) skewY(60deg);
+        
+        box-shadow: inset 0px -40px 0px -50px rgba(255, 255, 255, 0.0);
+        border-radius: 200px 0 20px 0 ;
+        top: 85px;
+        left: 95px;
+        width: 200px;
+        height: 100px;
+        background-color: transparent;
+      }
+      .menu-tranform.menu .glass-reflection {
+        box-shadow: inset 0px -40px 150px -50px rgba(255, 255, 255, 0.15);
+      }
+
+    </style>
+    <div class="container">
+      <div class="menu-tranform menu">
+        <ul class="middle">
+          <li tabindex="0"><i class="fa fa-calendar"></i></li>
+          <li tabindex="0"><i class="fa fa-calendar"></i>Calendar</li>
+          <li tabindex="0"><i class="fa fa-camera"></i>Photos</li>
+          <li tabindex="0"><i class="fa fa-check-square-o"></i>Tasks</li>
+          <li tabindex="0"><i class="fa fa-map-marker"></i>Places</li>
+          <li tabindex="0"><i class="fa fa-codepen"></i>Codepen</li>
+          <li tabindex="0"><i class="fa fa-dribbble"></i>Dribbble</li>
+          <li tabindex="0"><i class="fa fa-user"></i>User account</li>
+          <li tabindex="0"><i class="fa fa-cogs"></i>Settings</li>
+        </ul>
+        <div class="bottom"></div>
+        <div class="menu-back"></div>
+        <div class="glass-reflection"></div>
+      </div>
+    </div>
+      `,
+    }
   }]
 }
 
