@@ -120,6 +120,11 @@ module.exports = {
       },
     ],
   },
+  externals: {
+    'react': 'window.React',
+    'react-dom': 'window.ReactDOM',
+    'antd': 'window.antd'
+  },
   resolve: {
     alias: {},
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.md'],
