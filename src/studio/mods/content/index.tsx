@@ -15,6 +15,7 @@ type TypeProps = {
   width: number;
   contextWidth: number;
   contextHeight: number;
+  devicePixelRatio: number;
 }
 
 function StudioContent(props: TypeProps) {

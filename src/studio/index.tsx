@@ -18,6 +18,7 @@ type TypeProps = {
   studioHeight?: number;
   contextWidth?: number;
   contextHeight?: number;
+  devicePixelRatio?: number;
   data?: TypeData;
 }
 
@@ -76,6 +77,7 @@ function Studio(p: TypeProps) {
               height={contentSize.height}
               contextWidth={contentSize.contextWidth}
               contextHeight={contentSize.contextHeight}
+              devicePixelRatio={props.devicePixelRatio}
             />
             <SiderRight
               width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
@@ -114,6 +116,7 @@ function createProps (props: TypeProps) {
     studioHeight: 720,
     contextWidth: 400,
     contextHeight: 300,
+    devicePixelRatio: 2,
   };
   return {
     ...defaultProps,
