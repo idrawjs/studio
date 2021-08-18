@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from '../ui/antd';
-import { TypeData } from '@idraw/types';
+import { TypeDataBase, TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
 import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
@@ -19,7 +19,7 @@ type TypeProps = {
   contextWidth?: number;
   contextHeight?: number;
   devicePixelRatio?: number;
-  data?: TypeData;
+  data?: TypeDataBase | TypeData;
 }
 
 function Studio(p: TypeProps) {
@@ -27,7 +27,7 @@ function Studio(p: TypeProps) {
   const props = createProps(p);
   const contentSize = createContentSize(props);
 
-  const [data, setData] = useState<TypeData>(props.data || {elements: []});
+  const [data, setData] = useState<TypeData|TypeDataBase>(props.data || {elements: []});
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
   const [contentWidth, setContentWidth] = useState(contentSize.width);
   const [closeSiderLeft, setCloseSiderLeft] = useState(false);

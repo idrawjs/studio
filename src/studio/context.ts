@@ -1,8 +1,8 @@
 import { createContext } from 'react';
-import { TypeData } from '@idraw/types';
+import { TypeData, TypeDataBase } from '@idraw/types';
 
 type TypeContext = {
-  data: TypeData,
+  data: TypeData|TypeDataBase,
   selectedElementUUID: string | null,
 };
 
