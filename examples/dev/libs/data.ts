@@ -13,7 +13,7 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'HTML', title: 'Element' }),
+        html: createLayerHTML({ text: 'HTML', title: 'iDraw.js Element' }),
       }
     },
     {
@@ -26,7 +26,7 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'SVG', title: 'Element'  }),
+        html: createLayerHTML({ text: 'SVG', title: 'iDraw.js Element'  }),
       }
     },
     {
@@ -39,7 +39,7 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'Image', title: 'Element'  }),
+        html: createLayerHTML({ text: 'Image', title: 'iDraw.js Element'  }),
       }
     },
     {
@@ -52,7 +52,7 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'Circle', title: 'Element'  }),
+        html: createLayerHTML({ text: 'Circle', title: 'iDraw.js Element'  }),
       }
     },
     {
@@ -65,7 +65,7 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'Rectangle', title: 'Element'  }),
+        html: createLayerHTML({ text: 'Rectangle', title: 'iDraw.js Element'  }),
       }
     },
     {
@@ -80,7 +80,7 @@ const data = {
         height: 250,
         html: createLayerHTML({
           text: 'Text',
-          title: 'Element',
+          title: 'iDraw.js Element',
         }),
       }
     }, 
@@ -116,6 +116,20 @@ const data = {
       }
     }, 
     {
+      name: 'Introduction',
+      x: 390,
+      y: 120,
+      w: 350,
+      h: 75,
+      type: 'text',
+      desc: {
+        text: 'A simple JavaScript framework for Drawing on the web',
+        color: '#f0f0f0',
+        fontSize: 20,
+        fontWeight: 'bold',
+      }
+    },
+    {
       name: 'Title',
       x: 440,
       y: 45,
@@ -129,20 +143,6 @@ const data = {
         fontWeight: 'bold',
       }
     },
-    {
-      name: 'Introduction',
-      x: 390,
-      y: 120,
-      w: 350,
-      h: 75,
-      type: 'text',
-      desc: {
-        text: 'A simple JavaScript framework for Drawing on the web',
-        color: '#f0f0f0',
-        fontSize: 20,
-        fontWeight: 'bold',
-      }
-    }
   ]
 }
 
