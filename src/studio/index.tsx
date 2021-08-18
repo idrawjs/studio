@@ -45,7 +45,6 @@ function Studio(p: TypeProps) {
       setSelectedElementUUID(data.uuid);
     });
     eventHub.on('studioChangeData', (data) => {
-      console.log('studioChangeData:data =: ', data)
       setData(data);
     });
     eventHub.on('studioCloseLeftSider', ((status: boolean) => {
