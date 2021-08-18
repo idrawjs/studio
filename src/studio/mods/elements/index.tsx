@@ -1,5 +1,7 @@
 import * as React from 'react';
-import { List } from '../../../ui/antd';
+import { TypeElement, TypeElemDesc } from '@idraw/types';
+import util from '@idraw/util';
+import { List } from 'antd';
 import { StudioContext } from './../../context';
 import { Item } from './item';
 
@@ -19,16 +21,16 @@ export const Elements = (props: TypeProps) => {
     style.height = props.maxHeight;
   }
 
-
   return (
     <div className="idraw-studio-mod-element" style={style}>
       <List
         size="small"
-        dataSource={data.elements}
+        dataSource={util.data.deepClone(data.elements).reverse()}
         renderItem={(item) => {
+          const elem = item as TypeElement<keyof TypeElemDesc>
           return (
             <List.Item>
-              <Item element={item} />
+              <Item element={elem} />
             </List.Item>
           )
         }}

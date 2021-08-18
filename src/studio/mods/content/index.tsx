@@ -2,9 +2,8 @@ import * as React from 'react';
 import { useEffect, useRef, useContext, useCallback } from 'react';
 import IDraw from 'idraw';
 // import { TypeData, TypeScreenPosition } from '@idraw/types';
-import { Layout } from '../../../ui/antd'; 
+import { Layout } from 'antd'; 
 import eventHub from '../../util/event-hub';
-// import ScrollBox from './scroll-box';
 import { StudioContext } from './../../context';
 import { onDragOver } from './../../mods/global';
 
@@ -15,6 +14,7 @@ type TypeProps = {
   width: number;
   contextWidth: number;
   contextHeight: number;
+  devicePixelRatio: number;
 }
 
 function StudioContent(props: TypeProps) {
@@ -44,6 +44,10 @@ function StudioContent(props: TypeProps) {
       eventHub.trigger('studioChangeData', data);
     });
 
+    // idraw.on('changeScreen', (data) => {
+    //   console.log('xxxx changeScreen = ', data)
+    // });
+
     idraw.on('screenSelectElement', (elem) => {
       idraw.selectElement(elem.uuid, {
         useMode: true,
@@ -70,6 +74,12 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
     });
+    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number }) => {
+      idraw.resetSize({
+        contextWidth: size.width,
+        contextHeight: size.height,
+      })
+    })
     eventHub.on('studioDragNewElement', (params) => {
       const { clientX, clientY, element } = params;
       const mountDOM = mount.current as HTMLDivElement;

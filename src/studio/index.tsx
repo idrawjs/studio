@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Layout } from '../ui/antd';
-import { TypeData } from '@idraw/types';
+import { Layout } from 'antd';
+import { TypeDataBase, TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
 import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
@@ -8,7 +8,8 @@ import { SiderRight, SiderRightBtn } from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
-import { StudioContext } from './context';
+import { StudioContext, TypeContextData } from './context';
+import { initData } from './util/data';
 
 const { useState, useEffect } = React;
 
@@ -18,7 +19,8 @@ type TypeProps = {
   studioHeight?: number;
   contextWidth?: number;
   contextHeight?: number;
-  data?: TypeData;
+  devicePixelRatio?: number;
+  data?: TypeDataBase | TypeData;
 }
 
 function Studio(p: TypeProps) {
@@ -26,8 +28,14 @@ function Studio(p: TypeProps) {
   const props = createProps(p);
   const contentSize = createContentSize(props);
 
-  const [data, setData] = useState<TypeData>(props.data || {elements: []});
+  const [data, setData] = useState<TypeData>(initData(props.data || {elements: []}));
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
+  const [contextSize, setContextSize] = useState<TypeContextData['contextSize']>({
+    width: contentSize.contextWidth,
+    height: contentSize.contextHeight,
+  })
+  
+
   const [contentWidth, setContentWidth] = useState(contentSize.width);
   const [closeSiderLeft, setCloseSiderLeft] = useState(false);
   const [closeSiderRight, setCloseSiderRight] = useState(false);
@@ -37,6 +45,7 @@ function Studio(p: TypeProps) {
       setSelectedElementUUID(data.uuid);
     });
     eventHub.on('studioChangeData', (data) => {
+      console.log('studioChangeData:data =: ', data)
       setData(data);
     });
     eventHub.on('studioCloseLeftSider', ((status: boolean) => {
@@ -44,6 +53,9 @@ function Studio(p: TypeProps) {
     }));
     eventHub.on('studioCloseRightSider', (status: boolean) => {
       setCloseSiderRight(status);
+    });
+    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number }) => {
+      setContextSize(size);
     });
   }, []);
 
@@ -60,12 +72,15 @@ function Studio(p: TypeProps) {
     <StudioContext.Provider value={{
       data,
       selectedElementUUID,
+      contextSize,
     }}>
       <div className="studio-container" 
         style={createStyle(props)}
       >
         <Layout style={{height: '100%'}}>
-          <StudioHeader height={layoutConfig.header.height} />
+          <StudioHeader 
+            height={layoutConfig.header.height}
+          />
           <Layout style={{position: 'relative'}}>
             <SiderLeft
               width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
@@ -76,6 +91,7 @@ function Studio(p: TypeProps) {
               height={contentSize.height}
               contextWidth={contentSize.contextWidth}
               contextHeight={contentSize.contextHeight}
+              devicePixelRatio={props.devicePixelRatio}
             />
             <SiderRight
               width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
@@ -114,6 +130,7 @@ function createProps (props: TypeProps) {
     studioHeight: 720,
     contextWidth: 400,
     contextHeight: 300,
+    devicePixelRatio: 2,
   };
   return {
     ...defaultProps,

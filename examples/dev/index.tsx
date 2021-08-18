@@ -1,7 +1,7 @@
 // import React from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { TypeData } from '@idraw/types';
+import { TypeDataBase } from '@idraw/types';
 import Studio from '../../src/studio';
 import data from './libs/data';
 import './style';
@@ -20,9 +20,9 @@ ReactDOM.render(
         studioHeight: window.innerHeight,
         // studioWidth: 800,
         // studioHeight: 640,
-        contextWidth: 1000,
-        contextHeight: 900,
-        data: data as TypeData
+        contextWidth: 800,
+        contextHeight: 600,
+        data: data as TypeDataBase
       }}></Studio>
     </div>
   </div>),

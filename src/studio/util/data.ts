@@ -1,5 +1,5 @@
 import {
-  TypeData,
+  TypeData, TypeDataBase,
   TypeElement,
   TypeElemDesc
 } from '@idraw/types';
@@ -55,4 +55,23 @@ export function checkRectDesc(
 
 function isNumber(data: any) {
   return (typeof data === 'number' && (data > 0 || data <= 0))
+}
+
+export function isUnIntegerNumber(data: any) {
+  return (
+    typeof data === 'number' 
+    && /^[0-9]{1,}$/.test(`${data}`)
+    && data >= 0
+  )
+}
+
+// TODO
+export function initData(data: TypeData | TypeDataBase): TypeData {
+  const result = util.data.deepClone(data);
+  result.elements.forEach((elem) => {
+    if (!(typeof elem.uuid === 'string' && elem.uuid)) {
+      elem.uuid = util.uuid.createUUID()
+    }
+  });
+  return result;
 }

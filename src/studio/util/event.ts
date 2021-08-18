@@ -9,6 +9,7 @@ export type TypeIDrawEventArgMap  = {
   'studioCloseLeftSider': boolean;
   'studioCloseRightSider': boolean;
   'studioIDrawResetWidth': number;
+  'studioIDrawResetContextSize': { width: number, height: number }
   'studioDragNewElement': {
     clientX: number,
     clientY: number,
@@ -27,6 +28,7 @@ export type TypeIDrawEventTriggerResult = {
   'studioCloseLeftSider': void;
   'studioCloseRightSider': void;
   'studioIDrawResetWidth': void;
+  'studioIDrawResetContextSize': void;
   'studioDragNewElement': void;
   'studioUndo': number;
   'studioRedo': number;

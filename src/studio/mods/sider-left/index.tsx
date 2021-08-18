@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout, Collapse } from '../../../ui/antd';
+import { Layout, Collapse } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Selector } from '../selector';
 import { Advanced } from '../advanced';
