@@ -17,3 +17,17 @@ export const Box: React.FC<{
   )
 }
  
+
+export const BoxText: React.FC<{
+  text: string,
+  style?: React.HTMLAttributes<HTMLDivElement>['style'],
+}> = (props) => {
+  return (
+    <span
+      className="idraw-studio-header-box-text"
+      style={props.style || {}}
+    >
+      {props.text}
+    </span>
+  )
+}

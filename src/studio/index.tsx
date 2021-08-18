@@ -8,7 +8,7 @@ import { SiderRight, SiderRightBtn } from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
-import { StudioContext } from './context';
+import { StudioContext, TypeContextData } from './context';
 import { initData } from './util/data';
 
 const { useState, useEffect } = React;
@@ -28,8 +28,14 @@ function Studio(p: TypeProps) {
   const props = createProps(p);
   const contentSize = createContentSize(props);
 
-  const [data, setData] = useState<TypeData|TypeDataBase>(initData(props.data || {elements: []}));
+  const [data, setData] = useState<TypeData>(initData(props.data || {elements: []}));
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
+  const [contextSize, setContextSize] = useState<TypeContextData['contextSize']>({
+    width: contentSize.contextWidth,
+    height: contentSize.contextHeight,
+  })
+  
+
   const [contentWidth, setContentWidth] = useState(contentSize.width);
   const [closeSiderLeft, setCloseSiderLeft] = useState(false);
   const [closeSiderRight, setCloseSiderRight] = useState(false);
@@ -48,6 +54,9 @@ function Studio(p: TypeProps) {
     eventHub.on('studioCloseRightSider', (status: boolean) => {
       setCloseSiderRight(status);
     });
+    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number }) => {
+      setContextSize(size);
+    });
   }, []);
 
   useEffect(() => {
@@ -63,12 +72,15 @@ function Studio(p: TypeProps) {
     <StudioContext.Provider value={{
       data,
       selectedElementUUID,
+      contextSize,
     }}>
       <div className="studio-container" 
         style={createStyle(props)}
       >
         <Layout style={{height: '100%'}}>
-          <StudioHeader height={layoutConfig.header.height} />
+          <StudioHeader 
+            height={layoutConfig.header.height}
+          />
           <Layout style={{position: 'relative'}}>
             <SiderLeft
               width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}

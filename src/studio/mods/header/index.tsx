@@ -1,9 +1,8 @@
 import * as React from 'react';
-import { Layout, Input } from 'antd';
-import { Box } from './box';
+import { Layout } from 'antd';
 import { ZoomAction } from './zoom';
 import { RecordAction } from './record';
-
+import { SizeAction } from './size';
 
 const { Header, } = Layout;
 
@@ -19,14 +18,7 @@ export function StudioHeader(props: TypeProps) {
     >
       <ZoomAction />
       <RecordAction />
-      <Box>
-        <div>
-          <Input size="small" />
-        </div>
-        <div>
-          <Input size="small" />
-        </div>
-      </Box>
+      <SizeAction />
     </Header>
   )
 }
