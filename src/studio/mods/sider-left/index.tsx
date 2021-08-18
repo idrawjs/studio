@@ -2,7 +2,6 @@ import * as React from 'react';
 import { Layout, Collapse } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Selector } from '../selector';
-import { Advanced } from '../advanced';
 import eventHub from './../../util/event-hub';
 import { generalDataList } from './data';
 
@@ -35,7 +34,7 @@ export function SiderLeft(props: TypeProps) {
           <Selector dataList={generalDataList} />
         </Panel>
         <Panel header="Advanced" key="advanced" className="idraw-studio-siderleft-panel" >
-          <Advanced />
+          <Selector dataList={generalDataList} />
         </Panel>
       </Collapse>
     </Sider>
