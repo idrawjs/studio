@@ -25,7 +25,7 @@ export const HTMLDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       onFieldsChange={(_, allFields: FieldData[]) => {
         if (typeof onChange === 'function') {
           const newDesc = parseFiledsData(allFields);
-          if (idraw.check.textDesc(newDesc)) {
+          if (idraw.check.htmlDesc(newDesc)) {
             const desc = {...elem.desc, ...newDesc};
             onChange(desc);
           }
@@ -82,13 +82,13 @@ function parseFiledsData(fields: FieldData[]) {
         }
         case 'width': {
           if (idraw.is.w(parseInt(item.value))) {
-            desc[item.name[0]] = parseInt(item.value); 
+            desc[item.name[0]] = parseInt(item.value) || 0; 
           }
           break;
         }
         case 'height': {
           if (idraw.is.h(parseInt(item.value))) {
-            desc[item.name[0]] = parseInt(item.value); 
+            desc[item.name[0]] = parseInt(item.value) || 0; 
           }
           break;
         }
