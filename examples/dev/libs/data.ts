@@ -72,7 +72,10 @@ const data = {
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'Text', title: 'Element'  }),
+        html: createLayerHTML({
+          text: 'Text',
+          title: 'Element',
+        }),
       }
     }, 
     {
@@ -86,15 +89,22 @@ const data = {
       }
     },
     {
-      x: 380,
-      y: 164,
+      x: 320,
+      y: 210,
       w: 360,
       h: 250,
       type: 'html',
       desc: {
         width: 360,
         height: 250,
-        html: createLayerHTML({ text: 'Canvas', title: 'iDraw.js'  }),
+        html: createLayerHTML({
+          text: 'Canvas',
+          title: 'iDraw.js',
+          gradientColor: {
+            from: '#e91e63',
+            to: '#ff5722'
+          }
+        }),
       }
     }, 
   ]

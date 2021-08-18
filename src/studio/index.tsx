@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout } from '../ui/antd';
+import { Layout } from 'antd';
 import { TypeDataBase, TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
@@ -9,6 +9,7 @@ import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext } from './context';
+import { initData } from './util/data';
 
 const { useState, useEffect } = React;
 
@@ -27,7 +28,7 @@ function Studio(p: TypeProps) {
   const props = createProps(p);
   const contentSize = createContentSize(props);
 
-  const [data, setData] = useState<TypeData|TypeDataBase>(props.data || {elements: []});
+  const [data, setData] = useState<TypeData|TypeDataBase>(initData(props.data || {elements: []}));
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
   const [contentWidth, setContentWidth] = useState(contentSize.width);
   const [closeSiderLeft, setCloseSiderLeft] = useState(false);
@@ -38,6 +39,7 @@ function Studio(p: TypeProps) {
       setSelectedElementUUID(data.uuid);
     });
     eventHub.on('studioChangeData', (data) => {
+      console.log('studioChangeData:data =: ', data)
       setData(data);
     });
     eventHub.on('studioCloseLeftSider', ((status: boolean) => {

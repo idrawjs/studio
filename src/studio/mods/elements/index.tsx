@@ -1,5 +1,6 @@
 import * as React from 'react';
-import { List } from '../../../ui/antd';
+import { TypeElement, TypeElemDesc } from '@idraw/types';
+import { List } from 'antd';
 import { StudioContext } from './../../context';
 import { Item } from './item';
 
@@ -26,9 +27,10 @@ export const Elements = (props: TypeProps) => {
         size="small"
         dataSource={data.elements}
         renderItem={(item) => {
+          const elem = item as TypeElement<keyof TypeElemDesc>
           return (
             <List.Item>
-              <Item element={item} />
+              <Item element={elem} />
             </List.Item>
           )
         }}

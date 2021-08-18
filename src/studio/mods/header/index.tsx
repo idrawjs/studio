@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useState, useCallback } from 'react';
-import { Layout, Select } from '../../../ui/antd';
+import { Layout, Select } from 'antd';
 import classnames from 'classnames';
 import {
   ZoomInOutlined, ZoomOutOutlined, UndoOutlined, RedoOutlined,
@@ -56,8 +56,8 @@ function getZoomOutValue(value): number | null {
 export function StudioHeader(props: TypeProps) {
 
   const [scale, setScale] = useState<number>(1);
-  const [ableUndo, setAbleUndo] = useState<boolean>(true);
-  const [ableRedo, setAbleRedo] = useState<boolean>(true);
+  // const [ableUndo, setAbleUndo] = useState<boolean>(true);
+  // const [ableRedo, setAbleRedo] = useState<boolean>(true);
 
   const onChangeScale = useCallback((num) => {
     setScale(num);

@@ -4,6 +4,10 @@ import { renderToString } from 'react-dom/server';
 type TypeProps = {
   text: string;
   title?: string;
+  gradientColor?: {
+    from: string,
+    to: string
+  }
 }
 
 function Layer(props: TypeProps) {
@@ -23,7 +27,7 @@ function Layer(props: TypeProps) {
           width: 180,
           height: 320,
           backgroundColor: '#62278d',
-          background: 'linear-gradient(to bottom,  #62278d 0%,#2cc09b 100%)',
+          background: `linear-gradient(to bottom, ${props.gradientColor?.from || '#62278d'} 0%, ${props.gradientColor?.to || '#2cc09b'} 100%)`,
           border: '1px #666666 solid',
           transform:' perspective(900px) translateX(15px) rotateX(45deg) rotate(10deg) skew(-15deg) translateZ(120px)',
         }}>
