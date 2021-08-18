@@ -1,5 +1,5 @@
 import React from 'react';
-import { SVG } from './svg/svg';
+import { SVG, Text } from './svg/svg';
 
 type TypeProps = {
   size: number;
@@ -42,4 +42,12 @@ export function IconSVG(props: TypeProps) {
       <SVG color={props.color} />
     </Wrapper>
   );
+}
+
+export function IconText(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <Text color={props.color} />
+    </Wrapper>
+  )
 }

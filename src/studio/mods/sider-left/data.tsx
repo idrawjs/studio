@@ -1,7 +1,11 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
-import { BorderOutlined, FileTextOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG } from '../icon';
+import { BorderOutlined, FileImageOutlined } from '@ant-design/icons';
+import { IconSVG, IconText, } from '../icon';
+
+const defaultIconProps = {
+  width: 40, height: 40, size: 28, color: '#666666'
+}
 
 export const generalDataList: {
   name: string,
@@ -28,7 +32,7 @@ export const generalDataList: {
   },
   {
     name: 'Text',
-    icon: <FileTextOutlined />,
+    icon: <IconText {...defaultIconProps} />,
     defaultElement: {
       uuid: '',
       x: 0,
@@ -39,7 +43,7 @@ export const generalDataList: {
       type: 'text',
       desc: {
         text: 'Text',
-        color: '#333333',
+        color: '#999999',
         fontSize: 20,
         borderColor: '#ffffff00',
         borderWidth: 1,
@@ -64,7 +68,7 @@ export const generalDataList: {
   },
   {
     name: 'SVG',
-    icon: <IconSVG width={40} height={40} size={28} color={'#666666'} />,
+    icon: <IconSVG {...defaultIconProps} />,
     defaultElement: {
       uuid: '',
       x: 0,
