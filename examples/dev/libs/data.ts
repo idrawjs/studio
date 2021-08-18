@@ -4,6 +4,7 @@ const data = {
   "bgColor": "#292929",
   "elements": [ 
     {
+      name: 'HTML',
       x: 22,
       y: 324,
       w: 270,
@@ -16,6 +17,7 @@ const data = {
       }
     },
     {
+      name: 'SVG',
       x: 22,
       y: 274,
       w: 270,
@@ -28,6 +30,7 @@ const data = {
       }
     },
     {
+      name: 'Image',
       x: 22,
       y: 224,
       w: 270,
@@ -40,6 +43,7 @@ const data = {
       }
     },
     {
+      name: 'Circle',
       x: 22,
       y: 174,
       w: 270,
@@ -52,6 +56,7 @@ const data = {
       }
     },
     {
+      name: 'Rectangle',
       x: 22,
       y: 124,
       w: 270,
@@ -64,6 +69,7 @@ const data = {
       }
     },
     {
+      name: 'Text',
       x: 22,
       y: 74,
       w: 270,
@@ -79,6 +85,7 @@ const data = {
       }
     }, 
     {
+      name: 'Bracket',
       x: 260,
       y: 160,
       w: 160,
@@ -89,6 +96,7 @@ const data = {
       }
     },
     {
+      name: 'Canvas',
       x: 320,
       y: 210,
       w: 360,
@@ -107,6 +115,34 @@ const data = {
         }),
       }
     }, 
+    {
+      name: 'Title',
+      x: 440,
+      y: 45,
+      w: 230,
+      h: 70,
+      type: 'text',
+      desc: {
+        text: 'iDraw.js',
+        color: '#ffffff',
+        fontSize: 50,
+        fontWeight: 'bold',
+      }
+    },
+    {
+      name: 'Introduction',
+      x: 390,
+      y: 120,
+      w: 350,
+      h: 75,
+      type: 'text',
+      desc: {
+        text: 'A simple JavaScript framework for Drawing on the web',
+        color: '#f0f0f0',
+        fontSize: 20,
+        fontWeight: 'bold',
+      }
+    }
   ]
 }
 
