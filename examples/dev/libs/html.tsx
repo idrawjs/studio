@@ -3,6 +3,7 @@ import { renderToString } from 'react-dom/server';
 
 type TypeProps = {
   text: string;
+  title?: string;
 }
 
 function Layer(props: TypeProps) {
@@ -27,9 +28,19 @@ function Layer(props: TypeProps) {
           transform:' perspective(900px) translateX(15px) rotateX(45deg) rotate(10deg) skew(-15deg) translateZ(120px)',
         }}>
           <span style={{
+            position: 'absolute',
+            top: 100,
+            color: '#ffffff',
+            fontSize: 32,
+            fontWeight: 'bold',
+            opacity: 0.4,
+            margin: 10,
+            padding: 4,
+          }}>{props.title}</span>
+          <span style={{
             display: 'flex',
             color: '#ffffff',
-            fontSize: 24,
+            fontSize: 20,
             fontWeight: 'bold',
             border: '2px solid #ffffff',
             margin: 10,
@@ -41,7 +52,7 @@ function Layer(props: TypeProps) {
   )
 }
 
-export function createLayerHTML(props = { text: '' }): string {
+export function createLayerHTML(props: TypeProps): string {
   return renderToString(<Layer {...props}></Layer>)
 }
 
