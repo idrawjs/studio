@@ -4,7 +4,7 @@ const data = {
   "bgColor": "#292929",
   "elements": [ 
     {
-      name: 'HTML',
+      name: 'Layer-HTML',
       x: 22,
       y: 324,
       w: 270,
@@ -17,7 +17,7 @@ const data = {
       }
     },
     {
-      name: 'SVG',
+      name: 'Layer-SVG',
       x: 22,
       y: 274,
       w: 270,
@@ -30,7 +30,7 @@ const data = {
       }
     },
     {
-      name: 'Image',
+      name: 'Layer-Image',
       x: 22,
       y: 224,
       w: 270,
@@ -43,7 +43,7 @@ const data = {
       }
     },
     {
-      name: 'Circle',
+      name: 'Layer-Circle',
       x: 22,
       y: 174,
       w: 270,
@@ -56,7 +56,7 @@ const data = {
       }
     },
     {
-      name: 'Rectangle',
+      name: 'Layer-Rectangle',
       x: 22,
       y: 124,
       w: 270,
@@ -69,7 +69,7 @@ const data = {
       }
     },
     {
-      name: 'Text',
+      name: 'Layer-Text',
       x: 22,
       y: 74,
       w: 270,
@@ -85,7 +85,7 @@ const data = {
       }
     }, 
     {
-      name: 'Bracket',
+      name: 'Layer-Bracket',
       x: 260,
       y: 160,
       w: 160,
@@ -96,7 +96,7 @@ const data = {
       }
     },
     {
-      name: 'Canvas',
+      name: 'Layer-Canvas',
       x: 320,
       y: 210,
       w: 360,
