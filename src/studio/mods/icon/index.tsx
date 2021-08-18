@@ -1,5 +1,7 @@
 import React from 'react';
-import { SVG, Text } from './svg/svg';
+import { SVG } from './svg/svg';
+import { Text } from './svg/text';
+import { Circle } from './svg/circle';
 
 type TypeProps = {
   size: number;
@@ -48,6 +50,14 @@ export function IconText(props: TypeProps) {
   return (
     <Wrapper {...props}>
       <Text color={props.color} />
+    </Wrapper>
+  )
+}
+
+export function IconCircle(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <Circle color={props.color} />
     </Wrapper>
   )
 }

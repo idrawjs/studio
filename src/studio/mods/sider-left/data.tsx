@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import { BorderOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG, IconText, } from '../icon';
+import { IconSVG, IconText, IconCircle } from '../icon';
 
 const defaultIconProps = {
   width: 40, height: 40, size: 28, color: '#666666'
@@ -12,6 +12,27 @@ export const generalDataList: {
   icon: React.ReactElement,
   defaultElement: TypeElement<keyof TypeElemDesc>
 }[] = [
+  
+  {
+    name: 'Text',
+    icon: <IconText {...defaultIconProps} />,
+    defaultElement: {
+      uuid: '',
+      x: 0,
+      y: 0,
+      w: 100,
+      h: 80,
+      angle: 0,
+      type: 'text',
+      desc: {
+        text: 'Text',
+        color: '#999999',
+        fontSize: 20,
+        borderColor: '#ffffff00',
+        borderWidth: 1,
+      }
+    }
+  },
   {
     name: 'Rect',
     icon: <BorderOutlined />,
@@ -31,22 +52,20 @@ export const generalDataList: {
     }
   },
   {
-    name: 'Text',
-    icon: <IconText {...defaultIconProps} />,
+    name: 'Circle',
+    icon: <IconCircle {...defaultIconProps} />,
     defaultElement: {
       uuid: '',
       x: 0,
       y: 0,
       w: 100,
-      h: 80,
+      h: 100,
       angle: 0,
-      type: 'text',
+      type: 'circle',
       desc: {
-        text: 'Text',
-        color: '#999999',
-        fontSize: 20,
-        borderColor: '#ffffff00',
-        borderWidth: 1,
+        color: '#f0f0f0',
+        borderColor: '#aaaaaa',
+        borderWidth: 10,
       }
     }
   },
