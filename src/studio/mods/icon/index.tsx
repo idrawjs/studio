@@ -2,6 +2,7 @@ import React from 'react';
 import { SVG } from './svg/svg';
 import { Text } from './svg/text';
 import { Circle } from './svg/circle';
+import { HTML } from './svg/html';
 
 type TypeProps = {
   size: number;
@@ -61,3 +62,12 @@ export function IconCircle(props: TypeProps) {
     </Wrapper>
   )
 }
+
+export function IconHTML(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <HTML color={props.color} />
+    </Wrapper>
+  )
+}
+
