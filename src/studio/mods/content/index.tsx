@@ -71,6 +71,12 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioDeleteElement', (uuid: string) => {
       idraw.deleteElement(uuid);
     });
+    eventHub.on('studioMoveUpElement', (uuid: string) => {
+      idraw.moveUpElement(uuid);
+    });
+    eventHub.on('studioMoveDownElement', (uuid: string) => {
+      idraw.moveDownElement(uuid);
+    });
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
     });

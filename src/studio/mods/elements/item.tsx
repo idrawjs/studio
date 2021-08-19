@@ -3,7 +3,7 @@ import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import {
   EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined,
-  DeleteOutlined,
+  DeleteOutlined, ArrowDownOutlined, ArrowUpOutlined,
 } from '@ant-design/icons';
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
@@ -13,10 +13,12 @@ import { StudioContext } from './../../context';
 type TypeProps = {
   maxHeight?: number,
   element: TypeElement<keyof TypeElemDesc>
+  index: number;
+  total: number;
 }
 
 export const Item = (props: TypeProps) => {
-  const { element } = props;
+  const { element, index, total } = props;
   const context = useContext(StudioContext);
   const { selectedElementUUID } = context;
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
@@ -57,6 +59,14 @@ export const Item = (props: TypeProps) => {
     eventHub.trigger('studioDeleteElement', element.uuid);
   }, [element]);
 
+  const onClickMoveUp = useCallback(() => {
+    eventHub.trigger('studioMoveUpElement', element.uuid);
+  }, [element]);
+
+  const onClickMoveDown = useCallback(() => {
+    eventHub.trigger('studioMoveDownElement', element.uuid);
+  }, [element])
+
   return (
     <div
       className={classnames({
@@ -67,6 +77,24 @@ export const Item = (props: TypeProps) => {
         eventHub.trigger('studioSelectElement', { uuid: element.uuid });
       }}
     >
+      <span className="studio-element-item-action">
+        {(index === 0) ? (
+          <ArrowUpOutlined className="idraw-studio-element-icon no-margin icon-disable" ></ArrowUpOutlined>
+        ) : (
+          <ArrowUpOutlined className="idraw-studio-element-icon no-margin"
+            onClick={onClickMoveUp}
+          ></ArrowUpOutlined>
+        )}
+
+        {(index === total - 1) ? (
+          <ArrowDownOutlined className="idraw-studio-element-icon no-margin icon-disable" ></ArrowDownOutlined>
+        ) : (
+          <ArrowDownOutlined className="idraw-studio-element-icon no-margin"
+            onClick={onClickMoveDown}
+          ></ArrowDownOutlined>
+        )}
+        
+      </span>
       {isEdit === true ? (
         <Input 
           size="small" value={elemName} style={{width: 140}}
@@ -90,7 +118,6 @@ export const Item = (props: TypeProps) => {
             onClick={onClickEdit}
           />
         )}
-
         {element.lock === true ? (
           <LockFilled
             className="idraw-studio-element-icon icon-active"

@@ -6,6 +6,8 @@ export type TypeIDrawEventArgMap  = {
   'studioChangeData': TypeData;
   'studioUpdateElement': TypeElement<keyof TypeElemDesc>;
   'studioDeleteElement': string;
+  'studioMoveUpElement': string;
+  'studioMoveDownElement': string;
   'studioCloseLeftSider': boolean;
   'studioCloseRightSider': boolean;
   'studioIDrawResetWidth': number;
@@ -25,6 +27,8 @@ export type TypeIDrawEventTriggerResult = {
   'studioChangeData': void;
   'studioUpdateElement': void;
   'studioDeleteElement': void;
+  'studioMoveUpElement': void;
+  'studioMoveDownElement': void;
   'studioCloseLeftSider': void;
   'studioCloseRightSider': void;
   'studioIDrawResetWidth': void;
