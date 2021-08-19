@@ -1,11 +1,8 @@
 const path = require('path');
 const fs = require('fs');
 const { merge } = require('webpack-merge');
-const TerserPlugin = require("terser-webpack-plugin");
-const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
-const { makeFullDir, removeFullDir } = require('./util/file');
 const config = require('./webpack.config');
-const depsConfig = require('./deps');
+const { makeFullDir, removeFullDir } = require('./util/file');
 
 const projectPath = path.join(__dirname, '..');
 const distDir = path.join(projectPath, 'dist');
@@ -20,16 +17,19 @@ fs.writeFileSync(path.join(distDir, 'index.html'), html);
 
 module.exports = [
   ...config.map((conf, i) => {
+
+    let devServer = {};
+    if (i === 0) {
+      devServer = {
+        contentBase: projectPath,
+        compress: true,
+        port: 9000,
+      }
+    }
     return merge(conf, {
-      mode: 'production',
-      plugins: [],
-      optimization: {
-        minimize: true,
-        minimizer: [
-          new TerserPlugin(),
-          new CssMinimizerPlugin(),
-        ],
-      },
+      mode: 'development',
+      devtool: 'inline-cheap-source-map',
+      devServer,
     })
   })
 ]
