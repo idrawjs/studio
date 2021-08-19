@@ -98,7 +98,7 @@ const data = {
     {
       name: 'Layer-Canvas',
       x: 320,
-      y: 210,
+      y: 240,
       w: 360,
       h: 250,
       type: 'html',
@@ -115,6 +115,19 @@ const data = {
         }),
       }
     }, 
+    {
+      name: 'Rectangle',
+      x: 380,
+      y: 40,
+      w: 365,
+      h: 150,
+      type: 'rect',
+      desc: {
+        color: '#ffffff1a',
+        borderWidth: 2,
+        borderColor: '#9999993a'
+      }
+    },
     {
       name: 'Introduction',
       x: 390,
