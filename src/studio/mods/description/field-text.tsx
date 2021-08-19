@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Input, Popover,  } from 'antd';
+import { EditOutlined } from '@ant-design/icons';
 import IDraw from 'idraw';
 
 const is = IDraw.is;
@@ -39,7 +40,8 @@ export const FieldText: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
             }}
           />
         </div>)} > 
-        <Input className="desc-field-text" type="button" value={value || text} />
+        {/* <Input className="desc-field-text" type="button" value={value || text} /> */}
+        <EditOutlined className="idraw-studio-mod-desc-field-icon" />
       </Popover>
     </div>
   );

@@ -1,9 +1,12 @@
-import * as React from 'react';
+import React, { useCallback } from 'react';
 import { Form, Input, Col, Row, } from 'antd';
+import { CodeSandboxOutlined } from '@ant-design/icons';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import idraw from 'idraw';
 import { FieldData } from './base';
 import { FieldText } from './field-text';
+import { showCodeEditor } from './../dialog';
+import beautifyHTML from 'js-beautify/js/lib/beautify-html';
 
 interface DescFormProps {
   elem: TypeElement<'html'>
@@ -17,6 +20,21 @@ export const HTMLDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
     { name: ['width'], value: elem.desc.width || 0 },
     { name: ['height'], value: elem.desc.height || 0 },
   ];
+
+
+  const onClickEditCode = useCallback(() => {
+    showCodeEditor({
+      value: beautifyHTML.html_beautify(elem.desc.html || '', {
+        'indent_size': 2,
+      }),
+      mode: 'htmlmixed',
+      onConfirm: (value: string) => {
+        const desc = {...elem.desc, ...{ html: value }};
+        onChange(desc);
+      },
+      onCancel: () => {}
+    })
+  }, [elem]);
 
   return (<Form
       name="rect-desc"
@@ -33,13 +51,24 @@ export const HTMLDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       }}
     >
       <Row>
-        <Col span="24">
+        <Col span="9">
+          <div style={{lineHeight: '32px', marginRight: 10}}>HTML: </div>
+        </Col>
+        <Col span="6">
           <Form.Item
-            name="html"
-            label="HTML" >
+            name="html" >
             <FieldText />
           </Form.Item>
         </Col>
+        <Col span="6">
+          <Form.Item
+            name="html">
+            <CodeSandboxOutlined className="idraw-studio-mod-desc-field-icon"
+              onClick={onClickEditCode}
+            />
+          </Form.Item>
+        </Col>
+        
       </Row>
 
       <Row>
