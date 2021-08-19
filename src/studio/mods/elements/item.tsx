@@ -1,4 +1,4 @@
-import * as React from 'react';
+import { useContext, useState, useCallback, useEffect } from 'react';
 import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import {
@@ -8,8 +8,7 @@ import {
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
-
-const { useContext, useState, useCallback } = React;
+ 
 
 type TypeProps = {
   maxHeight?: number,
@@ -28,6 +27,11 @@ export const Item = (props: TypeProps) => {
 
   const [isEdit, setIsEdit] = useState(false);
   const [elemName, setElemName] = useState(element.name);
+
+  useEffect(() => {
+    setElemName(element.name);
+  }, [element])
+
 
   const onClickEdit = useCallback(() => {
     setIsEdit(true)

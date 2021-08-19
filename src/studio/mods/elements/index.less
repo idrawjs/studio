@@ -5,6 +5,10 @@
   .idraw-studio-element-item {
     cursor: pointer;
     display: flex;
+    width: 100%;
+    padding: 6px 4px;
+    padding-left: 10px;
+    box-sizing: border-box;
     
     &:hover {
       color: #1890ff;
@@ -44,6 +48,11 @@
     &:hover {
       color: #1890ff;
     }
+  }
+
+  // override css
+  .ant-list-sm .ant-list-item {
+    padding: 0;
   }
 }
 
