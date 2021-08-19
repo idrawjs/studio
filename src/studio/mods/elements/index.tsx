@@ -26,11 +26,11 @@ export const Elements = (props: TypeProps) => {
       <List
         size="small"
         dataSource={util.data.deepClone(data.elements).reverse()}
-        renderItem={(item) => {
+        renderItem={(item, index) => {
           const elem = item as TypeElement<keyof TypeElemDesc>
           return (
             <List.Item>
-              <Item element={elem} />
+              <Item element={elem} index={index} total={data.elements.length} />
             </List.Item>
           )
         }}

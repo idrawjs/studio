@@ -1,5 +1,8 @@
 import React from 'react';
 import { SVG } from './svg/svg';
+import { Text } from './svg/text';
+import { Circle } from './svg/circle';
+import { HTML } from './svg/html';
 
 type TypeProps = {
   size: number;
@@ -43,3 +46,28 @@ export function IconSVG(props: TypeProps) {
     </Wrapper>
   );
 }
+
+export function IconText(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <Text color={props.color} />
+    </Wrapper>
+  )
+}
+
+export function IconCircle(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <Circle color={props.color} />
+    </Wrapper>
+  )
+}
+
+export function IconHTML(props: TypeProps) {
+  return (
+    <Wrapper {...props}>
+      <HTML color={props.color} />
+    </Wrapper>
+  )
+}
+

@@ -5,6 +5,9 @@
   .idraw-studio-element-item {
     cursor: pointer;
     display: flex;
+    width: 100%;
+    padding: 6px 2px;
+    box-sizing: border-box;
     
     &:hover {
       color: #1890ff;
@@ -17,12 +20,15 @@
   }
 
   .studio-element-item-name {
-    width: 140px;
+    width: 130px;
     height: 22px;
     line-height: 22px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
+    padding-left: 4px;
+    margin-left: 4px;
+    border-left: 1px solid #e0e0e0;
   }
 
   .studio-element-item-action {
@@ -33,17 +39,33 @@
   .idraw-studio-element-icon {
     color: #888888;
     line-height: 22px;
-    font-size: 16px;
+    font-size: 14px;
     cursor: pointer;
-    margin-left: 6px;
+    margin-left: 4px;
+
+    &.no-margin {
+      margin: 0;
+    }
   
     &.icon-active {
       color: #1890ff;
+    }
+
+    &.icon-disable {
+      color: #e0e0e0;
+      &:hover {
+        color: #e0e0e0;
+      }
     }
     
     &:hover {
       color: #1890ff;
     }
+  }
+
+  // override css
+  .ant-list-sm .ant-list-item {
+    padding: 0;
   }
 }
 
