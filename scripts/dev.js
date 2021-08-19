@@ -3,6 +3,7 @@ const fs = require('fs');
 const { merge } = require('webpack-merge');
 const config = require('./webpack.config');
 const { makeFullDir, removeFullDir } = require('./util/file');
+const { createIndexPage } = require('./html');
 
 const projectPath = path.join(__dirname, '..');
 const distDir = path.join(projectPath, 'dist');
@@ -11,9 +12,7 @@ const distDir = path.join(projectPath, 'dist');
 // }
 // makeFullDir(distDir);
 
-const htmlPath = path.join(projectPath, 'static', 'index.html');
-const html = fs.readFileSync(htmlPath, { encoding: 'utf8' });
-fs.writeFileSync(path.join(distDir, 'index.html'), html);
+createIndexPage();
 
 module.exports = [
   ...config.map((conf, i) => {
