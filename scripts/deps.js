@@ -28,6 +28,13 @@ const deps = [
   },
   {
     file: {
+      dev: 'react-dom/umd/react-dom-server.browser.development.js',
+      prod: 'react-dom/umd/react-dom-server.browser.production.min.js'
+    },
+    target: 'lib/react-dom-server.js',
+  },
+  {
+    file: {
       dev: 'antd/dist/antd.js',
       prod: 'antd/dist/antd.min.js',
     },

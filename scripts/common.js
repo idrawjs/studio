@@ -22,26 +22,71 @@ function createWebpackNodeConfig(config) {
   return merge(nodeConfig, config);
 }
 
+const babelConfig = {
+  cacheDirectory: true,
+  presets: [
+    '@babel/preset-react',
+    [
+      '@babel/preset-env',
+      {
+        targets: {
+          browsers: [
+            'last 2 versions',
+            'Firefox ESR',
+            '> 1%',
+            'ie >= 11',
+            'iOS >= 8',
+            'Android >= 4',
+          ],
+        },
+      },
+    ],
+    '@babel/preset-typescript',
+  ],
+  plugins: [
+    // [
+    //   'babel-plugin-import',
+    //   {
+    //     libraryName: 'idrawStudio',
+    //     libraryDirectory: '', // default: lib
+    //     style: true,
+    //   },
+    // ],
+    // '@babel/plugin-proposal-optional-chaining',
+    // '@babel/plugin-transform-object-assign',
+    // '@babel/plugin-proposal-object-rest-spread',
+    // '@babel/plugin-proposal-export-default-from',
+    // '@babel/plugin-proposal-export-namespace-from',
+    // '@babel/plugin-proposal-class-properties',
+  ],
+};
+
 const baseConfig = {
   module: { 
     rules: [ 
       {
-        test: /\.tsx?$/,
-        use: 'ts-loader',
+        test: /\.(ts|tsx)?$/,
+        use: [
+          {
+            loader: 'babel-loader',
+            options: babelConfig,
+          },
+          {
+            loader: 'ts-loader',
+            options: {
+              transpileOnly: true,
+              appendTsSuffixTo: [],
+              happyPackMode: false,
+            },
+          },
+        ],
         exclude: /node_modules/,
       },
       {
-        test: /\.(js|jsx|ts|tsx)$/,
-        use: {
-          loader: 'babel-loader',
-          options: {
-            presets: [
-              '@babel/preset-env',
-              '@babel/preset-react'
-            ],
-            'plugins': []
-          }
-        }
+        test: /\.(js|jsx)$/,
+        loader: 'babel-loader',
+        exclude: /pickr.*js/,
+        options: babelConfig,
       },
       {
         test: /\.(css|less)$/,

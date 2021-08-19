@@ -1,12 +1,8 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": {
-      "pote": ["components/index.tsx"],
-      "pote/es/*": ["components/*"]
-    },
     "strictNullChecks": false,
-    "strict": true,
+    "strict": false,
     "moduleResolution": "node",
     "esModuleInterop": true,
     "experimentalDecorators": true,

@@ -1,5 +1,4 @@
 {
- 
   "scripts": {
     "dev": "npm run dev:build-deps && npm run dev:src",
     "dev:src": "webpack server -c ./scripts/dev.js",
@@ -31,6 +30,7 @@
     "@babel/core": "^7.14.6",
     "@babel/preset-env": "^7.14.5",
     "@babel/preset-react": "^7.14.5",
+    "@babel/preset-typescript": "^7.15.0",
     "@types/koa": "^2.13.4",
     "@types/koa-static": "^4.0.2",
     "@types/koa__router": "^8.0.7",
@@ -60,6 +60,7 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
+    "@idraw/studio": "^0.0.1",
     "@idraw/types": "0.1.4",
     "@idraw/util": "0.1.4",
     "@koa/router": "^10.1.0",
