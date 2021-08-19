@@ -5,7 +5,8 @@
     "dev:src": "webpack server -c ./scripts/dev.js",
     "dev:build-deps": "node ./scripts/deps.js",
     "build:src": "webpack -c ./scripts/build.js",
-    "build": "npm run dev:build-deps && npm run build:src"
+    "build": "npm run dev:build-deps && npm run build:src",
+    "docs": "npm run build && node ./scripts/docs.js"
   },
   "repository": {
     "type": "git",
