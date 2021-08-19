@@ -8,10 +8,11 @@ import { TextDescForm } from './text';
 import { ImageDescForm } from './image';
 import { SVGDescForm } from './svg';
 import { HTMLDescForm } from './html';
+import { CircleDescForm } from './circle';
 
 const { useContext, useCallback } = React;
 
-const supportElemList = ['rect', 'text', 'image', 'svg', 'html']; // TODO 
+const supportElemList = ['rect', 'text', 'image', 'svg', 'html', 'circle']; // TODO 
 
 type TypeProps = {
   maxHeight?: number,
@@ -69,6 +70,13 @@ export const Description = (props: TypeProps) => {
               onChange={onChangeElementDesc}
             />
           )}
+           {elem?.type === 'circle' && (
+            <CircleDescForm
+              elem={elem as TypeElement<'circle'>}
+              onChange={onChangeElementDesc}
+            />
+          )}
+          
         </>
       ) : (
         <div className="no-select-data">No Description</div>
