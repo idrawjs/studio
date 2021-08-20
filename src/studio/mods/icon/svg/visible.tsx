@@ -1,7 +1,6 @@
 import React from 'react';
-import IDraw from 'idraw';
-
-const { is } = IDraw;
+// import IDraw from 'idraw';
+// const { is } = IDraw;
 
 export function Visible(
   props?: {
