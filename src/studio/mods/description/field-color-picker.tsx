@@ -92,6 +92,7 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
             width: 16,
             backgroundColor: value || colorValue,
             zIndex: 1,
+            border: '1px solid #00000040',
           }}></span>
 
         </Popover>

@@ -44,7 +44,7 @@ export function SiderRight(props: TypeProps) {
 
   return (
     <Sider width={width} className="idraw-studio-siderright">
-      <div className="idraw-studio-siderright-header" style={{height: siderHeaderHeight}}>
+      <div className="idraw-studio-siderright-header" style={{height: Math.max(0, siderHeaderHeight - 3)}}>
         <DoubleRightOutlined
           className="studio-siderright-header-icon  siderright-close-btn"
           onClick={() => {
