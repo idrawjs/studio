@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Modal } from 'antd';
+import { Modal, Select } from 'antd';
 import iDraw from 'idraw';
+
+const { Option } = Select;
 
 export const showExportImage = (params: {
   idraw: iDraw,
@@ -40,7 +42,14 @@ function ExportImage (props: { idraw: iDraw }) {
         <img src={dataURL} className="export-image-content" />
       </div>
       <div className="export-image-setting">
-      
+        <div className="export-setting-field">
+          <div className="export-setting-field-title">
+
+          </div>
+          <div className="export-setting-field-title">
+            
+          </div>
+        </div>
       </div>
     </div>
   )
