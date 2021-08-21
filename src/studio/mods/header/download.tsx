@@ -2,14 +2,13 @@ import * as React from 'react';
 import { useCallback } from 'react';
 import { DownloadOutlined } from '@ant-design/icons';
 import { Box } from './box';
-// import eventHub from '../../util/event-hub';
+import eventHub from '../../util/event-hub';
 
 export function DownloadAction() {
 
   const onClickDwnload = useCallback(() => {
-    console.log('download -------')
+    eventHub.trigger('studioExportImage', undefined);
   }, []);
-
 
   return (
     <Box>
