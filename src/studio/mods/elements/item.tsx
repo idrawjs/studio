@@ -5,6 +5,7 @@ import {
   EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined,
   DeleteOutlined, ArrowDownOutlined, ArrowUpOutlined,
 } from '@ant-design/icons';
+import { Visible, InVisible } from './../icon/svg/visible';
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
@@ -51,6 +52,12 @@ export const Item = (props: TypeProps) => {
 
   const onClickSwitchLock = useCallback(() => {
     element.lock = !element.lock;
+    eventHub.trigger('studioUpdateElement', element);
+    setIsEdit(false);
+  }, [element]);
+
+  const onClickSwitchVisible = useCallback(() => {
+    element.invisible = !element.invisible;
     eventHub.trigger('studioUpdateElement', element);
     setIsEdit(false);
   }, [element]);
@@ -118,6 +125,16 @@ export const Item = (props: TypeProps) => {
             onClick={onClickEdit}
           />
         )}
+        {element.invisible === true ? (
+          <span onClick={onClickSwitchVisible} className="idraw-studio-element-icon ">
+            <InVisible color={'#888888'}></InVisible>
+          </span>
+        ) : (
+          <span onClick={onClickSwitchVisible} className="idraw-studio-element-icon icon-active">
+            <Visible color={'#888888'}></Visible>
+          </span>
+        )}
+        
         {element.lock === true ? (
           <LockFilled
             className="idraw-studio-element-icon icon-active"

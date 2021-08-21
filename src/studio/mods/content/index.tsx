@@ -6,6 +6,7 @@ import { Layout } from 'antd';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
 import { onDragOver } from './../../mods/global';
+import { showExportImage } from './../dialog';
 
 const { Content } = Layout;
 
@@ -114,6 +115,9 @@ function StudioContent(props: TypeProps) {
       }
       return undoRecordCount;
     })
+    eventHub.on('studioExportImage', () => {
+      showExportImage({ idraw })
+    });
 
     if (data) {
       idraw.setData(data, { 

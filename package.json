@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.0.0",
+  "version": "0.0.2",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -55,6 +55,7 @@
     "@babel/preset-react": "^7.14.5",
     "@babel/preset-typescript": "^7.14.5",
     "@octokit/rest": "^18.5.6",
+    "@types/codemirror": "^5.60.2",
     "@types/react": "^17.0.17",
     "@types/react-dom": "^17.0.9",
     "antd": "^4.16.2",
@@ -105,10 +106,12 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "0.1.5",
-    "@idraw/util": "0.1.5",
+    "@idraw/types": "0.1.6",
+    "@idraw/util": "0.1.6",
     "classnames": "^2.3.1",
-    "idraw": "0.1.5",
+    "codemirror": "^5.62.2",
+    "idraw": "0.1.6",
+    "js-beautify": "^1.14.0",
     "react-color": "^2.19.3"
   }
 }

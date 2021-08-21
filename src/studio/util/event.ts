@@ -10,6 +10,7 @@ export type TypeIDrawEventArgMap  = {
   'studioMoveDownElement': string;
   'studioCloseLeftSider': boolean;
   'studioCloseRightSider': boolean;
+  'studioExportImage': void;
   'studioIDrawResetWidth': number;
   'studioIDrawResetContextSize': { width: number, height: number }
   'studioDragNewElement': {
@@ -31,6 +32,7 @@ export type TypeIDrawEventTriggerResult = {
   'studioMoveDownElement': void;
   'studioCloseLeftSider': void;
   'studioCloseRightSider': void;
+  'studioExportImage': void;
   'studioIDrawResetWidth': void;
   'studioIDrawResetContextSize': void;
   'studioDragNewElement': void;

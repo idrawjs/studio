@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Input, Popover, } from 'antd';
 import { SketchPicker } from 'react-color';
 import IDraw from 'idraw';
@@ -40,6 +40,11 @@ function parseRGBA2Hex(rgba: { r: number, g: number, b: number, a: number }) {
 export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }) => {
   const [colorValue, setColorValue] = useState(value);
 
+  useEffect(() => {
+    setColorValue(value);
+  }, [value]);
+
+
   const triggerChange = (changedValue) => {
     onChange?.(changedValue.color || value);
   };
@@ -54,51 +59,52 @@ export const ColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange }
 
   return (
     
-      <span style={{
-        position: 'relative',
-        display: 'inline-block',
-        cursor: 'pointer',
-      }}>
-        <Popover
-          overlayClassName={'idraw-studio-mod-desc-color'}
-          trigger="click"
-          content={() => (
-          <div>
-            <SketchPicker
-              color={parseColor(value || colorValue)}
-              // disableAlpha={true}
-              onChangeComplete={(data) => {
-                // console.log('onChangeComplete =', data)
-                const hex = parseRGBA2Hex(data.rgb);
-                if (is.color(hex)) {
-                  onColorChange(hex);
-                }
-              }}
-            />
-          </div>)}
-          
-          >
-            <span style={{
-              position: 'absolute',
-              left: 4,
-              top: 4,
-              bottom: 4,
-              display: 'inline-block',
-              width: 16,
-              backgroundColor: value || colorValue,
-              zIndex: 1,
-            }}></span>
-
-          </Popover>
-          <Input
-            type="text"
-            size="small"
-            value={value || colorValue}
-            style={{ width: 120, paddingLeft: 24 }}
-            onChange={(e)=> {
-              onColorChange(e.target.value)
+    <span style={{
+      position: 'relative',
+      display: 'inline-block',
+      cursor: 'pointer',
+    }}>
+      <Popover
+        overlayClassName={'idraw-studio-mod-desc-color'}
+        trigger="click"
+        content={() => (
+        <div>
+          <SketchPicker
+            color={parseColor(value || colorValue)}
+            // disableAlpha={true}
+            onChangeComplete={(data) => {
+              // console.log('onChangeComplete =', data)
+              const hex = parseRGBA2Hex(data.rgb);
+              if (is.color(hex)) {
+                onColorChange(hex);
+              }
             }}
-          /> 
-      </span>
+          />
+        </div>)}
+        
+        >
+          <span style={{
+            position: 'absolute',
+            left: 4,
+            top: 4,
+            bottom: 4,
+            display: 'inline-block',
+            width: 16,
+            backgroundColor: value || colorValue,
+            zIndex: 1,
+            border: '1px solid #00000040',
+          }}></span>
+
+        </Popover>
+        <Input
+          type="text"
+          size="small"
+          value={colorValue}
+          style={{ width: 120, paddingLeft: 24 }}
+          onChange={(e)=> {
+            onColorChange(e.target.value)
+          }}
+        /> 
+    </span>
   );
 };

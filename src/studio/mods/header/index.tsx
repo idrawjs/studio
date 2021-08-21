@@ -3,6 +3,7 @@ import { Layout } from 'antd';
 import { ZoomAction } from './zoom';
 import { RecordAction } from './record';
 import { SizeAction } from './size';
+import { DownloadAction } from './download';
 
 const { Header, } = Layout;
 
@@ -19,6 +20,7 @@ export function StudioHeader(props: TypeProps) {
       <ZoomAction />
       <RecordAction />
       <SizeAction />
+      <DownloadAction />
     </Header>
   )
 }
