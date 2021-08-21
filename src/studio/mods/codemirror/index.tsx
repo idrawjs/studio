@@ -20,6 +20,7 @@ export function CodeEditor(props: TypeProps) {
     const editor = CodeMirror(ref.current, {
       value: '',
       mode: props.mode,
+      theme: 'material',
       readOnly: props.readonly === true,
       tabSize: 2,
       lineWrapping: true,
