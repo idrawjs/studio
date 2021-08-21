@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Modal } from 'antd';
 import iDraw from 'idraw';
 
@@ -15,10 +15,8 @@ export const showExportImage = (params: {
     icon: null,
     width: 640,
     className: 'idraw-studio-dialog-export-image',
-    content: (<div>
-      Export Image
-    </div>),
-    okText: 'OK',
+    content: (<ExportImage idraw={params.idraw} />),
+    okText: 'Download',
     cancelText: 'Cancel',
     // onCancel: () => {
     //   params.onCancel();
@@ -27,4 +25,23 @@ export const showExportImage = (params: {
     //   params.onConfirm(tempValue);
     // }
   });
+}
+
+
+function ExportImage (props: { idraw: iDraw }) {
+  const { idraw } = props;
+  const [imageType, setImageType] = useState<'image/png' | 'image/jpeg'>('image/png');
+  const [imageQuality,] = useState<number>(1);
+  const [dataURL, setDataURL] = useState(idraw.exportDataURL(imageType, imageQuality));
+  
+  return (
+    <div className="idraw-studio-export-image-container">
+      <div className="export-image-preview">
+        <img src={dataURL} className="export-image-content" />
+      </div>
+      <div className="export-image-setting">
+      
+      </div>
+    </div>
+  )
 }
