@@ -1,5 +1,5 @@
 import React, { useState, useCallback } from 'react';
-import { Modal, Select, Row, Col, Button, Input, message } from 'antd';
+import { Modal, Select, Row, Col, Button, Input, } from 'antd';
 import iDraw from 'idraw';
 import { downloadFile } from './../../util/file';
 
