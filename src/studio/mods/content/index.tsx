@@ -7,6 +7,7 @@ import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
 import { onDragOver } from './../../mods/global';
 import { showExportImage } from './../dialog';
+import { TextMask } from './../mask';
 
 const { Content } = Layout;
 
@@ -140,6 +141,7 @@ function StudioContent(props: TypeProps) {
         onDrop={onDragFeekback}
         onDragOver={onDragOver}
       ></div>
+      <TextMask />
     </Content>
   )
 }
