@@ -1,11 +1,12 @@
-import { useEffect, useRef } from 'react';
+import React, { useEffect, useRef } from 'react';
 import CodeMirror from './codemirror';
 
 type TypeProps = {
   mode: 'htmlmixed',
   onChange: (value: string) => void;
   value?: string,
-  readonly?: boolean
+  readonly?: boolean,
+  style?: any
 }
 
 export function CodeEditor(props: TypeProps) {
@@ -35,7 +36,7 @@ export function CodeEditor(props: TypeProps) {
 
   return (
     <div className="idraw-studio-codemirror">
-      <div className="editor" ref={ref}></div>
+      <div className="editor" style={props.style} ref={ref}></div>
     </div>
   )
 }
