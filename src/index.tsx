@@ -4,19 +4,14 @@ import ReactDOM from 'react-dom';
 import { TypeData } from '@idraw/types';
 import { Studio } from '@idraw/studio';
 import data from './libs/data';
+import { Nav } from './components/nav';
 import './index.less';
 
 // @ts-ignore
 var studioData: TypeData = data as TypeData;
 
 ReactDOM.render(
-  (<div style={{
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}>
+  (<div className="page-container">
     <div style={{display: 'flex'}}>
       <Studio {...{ 
         studioWidth: window.innerWidth,
@@ -25,6 +20,9 @@ ReactDOM.render(
         contextHeight: 600,
         data: studioData,
       }}></Studio>
+    </div>
+    <div className="page-nav">
+      <Nav />
     </div>
   </div>),
   document.querySelector('#app')
