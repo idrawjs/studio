@@ -7,12 +7,14 @@ type TypeProps = {
   // width: number;
   // height: number;
   // text: string;
-  // element: TypeElement<'text'>
+  element: TypeElement<'text'> | null;
+  onCloseMask: () => void;
 }
 
 export const TextMask = (props: TypeProps) => {
+  const { onCloseMask } = props;
   return (
-    <div className="idraw-studio-text-mask">
+    <div className="idraw-studio-text-mask" onClick={onCloseMask}>
       <div style={{
         position: 'absolute',
         top: 100,
@@ -22,7 +24,12 @@ export const TextMask = (props: TypeProps) => {
         overflow: 'auto',
         color: '#ffffff',
         fontSize: 20,
-      }} contentEditable>
+      }} contentEditable 
+        onClick={(e) => {
+          e.preventDefault();
+          e.stopPropagation();
+        }}
+      >
         Hello World
       </div>
     </div>

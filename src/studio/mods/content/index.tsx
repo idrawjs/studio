@@ -1,7 +1,7 @@
 import * as React from 'react';
-import { useEffect, useRef, useContext, useCallback } from 'react';
+import { useEffect, useRef, useState, useContext, useCallback } from 'react';
 import IDraw from 'idraw';
-// import { TypeData, TypeScreenPosition } from '@idraw/types';
+import { TypeElement } from '@idraw/types';
 import { Layout } from 'antd'; 
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
@@ -24,6 +24,7 @@ function StudioContent(props: TypeProps) {
   const { data } = context;
   const { width, height } = props;
   const mount = useRef(null); 
+  const [ textElem, setTextElem ] = useState<TypeElement<'text'>|null>(null);
   
   useEffect(() => {
     const mountDiv = mount.current as HTMLDivElement;
@@ -59,6 +60,12 @@ function StudioContent(props: TypeProps) {
         useMode: true,
       })
     });
+    idraw.on('screenDoubleClickElement', (data) => {
+      if (data.element?.type === 'text') {
+        const elem = data.element as TypeElement<'text'>;
+        setTextElem(elem);
+      }
+    })
     
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
@@ -141,7 +148,11 @@ function StudioContent(props: TypeProps) {
         onDrop={onDragFeekback}
         onDragOver={onDragOver}
       ></div>
-      <TextMask />
+      {textElem !== null && (
+        <TextMask element={textElem} onCloseMask={() => {
+          setTextElem(null);
+        }} />
+      )}
     </Content>
   )
 }
