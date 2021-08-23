@@ -1,41 +1,29 @@
 import React, { useState, useCallback } from 'react';
-import { Modal, Select, Row, Col } from 'antd';
+import { Modal, Select, Row, Col, Button, Input, message } from 'antd';
 import iDraw from 'idraw';
+import { downloadFile } from './../../util/file';
 
-const { Option } = Select;
+let tempDialog: any = null;
 
 export const showExportImage = (params: {
   idraw: iDraw,
 }) => {
 
-  console.log(params);
-
-  // let tempValue = params.value
-
-  Modal.confirm({
-    // title: 'Confirm',
+  tempDialog = Modal.confirm({
     icon: null,
     width: 640,
     className: 'idraw-studio-dialog-export-image',
     content: (<ExportImage idraw={params.idraw} />),
-    okText: 'Download',
-    cancelText: 'Cancel',
-    // onCancel: () => {
-    //   params.onCancel();
-    // },
-    // onOk: () => {
-    //   params.onConfirm(tempValue);
-    // }
   });
 }
 
 const imageTypeOptions = [
   {
-    label: 'image/png',
+    label: 'PNG',
     value: 'image/png',
   },
   {
-    label: 'image/jpeg',
+    label: 'JPEG',
     value: 'image/jpeg',
   }
 ]
@@ -61,6 +49,12 @@ function ExportImage (props: { idraw: iDraw }) {
   const [imageType, setImageType] = useState<'image/png' | 'image/jpeg'>('image/png');
   const [imageQuality, setImageQuality] = useState<number>(1);
   const [dataURL, setDataURL] = useState(idraw.exportDataURL(imageType, imageQuality));
+  const [imageName, setImageName] = useState<string>('idraw-image');
+
+  const imageExtMap = {
+    'image/png': 'png',
+    'image/jpeg': 'jpeg',
+  }
 
   const handleImageType = useCallback((value) => {
     setImageType(value);
@@ -77,6 +71,15 @@ function ExportImage (props: { idraw: iDraw }) {
       setDataURL(newDataURL);
     }
   }, [imageType, imageQuality])
+
+  const onClickDownload = useCallback(() => {
+    const name = `${imageName || 'idraw-image'}.${imageExtMap[imageType]}`
+    downloadFile({dataURL, name})
+  }, [imageType, imageQuality, dataURL, imageName]);
+
+  const onChangeName = useCallback((e) => {
+    setImageName(e.target.value || '');
+  }, [])
   
   return (
     <div className="idraw-studio-export-image-container">
@@ -93,6 +96,7 @@ function ExportImage (props: { idraw: iDraw }) {
               onChange={handleImageType}></Select>
           </Col>
         </Row>
+
         <Row className="export-setting-field">
           <Col span={7} className="setting-field-text">Quality: </Col>
           <Col span={17} className="setting-field-content">
@@ -100,6 +104,24 @@ function ExportImage (props: { idraw: iDraw }) {
               options={imageQualityOptions}
               value={imageQuality}
               onChange={handleImageQuality}></Select>
+          </Col>
+        </Row>
+
+        <Row className="export-setting-field">
+          <Col span={7} className="setting-field-text">Name: </Col>
+          <Col span={17} className="setting-field-content">
+            <Input value={imageName} onChange={onChangeName} style={{ width: '100%' }} />
+          </Col>
+        </Row>
+
+        <Row className="export-setting-field">
+          <Col span={12}>
+            <Button onClick={() => {
+              tempDialog.destroy();
+            }}>Cancel</Button>
+          </Col>
+          <Col span={12}>
+            <Button type="primary" onClick={onClickDownload}>Download</Button>
           </Col>
         </Row>
 

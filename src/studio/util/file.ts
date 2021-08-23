@@ -61,3 +61,14 @@ export function parseFileToText(file: File): Promise<string | ArrayBuffer> {
     reader.readAsText(file);
   })
 } 
+
+
+export function downloadFile(params: { dataURL: string, name: string }) {
+  const { dataURL, name } = params;
+  const downloadLink = document.createElement('a');
+  downloadLink.href = dataURL;
+  downloadLink.download = name || 'unkown';
+  const downloadClickEvent = document.createEvent('MouseEvents');
+  downloadClickEvent.initEvent('click', true, false);
+  downloadLink.dispatchEvent(downloadClickEvent);
+}
