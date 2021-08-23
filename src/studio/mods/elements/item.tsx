@@ -33,6 +33,7 @@ export const Item = (props: TypeProps) => {
 
   useEffect(() => {
     setElemName(element.name);
+    setIsEdit(false);
   }, [element])
 
 
@@ -104,7 +105,8 @@ export const Item = (props: TypeProps) => {
       </span>
       {isEdit === true ? (
         <Input 
-          size="small" value={elemName} style={{width: 140}}
+          className="studio-element-item-name"
+          size="small" value={elemName}
           onChange={onChangeInput}
         />
       ) : (
