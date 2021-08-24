@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -106,11 +106,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "0.1.6",
-    "@idraw/util": "0.1.6",
+    "@idraw/types": "0.1.7",
+    "@idraw/util": "0.1.7",
     "classnames": "^2.3.1",
     "codemirror": "^5.62.2",
-    "idraw": "0.1.6",
+    "idraw": "0.1.7",
     "js-beautify": "^1.14.0",
     "react-color": "^2.19.3"
   }

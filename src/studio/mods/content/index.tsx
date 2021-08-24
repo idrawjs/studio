@@ -1,12 +1,13 @@
 import * as React from 'react';
-import { useEffect, useRef, useContext, useCallback } from 'react';
-import IDraw from 'idraw';
-// import { TypeData, TypeScreenPosition } from '@idraw/types';
+import { useEffect, useRef, useState, useContext, useCallback } from 'react';
+import iDraw from 'idraw';
+import { TypeElement } from '@idraw/types';
 import { Layout } from 'antd'; 
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
 import { onDragOver } from './../../mods/global';
 import { showExportImage } from './../dialog';
+import { TextMask } from './../mask';
 
 const { Content } = Layout;
 
@@ -23,10 +24,12 @@ function StudioContent(props: TypeProps) {
   const { data } = context;
   const { width, height } = props;
   const mount = useRef(null); 
+  const [ textElem, setTextElem ] = useState<TypeElement<'text'>|null>(null);
+  const [idrawObj, setIDrawObj] = useState<iDraw|null>(null)
   
   useEffect(() => {
     const mountDiv = mount.current as HTMLDivElement;
-    const idraw = new IDraw(mountDiv, {
+    const idraw = new iDraw(mountDiv, {
       width: width,
       height: height,
       contextWidth: props.contextWidth,
@@ -39,7 +42,7 @@ function StudioContent(props: TypeProps) {
         lineWidth: 10,
       }
     });
-    // setIDraw(idraw);
+    setIDrawObj(idraw);
 
     idraw.on('changeData', (data) => {
       eventHub.trigger('studioChangeData', data);
@@ -58,6 +61,12 @@ function StudioContent(props: TypeProps) {
         useMode: true,
       })
     });
+    idraw.on('screenDoubleClickElement', (data) => {
+      if (data.element?.type === 'text') {
+        const elem = data.element as TypeElement<'text'>;
+        setTextElem(elem);
+      }
+    })
     
     // studio event
     eventHub.on('studioScaleScreen', (num) => {
@@ -140,6 +149,13 @@ function StudioContent(props: TypeProps) {
         onDrop={onDragFeekback}
         onDragOver={onDragOver}
       ></div>
+      {textElem !== null && (
+        <TextMask element={textElem} idraw={idrawObj} onCloseMask={(text) => {
+          textElem.desc.text = text;
+          idrawObj.updateElement(textElem);
+          setTextElem(null);
+        }} />
+      )}
     </Content>
   )
 }

@@ -1,7 +1,7 @@
 .idraw-studio-dialog-code-editor {
   &.ant-modal-confirm .ant-modal-body {
     padding: 10px 10px;
-    height: 640;
+    // height: 640;
     overflow: auto;
   }
 }
@@ -9,7 +9,7 @@
 .idraw-studio-dialog-export-image {
   &.ant-modal-confirm .ant-modal-body {
     padding: 10px 10px;
-    height: 640;
+    // height: 640;
     overflow: auto;
   }
 
@@ -28,13 +28,39 @@
 
     .export-image-content {
       display: flex;
-      max-width: 560px;
+      max-width: 400px;
       max-height: 400px;
     }
 
     .export-image-setting {
       display: flex;
-      width: 140px;
+      flex-direction: column;
+      width: 240px;
     }
+
+    .export-setting-field {
+      width: 100%;
+      height: 30px;
+      padding: 0 10px;
+      box-sizing: border-box;
+      font-size: 14px;
+      line-height: 30px;
+      margin-bottom: 20px;
+      text-align: center;
+
+      .setting-field-text {
+        text-align: right;
+      }
+
+      .setting-field-content {
+        padding-left: 10px;
+      }
+    }
+
+  }
+
+  // override
+  .ant-modal-confirm-btns {
+    display: none;
   }
 }
