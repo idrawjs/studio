@@ -136,7 +136,7 @@ const data = {
       h: 75,
       type: 'text',
       desc: {
-        text: 'A simple JavaScript framework for Drawing on the web',
+        text: 'A simple JavaScript framework for\r\nDrawing on the web',
         color: '#f0f0f0',
         fontSize: 20,
         fontWeight: 'bold',

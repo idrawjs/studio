@@ -30,12 +30,15 @@ export const TextMask = (props: TypeProps) => {
       height: element.h * scale,
       overflow: 'auto',
       textAlign: element.desc.textAlign || 'center',
+      lineHeight: `${element.desc.fontSize * scale}px`,
       fontSize: element.desc.fontSize * scale,
       fontFamily: element.desc.fontFamily,
       fontWeight: element.desc.fontWeight,
       color: '#555555', // element.desc.color, // TODO
       background: '#ffffff',
       wordBreak: 'break-all',
+      resize: 'none',
+      border: 'none',
     });
     setText(element.desc.text);
   }, [idraw, element])
