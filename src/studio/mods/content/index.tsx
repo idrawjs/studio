@@ -150,7 +150,9 @@ function StudioContent(props: TypeProps) {
         onDragOver={onDragOver}
       ></div>
       {textElem !== null && (
-        <TextMask element={textElem} idraw={idrawObj} onCloseMask={() => {
+        <TextMask element={textElem} idraw={idrawObj} onCloseMask={(text) => {
+          textElem.desc.text = text;
+          idrawObj.updateElement(textElem);
           setTextElem(null);
         }} />
       )}

@@ -10,13 +10,13 @@ type TypeProps = {
   // text: string;
   idraw: iDraw | null;
   element: TypeElement<'text'> | null;
-  onCloseMask: () => void;
+  onCloseMask: (text: string) => void;
 }
 
 export const TextMask = (props: TypeProps) => {
   const { onCloseMask, element, idraw } = props;
   const [editorStyle, setEditorStyle] = useState({});
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string>(element?.desc?.text || '');
 
   const resetEditor = useCallback(() => {
     const { scale } = idraw.getScreenTransform();
@@ -42,11 +42,20 @@ export const TextMask = (props: TypeProps) => {
 
 
   useEffect(() => {
+    setText(element?.desc?.text || '');
     resetEditor();
   }, [element]);
 
+  const onClose = useCallback(() => {
+    onCloseMask(text);
+  }, [text]);
+
+  const onChangeText = useCallback((e) => {
+    setText(e.target.value || '');
+  }, [element])
+
   return (
-    <div className="idraw-studio-text-mask" onClick={onCloseMask}>
+    <div className="idraw-studio-text-mask" onClick={onClose}>
       {/* <div style={editorStyle}
         contentEditable 
         suppressContentEditableWarning={true} 
@@ -65,10 +74,9 @@ export const TextMask = (props: TypeProps) => {
           e.preventDefault();
           e.stopPropagation();
         }}
-        onChange={(e) => {
-          console.log('e =====', e)
-        }}
-        defaultValue={text}
+        onChange={onChangeText}
+        onBlur={onClose}
+        defaultValue={element.desc.text}
       >
       </textarea>
     </div>
