@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useEffect, useRef, useState, useContext, useCallback } from 'react';
-import IDraw from 'idraw';
+import iDraw from 'idraw';
 import { TypeElement } from '@idraw/types';
 import { Layout } from 'antd'; 
 import eventHub from '../../util/event-hub';
@@ -25,10 +25,11 @@ function StudioContent(props: TypeProps) {
   const { width, height } = props;
   const mount = useRef(null); 
   const [ textElem, setTextElem ] = useState<TypeElement<'text'>|null>(null);
+  const [idrawObj, setIDrawObj] = useState<iDraw|null>(null)
   
   useEffect(() => {
     const mountDiv = mount.current as HTMLDivElement;
-    const idraw = new IDraw(mountDiv, {
+    const idraw = new iDraw(mountDiv, {
       width: width,
       height: height,
       contextWidth: props.contextWidth,
@@ -41,7 +42,7 @@ function StudioContent(props: TypeProps) {
         lineWidth: 10,
       }
     });
-    // setIDraw(idraw);
+    setIDrawObj(idraw);
 
     idraw.on('changeData', (data) => {
       eventHub.trigger('studioChangeData', data);
@@ -149,7 +150,7 @@ function StudioContent(props: TypeProps) {
         onDragOver={onDragOver}
       ></div>
       {textElem !== null && (
-        <TextMask element={textElem} onCloseMask={() => {
+        <TextMask element={textElem} idraw={idrawObj} onCloseMask={() => {
           setTextElem(null);
         }} />
       )}
