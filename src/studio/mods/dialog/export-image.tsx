@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Modal, Select, Row, Col, Button, Input, } from 'antd';
 import iDraw from 'idraw';
 import { downloadFile } from './../../util/file';
@@ -48,7 +48,7 @@ function ExportImage (props: { idraw: iDraw }) {
   const { idraw } = props;
   const [imageType, setImageType] = useState<'image/png' | 'image/jpeg'>('image/png');
   const [imageQuality, setImageQuality] = useState<number>(1);
-  const [dataURL, setDataURL] = useState(idraw.exportDataURL(imageType, imageQuality));
+  const [dataURL, setDataURL] = useState<string|null>(null);
   const [imageName, setImageName] = useState<string>('idraw-image');
 
   const imageExtMap = {
@@ -56,19 +56,25 @@ function ExportImage (props: { idraw: iDraw }) {
     'image/jpeg': 'jpeg',
   }
 
+  const resetDataURL = useCallback(() => {
+    idraw.exportDataURL(imageType, imageQuality).then((url) => {
+      setDataURL(url);
+    }).catch(console.log);
+  }, [imageType, imageQuality])
+
+  useEffect(() => {
+    resetDataURL();
+  }, [imageType, imageQuality])
+
   const handleImageType = useCallback((value) => {
-    setImageType(value);
     if (value !== imageType) {
-      const newDataURL = idraw.exportDataURL(value, imageQuality);
-      setDataURL(newDataURL);
+      setImageType(value);
     }
   }, [imageType, imageQuality])
 
   const handleImageQuality = useCallback((value) => {
-    setImageQuality(value);
     if (value !== imageQuality) {
-      const newDataURL = idraw.exportDataURL(imageType, value);
-      setDataURL(newDataURL);
+      setImageQuality(value);
     }
   }, [imageType, imageQuality])
 
