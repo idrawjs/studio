@@ -4,12 +4,15 @@ import { VirtualDrag } from '../virtual-drag';
 import eventHub from '../../util/event-hub';
 
 
+export type TypeSelectDataItem = {
+  name: string,
+  icon: React.ReactElement,
+  element: TypeElement<keyof TypeElemDesc>
+}
+
+
 export const Selector = (props: {
-  dataList?: {
-    name: string,
-    icon: React.ReactElement,
-    defaultElement: TypeElement<keyof TypeElemDesc>
-  }[]
+  dataList?: TypeSelectDataItem[]
 }) => {
   const { dataList = [] } = props;
   const onActionEnd = React.useCallback((e, element: TypeElement<keyof TypeElemDesc>) => {
@@ -24,11 +27,11 @@ export const Selector = (props: {
     <div className="idraw-studio-mod-selector">
       <div className="studio-selector-element-list">
         {dataList.map((elem, i) => {
-          const { icon, defaultElement } = elem;
+          const { icon, element } = elem;
           return (
             <div className="studio-selector-element-item" key={i}>
               <VirtualDrag onActionEnd={(e) => {
-                onActionEnd(e, defaultElement);
+                onActionEnd(e, element);
               }}>
                 {icon}
               </VirtualDrag>

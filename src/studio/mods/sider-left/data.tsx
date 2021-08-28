@@ -10,13 +10,13 @@ const defaultIconProps = {
 export const generalDataList: {
   name: string,
   icon: React.ReactElement,
-  defaultElement: TypeElement<keyof TypeElemDesc>
+  element: TypeElement<keyof TypeElemDesc>
 }[] = [
   
   {
     name: 'Text',
     icon: <IconText {...defaultIconProps} />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -36,7 +36,7 @@ export const generalDataList: {
   {
     name: 'Rect',
     icon: <BorderOutlined />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -54,7 +54,7 @@ export const generalDataList: {
   {
     name: 'Circle',
     icon: <IconCircle {...defaultIconProps} />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -72,7 +72,7 @@ export const generalDataList: {
   {
     name: 'Image',
     icon: <FileImageOutlined />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -88,7 +88,7 @@ export const generalDataList: {
   {
     name: 'SVG',
     icon: <IconSVG {...defaultIconProps} />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -104,7 +104,7 @@ export const generalDataList: {
   {
     name: 'HTML',
     icon: <IconHTML {...defaultIconProps} />,
-    defaultElement: {
+    element: {
       uuid: '',
       x: 0,
       y: 0,
