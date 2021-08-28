@@ -37,7 +37,7 @@ export const Description = (props: TypeProps) => {
   }
 
   return (
-    <div className="idraw-studio-mod-desc" style={style}>
+    <div className="idraw-studio-mod-desc" style={{...style}}>
       {supportElemList.includes(elem?.type) ? (
         <>
           {elem?.type === 'rect' && (

@@ -88,7 +88,7 @@ export function SiderRight(props: TypeProps) {
             )
           }
           key="description" className="idraw-studio-siderright-panel" >
-          <div style={{height: descMaxHeight, overflow: 'scroll'}}>
+          <div style={{height: descMaxHeight - 4, overflow: 'scroll'}}>
             <Attribute />
             <Description />
           </div>
