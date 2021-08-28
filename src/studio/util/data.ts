@@ -75,3 +75,17 @@ export function initData(data: TypeData | TypeDataBase): TypeData {
   });
   return result;
 }
+
+
+export function getSelectedElement (uuid: string, data: TypeData): TypeElement<keyof TypeElemDesc> | null {
+  let elem: TypeElement<keyof TypeElemDesc>|null = null;
+  if (data && Array.isArray(data?.elements)) {
+    for (let i = 0; i < data?.elements.length; i++) {
+      if (data?.elements[i]?.uuid === uuid) {
+        elem = data?.elements[i];
+        break;
+      }
+    }
+  }
+  return elem;
+}
