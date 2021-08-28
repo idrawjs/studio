@@ -26,14 +26,14 @@ export function SiderLeft(props: TypeProps) {
       </div>
       <Collapse
         bordered={false} 
-        defaultActiveKey={['general', 'advanced']}
+        defaultActiveKey={['general', 'custom']}
         expandIconPosition={'right'}
         className="idraw-studio-siderleft-collapse"
       >
         <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
           <Selector dataList={generalDataList} />
         </Panel>
-        <Panel header="Advanced" key="advanced" className="idraw-studio-siderleft-panel" >
+        <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
           <Selector dataList={generalDataList} />
         </Panel>
       </Collapse>

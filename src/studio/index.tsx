@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from 'antd';
-import { TypeDataBase, TypeData } from '@idraw/types';
+import { TypeDataBase, TypeData, TypeElement, TypeElemDesc } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
 import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
@@ -21,6 +21,17 @@ type TypeProps = {
   contextHeight?: number;
   devicePixelRatio?: number;
   data?: TypeDataBase | TypeData;
+  customElements?: {
+    name: string,
+    icon: React.ReactElement,
+    element: TypeElement<keyof TypeElemDesc>
+  }[],
+  customElementsPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (page: number) => void;
+  }
 }
 
 function Studio(p: TypeProps) {
