@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Layout, Collapse } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { Selector } from '../selector';
+import { Selector, TypeSelectDataItem } from '../selector';
 import { CustomSelector } from '../custom-selector';
 import eventHub from './../../util/event-hub';
 import { generalDataList } from './data';
@@ -10,7 +10,14 @@ const { Panel } = Collapse;
 const { Sider } = Layout;
 
 type TypeProps = {
-  width: number
+  width: number,
+  customElements?: TypeSelectDataItem[],
+  customElementsPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (page: number) => void;
+  }
 }
 
 export function SiderLeft(props: TypeProps) {
@@ -34,9 +41,14 @@ export function SiderLeft(props: TypeProps) {
         <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
           <Selector dataList={generalDataList} />
         </Panel>
-        <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
-          <CustomSelector dataList={generalDataList} />
-        </Panel>
+        {Array.isArray(props.customElements) && (
+          <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
+            <CustomSelector
+              dataList={props.customElements}
+              {...(props.customElementsPagination || {})}
+            />
+          </Panel>
+        )}
       </Collapse>
     </Sider>
   )

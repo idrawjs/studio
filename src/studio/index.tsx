@@ -92,6 +92,8 @@ function Studio(p: TypeProps) {
             <SiderLeft
               width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
               // height={contentSize.height}
+              customElements={props.customElements}
+              customElementsPagination={props.customElementsPagination}
             />
             <StudioContent
               width={contentWidth}

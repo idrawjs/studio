@@ -27,7 +27,7 @@ export const Selector = (props: {
     <div className="idraw-studio-mod-selector">
       <div className="studio-selector-element-list">
         {dataList.map((elem, i) => {
-          const { icon, element } = elem;
+          const { icon, element, name } = elem;
           return (
             <div className="studio-selector-element-item" key={i}>
               <VirtualDrag onActionEnd={(e) => {
@@ -35,6 +35,7 @@ export const Selector = (props: {
               }}>
                 {icon}
               </VirtualDrag>
+              <div className="selector-element-item-name">{name}</div>
             </div>
           )
         })}
