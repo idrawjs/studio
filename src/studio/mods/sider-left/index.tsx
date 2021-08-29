@@ -4,7 +4,10 @@ import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Selector, TypeSelectDataItem } from '../selector';
 import { CustomSelector } from '../custom-selector';
 import eventHub from './../../util/event-hub';
-import { generalDataList } from './data';
+import { generalDataList } from './data/general';
+import { iconDataList } from './data/icon';
+
+console.log('iconDataList ====', iconDataList);
 
 const { Panel } = Collapse;
 const { Sider } = Layout;
@@ -42,7 +45,7 @@ export function SiderLeft(props: TypeProps) {
           <Selector dataList={generalDataList} />
         </Panel>
         <Panel header="Icon" key="icon" className="idraw-studio-siderleft-panel">
-          <Selector dataList={generalDataList} />
+          <Selector dataList={iconDataList} />
         </Panel>
         {Array.isArray(props.customElements) && (
           <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >

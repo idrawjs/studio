@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import { BorderOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG, IconText, IconCircle, IconHTML } from '../icon';
+import { IconSVG, IconText, IconCircle, IconHTML } from '../../icon';
 
 const defaultIconProps = {
   width: 40, height: 40, size: 28, color: '#666666'
