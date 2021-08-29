@@ -3,12 +3,11 @@ import { TypeElement, TypeElemDesc } from '@idraw/types';
 import { AppstoreOutlined } from '@ant-design/icons';
 
 
-export const customDataList: {
+const testDataList: {
   name: string,
   icon: React.ReactElement,
   element: TypeElement<keyof TypeElemDesc>
 }[] = [
-  
   {
     name: 'Text',
     icon: <AppstoreOutlined />,
@@ -120,3 +119,9 @@ export const customDataList: {
     }
   }
 ];
+
+export const customDataList: {
+  name: string,
+  icon: React.ReactElement,
+  element: TypeElement<keyof TypeElemDesc>
+}[] = [...testDataList, ...testDataList, ...testDataList, ...testDataList ]
