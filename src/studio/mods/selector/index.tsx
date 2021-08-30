@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
+import { Tooltip } from 'antd';
 import { VirtualDrag } from '../virtual-drag';
 import eventHub from '../../util/event-hub';
 
@@ -29,14 +30,18 @@ export const Selector = (props: {
         {dataList.map((elem, i) => {
           const { icon, element, name } = elem;
           return (
-            <div className="studio-selector-element-item" key={i}>
-              <VirtualDrag onActionEnd={(e) => {
-                onActionEnd(e, element);
-              }}>
-                {icon}
-              </VirtualDrag>
-              <div className="selector-element-item-name">{name}</div>
-            </div>
+          <div className="studio-selector-element-item" key={i}>
+            <VirtualDrag onActionEnd={(e) => {
+              onActionEnd(e, element);
+            }}>
+              {icon}
+            </VirtualDrag>
+            <Tooltip placement="top" title={name}>
+              <div className="selector-element-item-name">
+                {name}
+              </div>
+            </Tooltip>
+          </div>
           )
         })}
       </div>
