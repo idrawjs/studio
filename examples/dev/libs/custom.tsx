@@ -1,22 +1,17 @@
 import * as React from 'react';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
-import { BorderOutlined, FileImageOutlined } from '@ant-design/icons';
-import { IconSVG, IconText, IconCircle, IconHTML } from '../icon';
+import { AppstoreOutlined } from '@ant-design/icons';
 
-const defaultIconProps = {
-  width: 40, height: 40, size: 28, color: '#666666'
-}
 
-export const generalDataList: {
+const testDataList: {
   name: string,
   icon: React.ReactElement,
-  defaultElement: TypeElement<keyof TypeElemDesc>
+  element: TypeElement<keyof TypeElemDesc>
 }[] = [
-  
   {
     name: 'Text',
-    icon: <IconText {...defaultIconProps} />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -35,8 +30,8 @@ export const generalDataList: {
   },
   {
     name: 'Rect',
-    icon: <BorderOutlined />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -53,8 +48,8 @@ export const generalDataList: {
   },
   {
     name: 'Circle',
-    icon: <IconCircle {...defaultIconProps} />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -71,8 +66,8 @@ export const generalDataList: {
   },
   {
     name: 'Image',
-    icon: <FileImageOutlined />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -87,8 +82,8 @@ export const generalDataList: {
   },
   {
     name: 'SVG',
-    icon: <IconSVG {...defaultIconProps} />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -103,8 +98,8 @@ export const generalDataList: {
   },
   {
     name: 'HTML',
-    icon: <IconHTML {...defaultIconProps} />,
-    defaultElement: {
+    icon: <AppstoreOutlined />,
+    element: {
       uuid: '',
       x: 0,
       y: 0,
@@ -124,3 +119,9 @@ export const generalDataList: {
     }
   }
 ];
+
+export const customDataList: {
+  name: string,
+  icon: React.ReactElement,
+  element: TypeElement<keyof TypeElemDesc>
+}[] = [...testDataList, ...testDataList, ...testDataList, ...testDataList ]

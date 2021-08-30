@@ -1,12 +1,13 @@
-import * as React from 'react';
-import { Layout, Collapse,  } from 'antd';
+import { useState, useCallback, useContext } from 'react';
+import { Layout, Collapse, Tag } from 'antd';
 import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
 import { Elements } from '../elements';
 import { Attribute } from '../attribute';
 import { Description } from '../description';
 import eventHub from './../../util/event-hub';
+import { getSelectedElement } from './../../util/data';
+import { StudioContext } from './../../context';
 
-const { useState, useCallback } = React;
 const { Panel } = Collapse;
 const { Sider } = Layout;
 type TypeProps = {
@@ -17,11 +18,24 @@ type TypeProps = {
 const panelHeaderHeight = 30;
 const siderHeaderHeight = 24;
 
+const descTagColorMap = {
+  'text': 'magenta',
+  'rect': 'volcano',
+  'circle': 'green',
+  'image': 'blue',
+  'svg': 'geekblue',
+  'html': 'purple',
+  '_': 'default'
+}
+
 export function SiderRight(props: TypeProps) {
   const { width, height } = props;
   const panelContentMaxHeight = ((height - siderHeaderHeight) / 2) - 30;
   const [elemMaxHeight, setElemMaxHeight] = useState(panelContentMaxHeight);
   const [descMaxHeight, setDescMaxHeight] = useState(panelContentMaxHeight);
+  const { selectedElementUUID, data } = useContext(StudioContext);
+
+  const selectedElement = getSelectedElement(selectedElementUUID, data);
 
   const onCollapseChange = useCallback((key: string|string[]) => {
     let keys: string[] = [];
@@ -62,8 +76,19 @@ export function SiderRight(props: TypeProps) {
         <Panel header="Elements" key="elements" className="idraw-studio-siderright-panel">
           <Elements maxHeight={elemMaxHeight}/>
         </Panel>
-        <Panel header="Description" key="description" className="idraw-studio-siderright-panel" >
-          <div style={{height: descMaxHeight, overflow: 'scroll'}}>
+        <Panel header={(
+            <>
+            <span style={{marginRight: 4}}>Description</span>
+            {selectedElement?.type && (
+              <Tag color={
+                descTagColorMap[selectedElement?.type] || descTagColorMap['_']
+              }>{selectedElement?.type}</Tag>
+            )}
+            </>
+            )
+          }
+          key="description" className="idraw-studio-siderright-panel" >
+          <div style={{height: descMaxHeight - 4, overflow: 'scroll'}}>
             <Attribute />
             <Description />
           </div>

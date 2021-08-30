@@ -1,5 +1,4 @@
 .idraw-studio-mod-selector {
-
   padding: 10px 10px;
 
   .studio-selector-element-list {
@@ -9,12 +8,25 @@
   
   .studio-selector-element-item {
     display: flex;
-    width: 40px;
-    height: 40px;
+    width: 52px;
+    height: 60px;
     justify-content: center;
     align-items: center;
     font-size: 28px;
     color: #666666;
     cursor: pointer;
+    flex-direction: column;
+  }
+
+  .selector-element-item-name {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 0px;
+    color: #888888;
+
+    width: 48px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
   }
 }

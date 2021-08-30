@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from 'antd';
-import { TypeDataBase, TypeData } from '@idraw/types';
+import { TypeDataBase, TypeData, } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
 import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
@@ -10,6 +10,7 @@ import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext, TypeContextData } from './context';
 import { initData } from './util/data';
+import { TypeSelectDataItem } from './mods/selector';
 
 const { useState, useEffect } = React;
 
@@ -21,6 +22,13 @@ type TypeProps = {
   contextHeight?: number;
   devicePixelRatio?: number;
   data?: TypeDataBase | TypeData;
+  customElements?: TypeSelectDataItem[],
+  customElementsPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (page: number) => void;
+  }
 }
 
 function Studio(p: TypeProps) {
@@ -84,6 +92,8 @@ function Studio(p: TypeProps) {
             <SiderLeft
               width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
               // height={contentSize.height}
+              customElements={props.customElements}
+              customElementsPagination={props.customElementsPagination}
             />
             <StudioContent
               width={contentWidth}

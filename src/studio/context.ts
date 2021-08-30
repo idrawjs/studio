@@ -7,7 +7,8 @@ export type TypeContextData = {
   contextSize: {
     width: number,
     height: number,
-  }
+  },
+  // getSelectedElement: (uuid: string, data: TypeData) => TypeElement<keyof TypeElemDesc>|null
 };
 
 export const StudioContext = createContext<TypeContextData>({
@@ -16,5 +17,5 @@ export const StudioContext = createContext<TypeContextData>({
   contextSize: {
     width: 0,
     height: 0,
-  }
+  },
 });

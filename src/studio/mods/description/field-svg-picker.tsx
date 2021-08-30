@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
-import { Input, Popover, message, } from 'antd';
+import {
+  // Popover,
+  // Input,
+  message, } from 'antd';
 import IDraw from 'idraw';
 import { pickFile, parseFileToText } from '../../util/file';
 
 const is = IDraw.is;
-const { TextArea } = Input;
+// const { TextArea } = Input;
 
 interface SVGPickerProps {
   value?: string;
@@ -95,7 +98,7 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
           </div> */}
           <div className="desc-svgpicker-entity" dangerouslySetInnerHTML={createMarkup(value || svgText)} />
           <div className="desc-svgpicker-action">
-            <div className="svgpicker-action svgpicker-action-text" >
+            {/* <div className="svgpicker-action svgpicker-action-text" >
               <Popover
                 content={() => (
                 <div>
@@ -117,7 +120,7 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
                   lineHeight: '50px'
                 }}>Code</span>
               </Popover>
-            </div>
+            </div> */}
             <div
               onClick={onPickSVG}
               className="svgpicker-action svgpicker-action-upload">

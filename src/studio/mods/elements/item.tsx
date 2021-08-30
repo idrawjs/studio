@@ -52,13 +52,19 @@ export const Item = (props: TypeProps) => {
   }, [elemName, element]);
 
   const onClickSwitchLock = useCallback(() => {
-    element.lock = !element.lock;
+    if (!element.operation) {
+      element.operation = {};
+    }
+    element.operation.lock = !element?.operation?.lock;
     eventHub.trigger('studioUpdateElement', element);
     setIsEdit(false);
   }, [element]);
 
   const onClickSwitchVisible = useCallback(() => {
-    element.invisible = !element.invisible;
+    if (!element.operation) {
+      element.operation = {};
+    }
+    element.operation.invisible = !element?.operation?.invisible;
     eventHub.trigger('studioUpdateElement', element);
     setIsEdit(false);
   }, [element]);
@@ -127,7 +133,7 @@ export const Item = (props: TypeProps) => {
             onClick={onClickEdit}
           />
         )}
-        {element.invisible === true ? (
+        {element?.operation?.invisible === true ? (
           <span onClick={onClickSwitchVisible} className="idraw-studio-element-icon ">
             <InVisible color={'#888888'}></InVisible>
           </span>
@@ -137,7 +143,7 @@ export const Item = (props: TypeProps) => {
           </span>
         )}
         
-        {element.lock === true ? (
+        {element?.operation?.lock === true ? (
           <LockFilled
             className="idraw-studio-element-icon icon-active"
             onClick={onClickSwitchLock} />

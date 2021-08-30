@@ -9,6 +9,7 @@ import { ImageDescForm } from './image';
 import { SVGDescForm } from './svg';
 import { HTMLDescForm } from './html';
 import { CircleDescForm } from './circle';
+import { SVGExtensionForm } from './svg-extension';
 
 const { useContext, useCallback } = React;
 
@@ -30,6 +31,14 @@ export const Description = (props: TypeProps) => {
     }
   }, [selectedElementUUID, elem]);
 
+
+  const onChangeElementExt = useCallback((ext: {[key: string]: any}) => {
+    if (elem) {
+      elem.extension = { ...(elem.extension || {}), ...ext };
+      eventHub.trigger('studioUpdateElement', elem);
+    }
+  }, [selectedElementUUID, elem]);
+
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
   if (props.maxHeight > 0) {
     style.maxHeight = props.maxHeight;
@@ -37,7 +46,7 @@ export const Description = (props: TypeProps) => {
   }
 
   return (
-    <div className="idraw-studio-mod-desc" style={style}>
+    <div className="idraw-studio-mod-desc" style={{...style}}>
       {supportElemList.includes(elem?.type) ? (
         <>
           {elem?.type === 'rect' && (
@@ -59,10 +68,16 @@ export const Description = (props: TypeProps) => {
             />
           )}
           {elem?.type === 'svg' && (
-            <SVGDescForm
-              elem={elem as TypeElement<'svg'>}
-              onChange={onChangeElementDesc}
-            />
+            <>
+              <SVGExtensionForm
+                elem={elem as TypeElement<'svg'>}
+                onChange={onChangeElementExt}
+              />
+              <SVGDescForm
+                elem={elem as TypeElement<'svg'>}
+                onChange={onChangeElementDesc}
+              />
+            </>
           )}
           {elem?.type === 'html' && (
             <HTMLDescForm

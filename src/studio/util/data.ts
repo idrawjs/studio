@@ -4,6 +4,7 @@ import {
   TypeElemDesc
 } from '@idraw/types';
 import util from '@idraw/util';
+import { parseElementExtension } from './extension';
 
 const { isColorStr } = util.color;
 
@@ -70,8 +71,23 @@ export function initData(data: TypeData | TypeDataBase): TypeData {
   const result = util.data.deepClone(data);
   result.elements.forEach((elem) => {
     if (!(typeof elem.uuid === 'string' && elem.uuid)) {
-      elem.uuid = util.uuid.createUUID()
+      elem.uuid = util.uuid.createUUID();
     }
+    elem = parseElementExtension(elem);
   });
   return result;
+}
+
+
+export function getSelectedElement (uuid: string, data: TypeData): TypeElement<keyof TypeElemDesc> | null {
+  let elem: TypeElement<keyof TypeElemDesc>|null = null;
+  if (data && Array.isArray(data?.elements)) {
+    for (let i = 0; i < data?.elements.length; i++) {
+      if (data?.elements[i]?.uuid === uuid) {
+        elem = data?.elements[i];
+        break;
+      }
+    }
+  }
+  return elem;
 }
