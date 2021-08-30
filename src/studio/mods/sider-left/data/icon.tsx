@@ -22,6 +22,10 @@ export const iconDataList: {
       type: 'svg',
       desc: {
         svg: parseReactToSVG(<CheckCircleOutlined />)
+      },
+      extension: {
+        subType: 'svg-custom-color',
+        currentColor: '#4A90E2FF'
       }
     },
     

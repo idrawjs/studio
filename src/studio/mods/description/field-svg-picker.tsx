@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { Input, Popover, message, } from 'antd';
+import {
+  Popover,
+  Input,
+  message, } from 'antd';
 import IDraw from 'idraw';
 import { pickFile, parseFileToText } from '../../util/file';
 

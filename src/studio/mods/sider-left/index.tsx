@@ -7,8 +7,6 @@ import eventHub from './../../util/event-hub';
 import { generalDataList } from './data/general';
 import { iconDataList } from './data/icon';
 
-console.log('iconDataList ====', iconDataList);
-
 const { Panel } = Collapse;
 const { Sider } = Layout;
 

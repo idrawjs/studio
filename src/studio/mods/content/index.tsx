@@ -8,6 +8,7 @@ import { StudioContext } from './../../context';
 import { onDragOver } from './../../mods/global';
 import { showExportImage } from './../dialog';
 import { TextMask } from './../mask';
+import { parseElementExtension } from './../../util/extension';
 
 const { Content } = Layout;
 
@@ -76,6 +77,7 @@ function StudioContent(props: TypeProps) {
       idraw.selectElement(data.uuid, { useMode: data.useMode });
     });
     eventHub.on('studioUpdateElement', (elem) => {
+      elem = parseElementExtension(elem);
       idraw.updateElement(elem);
     });
     eventHub.on('studioDeleteElement', (uuid: string) => {
@@ -106,8 +108,8 @@ function StudioContent(props: TypeProps) {
       const ctxPoint = idraw.pointScreenToContext({ x: dragX, y: dragY })
       element.x = ctxPoint.x;
       element.y = ctxPoint.y;
-
-      idraw.addElement(element);
+      let elem = parseElementExtension(element);
+      idraw.addElement(elem);
     });
 
     eventHub.on('studioUndo', () => {

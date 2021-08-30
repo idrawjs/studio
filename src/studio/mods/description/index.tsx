@@ -9,6 +9,7 @@ import { ImageDescForm } from './image';
 import { SVGDescForm } from './svg';
 import { HTMLDescForm } from './html';
 import { CircleDescForm } from './circle';
+import { SVGExtensionForm } from './svg-extension';
 
 const { useContext, useCallback } = React;
 
@@ -26,6 +27,14 @@ export const Description = (props: TypeProps) => {
   const onChangeElementDesc = useCallback((desc: TypeElemDesc[keyof TypeElemDesc]) => {
     if (elem) {
       elem.desc = { ...elem.desc, ...desc };
+      eventHub.trigger('studioUpdateElement', elem);
+    }
+  }, [selectedElementUUID, elem]);
+
+
+  const onChangeElementExt = useCallback((ext: {[key: string]: any}) => {
+    if (elem) {
+      elem.extension = { ...(elem.extension || {}), ...ext };
       eventHub.trigger('studioUpdateElement', elem);
     }
   }, [selectedElementUUID, elem]);
@@ -59,10 +68,16 @@ export const Description = (props: TypeProps) => {
             />
           )}
           {elem?.type === 'svg' && (
-            <SVGDescForm
-              elem={elem as TypeElement<'svg'>}
-              onChange={onChangeElementDesc}
-            />
+            <>
+              <SVGDescForm
+                elem={elem as TypeElement<'svg'>}
+                onChange={onChangeElementDesc}
+              />
+              <SVGExtensionForm
+                elem={elem as TypeElement<'svg'>}
+                onChange={onChangeElementExt}
+              />
+            </>
           )}
           {elem?.type === 'html' && (
             <HTMLDescForm
