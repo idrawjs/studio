@@ -69,13 +69,13 @@ export const Description = (props: TypeProps) => {
           )}
           {elem?.type === 'svg' && (
             <>
-              <SVGDescForm
-                elem={elem as TypeElement<'svg'>}
-                onChange={onChangeElementDesc}
-              />
               <SVGExtensionForm
                 elem={elem as TypeElement<'svg'>}
                 onChange={onChangeElementExt}
+              />
+              <SVGDescForm
+                elem={elem as TypeElement<'svg'>}
+                onChange={onChangeElementDesc}
               />
             </>
           )}
