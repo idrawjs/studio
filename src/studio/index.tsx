@@ -163,7 +163,7 @@ function calcContentWidth(
 }): number {
   let contentWidth = props.studioWidth;
   if (opts.closeSiderLeft !== true) {
-    contentWidth = contentWidth - (layoutConfig.siderLeft.width + layoutConfig.siderLeft.asideLayout.width);
+    contentWidth = contentWidth - layoutConfig.siderLeft.width;
   }
   if (opts.closeSiderRight !== true) {
     contentWidth = contentWidth - layoutConfig.siderRight.width;
