@@ -59,14 +59,6 @@ export function SiderRight(props: TypeProps) {
 
   return (
     <Sider width={width} className="idraw-studio-siderright">
-      <div className="idraw-studio-siderright-header" style={{height: siderHeaderHeight}}>
-        <DoubleRightOutlined
-          className="studio-siderright-header-icon  siderright-close-btn"
-          onClick={() => {
-            eventHub.trigger('studioCloseRightSider', true);
-          }}
-        />
-      </div>
       <Collapse
         bordered={false} 
         defaultActiveKey={['elements', 'description']}
@@ -109,19 +101,3 @@ export function SiderRight(props: TypeProps) {
 }
  
 
-
-export function SiderRightBtn(props: { style?: React.HTMLAttributes<HTMLDivElement>['style'] }) {
-  return (
-    <div
-      style={props.style}
-      className="idraw-studio-siderright-open-btn"
-      onClick={() => {
-        eventHub.trigger('studioCloseRightSider', false);
-      }}
-    >
-      <DoubleLeftOutlined
-        className="siderright-open-btn-icon"
-      />
-    </div>
-  )
-}
