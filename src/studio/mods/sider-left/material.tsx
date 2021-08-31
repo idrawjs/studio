@@ -20,18 +20,10 @@ type TypeProps = {
   }
 }
 
-export function SiderMaterial(props: TypeProps) {
+export function Materials(props: TypeProps) {
 
   return (
     <div style={{width: props.width}} >
-      {/* <div className="idraw-studio-siderleft-header">
-        <DoubleLeftOutlined
-          className="studio-siderleft-header-icon  siderleft-close-btn"
-          onClick={() => {
-            eventHub.trigger('studioCloseLeftSider', true);
-          }}
-        />
-      </div> */}
       <Collapse
         bordered={false} 
         defaultActiveKey={['general', 'icon', 'custom']}

@@ -43,6 +43,14 @@
     overflow: auto;
   }
 
+  .idraw-studio-siderleft-content {
+    display: none;
+
+    &.content-active {
+      display: block;
+    }
+  }
+
   // override 
   .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
     padding-top: 4px;
@@ -53,6 +61,24 @@
     background: #fafafa;
     border-top: 1px solid #dadce0;
     padding: 0;
+  }
+}
+
+
+.idraw-studio-siderleft-aside {
+  display: flex;
+  flex-direction: column;
+
+  .siderleft-aside-tab-item {
+    text-align: center;
+    font-size: 28px;
+    color: #999999;
+    cursor: pointer;
+    border-bottom: 1px solid #dadce0;
+
+    &.tab-active {
+      color: #03a9f4;
+    }
   }
 }
 
