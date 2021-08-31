@@ -5,7 +5,7 @@ import classnames from 'classnames';
 import { TypeSelectDataItem } from '../selector'; 
 import eventHub from './../../util/event-hub'; 
 import { Materials } from './material';
-import { Themes } from './theme';
+import { Templates } from './template';
 import { Aside } from './aside';
  
 const { Sider, Content } = Layout;
@@ -27,14 +27,14 @@ type TypeProps = {
 
 export function SiderLeft(props: TypeProps) {
 
-  const [asideActiveTab, setActiveTab] = useState<string>('themes');
+  const [asideActiveTab, setActiveTab] = useState<string>('templates');
   const contentList: {
     key: string,
     content: React.ReactElement,
   }[] = [
     {
-      key: 'themes',
-      content: <Themes />
+      key: 'templates',
+      content: <Templates width={props.width - props.asideLayout.width} />
     },
     {
       key: 'materials',

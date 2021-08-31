@@ -16,8 +16,8 @@ const tabList: {
   Comp: React.ReactElement
 }[] = [
   {
-    name: 'Themes',
-    key: 'themes',
+    name: 'Templates',
+    key: 'templates',
     Comp: <ReconciliationOutlined />
   },
   {
