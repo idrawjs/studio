@@ -3,17 +3,37 @@
   background: #ffffff;
   user-select: none;
 
-  .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
-    padding-top: 4px;
-    padding-bottom: 4px;
+  .idraw-studio-siderright-closebtn {
+    position: absolute;
+    height: 100px;
+    width: 16px;
+    top: calc(50% - 50px);
+    left: -16px;
     background: #ffffff;
+    border: 1px solid #dadce0;
+    border-top-left-radius: 16px;
+    border-bottom-left-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #cccccc;
+    cursor: pointer;
+    box-shadow: -2px 4px 8px #00000026;
+    z-index: 1;
+
+    >span {
+      position: absolute;
+      width: 14px;
+      left: 0px;
+      top: calc(50% - 8px);
+    }
+
+    &:hover {
+      color: #03a9f4;
+      border-color: #03a9f4;
+    }
   }
 
-  .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
-    background: #fafafa;
-    border-top: 1px solid #dadce0;
-    padding: 0;
-  }
 
 
   .idraw-studio-siderright-collapse {
@@ -24,6 +44,18 @@
     box-sizing: border-box;
   }
 
+
+  // override
+  .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
+    padding-top: 4px;
+    padding-bottom: 4px;
+    background: #ffffff;
+  }
+  .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
+    background: #fafafa;
+    border-top: 1px solid #dadce0;
+    padding: 0;
+  }
 }
 
 .idraw-studio-siderright-header {

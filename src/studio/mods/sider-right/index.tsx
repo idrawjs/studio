@@ -11,6 +11,7 @@ import { StudioContext } from './../../context';
 const { Panel } = Collapse;
 const { Sider } = Layout;
 type TypeProps = {
+  close: boolean,
   width: number,
   height: number,
 }
@@ -94,6 +95,15 @@ export function SiderRight(props: TypeProps) {
           </div>
         </Panel>
       </Collapse>
+      <div className="idraw-studio-siderright-closebtn" onClick={() => {
+        eventHub.trigger('studioCloseRightSider', !props.close);
+      }}>
+        {props.close === true ? (
+          <DoubleLeftOutlined />
+        ) : (
+          <DoubleRightOutlined />
+        )}
+      </div>
     </Sider>
   )
 }
