@@ -3,7 +3,7 @@ import { Layout } from 'antd';
 import { TypeDataBase, TypeData, } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
-import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
+import { SiderLeft } from './mods/sider-left';
 import { SiderRight, SiderRightBtn } from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
@@ -90,7 +90,8 @@ function Studio(p: TypeProps) {
           />
           <Layout style={{position: 'relative'}}>
             <SiderLeft
-              width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
+              close={closeSiderLeft}
+              width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
               // height={contentSize.height}
               asideLayout={layoutConfig.siderLeft.asideLayout}
               customElements={props.customElements}
@@ -107,9 +108,9 @@ function Studio(p: TypeProps) {
               width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
               height={contentSize.height}
             />
-            {closeSiderLeft && (
+            {/* {closeSiderLeft && (
               <SiderLeftBtn style={{position: 'absolute', left: 10, top: 10, zIndex: 1,}} />
-            )}
+            )} */}
             {closeSiderRight && (
               <SiderRightBtn style={{position: 'absolute', right: 10, top: 10, zIndex: 1,}} />
             )}
@@ -167,7 +168,7 @@ function calcContentWidth(
 }): number {
   let contentWidth = props.studioWidth;
   if (opts.closeSiderLeft !== true) {
-    contentWidth = contentWidth - layoutConfig.siderLeft.width;
+    contentWidth = contentWidth - (layoutConfig.siderLeft.width + layoutConfig.siderLeft.asideLayout.width);
   }
   if (opts.closeSiderRight !== true) {
     contentWidth = contentWidth - layoutConfig.siderRight.width;

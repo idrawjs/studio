@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Layout } from 'antd';
-import { DoubleRightOutlined } from '@ant-design/icons';
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import { TypeSelectDataItem } from '../selector'; 
 import eventHub from './../../util/event-hub'; 
 import { SiderMaterial } from './material';
@@ -8,6 +8,7 @@ import { SiderMaterial } from './material';
 const { Sider, Content } = Layout;
 
 type TypeProps = {
+  close: boolean;
   width: number,
   asideLayout: { width: number }
   customElements?: TypeSelectDataItem[],
@@ -20,6 +21,7 @@ type TypeProps = {
 }
 
 export function SiderLeft(props: TypeProps) {
+
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
       <Layout style={{
@@ -40,8 +42,14 @@ export function SiderLeft(props: TypeProps) {
           />
         </Content>
       </Layout>
-      <div className="idraw-studio-siderleft-closebtn">
-        <DoubleRightOutlined />
+      <div className="idraw-studio-siderleft-closebtn" onClick={() => {
+        eventHub.trigger('studioCloseLeftSider', !props.close);
+      }}>
+        {props.close === true ? (
+          <DoubleRightOutlined />
+        ) : (
+          <DoubleLeftOutlined />
+        )}
       </div>
     </Sider>
   )
