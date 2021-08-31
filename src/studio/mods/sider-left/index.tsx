@@ -1,14 +1,11 @@
 import * as React from 'react';
-import { Layout, Collapse } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { Selector, TypeSelectDataItem } from '../selector';
-import { CustomSelector } from '../custom-selector';
-import eventHub from './../../util/event-hub';
-import { generalDataList } from './data/general';
-import { iconDataList } from './data/icon';
-
-const { Panel } = Collapse;
-const { Sider } = Layout;
+import { Layout } from 'antd';
+import { DoubleRightOutlined } from '@ant-design/icons';
+import { TypeSelectDataItem } from '../selector'; 
+import eventHub from './../../util/event-hub'; 
+import { SiderMaterial } from './material';
+ 
+const { Sider, Content } = Layout;
 
 type TypeProps = {
   width: number,
@@ -21,39 +18,32 @@ type TypeProps = {
   }
 }
 
+const asideLayout = {
+  width: 50
+};
+
 export function SiderLeft(props: TypeProps) {
 
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
-      <div className="idraw-studio-siderleft-header">
-        <DoubleLeftOutlined
-          className="studio-siderleft-header-icon  siderleft-close-btn"
-          onClick={() => {
-            eventHub.trigger('studioCloseLeftSider', true);
-          }}
-        />
-      </div>
-      <Collapse
-        bordered={false} 
-        defaultActiveKey={['general', 'icon', 'custom']}
-        expandIconPosition={'right'}
-        className="idraw-studio-siderleft-collapse"
-      >
-        <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
-          <Selector dataList={generalDataList} />
-        </Panel>
-        <Panel header="Icon" key="icon" className="idraw-studio-siderleft-panel">
-          <Selector dataList={iconDataList} />
-        </Panel>
-        {Array.isArray(props.customElements) && (
-          <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
-            <CustomSelector
-              dataList={props.customElements}
-              {...(props.customElementsPagination || {})}
-            />
-          </Panel>
-        )}
-      </Collapse>
+      <Layout style={{
+        height: '100%',
+        overflow: 'auto'
+      }}>
+        <Sider width={asideLayout.width} className="idraw-studio-siderleft-aside">
+          aside
+        </Sider>
+        <Content style={{
+          height: '100%',
+          overflow: 'auto'
+        }}>
+          <SiderMaterial 
+             width={props.width - asideLayout.width}
+             customElements={props.customElements}
+             customElementsPagination={props.customElementsPagination}
+          />
+        </Content>
+      </Layout>
     </Sider>
   )
 }
