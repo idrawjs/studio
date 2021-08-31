@@ -38,12 +38,15 @@ export function SiderLeft(props: TypeProps) {
           overflow: 'auto'
         }}>
           <SiderMaterial 
-             width={props.width - asideLayout.width}
-             customElements={props.customElements}
-             customElementsPagination={props.customElementsPagination}
+            width={props.width - asideLayout.width}
+            customElements={props.customElements}
+            customElementsPagination={props.customElementsPagination}
           />
         </Content>
       </Layout>
+      <div className="idraw-studio-siderleft-closebtn">
+        <DoubleRightOutlined />
+      </div>
     </Sider>
   )
 }

@@ -1,14 +1,13 @@
 import * as React from 'react';
-import { Layout, Collapse } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
+import { Collapse } from 'antd';
+// import { DoubleLeftOutlined } from '@ant-design/icons';
 import { Selector, TypeSelectDataItem } from '../selector';
 import { CustomSelector } from '../custom-selector';
-import eventHub from './../../util/event-hub';
+// import eventHub from './../../util/event-hub';
 import { generalDataList } from './data/general';
 import { iconDataList } from './data/icon';
 
 const { Panel } = Collapse;
-const { Sider } = Layout;
 
 type TypeProps = {
   width: number,
@@ -24,15 +23,15 @@ type TypeProps = {
 export function SiderMaterial(props: TypeProps) {
 
   return (
-    <Sider width={props.width} className="idraw-studio-siderleft">
-      <div className="idraw-studio-siderleft-header">
+    <div style={{width: props.width}} >
+      {/* <div className="idraw-studio-siderleft-header">
         <DoubleLeftOutlined
           className="studio-siderleft-header-icon  siderleft-close-btn"
           onClick={() => {
             eventHub.trigger('studioCloseLeftSider', true);
           }}
         />
-      </div>
+      </div> */}
       <Collapse
         bordered={false} 
         defaultActiveKey={['general', 'icon', 'custom']}
@@ -54,24 +53,6 @@ export function SiderMaterial(props: TypeProps) {
           </Panel>
         )}
       </Collapse>
-    </Sider>
-  )
-}
-
-
-export function SiderLeftBtn(props: { style?: React.HTMLAttributes<HTMLDivElement>['style'] }) {
-  return (
-    <div
-      style={props.style}
-      className="idraw-studio-siderleft-open-btn"
-      onClick={() => {
-        eventHub.trigger('studioCloseLeftSider', false);
-      }}
-    >
-      <DoubleRightOutlined
-        className="siderleft-open-btn-icon"
-      />
     </div>
   )
 }
- 

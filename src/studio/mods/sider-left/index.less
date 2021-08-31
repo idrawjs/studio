@@ -2,8 +2,38 @@
   border-right: 1px solid #dadce0;
   background: #ffffff;
   user-select: none;
-  overflow: auto;
+  // overflow: auto;
+  position: relative;
 
+  .idraw-studio-siderleft-closebtn {
+    position: absolute;
+    height: 100px;
+    width: 16px;
+    top: calc(50% - 50px);
+    right: -16px;
+    background: #ffffff;
+    border: 1px solid #dadce0;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #cccccc;
+    cursor: pointer;
+    z-index: 1;
+
+    >span {
+      position: absolute;
+      width: 14px;
+      left: 0px;
+      top: calc(50% - 8px);
+    }
+
+    &:hover {
+      color: #03a9f4;
+      border-color: #03a9f4;
+    }
+  }
 
   .idraw-studio-siderleft-aside {
     border-right: 1px solid #dadce0;
@@ -11,7 +41,6 @@
     user-select: none;
     overflow: auto;
   }
-
 
   // override 
   .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
