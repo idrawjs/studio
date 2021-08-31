@@ -9,6 +9,7 @@ const { Sider, Content } = Layout;
 
 type TypeProps = {
   width: number,
+  asideLayout: { width: number }
   customElements?: TypeSelectDataItem[],
   customElementsPagination?: {
     current: number,
@@ -18,19 +19,14 @@ type TypeProps = {
   }
 }
 
-const asideLayout = {
-  width: 50
-};
-
 export function SiderLeft(props: TypeProps) {
-
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
       <Layout style={{
         height: '100%',
         overflow: 'auto'
       }}>
-        <Sider width={asideLayout.width} className="idraw-studio-siderleft-aside">
+        <Sider width={props.asideLayout.width} className="idraw-studio-siderleft-aside">
           aside
         </Sider>
         <Content style={{
@@ -38,7 +34,7 @@ export function SiderLeft(props: TypeProps) {
           overflow: 'auto'
         }}>
           <SiderMaterial 
-            width={props.width - asideLayout.width}
+            width={props.width - props.asideLayout.width}
             customElements={props.customElements}
             customElementsPagination={props.customElementsPagination}
           />

@@ -7,6 +7,9 @@ export const layoutConfig = {
   },
   siderLeft: {
     width: 300,
+    asideLayout: {
+      width: 50
+    }
   },
   siderRight: {
     width: 240,
