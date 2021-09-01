@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, memo, useMemo } from 'react';
 import { Layout } from 'antd';
 import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
@@ -8,6 +8,7 @@ import { Materials } from './material';
 import { Templates } from './template';
 import { Aside } from './aside';
  
+const TemplatesMemo = memo(Templates);
 const { Sider, Content } = Layout;
 
 type TypeProps = {
@@ -41,10 +42,13 @@ export function SiderLeft(props: TypeProps) {
   }[] = [
     {
       key: 'templates',
-      content: <Templates
+      content: <TemplatesMemo
         width={props.width - props.asideLayout.width}
-        customTemplates={props.customTemplates}
-        customTemplatesPagination={props.customTemplatesPagination}
+        customTemplates={useMemo(() => props.customTemplates, [props.customTemplates])}
+        customTemplatesPagination={useMemo(
+          () => props.customTemplatesPagination,
+          [props.customTemplatesPagination]
+        )}
       />
     },
     {
