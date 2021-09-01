@@ -1,6 +1,7 @@
 import React, { useRef, useEffect, useState, useCallback } from 'react';
 import classnames from 'classnames';
 import iDraw from 'idraw';
+import { Tooltip } from 'antd';
 // import { TypeDataBase } from '@idraw/types';
 import { TypeTemplate } from './../../types';
 import eventHub from './../../util/event-hub';
@@ -107,61 +108,81 @@ export function Templates(props: TypeProps) {
           'studio-template-item': true,
           'template-show': customTemplates.length >= 1
         })}>
-          <div className="template-idraw" ref={ref0} onClick={() => {onClickTemplate(0)}}></div>
+          <Tooltip title={customTemplates[0]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref0} onClick={() => {onClickTemplate(0)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 2
         })}>
-          <div className="template-idraw" ref={ref1} onClick={() => {onClickTemplate(1)}}></div>
+          <Tooltip title={customTemplates[1]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref1} onClick={() => {onClickTemplate(1)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 3
         })}>
-          <div className="template-idraw" ref={ref2} onClick={() => {onClickTemplate(2)}}></div>
+          <Tooltip title={customTemplates[2]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref2} onClick={() => {onClickTemplate(2)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 4
         })}>
-          <div className="template-idraw" ref={ref3} onClick={() => {onClickTemplate(3)}}></div>
+          <Tooltip title={customTemplates[3]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref3} onClick={() => {onClickTemplate(3)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 5
         })}>
-          <div className="template-idraw" ref={ref4} onClick={() => {onClickTemplate(4)}}></div>
+          <Tooltip title={customTemplates[4]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref4} onClick={() => {onClickTemplate(4)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 6
         })}>
-          <div className="template-idraw" ref={ref5} onClick={() => {onClickTemplate(5)}}></div>
+          <Tooltip title={customTemplates[5]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref5} onClick={() => {onClickTemplate(5)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 7
         })}>
-          <div className="template-idraw" ref={ref6} onClick={() => {onClickTemplate(6)}}></div>
+          <Tooltip title={customTemplates[6]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref6} onClick={() => {onClickTemplate(6)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 8
         })}>
-          <div className="template-idraw" ref={ref7} onClick={() => {onClickTemplate(7)}}></div>
+          <Tooltip title={customTemplates[7]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref7} onClick={() => {onClickTemplate(7)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 9
         })}>
-          <div className="template-idraw" ref={ref8} onClick={() => {onClickTemplate(8)}}></div>
+          <Tooltip title={customTemplates[8]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref8} onClick={() => {onClickTemplate(8)}}></div>
+          </Tooltip>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 10
         })}>
-          <div className="template-idraw" ref={ref9} onClick={() => {onClickTemplate(9)}}></div>
+          <Tooltip title={customTemplates[9]?.name || ''} placement="right">
+            <div className="template-idraw" ref={ref9} onClick={() => {onClickTemplate(9)}}></div>
+          </Tooltip>
         </div>
       </div>
     </div>
