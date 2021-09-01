@@ -3,17 +3,10 @@ import { TypeElement, TypeElemDesc } from '@idraw/types';
 import { Tooltip } from 'antd';
 import { VirtualDrag } from '../virtual-drag';
 import eventHub from '../../util/event-hub';
-
-
-export type TypeMaterialItem = {
-  name: string,
-  icon: React.ReactElement,
-  element: TypeElement<keyof TypeElemDesc>
-}
-
+import { TypeMaterial } from '../../types';
 
 export const Selector = (props: {
-  dataList?: TypeMaterialItem[]
+  dataList?: TypeMaterial[]
 }) => {
   const { dataList = [] } = props;
   const onActionEnd = React.useCallback((e, element: TypeElement<keyof TypeElemDesc>) => {

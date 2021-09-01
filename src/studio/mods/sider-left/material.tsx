@@ -1,7 +1,8 @@
 import * as React from 'react';
 import { Collapse } from 'antd';
 // import { DoubleLeftOutlined } from '@ant-design/icons';
-import { Selector, TypeMaterialItem } from '../selector';
+import { Selector } from '../selector';
+import { TypeMaterial } from '../../types';
 import { CustomSelector } from '../custom-selector';
 // import eventHub from './../../util/event-hub';
 import { generalDataList } from './data/general';
@@ -11,7 +12,7 @@ const { Panel } = Collapse;
 
 type TypeProps = {
   width: number,
-  customMaterials?: TypeMaterialItem[],
+  customMaterials?: TypeMaterial[],
   customMaterialsPagination?: {
     current: number,
     pageSize: number,

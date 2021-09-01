@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Layout } from 'antd';
 import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { TypeMaterialItem } from '../selector'; 
+import { TypeMaterial, TypeTemplate } from '../../types'; 
 import eventHub from './../../util/event-hub'; 
 import { Materials } from './material';
 import { Templates } from './template';
@@ -14,12 +14,19 @@ type TypeProps = {
   close: boolean;
   width: number,
   asideLayout: { width: number }
-  customMaterials?: TypeMaterialItem[],
+  customMaterials?: TypeMaterial[],
   customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
     onChange: (page: number) => void;
+  },
+  customTemplates?: TypeTemplate[],
+  customTemplatesPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (currentPage: number) => void;
   }
 }
 
@@ -34,7 +41,11 @@ export function SiderLeft(props: TypeProps) {
   }[] = [
     {
       key: 'templates',
-      content: <Templates width={props.width - props.asideLayout.width} />
+      content: <Templates
+        width={props.width - props.asideLayout.width}
+        customTemplates={props.customTemplates}
+        customTemplatesPagination={props.customTemplatesPagination}
+      />
     },
     {
       key: 'materials',

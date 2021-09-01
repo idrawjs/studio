@@ -13,6 +13,7 @@
   ],
   "scripts": {
     "dev": "webpack serve --host 0.0.0.0 -c ./scripts/webpack.dev.config.js",
+    "dev:advance": "webpack serve --host 0.0.0.0 -c ./scripts/webpack.dev-advance.config.js",
     "build": "npm run build:compile && npm run build:dist",
     "build:compile": "node ./scripts/build.js compile",
     "build:dist": "node --max_old_space_size=8192 ./scripts/build.js dist"
