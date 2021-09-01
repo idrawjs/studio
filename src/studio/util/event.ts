@@ -1,9 +1,10 @@
-import { TypeData, TypeElemDesc, TypeElement } from "@idraw/types";
+import { TypeData, TypeDataBase, TypeElemDesc, TypeElement } from "@idraw/types";
 
 export type TypeIDrawEventArgMap  = {
   'studioScaleScreen': number;
   'studioSelectElement': { uuid: string, useMode?: boolean };
   'studioChangeData': TypeData;
+  'studioUpdateData': TypeData | TypeDataBase;
   'studioUpdateElement': TypeElement<keyof TypeElemDesc>;
   'studioDeleteElement': string;
   'studioMoveUpElement': string;
@@ -26,6 +27,7 @@ export type TypeIDrawEventTriggerResult = {
   'studioScaleScreen': void;
   'studioSelectElement': void;
   'studioChangeData': void;
+  'studioUpdateData': void;
   'studioUpdateElement': void;
   'studioDeleteElement': void;
   'studioMoveUpElement': void;

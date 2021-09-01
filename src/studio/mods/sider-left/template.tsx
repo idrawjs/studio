@@ -1,8 +1,9 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import classnames from 'classnames';
 import iDraw from 'idraw';
 // import { TypeDataBase } from '@idraw/types';
 import { TypeTemplate } from './../../types';
+import eventHub from './../../util/event-hub';
 
 
 type TypeProps = {
@@ -85,7 +86,18 @@ export function Templates(props: TypeProps) {
       }
     }
     
-  }, [customTemplates, customTemplatesPagination])
+  }, [customTemplates, customTemplatesPagination]);
+
+  const onClickTemplate = useCallback((index: number) => {
+    const tpl = customTemplates[index];
+    if (tpl) {
+      eventHub.trigger('studioUpdateData', tpl.data);
+      eventHub.trigger('studioIDrawResetContextSize', {
+        width: tpl.width,
+        height: tpl.height
+      })
+    }
+  }, [customTemplates]);
 
 
   return (
@@ -95,61 +107,61 @@ export function Templates(props: TypeProps) {
           'studio-template-item': true,
           'template-show': customTemplates.length >= 1
         })}>
-          <div className="template-idraw" ref={ref0}></div>
+          <div className="template-idraw" ref={ref0} onClick={() => {onClickTemplate(0)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 2
         })}>
-          <div className="template-idraw" ref={ref1}></div>
+          <div className="template-idraw" ref={ref1} onClick={() => {onClickTemplate(1)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 3
         })}>
-          <div className="template-idraw" ref={ref2}></div>
+          <div className="template-idraw" ref={ref2} onClick={() => {onClickTemplate(2)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 4
         })}>
-          <div className="template-idraw" ref={ref3}></div>
+          <div className="template-idraw" ref={ref3} onClick={() => {onClickTemplate(3)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 5
         })}>
-          <div className="template-idraw" ref={ref4}></div>
+          <div className="template-idraw" ref={ref4} onClick={() => {onClickTemplate(4)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 6
         })}>
-          <div className="template-idraw" ref={ref5}></div>
+          <div className="template-idraw" ref={ref5} onClick={() => {onClickTemplate(5)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 7
         })}>
-          <div className="template-idraw" ref={ref6}></div>
+          <div className="template-idraw" ref={ref6} onClick={() => {onClickTemplate(6)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 8
         })}>
-          <div className="template-idraw" ref={ref7}></div>
+          <div className="template-idraw" ref={ref7} onClick={() => {onClickTemplate(7)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 9
         })}>
-          <div className="template-idraw" ref={ref8}></div>
+          <div className="template-idraw" ref={ref8} onClick={() => {onClickTemplate(8)}}></div>
         </div>
         <div className={classnames({
           'studio-template-item': true,
           'template-show': customTemplates.length >= 10
         })}>
-          <div className="template-idraw" ref={ref9}></div>
+          <div className="template-idraw" ref={ref9} onClick={() => {onClickTemplate(9)}}></div>
         </div>
       </div>
     </div>
