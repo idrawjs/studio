@@ -10,7 +10,7 @@ import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext, TypeContextData } from './context';
 import { initData } from './util/data';
-import { TypeSelectDataItem } from './mods/selector';
+import { TypeMaterialItem } from './mods/selector';
 
 const { useState, useEffect } = React;
 
@@ -22,8 +22,8 @@ type TypeProps = {
   contextHeight?: number;
   devicePixelRatio?: number;
   data?: TypeDataBase | TypeData;
-  customElements?: TypeSelectDataItem[],
-  customElementsPagination?: {
+  customMaterials?: TypeMaterialItem[],
+  customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
@@ -94,8 +94,8 @@ function Studio(p: TypeProps) {
               width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
               // height={contentSize.height}
               asideLayout={layoutConfig.siderLeft.asideLayout}
-              customElements={props.customElements}
-              customElementsPagination={props.customElementsPagination}
+              customMaterials={props.customMaterials}
+              customMaterialsPagination={props.customMaterialsPagination}
             />
             <StudioContent
               width={contentWidth}

@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { Pagination } from 'antd';
-import { Selector, TypeSelectDataItem } from '../selector';
+import { Selector, TypeMaterialItem } from '../selector';
 
 
 type TypeProps = {
-  dataList: TypeSelectDataItem[],
+  dataList: TypeMaterialItem[],
   current?: number,
   pageSize?: number,
   total?: number,

@@ -5,7 +5,7 @@ import { VirtualDrag } from '../virtual-drag';
 import eventHub from '../../util/event-hub';
 
 
-export type TypeSelectDataItem = {
+export type TypeMaterialItem = {
   name: string,
   icon: React.ReactElement,
   element: TypeElement<keyof TypeElemDesc>
@@ -13,7 +13,7 @@ export type TypeSelectDataItem = {
 
 
 export const Selector = (props: {
-  dataList?: TypeSelectDataItem[]
+  dataList?: TypeMaterialItem[]
 }) => {
   const { dataList = [] } = props;
   const onActionEnd = React.useCallback((e, element: TypeElement<keyof TypeElemDesc>) => {

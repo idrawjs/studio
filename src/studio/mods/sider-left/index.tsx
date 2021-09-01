@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Layout } from 'antd';
 import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
-import { TypeSelectDataItem } from '../selector'; 
+import { TypeMaterialItem } from '../selector'; 
 import eventHub from './../../util/event-hub'; 
 import { Materials } from './material';
 import { Templates } from './template';
@@ -14,8 +14,8 @@ type TypeProps = {
   close: boolean;
   width: number,
   asideLayout: { width: number }
-  customElements?: TypeSelectDataItem[],
-  customElementsPagination?: {
+  customMaterials?: TypeMaterialItem[],
+  customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
@@ -40,8 +40,8 @@ export function SiderLeft(props: TypeProps) {
       key: 'materials',
       content: <Materials
         width={props.width - props.asideLayout.width}
-        customElements={props.customElements}
-        customElementsPagination={props.customElementsPagination}
+        customMaterials={props.customMaterials}
+        customMaterialsPagination={props.customMaterialsPagination}
       />
     }
   ]

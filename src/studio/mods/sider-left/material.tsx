@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Collapse } from 'antd';
 // import { DoubleLeftOutlined } from '@ant-design/icons';
-import { Selector, TypeSelectDataItem } from '../selector';
+import { Selector, TypeMaterialItem } from '../selector';
 import { CustomSelector } from '../custom-selector';
 // import eventHub from './../../util/event-hub';
 import { generalDataList } from './data/general';
@@ -11,8 +11,8 @@ const { Panel } = Collapse;
 
 type TypeProps = {
   width: number,
-  customElements?: TypeSelectDataItem[],
-  customElementsPagination?: {
+  customMaterials?: TypeMaterialItem[],
+  customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
@@ -36,11 +36,11 @@ export function Materials(props: TypeProps) {
         <Panel header="Icon" key="icon" className="idraw-studio-siderleft-panel">
           <Selector dataList={iconDataList} />
         </Panel>
-        {Array.isArray(props.customElements) && (
+        {Array.isArray(props.customMaterials) && (
           <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
             <CustomSelector
-              dataList={props.customElements}
-              {...(props.customElementsPagination || {})}
+              dataList={props.customMaterials}
+              {...(props.customMaterialsPagination || {})}
             />
           </Panel>
         )}
