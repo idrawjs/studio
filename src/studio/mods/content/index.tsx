@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { useEffect, useRef, useState, useContext, useCallback } from 'react';
 import iDraw from 'idraw';
-import { TypeElement } from '@idraw/types';
+import { TypeElement, TypeDataBase, TypeData } from '@idraw/types';
 import { Layout } from 'antd'; 
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
@@ -70,6 +70,9 @@ function StudioContent(props: TypeProps) {
     })
     
     // studio event
+    eventHub.on('studioUpdateData', (data: TypeDataBase|TypeData) => {
+      idraw.setData(data);
+    });
     eventHub.on('studioScaleScreen', (num) => {
       idraw.scale(num);
     });

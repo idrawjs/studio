@@ -3,10 +3,13 @@ export const layoutConfig = {
     height: 40,
   },
   footer: {
-    height: 40,
+    height: 0,
   },
   siderLeft: {
-    width: 240,
+    width: 300,
+    asideLayout: {
+      width: 50
+    }
   },
   siderRight: {
     width: 240,

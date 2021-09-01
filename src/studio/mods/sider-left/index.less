@@ -2,79 +2,126 @@
   border-right: 1px solid #dadce0;
   background: #ffffff;
   user-select: none;
-  overflow: auto;
+  // overflow: auto;
+  position: relative;
 
+  .idraw-studio-siderleft-closebtn {
+    position: absolute;
+    height: 100px;
+    width: 16px;
+    top: calc(50% - 50px);
+    right: -16px;
+    background: #ffffff;
+    border: 1px solid #dadce0;
+    border-top-right-radius: 16px;
+    border-bottom-right-radius: 16px;
+    justify-content: center;
+    align-items: center;
+    font-size: 14px;
+    color: #cccccc;
+    cursor: pointer;
+    box-shadow: 2px 4px 8px #00000026;
+    z-index: 1;
+
+    >span {
+      position: absolute;
+      width: 14px;
+      left: 0px;
+      top: calc(50% - 8px);
+    }
+
+    &:hover {
+      color: #03a9f4;
+      border-color: #03a9f4;
+    }
+  }
+
+  .idraw-studio-siderleft-aside {
+    border-right: 1px solid #dadce0;
+    background: #ffffff;
+    user-select: none;
+    overflow: auto;
+  }
+
+  .idraw-studio-siderleft-content {
+    display: none;
+
+    &.content-active {
+      display: flex;
+      min-height: 100%;
+    }
+  }
+
+  // override 
   .ant-collapse-icon-position-right > .ant-collapse-item > .ant-collapse-header {
     padding-top: 4px;
     padding-bottom: 4px;
     background: #ffffff;
   }
-
   .ant-collapse-borderless > .ant-collapse-item > .ant-collapse-content > .ant-collapse-content-box {
     background: #fafafa;
     border-top: 1px solid #dadce0;
     padding: 0;
   }
-
-  .idraw-studio-siderright-collapse {
-    height: 100%;
-    box-sizing: border-box;
-  }
-
-  .idraw-studio-siderright-panel {
-    box-sizing: border-box;
-  }
 }
 
-.idraw-studio-siderleft-header {
-  height: 24px;
-  border-bottom: 1px solid #dadce0;
-  position: relative;
 
-  .studio-siderleft-header-icon {
-    color: #888888;
-    line-height: 26px;
-    font-size: 16px;
+.idraw-studio-siderleft-aside {
+  display: flex;
+  flex-direction: column;
+
+  .siderleft-aside-tab-item {
+    text-align: center;
+    font-size: 28px;
+    color: #999999;
     cursor: pointer;
-  
-    &:hover {
-      color: #1890ff;
+    border-bottom: 1px solid #dadce0;
+
+    &.tab-active {
+      color: #03a9f4;
     }
   }
-
-  .siderleft-close-btn {
-    position: absolute;
-    right: 16px;
-    top: 0;
-    bottom: 0;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-  }
 }
 
-.idraw-studio-siderleft-open-btn {
-  display: flex;
-  width: 40px;
-  height: 40px;
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 1px 2px 2px #00000047;
-  border: 1px solid #d9d9d9;
-  text-align: center;
-  justify-content: center;
-  align-items: center;
-  cursor: pointer;
 
-  .siderleft-open-btn-icon {
-    display: flex;
-    color: #888888;
-    line-height: 24px;
-    font-size: 16px;
+.idraw-studio-siderleft-templates {
+  background: #ffffff;
+  height: 100%;
+
+  .studio-templates-list {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0 14px;
+  }
+
+  .studio-template-item {
+    display: none;
+    width: 100%;
+    height: 100px;
+    background: #eef0f3;
+    margin: 10px 0;
+    justify-content: center;
+    align-items: center;
     cursor: pointer;
-  
-    &:hover {
-      color: #1890ff;
+
+    &.template-show {
+      display: flex;
+    }
+
+    .template-idraw {
+      width: 200px;
+      height: 100px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      canvas {
+        display: inline-block;
+        max-width: 200px !important;
+        max-height: 100px !important;
+        width: auto !important;
+        height: auto !important;
+      }
     }
   }
 }

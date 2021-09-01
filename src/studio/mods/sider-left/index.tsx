@@ -1,77 +1,107 @@
-import * as React from 'react';
-import { Layout, Collapse } from 'antd';
-import { DoubleLeftOutlined, DoubleRightOutlined } from '@ant-design/icons';
-import { Selector, TypeSelectDataItem } from '../selector';
-import { CustomSelector } from '../custom-selector';
-import eventHub from './../../util/event-hub';
-import { generalDataList } from './data/general';
-import { iconDataList } from './data/icon';
-
-const { Panel } = Collapse;
-const { Sider } = Layout;
+import { useState, memo, useMemo } from 'react';
+import { Layout } from 'antd';
+import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
+import classnames from 'classnames';
+import { TypeMaterial, TypeTemplate } from '../../types'; 
+import eventHub from './../../util/event-hub'; 
+import { Materials } from './material';
+import { Templates } from './template';
+import { Aside } from './aside';
+ 
+const TemplatesMemo = memo(Templates);
+const { Sider, Content } = Layout;
 
 type TypeProps = {
+  close: boolean;
   width: number,
-  customElements?: TypeSelectDataItem[],
-  customElementsPagination?: {
+  asideLayout: { width: number }
+  customMaterials?: TypeMaterial[],
+  customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
     onChange: (page: number) => void;
+  },
+  customTemplates?: TypeTemplate[],
+  customTemplatesPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (currentPage: number) => void;
   }
 }
 
+
+
 export function SiderLeft(props: TypeProps) {
+
+  const [asideActiveTab, setActiveTab] = useState<string>('templates');
+  const contentList: {
+    key: string,
+    content: React.ReactElement,
+  }[] = [
+    {
+      key: 'templates',
+      content: <TemplatesMemo
+        width={props.width - props.asideLayout.width}
+        customTemplates={useMemo(() => props.customTemplates, [props.customTemplates])}
+        customTemplatesPagination={useMemo(
+          () => props.customTemplatesPagination,
+          [props.customTemplatesPagination]
+        )}
+      />
+    },
+    {
+      key: 'materials',
+      content: <Materials
+        width={props.width - props.asideLayout.width}
+        customMaterials={props.customMaterials}
+        customMaterialsPagination={props.customMaterialsPagination}
+      />
+    }
+  ]
 
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
-      <div className="idraw-studio-siderleft-header">
-        <DoubleLeftOutlined
-          className="studio-siderleft-header-icon  siderleft-close-btn"
-          onClick={() => {
-            eventHub.trigger('studioCloseLeftSider', true);
-          }}
-        />
-      </div>
-      <Collapse
-        bordered={false} 
-        defaultActiveKey={['general', 'icon', 'custom']}
-        expandIconPosition={'right'}
-        className="idraw-studio-siderleft-collapse"
-      >
-        <Panel header="General" key="general" className="idraw-studio-siderleft-panel">
-          <Selector dataList={generalDataList} />
-        </Panel>
-        <Panel header="Icon" key="icon" className="idraw-studio-siderleft-panel">
-          <Selector dataList={iconDataList} />
-        </Panel>
-        {Array.isArray(props.customElements) && (
-          <Panel header="Custom" key="custom" className="idraw-studio-siderleft-panel" >
-            <CustomSelector
-              dataList={props.customElements}
-              {...(props.customElementsPagination || {})}
-            />
-          </Panel>
+      <Layout style={{
+        height: '100%',
+        overflow: 'auto'
+      }}>
+        <Sider width={props.asideLayout.width} className="idraw-studio-siderleft-aside">
+          <Aside size={props.asideLayout.width} activeTab={asideActiveTab}
+            onChangeTab={(value: string = '') => {
+              setActiveTab(value);
+            }}
+          />
+        </Sider>
+        <Content style={{
+          height: '100%',
+          overflow: 'auto'
+        }}>
+          {contentList.map((item, i) => {
+            return (
+              <div key={i}
+                className={classnames({
+                'idraw-studio-siderleft-content': true,
+                'content-active ': asideActiveTab === item.key})}>
+              {item.content}
+              </div> 
+            );
+          })}
+        </Content>
+      </Layout>
+      <div className="idraw-studio-siderleft-closebtn" onClick={() => {
+        eventHub.trigger('studioCloseLeftSider', !props.close);
+      }}>
+        {props.close === true ? (
+          <DoubleRightOutlined />
+        ) : (
+          <DoubleLeftOutlined />
         )}
-      </Collapse>
+      </div>
     </Sider>
   )
 }
 
 
-export function SiderLeftBtn(props: { style?: React.HTMLAttributes<HTMLDivElement>['style'] }) {
-  return (
-    <div
-      style={props.style}
-      className="idraw-studio-siderleft-open-btn"
-      onClick={() => {
-        eventHub.trigger('studioCloseLeftSider', false);
-      }}
-    >
-      <DoubleRightOutlined
-        className="siderleft-open-btn-icon"
-      />
-    </div>
-  )
-}
  

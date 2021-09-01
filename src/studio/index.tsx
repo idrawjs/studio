@@ -3,14 +3,14 @@ import { Layout } from 'antd';
 import { TypeDataBase, TypeData, } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
-import { SiderLeft, SiderLeftBtn } from './mods/sider-left';
-import { SiderRight, SiderRightBtn } from './mods/sider-right';
+import { SiderLeft } from './mods/sider-left';
+import { SiderRight } from './mods/sider-right';
 import StudioContent from './mods/content';
 import { layoutConfig } from './layout';
 import eventHub from './util/event-hub';
 import { StudioContext, TypeContextData } from './context';
 import { initData } from './util/data';
-import { TypeSelectDataItem } from './mods/selector';
+import { TypeMaterial, TypeTemplate } from './types/index';
 
 const { useState, useEffect } = React;
 
@@ -22,12 +22,19 @@ type TypeProps = {
   contextHeight?: number;
   devicePixelRatio?: number;
   data?: TypeDataBase | TypeData;
-  customElements?: TypeSelectDataItem[],
-  customElementsPagination?: {
+  customMaterials?: TypeMaterial[],
+  customMaterialsPagination?: {
     current: number,
     pageSize: number,
     total: number,
-    onChange: (page: number) => void;
+    onChange: (currentPage: number) => void;
+  },
+  customTemplates?: TypeTemplate[],
+  customTemplatesPagination?: {
+    current: number,
+    pageSize: number,
+    total: number,
+    onChange: (currentPage: number) => void;
   }
 }
 
@@ -90,10 +97,14 @@ function Studio(p: TypeProps) {
           />
           <Layout style={{position: 'relative'}}>
             <SiderLeft
-              width={closeSiderLeft ? 0 : layoutConfig.siderLeft.width}
+              close={closeSiderLeft}
+              width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
               // height={contentSize.height}
-              customElements={props.customElements}
-              customElementsPagination={props.customElementsPagination}
+              asideLayout={layoutConfig.siderLeft.asideLayout}
+              customMaterials={props.customMaterials}
+              customMaterialsPagination={props.customMaterialsPagination}
+              customTemplates={props.customTemplates}
+              customTemplatesPagination={props.customTemplatesPagination}
             />
             <StudioContent
               width={contentWidth}
@@ -103,15 +114,10 @@ function Studio(p: TypeProps) {
               devicePixelRatio={props.devicePixelRatio}
             />
             <SiderRight
+              close={closeSiderRight}
               width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
               height={contentSize.height}
             />
-            {closeSiderLeft && (
-              <SiderLeftBtn style={{position: 'absolute', left: 10, top: 10, zIndex: 1,}} />
-            )}
-            {closeSiderRight && (
-              <SiderRightBtn style={{position: 'absolute', right: 10, top: 10, zIndex: 1,}} />
-            )}
           </Layout>
           <StudioFooter height={layoutConfig.footer.height}/>
         </Layout>
