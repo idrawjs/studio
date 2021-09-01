@@ -1,14 +1,11 @@
-// import React from 'react';
 import * as React from 'react';
 import ReactDOM from 'react-dom';
-import { TypeData } from '@idraw/types';
 import { Studio } from '@idraw/studio';
-import data from './libs/data';
+import templateList from './libs/template';
 import { Nav } from './components/nav';
 import './index.less';
 
-// @ts-ignore
-var studioData: TypeData = data as TypeData;
+const defaultTpl = templateList[0];
 
 ReactDOM.render(
   (<div className="page-container">
@@ -16,9 +13,13 @@ ReactDOM.render(
       <Studio {...{ 
         studioWidth: window.innerWidth,
         studioHeight: window.innerHeight,
-        contextWidth: 800,
-        contextHeight: 600,
-        data: studioData,
+        // studioWidth: 800,
+        // studioHeight: 640,
+        contextWidth: defaultTpl.width,
+        contextHeight: defaultTpl.height,
+        data: defaultTpl.data,
+        // customElements: customDataList
+        customTemplates: templateList
       }}></Studio>
     </div>
     <div className="page-nav">
