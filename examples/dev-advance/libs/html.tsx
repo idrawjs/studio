@@ -57,6 +57,9 @@ function Layer(props: TypeProps) {
 }
 
 export function createLayerHTML(props: TypeProps): string {
-  return renderToString(<Layer {...props}></Layer>)
+  return createHTML(<Layer {...props}></Layer>)
 }
 
+export function createHTML(content: React.ReactElement): string {
+  return renderToString(<>{content}</>)
+}

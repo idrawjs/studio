@@ -74,6 +74,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
           <Form.Item name="fontFamily" label="Font Family" >
             <Select style={{ width: 120 }} size="small">
               <Option value="sans-serif">sans-serif</Option>
+              <Option value="monospace">monospace</Option>
             </Select>
           </Form.Item>
         </Col>
