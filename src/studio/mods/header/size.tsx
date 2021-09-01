@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback } from 'react';
+import { useContext, useState, useCallback, useEffect } from 'react';
 import { Input } from 'antd';
 import { Box, BoxText } from './box';
 import { StudioContext } from './../../context';
@@ -11,6 +11,17 @@ export function SizeAction() {
   const { contextSize } = context;
   const [width, setWidth] = useState(contextSize.width);
   const [height, setHeight] = useState(contextSize.height);
+
+  useEffect(() => {
+    eventHub.on('studioIDrawResetContextSize', function (data) {
+      if (data.width > 0) {
+        setWidth(data.width);
+      }
+      if (data.height > 0) {
+        setHeight(data.height);
+      }
+    });
+  }, []);
 
   const onChangeWidth = useCallback((e) => {
     const num = e.target.value * 1;
