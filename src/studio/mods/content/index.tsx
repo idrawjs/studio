@@ -71,7 +71,7 @@ function StudioContent(props: TypeProps) {
     
     // studio event
     eventHub.on('studioUpdateData', (data: TypeDataBase|TypeData) => {
-      idraw.setData(data);
+      idraw.setData(data, { triggerChangeEvent: true });
     });
     eventHub.on('studioScaleScreen', (num) => {
       idraw.scale(num);

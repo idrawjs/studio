@@ -71,6 +71,10 @@
   flex-direction: column;
 
   .siderleft-aside-tab-item {
+    height: 56px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     text-align: center;
     font-size: 28px;
     color: #999999;
@@ -108,6 +112,10 @@
       display: flex;
     }
 
+    &:hover {
+      background: #03a9f433;
+    }
+
     .template-idraw {
       width: 200px;
       height: 100px;
@@ -121,6 +129,7 @@
         max-height: 100px !important;
         width: auto !important;
         height: auto !important;
+        cursor: pointer !important;
       }
     }
   }
