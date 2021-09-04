@@ -26,6 +26,7 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
     { name: ['borderWidth'], value: elem.desc.borderWidth || 0 },
     { name: ['borderRadius'], value: elem.desc.borderRadius || 0 },
     { name: ['borderColor'], value: elem.desc.borderColor || '' },
+    { name: ['bgColor'], value: elem.desc.bgColor || '' },
   ];
 
   return (<Form
@@ -104,6 +105,15 @@ export const TextDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       <Row>
         <Col span="24">
           <Form.Item
+            name="bgColor"
+            label="Background" >
+            <ColorPicker />
+          </Form.Item>
+        </Col>
+      </Row>
+      <Row>
+        <Col span="24">
+          <Form.Item
             name="borderWidth"
             label="Border Width" >
             <Input type="number" size="small" />
@@ -144,7 +154,7 @@ function parseFiledsData(fields: FieldData[]) {
   // TODO
   const attrKeys = [
     'text', 'fontSize', 'lineHeight', 'fontFamily', 'textAlign',
-    'color', 'borderColor', 'borderRadius', 'borderWidth'];
+    'color', 'bgColor', 'borderColor', 'borderRadius', 'borderWidth'];
   fields.forEach((item: FieldData) => {
     if (attrKeys.includes(item.name[0])) {
       switch (item.name[0]) {
@@ -179,6 +189,12 @@ function parseFiledsData(fields: FieldData[]) {
           break;
         }
         case 'color': {
+          if (idraw.is.color(item.value)) {
+            desc[item.name[0]] = item.value; 
+          }
+          break;
+        }
+        case 'bgColor': {
           if (idraw.is.color(item.value)) {
             desc[item.name[0]] = item.value; 
           }
