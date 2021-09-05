@@ -24,14 +24,18 @@ The preview of `@idraw/studo`.
 ## Install
 
 ```sh
-npm install @idraw/studio antd
+npm install antd
 
+npm install @idraw/studio;
 ```
 
 ```js
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import Studio from '@idraw/studio';
+
+import 'antd/dist/antd.css';
+import '@idraw/studio/dist/idraw-studio.css'
 
 ReactDOM.render(
   (<Studio {...{ 
