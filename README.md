@@ -21,7 +21,7 @@ The preview of `@idraw/studo`.
   <img src="./assets/preview/idraw-studio-preview.png" width="700" />
 </p>
 
-## Install
+## Usage
 
 ```sh
 npm install antd
@@ -48,4 +48,22 @@ ReactDOM.render(
   document.querySelector('#app')
 )
 
+```
+
+## Development
+
+```sh
+git clone git@github.com:idrawjs/studio.git
+
+cd studio
+
+npm install
+
+npm run dev
+```
+
+- Advanced development mode
+
+```
+npm run dev:advance
 ```
