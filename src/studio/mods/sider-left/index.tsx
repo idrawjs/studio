@@ -1,6 +1,6 @@
 import { useState, memo, useMemo } from 'react';
 import { Layout } from 'antd';
-import { DoubleRightOutlined, DoubleLeftOutlined } from '@ant-design/icons';
+import { DoubleRightOutlined, DoubleLeftOutlined, ReconciliationOutlined, AppstoreOutlined } from '@ant-design/icons';
 import classnames from 'classnames';
 import { TypeMaterial, TypeTemplate } from '../../types'; 
 import eventHub from './../../util/event-hub'; 
@@ -34,8 +34,7 @@ type TypeProps = {
 
 
 export function SiderLeft(props: TypeProps) {
-
-  const [asideActiveTab, setActiveTab] = useState<string>('templates');
+  const { customTemplates } = props;
   const contentList: {
     key: string,
     content: React.ReactElement,
@@ -59,7 +58,28 @@ export function SiderLeft(props: TypeProps) {
         customMaterialsPagination={props.customMaterialsPagination}
       />
     }
+  ];
+  const tabList = [
+    {
+      name: 'Templates',
+      key: 'templates',
+      Icon: <ReconciliationOutlined />
+    },
+    {
+      name: 'Materials',
+      key: 'materials',
+      Icon: <AppstoreOutlined />
+    }
   ]
+
+  let defaultTabKey = tabList[0]?.key;
+  if (Array.isArray(customTemplates) !== true) {
+    tabList.shift();
+    contentList.shift();
+    defaultTabKey = tabList[0]?.key;
+  }
+
+  const [asideActiveTab, setActiveTab] = useState<string>(defaultTabKey);
 
   return (
     <Sider width={props.width} className="idraw-studio-siderleft">
@@ -69,6 +89,7 @@ export function SiderLeft(props: TypeProps) {
       }}>
         <Sider width={props.asideLayout.width} className="idraw-studio-siderleft-aside">
           <Aside size={props.asideLayout.width} activeTab={asideActiveTab}
+            tabList={tabList}
             onChangeTab={(value: string = '') => {
               setActiveTab(value);
             }}

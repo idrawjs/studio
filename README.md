@@ -2,7 +2,6 @@
 
 
 <p align="center">
-
   <a href="https://www.npmjs.com/package/@idraw/studio">
     <img src="https://img.shields.io/npm/v/@idraw/studio.svg?sanitize=@idraw/studio" alt="Version">
   </a>
@@ -11,7 +10,7 @@
   </a>
 </p>
 
-<p>
+<p align="center">
   <a href="https://idraw.js.org/studio/" target="_blank">idraw.js.org/studio/</a>
 </p>
 
