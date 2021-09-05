@@ -2,7 +2,7 @@
 import { TypeDataBase } from '@idraw/types';
 
 const data: TypeDataBase = {
-  "bgColor": "#292929",
+  "bgColor": "#46494a",
   "elements": [ 
     {
       name: 'Layer-Background',
@@ -392,8 +392,6 @@ const data: TypeDataBase = {
           padding-top: 100px;
           box-sizing: border-box;
         }
-    
-     
      
         </style>
        
@@ -453,6 +451,131 @@ const data: TypeDataBase = {
       },
       operation: {
         lock: false,
+      }
+    },
+    {
+      name: 'Layer-Screen',
+      x: 104,
+      y: 140,
+      w: 600,
+      h: 320,
+      type: 'html',
+      angle: 0,
+      desc: {
+        width: 1200,
+        height: 720,
+        html: `<style>
+        .phone-box {
+          opacity: 0.8;
+          position: relative;
+          width: 1200px;
+          height: 720px;
+        }
+        .phone {
+          position: absolute;
+          left: calc(50% - 8px);
+          top: calc(50% - 2px);
+          transform: translate(-50%, -50%) rotate(-30deg) skewX(30deg);
+        } 
+        
+        .phone-display {
+          position: absolute;
+          z-index: 1;
+          top: 0;
+          left: 0;
+          transform: translate(-50%, -50%);
+          height: 690px;
+          width: 378px;
+          background-color: #fbfbfb;
+          border-radius: 45px 37px 41px 41px;
+        }
+        .phone-notch {
+          position: absolute;
+          top: -1px;
+          left: 50%;
+          transform: translate(-50%);
+          width: 210px;
+          background-color: #131313;
+          border-top: 6px solid #000;
+          height: 21px;
+          z-index: 3;
+          border-radius: 0 0 20px 20px;
+        }
+        .display-content {
+          position: absolute;
+          top: 0;
+          left: 0;
+          height: 690px;
+          width: 378px;
+          border-radius: 45px 37px 41px 41px;
+          overflow: hidden;
+        }
+        .display-content-view {
+          background-image: linear-gradient(to top, #ffeb3b, #ff9800);
+          font-size: 40px;
+          color: #ffffff;
+          height: 100%;
+          padding: 20px;
+          padding-top: 100px;
+          box-sizing: border-box;
+        }
+        .display-content-text {
+          font-size: 80px;
+          font-weight: bolder;
+          color: #ffffff;
+          height: 100%;
+          padding: 20px;
+          padding-top: 100px;
+          box-sizing: border-box;
+        }
+     
+        </style>
+       
+        <div class="phone-box">
+          <div class="phone">
+            
+            <div class="phone-display">
+              <div class="phone-notch"></div>
+              <div class="display-content">
+                <div class="display-content-view"></div>
+              </div>
+              <div class="display-content">
+                <h1 class="display-content-text">iDraw.js</h1>
+              </div>
+            </div>
+            
+          </div>
+        </div>`
+      }
+    },
+    {
+      name: 'Introduction',
+      x: 390,
+      y: 120,
+      w: 350,
+      h: 75,
+      angle: 0,
+      type: 'text',
+      desc: {
+        text: 'A simple JavaScript framework for\r\nDrawing on the web',
+        color: '#f0f0f0',
+        fontSize: 20,
+        fontWeight: 'bold',
+      }
+    },
+    {
+      name: 'Title',
+      x: 440,
+      y: 45,
+      w: 230,
+      h: 70,
+      angle: 0,
+      type: 'text',
+      desc: {
+        text: 'iDraw.js',
+        color: '#ffffff',
+        fontSize: 50,
+        fontWeight: 'bold',
       }
     },
   ]
