@@ -11,8 +11,13 @@
   </a>
 </p>
 
+<p>
+  <a href="https://idraw.js.org/studio/" target="_blank">idraw.js.org/studio/</a>
+</p>
+
 ## @idraw/studio Preview
 
+You can click [idraw.js.org/studio/](https://idraw.js.org/studio) to experience it.
 
 The preview of `@idraw/studo`. 
 
@@ -21,17 +26,21 @@ The preview of `@idraw/studo`.
   <img src="./assets/preview/idraw-studio-preview.png" width="700" />
 </p>
 
-## Install
+## Usage
 
 ```sh
-npm install @idraw/studio antd
+npm install antd
 
+npm install @idraw/studio;
 ```
 
 ```js
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import Studio from '@idraw/studio';
+
+import 'antd/dist/antd.css';
+import '@idraw/studio/dist/idraw-studio.css'
 
 ReactDOM.render(
   (<Studio {...{ 
@@ -44,4 +53,22 @@ ReactDOM.render(
   document.querySelector('#app')
 )
 
+```
+
+## Development
+
+```sh
+git clone git@github.com:idrawjs/studio.git
+
+cd studio
+
+npm install
+
+npm run dev
+```
+
+- Advanced development mode
+
+```
+npm run dev:advance
 ```
