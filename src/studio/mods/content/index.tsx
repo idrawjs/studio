@@ -35,7 +35,8 @@ function StudioContent(props: TypeProps) {
       height: height,
       contextWidth: props.contextWidth,
       contextHeight: props.contextHeight,
-      devicePixelRatio: 4,
+      devicePixelRatio: window.devicePixelRatio,
+      disableKeyboard: false,
     }, {
       scrollWrapper: {
         use: true,
