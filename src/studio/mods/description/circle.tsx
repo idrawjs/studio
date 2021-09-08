@@ -16,7 +16,7 @@ export const CircleDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
   const fields = [
     { name: ['borderWidth'], value: elem.desc.borderWidth || 0 },
     { name: ['borderColor'], value: elem.desc.borderColor || '' },
-    { name: ['color'], value: elem.desc.color || '' },
+    { name: ['bgColor'], value: elem.desc.bgColor || '' },
   ];
 
   return (<Form
@@ -37,8 +37,8 @@ export const CircleDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
       <Row>
         <Col span="24">
           <Form.Item
-            name="color"
-            label="Color" >
+            name="bgColor"
+            label="Background" >
             <ColorPicker />
           </Form.Item>
         </Col>
@@ -69,16 +69,16 @@ export const CircleDescForm: React.FC<DescFormProps> = ({ onChange, elem }) => {
 
 function parseFiledsData(fields: FieldData[]) {
   const desc = {
-    // color: '#ffffff',
+    // bgColor: '#ffffff',
     // borderColor: '',
     // borderWidth: 0,
   };
   // TODO
-  const attrKeys = [ 'color', 'borderColor', 'borderWidth'];
+  const attrKeys = [ 'bgColor', 'borderColor', 'borderWidth'];
   fields.forEach((item: FieldData) => {
     if (attrKeys.includes(item.name[0])) {
       switch (item.name[0]) {
-        case 'color': {
+        case 'bgColor': {
           if (idraw.is.color(item.value)) {
             desc[item.name[0]] = item.value; 
           }

@@ -2,8 +2,8 @@
   "compilerOptions": {
     "baseUrl": "./",
     "paths": {
-      "pote": ["components/index.tsx"],
-      "pote/es/*": ["components/*"]
+      "stduio": ["src/index.tsx"],
+      "stduio/es/*": ["src/*"]
     },
     "strictNullChecks": false,
     "strict": true,
@@ -19,5 +19,5 @@
     "skipLibCheck": true,
     "allowJs": true
   },
-  "exclude": ["node_modules", "lib", "es", "dist"]
+  "exclude": ["node_modules", "lib", "es", "dist", "examples"]
 }
