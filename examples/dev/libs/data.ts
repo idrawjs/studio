@@ -123,7 +123,7 @@ const data = {
       h: 150,
       type: 'rect',
       desc: {
-        color: '#ffffff1a',
+        bgColor: '#ffffff1a',
         borderWidth: 2,
         borderColor: '#9999993a'
       }

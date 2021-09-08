@@ -45,7 +45,7 @@ export const generalDataList: {
       angle: 0,
       type: 'rect',
       desc: {
-        color: '#f0f0f0',
+        bgColor: '#f0f0f0',
         borderColor: '#999999',
         borderWidth: 2,
       }
@@ -63,7 +63,7 @@ export const generalDataList: {
       angle: 0,
       type: 'circle',
       desc: {
-        color: '#f0f0f0',
+        bgColor: '#f0f0f0',
         borderColor: '#aaaaaa',
         borderWidth: 10,
       }
