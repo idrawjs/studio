@@ -149,6 +149,7 @@ const data: TypeDataBase = {
       desc: {
         text: 'A simple JavaScript framework for\r\nDrawing on the web',
         color: '#f0f0f0',
+        bgColor: '',
         fontSize: 20,
         fontWeight: 'bold',
       }
