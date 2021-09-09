@@ -2,12 +2,12 @@ import { TypeTemplate } from './type';
 import idrawjsIntroduction from '../../data/idrawjs-introduction';
 import iphone from './../../data/iphone';
 import wave from '../../data/wave';
-import banner from './../../data/banner';
+import waveBanner from './../../data/wave-banner';
 
 const templateList: TypeTemplate[] = [
   {
-    name: 'Banner',
-    data: banner,
+    name: 'Wave Banner',
+    data: waveBanner,
     width: 720,
     height: 400,
   },
