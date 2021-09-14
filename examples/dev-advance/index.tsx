@@ -23,6 +23,7 @@ ReactDOM.render(
         studioHeight: window.innerHeight,
         // studioWidth: 800,
         // studioHeight: 640,
+        devicePixelRatio: 2,
         contextWidth: defaultTpl.width,
         contextHeight: defaultTpl.height,
         data: defaultTpl.data,
