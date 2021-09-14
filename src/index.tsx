@@ -19,6 +19,7 @@ ReactDOM.render(
         contextHeight: defaultTpl.height,
         data: defaultTpl.data,
         // customElements: customDataList
+        devicePixelRatio: window.devicePixelRatio,
         customTemplates: templateList
       }}></Studio>
     </div>
