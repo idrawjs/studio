@@ -165,14 +165,17 @@ function parseFiledsData(fields: FieldData[]) {
           break;
         }
         case 'fontSize': {
-          if (idraw.is.fontSize(parseFloat(item.value))) {
-            desc[item.name[0]] = parseFloat(item.value); 
+          if (idraw.is.fontSize(parseInt(item.value))) {
+            desc[item.name[0]] = parseInt(item.value); 
           }
           break;
         }
         case 'lineHeight': {
-          if (idraw.is.lineHeight(parseFloat(item.value))) {
-            desc[item.name[0]] = parseFloat(item.value); 
+          if (idraw.is.lineHeight(parseInt(item.value))) {
+            desc[item.name[0]] = parseInt(item.value); 
+          } else {
+            // delete desc[item.name[0]];
+            desc[item.name[0]] = '';
           }
           break;
         }

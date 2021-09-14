@@ -48,6 +48,7 @@ function Studio(p: TypeProps) {
   const [contextSize, setContextSize] = useState<TypeContextData['contextSize']>({
     width: contentSize.contextWidth,
     height: contentSize.contextHeight,
+    devicePixelRatio: props.devicePixelRatio
   })
   
 
@@ -68,7 +69,7 @@ function Studio(p: TypeProps) {
     eventHub.on('studioCloseRightSider', (status: boolean) => {
       setCloseSiderRight(status);
     });
-    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number }) => {
+    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number, devicePixelRatio: number }) => {
       setContextSize(size);
     });
   }, []);
@@ -111,7 +112,7 @@ function Studio(p: TypeProps) {
               height={contentSize.height}
               contextWidth={contentSize.contextWidth}
               contextHeight={contentSize.contextHeight}
-              devicePixelRatio={props.devicePixelRatio}
+              devicePixelRatio={contentSize.devicePixelRatio}
             />
             <SiderRight
               close={closeSiderRight}
@@ -161,6 +162,7 @@ function createContentSize(props: TypeProps) {
   return {
     width,
     height,
+    devicePixelRatio: props.devicePixelRatio,
     contextWidth,
     contextHeight
   }

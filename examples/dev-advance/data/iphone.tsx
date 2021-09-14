@@ -561,6 +561,7 @@ const data: TypeDataBase = {
         color: '#f0f0f0',
         fontSize: 20,
         fontWeight: 'bold',
+        bgColor: ''
       }
     },
     {
@@ -576,6 +577,7 @@ const data: TypeDataBase = {
         color: '#ffffff',
         fontSize: 50,
         fontWeight: 'bold',
+        bgColor: '',
       }
     },
   ]

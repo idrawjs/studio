@@ -95,7 +95,8 @@ export function Templates(props: TypeProps) {
       eventHub.trigger('studioUpdateData', tpl.data);
       eventHub.trigger('studioIDrawResetContextSize', {
         width: tpl.width,
-        height: tpl.height
+        height: tpl.height,
+        devicePixelRatio: window.devicePixelRatio,
       })
     }
   }, [customTemplates]);

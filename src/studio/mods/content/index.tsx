@@ -35,7 +35,7 @@ function StudioContent(props: TypeProps) {
       height: height,
       contextWidth: props.contextWidth,
       contextHeight: props.contextHeight,
-      devicePixelRatio: window.devicePixelRatio,
+      devicePixelRatio: props.devicePixelRatio,
       disableKeyboard: false,
     }, {
       scrollWrapper: {
@@ -96,10 +96,11 @@ function StudioContent(props: TypeProps) {
     eventHub.on('studioIDrawResetWidth', (width: number) => {
       idraw.resetSize({ width })
     });
-    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number }) => {
+    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number, devicePixelRatio: number }) => {
       idraw.resetSize({
         contextWidth: size.width,
         contextHeight: size.height,
+        devicePixelRatio: size.devicePixelRatio,
       })
     })
     eventHub.on('studioDragNewElement', (params) => {

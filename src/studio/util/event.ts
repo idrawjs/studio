@@ -13,7 +13,7 @@ export type TypeIDrawEventArgMap  = {
   'studioCloseRightSider': boolean;
   'studioExportImage': void;
   'studioIDrawResetWidth': number;
-  'studioIDrawResetContextSize': { width: number, height: number }
+  'studioIDrawResetContextSize': { width: number, height: number, devicePixelRatio: number }
   'studioDragNewElement': {
     clientX: number,
     clientY: number,
