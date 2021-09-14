@@ -21,17 +21,17 @@ export function SizeAction() {
   const [devicePixelRatio, setDevicePixelRatio] = useState<number>(contextSize.devicePixelRatio);
 
   useEffect(() => {
-    // eventHub.on('studioIDrawResetContextSize', function (data) {
-    //   if (data.width > 0) {
-    //     setWidth(data.width);
-    //   }
-    //   if (data.height > 0) {
-    //     setHeight(data.height);
-    //   }
-    //   if (data.devicePixelRatio > 0) {
-    //     setDevicePixelRatio(data.devicePixelRatio);
-    //   }
-    // });
+    eventHub.on('studioIDrawResetContextSize', function (data) {
+      if (data.width > 0) {
+        setWidth(data.width);
+      }
+      if (data.height > 0) {
+        setHeight(data.height);
+      }
+      if (data.devicePixelRatio > 0) {
+        setDevicePixelRatio(data.devicePixelRatio);
+      }
+    });
   }, []);
 
   const onChangeWidth = useCallback((e) => {
