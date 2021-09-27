@@ -60,13 +60,13 @@
     "webpack-node-externals": "^3.0.0"
   },
   "dependencies": {
-    "@idraw/studio": "0.0.16",
-    "@idraw/types": "0.2.0-alpha.4",
-    "@idraw/util": "0.2.0-alpha.4",
+    "@idraw/studio": "0.0.17",
+    "@idraw/types": "0.2.0-alpha.5",
+    "@idraw/util": "0.2.0-alpha.5",
     "@koa/router": "^10.1.0",
     "antd": "^4.16.10",
     "commander": "^8.1.0",
-    "idraw": "0.2.0-alpha.4",
+    "idraw": "0.2.0-alpha.5",
     "koa": "^2.13.1",
     "koa-static": "^5.0.0",
     "react": "^17.0.2",
