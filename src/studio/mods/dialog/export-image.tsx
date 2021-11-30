@@ -57,10 +57,8 @@ function ExportImage (props: { idraw: iDraw }) {
   }
 
   const resetDataURL = useCallback(() => {
-    idraw.clearOperation();
-    idraw.exportDataURL(imageType, imageQuality).then((url) => {
-      setDataURL(url);
-    }).catch(console.log);
+    const url = idraw.toDataURL(imageType, imageQuality);
+    setDataURL(url);
   }, [imageType, imageQuality])
 
   useEffect(() => {
