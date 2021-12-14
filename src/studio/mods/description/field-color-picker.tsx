@@ -30,10 +30,10 @@ function parseColor(hex: string) {
 
 function parseRGBA2Hex(rgba: { r: number, g: number, b: number, a: number }) {
   const list = [];
-  list.push(rgba.r.toString(16).toLocaleUpperCase());
-  list.push(rgba.g.toString(16).toLocaleUpperCase());
-  list.push(rgba.b.toString(16).toLocaleUpperCase());
-  list.push(Math.floor(rgba.a * 255).toString(16).toLocaleUpperCase());
+  list.push(rgba.r.toString(16).padStart(2, '0').toLocaleUpperCase());
+  list.push(rgba.g.toString(16).padStart(2, '0').toLocaleUpperCase());
+  list.push(rgba.b.toString(16).padStart(2, '0').toLocaleUpperCase());
+  list.push(Math.floor(rgba.a * 255).toString(16).padStart(2, '0').toLocaleUpperCase());
   return `#${list.join('')}`
 }
 
