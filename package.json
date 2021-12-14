@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.0.20",
+  "version": "0.0.21",
   "description": "",
   "main": "lib/index.js",
   "module": "es/index.js",
@@ -98,7 +98,7 @@
     "typescript": "^4.3.2",
     "webpack": "^5.38.1",
     "webpack-cli": "^4.7.2",
-    "webpack-dev-server": "^3.11.2",
+    "webpack-dev-server": "^4.6.0",
     "webpack-merge": "^5.8.0",
     "webpackbar": "^5.0.0-3"
   },
@@ -107,11 +107,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "0.2.0-alpha.21",
-    "@idraw/util": "0.2.0-alpha.21",
+    "@idraw/types": "0.2.0-alpha.24",
+    "@idraw/util": "0.2.0-alpha.24",
     "classnames": "^2.3.1",
     "codemirror": "^5.62.2",
-    "idraw": "0.2.0-alpha.21",
+    "idraw": "0.2.0-alpha.24",
     "js-beautify": "^1.14.0",
     "react-color": "^2.19.3"
   }

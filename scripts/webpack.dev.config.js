@@ -134,7 +134,10 @@ module.exports = {
     historyApiFallback: {
       rewrites: [{ from: /./, to: '/index.html' }],
     },
-    disableHostCheck: true,
+    static: {
+      directory: path.join(__dirname, '..'),
+      publicPath: '/'
+    },
     hot: true,
     open: true,
   },
