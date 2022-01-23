@@ -1,4 +1,4 @@
-import { useContext, useState, useCallback, useEffect } from 'react';
+import React, { useContext, useState, useCallback, useEffect } from 'react';
 import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import {

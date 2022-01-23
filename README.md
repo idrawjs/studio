@@ -39,7 +39,7 @@ import ReactDOM from 'react-dom';
 import Studio from '@idraw/studio';
 
 import 'antd/dist/antd.css';
-import '@idraw/studio/dist/idraw-studio.css'
+import '@idraw/studio/dist/css/index.css'
 
 ReactDOM.render(
   (<Studio {...{ 
@@ -64,10 +64,4 @@ cd studio
 npm install
 
 npm run dev
-```
-
-- Advanced development mode
-
-```
-npm run dev:advance
 ```
