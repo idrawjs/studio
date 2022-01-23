@@ -1,3 +1,4 @@
+import React from 'react';
 import { createHTML } from '../libs/html';
 import { TypeDataBase } from '@idraw/types';
 

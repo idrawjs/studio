@@ -2,7 +2,7 @@
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import { TypeDataBase } from '@idraw/types';
-import Studio from '../../src/studio';
+import Studio from '../../src';
 import data from './libs/data';
 // import { customDataList } from './libs/custom';
 import './style';

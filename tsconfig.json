@@ -1,10 +1,6 @@
 {
   "compilerOptions": {
     "baseUrl": "./",
-    "paths": {
-      "stduio": ["src/index.tsx"],
-      "stduio/es/*": ["src/*"]
-    },
     "strictNullChecks": false,
     "strict": true,
     "moduleResolution": "node",
