@@ -25,7 +25,7 @@ export const Elements = (props: TypeProps) => {
     <div className="idraw-studio-mod-element" style={style}>
       <List
         size="small"
-        dataSource={util.data.deepClone(data.elements).reverse()}
+        dataSource={util.deepClone(data.elements).reverse()}
         renderItem={(item, index) => {
           const elem = item as TypeElement<keyof TypeElemDesc>
           return (
