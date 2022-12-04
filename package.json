@@ -59,11 +59,11 @@
   },
   "dependencies": {
     "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "0.2.0-alpha.25",
-    "@idraw/util": "0.2.0-alpha.25",
+    "@idraw/types": "0.3.0-alpha.4",
+    "@idraw/util": "0.3.0-alpha.4",
     "classnames": "^2.3.1",
     "codemirror": "^5.62.2",
-    "idraw": "0.2.0-alpha.25",
+    "idraw": "0.3.0-alpha.4",
     "js-beautify": "^1.14.0",
     "react-color": "^2.19.3"
   }
