@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Layout } from 'antd';
+import { Layout, ConfigProvider, LayoutProps } from 'antd'; 
 import { TypeDataBase, TypeData, } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
@@ -84,46 +84,50 @@ function Studio(p: TypeProps) {
   }, [closeSiderLeft,  closeSiderRight]);
 
   return (
-    <StudioContext.Provider value={{
-      data,
-      selectedElementUUID,
-      contextSize,
-    }}>
-      <div className="studio-container" 
-        style={createStyle(props)}
-      >
-        <Layout style={{height: '100%'}}>
-          <StudioHeader 
-            height={layoutConfig.header.height}
-          />
-          <Layout style={{position: 'relative'}}>
-            <SiderLeft
-              close={closeSiderLeft}
-              width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
-              // height={contentSize.height}
-              asideLayout={layoutConfig.siderLeft.asideLayout}
-              customMaterials={props.customMaterials}
-              customMaterialsPagination={props.customMaterialsPagination}
-              customTemplates={props.customTemplates}
-              customTemplatesPagination={props.customTemplatesPagination}
+    <ConfigProvider
+    theme={{ components: { Layout: { colorBgHeader: '#FFFFFF' } } }}
+    >
+      <StudioContext.Provider value={{
+        data,
+        selectedElementUUID,
+        contextSize,
+      }}>
+        <div className="studio-container" 
+          style={createStyle(props)}
+        >
+          <Layout style={{height: '100%'}}>
+            <StudioHeader 
+              height={layoutConfig.header.height}
             />
-            <StudioContent
-              width={contentWidth}
-              height={contentSize.height}
-              contextWidth={contentSize.contextWidth}
-              contextHeight={contentSize.contextHeight}
-              devicePixelRatio={contentSize.devicePixelRatio}
-            />
-            <SiderRight
-              close={closeSiderRight}
-              width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
-              height={contentSize.height}
-            />
+            <Layout style={{position: 'relative'}}>
+              <SiderLeft
+                close={closeSiderLeft}
+                width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
+                // height={contentSize.height}
+                asideLayout={layoutConfig.siderLeft.asideLayout}
+                customMaterials={props.customMaterials}
+                customMaterialsPagination={props.customMaterialsPagination}
+                customTemplates={props.customTemplates}
+                customTemplatesPagination={props.customTemplatesPagination}
+              />
+              <StudioContent
+                width={contentWidth}
+                height={contentSize.height}
+                contextWidth={contentSize.contextWidth}
+                contextHeight={contentSize.contextHeight}
+                devicePixelRatio={contentSize.devicePixelRatio}
+              />
+              <SiderRight
+                close={closeSiderRight}
+                width={closeSiderRight ? 0 : layoutConfig.siderRight.width}
+                height={contentSize.height}
+              />
+            </Layout>
+            <StudioFooter height={layoutConfig.footer.height}/>
           </Layout>
-          <StudioFooter height={layoutConfig.footer.height}/>
-        </Layout>
-      </div>
-    </StudioContext.Provider>
+        </div>
+      </StudioContext.Provider>
+    </ConfigProvider>
   )
 }
 

@@ -4,6 +4,7 @@ import classnames from 'classnames';
 export const Box: React.FC<{
   noBoarder?: boolean,
   style?: React.HTMLAttributes<HTMLDivElement>['style'],
+  children?: React.ReactNode
 }> = (props) => {
   return (
     <div

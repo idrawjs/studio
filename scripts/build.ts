@@ -1,17 +1,25 @@
-const fs = require('fs');
-const path = require('path');
-const ts = require('typescript');
-const babel = require('@babel/core');
-const glob = require('glob');
-const less = require('less');
+import fs from 'node:fs';
+import path from 'node:path';
+import ts from 'typescript';
+import babel from '@babel/core';
+import glob from 'glob';
+import less from 'less'; 
 
 build();
 
+
 async function build() {
-  remove('dist');
+  removeDist();
   buildTS();
   tranformES();
   await buildLess();
+}
+
+function removeDist() {
+  const distPath = path.join(__dirname, '..', 'dist');
+  if (fs.existsSync(distPath) && fs.statSync(distPath).isDirectory()) {
+    fs.rmSync(distPath, { recursive: true });
+  }
 }
 
 function tranformES() {
@@ -132,25 +140,6 @@ function write(filePath, content) {
   fs.writeFileSync(filePath, content);
 }
 
-function remove(dirPath) {
-  let files = [];
-  if (fs.existsSync(dirPath)) {
-    files = fs.readdirSync(dirPath);
-    files.forEach((filename) => {
-      let curPath = path.join(dirPath, filename);
-      const stat = fs.statSync(curPath);
-      if(stat.isDirectory()) {
-        remove(curPath);
-      } else if (stat.isFile()) {
-        // fs.unlinkSync(curPath);
-        fs.rmSync(curPath);
-      } else {
-        fs.unlinkSync(curPath);
-      }
-    });
-    fs.rmdirSync(dirPath);
-  }
-}
 
 function getTsConfig() {
   const configPath = resolve('tsconfig.json')

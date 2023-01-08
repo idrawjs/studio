@@ -6,7 +6,7 @@ import {
 import util from '@idraw/util';
 import { parseElementExtension } from './extension';
 
-const { isColorStr } = util.color;
+const { isColorStr } = util;
 
 export function getElement(
   data: TypeData, uuid: string
@@ -68,10 +68,10 @@ export function isUnIntegerNumber(data: any) {
 
 // TODO
 export function initData(data: TypeData | TypeDataBase): TypeData {
-  const result = util.data.deepClone(data);
+  const result = util.deepClone(data);
   result.elements.forEach((elem) => {
     if (!(typeof elem.uuid === 'string' && elem.uuid)) {
-      elem.uuid = util.uuid.createUUID();
+      elem.uuid = util.createUUID();
     }
     elem = parseElementExtension(elem);
   });

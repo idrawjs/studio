@@ -16,7 +16,7 @@ type TypeProps = {
   height: number,
 }
 
-const panelHeaderHeight = 30;
+const panelHeaderHeight = 46;
 const siderHeaderHeight = 24;
 
 const descTagColorMap = {
@@ -31,7 +31,7 @@ const descTagColorMap = {
 
 export function SiderRight(props: TypeProps) {
   const { width, height } = props;
-  const panelContentMaxHeight = ((height - siderHeaderHeight) / 2) - 30;
+  const panelContentMaxHeight = ((height - siderHeaderHeight) / 2) - panelHeaderHeight;
   const [elemMaxHeight, setElemMaxHeight] = useState(panelContentMaxHeight);
   const [descMaxHeight, setDescMaxHeight] = useState(panelContentMaxHeight);
   const { selectedElementUUID, data } = useContext(StudioContext);
@@ -62,7 +62,7 @@ export function SiderRight(props: TypeProps) {
       <Collapse
         bordered={false} 
         defaultActiveKey={['elements', 'description']}
-        expandIconPosition={'right'}
+        expandIconPosition={'end'}
         className="idraw-studio-siderright-collapse"
         onChange={onCollapseChange}
       >

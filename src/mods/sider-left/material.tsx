@@ -28,7 +28,7 @@ export function Materials(props: TypeProps) {
       <Collapse
         bordered={false} 
         defaultActiveKey={['general', 'icon', 'custom']}
-        expandIconPosition={'right'}
+        expandIconPosition={'end'}
         className="idraw-studio-siderleft-collapse"
       >
         <Panel header="General" key="general" className="idraw-studio-siderleft-panel">

@@ -1,2 +1,2 @@
 // import './index.less';
-import '../../src/css/index'
+import '../../src/index.less';
