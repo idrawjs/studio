@@ -10,7 +10,7 @@ type TypeProps = {
 export function StudioFooter(props: TypeProps) {
 
   return (
-    <Footer className="idraw-studio-footer"d style={{
+    <Footer className="idraw-studio-footer" style={{
         ...{
           background: '#ffffff',
           borderTop: '1px solid #dadce0',

@@ -62,7 +62,7 @@ export function SiderRight(props: TypeProps) {
       <Collapse
         bordered={false} 
         defaultActiveKey={['elements', 'description']}
-        expandIconPosition={'right'}
+        expandIconPosition={'end'}
         className="idraw-studio-siderright-collapse"
         onChange={onCollapseChange}
       >
