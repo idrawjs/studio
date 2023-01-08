@@ -9,8 +9,8 @@
     "dist"
   ],
   "scripts": {
-    "dev": "node ./scripts/dev.js",
-    "build": "node ./scripts/build.js"
+    "dev": "vite-node ./scripts/dev.ts",
+    "build": "vite-node ./scripts/build.ts"
   },
   "repository": {
     "type": "git",
@@ -27,44 +27,45 @@
   },
   "homepage": "https://github.com/idrawjs/studio#readme",
   "peerDependencies": {
-    "antd": "^4.16.2",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "antd": "^5.1.2",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.16.7",
-    "@babel/plugin-proposal-class-properties": "^7.16.7",
-    "@babel/plugin-proposal-decorators": "^7.16.7",
-    "@babel/plugin-proposal-export-default-from": "^7.16.7",
-    "@babel/plugin-proposal-export-namespace-from": "^7.16.7",
-    "@babel/plugin-proposal-object-rest-spread": "^7.16.7",
-    "@babel/plugin-transform-runtime": "^7.16.8",
-    "@babel/preset-env": "^7.16.8",
-    "@babel/preset-react": "^7.16.7",
-    "@babel/preset-typescript": "^7.16.7",
-    "@types/react": "^17.0.38",
-    "@types/react-dom": "^17.0.11",
-    "@vitejs/plugin-react-refresh": "^1.3.6",
-    "antd": "^4.16.2",
-    "glob": "^7.2.0",
-    "less": "^4.1.2",
-    "open": "^8.4.0",
-    "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "typescript": "^4.5.4",
-    "vite": "^2.7.12"
+    "@babel/core": "^7.20.12",
+    "@babel/plugin-proposal-class-properties": "^7.18.6",
+    "@babel/plugin-proposal-decorators": "^7.20.7",
+    "@babel/plugin-proposal-export-default-from": "^7.18.10",
+    "@babel/plugin-proposal-export-namespace-from": "^7.18.9",
+    "@babel/plugin-proposal-object-rest-spread": "^7.20.7",
+    "@babel/plugin-transform-runtime": "^7.19.6",
+    "@babel/preset-env": "^7.20.2",
+    "@babel/preset-react": "^7.18.6",
+    "@babel/preset-typescript": "^7.18.6",
+    "@types/node": "^18.11.18",
+    "@types/react": "^18.0.26",
+    "@types/react-dom": "^18.0.10",
+    "@vitejs/plugin-react": "^3.0.1",
+    "antd": "^5.1.2",
+    "glob": "^8.0.3",
+    "less": "^4.1.3",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "typescript": "^4.9.4",
+    "vite": "^4.0.4",
+    "vite-node": "^0.26.3"
   },
   "publishConfig": {
     "access": "public"
   },
   "dependencies": {
-    "@ant-design/icons": "^4.6.2",
-    "@idraw/types": "0.3.0-alpha.4",
-    "@idraw/util": "0.3.0-alpha.4",
-    "classnames": "^2.3.1",
-    "codemirror": "^5.62.2",
-    "idraw": "0.3.0-alpha.4",
-    "js-beautify": "^1.14.0",
+    "@ant-design/icons": "^4.8.0",
+    "@idraw/types": "0.3.0-alpha.6",
+    "@idraw/util": "0.3.0-alpha.6",
+    "classnames": "^2.3.2",
+    "codemirror": "^6.0.1",
+    "idraw": "0.3.0-alpha.6",
+    "js-beautify": "^1.14.7",
     "react-color": "^2.19.3"
   }
 }
