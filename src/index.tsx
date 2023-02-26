@@ -176,13 +176,19 @@ function calcContentWidth(
   props: TypeProps,
   opts: { closeSiderLeft: boolean, closeSiderRight: boolean
 }): number {
+
   let contentWidth = props.studioWidth;
-  if (opts.closeSiderLeft !== true) {
-    contentWidth = contentWidth - layoutConfig.siderLeft.width;
+  if (opts.closeSiderLeft === true && opts.closeSiderRight === true) {
+    contentWidth = contentWidth - layoutConfig.siderLeft.asideLayout.width;
+  } else {
+    if (opts.closeSiderLeft !== true) {
+      contentWidth = contentWidth - layoutConfig.siderLeft.width;
+    }
+    if (opts.closeSiderRight !== true) {
+      contentWidth = contentWidth - layoutConfig.siderRight.width;
+    }
   }
-  if (opts.closeSiderRight !== true) {
-    contentWidth = contentWidth - layoutConfig.siderRight.width;
-  }
+ 
   return contentWidth;
 }
 
