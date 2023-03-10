@@ -22,7 +22,7 @@ export const showCodeEditor = (params: {
       onChange={(value: string) => {
         tempValue = value;
       }}
-      style={{height: 400}}
+      style={{height: 400, width: 560}}
     />,
     okText: 'OK',
     cancelText: 'Cancel',
