@@ -37,8 +37,7 @@ npm install @idraw/studio;
 import * as React from 'react';
 import ReactDOM from 'react-dom';
 import Studio from '@idraw/studio';
-
-import 'antd/dist/antd.css';
+ 
 import '@idraw/studio/dist/css/index.css'
 
 ReactDOM.render(

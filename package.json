@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.1.0-alpha.1",
+  "version": "0.2.0-alpha.0",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
