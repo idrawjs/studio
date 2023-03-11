@@ -35,6 +35,7 @@ type TypeProps = {
     total: number;
     onChange: (currentPage: number) => void;
   };
+  onChange?: (data: TypeData) => void;
 };
 
 function Studio(p: TypeProps) {
@@ -63,6 +64,7 @@ function Studio(p: TypeProps) {
     });
     eventHub.on('studioChangeData', (data) => {
       setData(data);
+      props.onChange?.(data);
     });
     eventHub.on('studioCloseLeftSider', (status: boolean) => {
       setCloseSiderLeft(status);
