@@ -53,6 +53,34 @@ ReactDOM.render(
 
 ```
 
+## Props
+
+```ts
+{
+  studioWidth?: number;
+  studioHeight?: number;
+  contextWidth?: number;
+  contextHeight?: number;
+  devicePixelRatio?: number;
+  data?: TypeDataBase | TypeData;
+  customMaterials?: TypeMaterial[];
+  customMaterialsPagination?: {
+    current: number;
+    pageSize: number;
+    total: number;
+    onChange: (currentPage: number) => void;
+  };
+  customTemplates?: TypeTemplate[];
+  customTemplatesPagination?: {
+    current: number;
+    pageSize: number;
+    total: number;
+    onChange: (currentPage: number) => void;
+  };
+  onChange?: (data: TypeData) => void;
+}
+```
+
 ## Development
 
 ```sh
