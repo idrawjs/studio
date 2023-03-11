@@ -2,21 +2,25 @@ import React, { useContext, useState, useCallback, useEffect } from 'react';
 import { Input } from 'antd';
 import { TypeElement, TypeElemDesc } from '@idraw/types';
 import {
-  EditOutlined, LockOutlined, LockFilled, CheckCircleOutlined,
-  DeleteOutlined, ArrowDownOutlined, ArrowUpOutlined,
+  EditOutlined,
+  LockOutlined,
+  LockFilled,
+  CheckCircleOutlined,
+  DeleteOutlined,
+  ArrowDownOutlined,
+  ArrowUpOutlined
 } from '@ant-design/icons';
 import { Visible, InVisible } from './../icon/svg/visible';
 import classnames from 'classnames';
 import eventHub from '../../util/event-hub';
 import { StudioContext } from './../../context';
- 
 
 type TypeProps = {
-  maxHeight?: number,
-  element: TypeElement<keyof TypeElemDesc>
+  maxHeight?: number;
+  element: TypeElement<keyof TypeElemDesc>;
   index: number;
   total: number;
-}
+};
 
 export const Item = (props: TypeProps) => {
   const { element, index, total } = props;
@@ -34,11 +38,10 @@ export const Item = (props: TypeProps) => {
   useEffect(() => {
     setElemName(element.name);
     setIsEdit(false);
-  }, [element])
-
+  }, [element]);
 
   const onClickEdit = useCallback(() => {
-    setIsEdit(true)
+    setIsEdit(true);
   }, []);
 
   const onChangeInput = useCallback((e) => {
@@ -79,40 +82,45 @@ export const Item = (props: TypeProps) => {
 
   const onClickMoveDown = useCallback(() => {
     eventHub.trigger('studioMoveDownElement', element.uuid);
-  }, [element])
+  }, [element]);
 
   return (
     <div
       className={classnames({
         'idraw-studio-element-item': true,
-        'element-item-active': (element.uuid && selectedElementUUID && element.uuid === selectedElementUUID)
+        'element-item-active':
+          element.uuid &&
+          selectedElementUUID &&
+          element.uuid === selectedElementUUID
       })}
       onClick={() => {
         eventHub.trigger('studioSelectElement', { uuid: element.uuid });
       }}
     >
       <span className="studio-element-item-action">
-        {(index === 0) ? (
-          <ArrowUpOutlined className="idraw-studio-element-icon no-margin icon-disable" ></ArrowUpOutlined>
+        {index === 0 ? (
+          <ArrowUpOutlined className="idraw-studio-element-icon no-margin icon-disable"></ArrowUpOutlined>
         ) : (
-          <ArrowUpOutlined className="idraw-studio-element-icon no-margin"
+          <ArrowUpOutlined
+            className="idraw-studio-element-icon no-margin"
             onClick={onClickMoveUp}
           ></ArrowUpOutlined>
         )}
 
-        {(index === total - 1) ? (
-          <ArrowDownOutlined className="idraw-studio-element-icon no-margin icon-disable" ></ArrowDownOutlined>
+        {index === total - 1 ? (
+          <ArrowDownOutlined className="idraw-studio-element-icon no-margin icon-disable"></ArrowDownOutlined>
         ) : (
-          <ArrowDownOutlined className="idraw-studio-element-icon no-margin"
+          <ArrowDownOutlined
+            className="idraw-studio-element-icon no-margin"
             onClick={onClickMoveDown}
           ></ArrowDownOutlined>
         )}
-        
       </span>
       {isEdit === true ? (
-        <Input 
+        <Input
           className="studio-element-item-name"
-          size="small" value={elemName}
+          size="small"
+          value={elemName}
           onChange={onChangeInput}
         />
       ) : (
@@ -134,31 +142,37 @@ export const Item = (props: TypeProps) => {
           />
         )}
         {element?.operation?.invisible === true ? (
-          <span onClick={onClickSwitchVisible} className="idraw-studio-element-icon ">
+          <span
+            onClick={onClickSwitchVisible}
+            className="idraw-studio-element-icon "
+          >
             <InVisible color={'#888888'}></InVisible>
           </span>
         ) : (
-          <span onClick={onClickSwitchVisible} className="idraw-studio-element-icon icon-active">
+          <span
+            onClick={onClickSwitchVisible}
+            className="idraw-studio-element-icon icon-active"
+          >
             <Visible color={'#888888'}></Visible>
           </span>
         )}
-        
+
         {element?.operation?.lock === true ? (
           <LockFilled
             className="idraw-studio-element-icon icon-active"
-            onClick={onClickSwitchLock} />
+            onClick={onClickSwitchLock}
+          />
         ) : (
           <LockOutlined
             className="idraw-studio-element-icon"
-            onClick={onClickSwitchLock} />
+            onClick={onClickSwitchLock}
+          />
         )}
         <DeleteOutlined
           className="idraw-studio-element-icon"
           onClick={onClickDelete}
-        />         
+        />
       </span>
-      
     </div>
-  )
-}
- 
+  );
+};

@@ -8,11 +8,10 @@ import { Item } from './item';
 const { useContext } = React;
 
 type TypeProps = {
-  maxHeight?: number
-}
+  maxHeight?: number;
+};
 
 export const Elements = (props: TypeProps) => {
-
   const context = useContext(StudioContext);
   const { data } = context;
   const style: React.HTMLAttributes<HTMLDivElement>['style'] = {};
@@ -27,15 +26,14 @@ export const Elements = (props: TypeProps) => {
         size="small"
         dataSource={util.deepClone(data.elements).reverse()}
         renderItem={(item, index) => {
-          const elem = item as TypeElement<keyof TypeElemDesc>
+          const elem = item as TypeElement<keyof TypeElemDesc>;
           return (
             <List.Item>
               <Item element={elem} index={index} total={data.elements.length} />
             </List.Item>
-          )
+          );
         }}
       />
     </div>
-  )
-}
- 
+  );
+};
