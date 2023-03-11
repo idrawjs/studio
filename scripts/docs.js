@@ -1,11 +1,10 @@
 const fs = require('fs');
-const path = require('path');
-const { removeFullDir } = require('./util/file');
+const path = require('path'); 
 
 const pageDir = path.join(__dirname, '..', 'docs');
 const distDir = path.join(__dirname, '..', 'dist');
 if (fs.existsSync(pageDir)) {
-  removeFullDir(pageDir);
+  fs.rmSync(pageDir, { recursive: true });
 }
 fixPageAssetsPath();
 copyDir(distDir, pageDir, () => {
