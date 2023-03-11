@@ -6,30 +6,36 @@ import './style';
 
 const defaultTpl = templateList[0];
 
-const root = createRoot(document.querySelector('#app') as HTMLElement)
+const root = createRoot(document.querySelector('#app') as HTMLElement);
 
 root.render(
-  (<div style={{
-    width: '100%',
-    height: '100%',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-  }}>
-    <div style={{display: 'flex'}}>
-      <Studio {...{ 
-        // studioWidth: window.innerWidth,
-        // studioHeight: window.innerHeight,
-        studioWidth: 800,
-        studioHeight: 400,
-        devicePixelRatio: window.devicePixelRatio,
-        contextWidth: defaultTpl.width,
-        contextHeight: defaultTpl.height,
-        data: defaultTpl.data,
-        // customElements: customDataList
-        customTemplates: templateList
-      }}></Studio>
+  <div
+    style={{
+      width: '100%',
+      height: '100%',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center'
+    }}
+  >
+    <div style={{ display: 'flex' }}>
+      <Studio
+        {...{
+          // studioWidth: window.innerWidth,
+          // studioHeight: window.innerHeight,
+          studioWidth: 1200,
+          studioHeight: 600,
+          devicePixelRatio: window.devicePixelRatio,
+          contextWidth: defaultTpl.width,
+          contextHeight: defaultTpl.height,
+          data: defaultTpl.data,
+          // customElements: customDataList
+          customTemplates: templateList,
+          onChange: (data) => {
+            console.log('data  =', data);
+          }
+        }}
+      ></Studio>
     </div>
-  </div>),
-  
-)
+  </div>
+);

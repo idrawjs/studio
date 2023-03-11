@@ -1,9 +1,9 @@
 export const layoutConfig = {
   header: {
-    height: 40,
+    height: 40
   },
   footer: {
-    height: 0,
+    height: 0
   },
   siderLeft: {
     width: 300,
@@ -12,6 +12,6 @@ export const layoutConfig = {
     }
   },
   siderRight: {
-    width: 240,
+    width: 240
   }
-}
+};

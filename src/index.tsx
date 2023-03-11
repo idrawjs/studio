@@ -1,6 +1,6 @@
 import * as React from 'react';
-import { Layout, ConfigProvider, LayoutProps } from 'antd'; 
-import { TypeDataBase, TypeData, } from '@idraw/types';
+import { Layout, ConfigProvider, LayoutProps } from 'antd';
+import { TypeDataBase, TypeData } from '@idraw/types';
 import { StudioHeader } from './mods/header';
 import { StudioFooter } from './mods/footer';
 import { SiderLeft } from './mods/sider-left';
@@ -14,7 +14,6 @@ import { TypeMaterial, TypeTemplate } from './types/index';
 
 const { useState, useEffect } = React;
 
-
 type TypeProps = {
   studioWidth?: number;
   studioHeight?: number;
@@ -22,35 +21,38 @@ type TypeProps = {
   contextHeight?: number;
   devicePixelRatio?: number;
   data?: TypeDataBase | TypeData;
-  customMaterials?: TypeMaterial[],
+  customMaterials?: TypeMaterial[];
   customMaterialsPagination?: {
-    current: number,
-    pageSize: number,
-    total: number,
+    current: number;
+    pageSize: number;
+    total: number;
     onChange: (currentPage: number) => void;
-  },
-  customTemplates?: TypeTemplate[],
+  };
+  customTemplates?: TypeTemplate[];
   customTemplatesPagination?: {
-    current: number,
-    pageSize: number,
-    total: number,
+    current: number;
+    pageSize: number;
+    total: number;
     onChange: (currentPage: number) => void;
-  }
-}
+  };
+  onChange?: (data: TypeData) => void;
+};
 
 function Studio(p: TypeProps) {
-
   const props = createProps(p);
   const contentSize = createContentSize(props);
 
-  const [data, setData] = useState<TypeData>(initData(props.data || {elements: []}));
+  const [data, setData] = useState<TypeData>(
+    initData(props.data || { elements: [] })
+  );
   const [selectedElementUUID, setSelectedElementUUID] = useState<string>('');
-  const [contextSize, setContextSize] = useState<TypeContextData['contextSize']>({
+  const [contextSize, setContextSize] = useState<
+    TypeContextData['contextSize']
+  >({
     width: contentSize.contextWidth,
     height: contentSize.contextHeight,
     devicePixelRatio: props.devicePixelRatio
-  })
-  
+  });
 
   const [contentWidth, setContentWidth] = useState(contentSize.width);
   const [closeSiderLeft, setCloseSiderLeft] = useState(false);
@@ -62,16 +64,20 @@ function Studio(p: TypeProps) {
     });
     eventHub.on('studioChangeData', (data) => {
       setData(data);
+      props.onChange?.(data);
     });
-    eventHub.on('studioCloseLeftSider', ((status: boolean) => {
+    eventHub.on('studioCloseLeftSider', (status: boolean) => {
       setCloseSiderLeft(status);
-    }));
+    });
     eventHub.on('studioCloseRightSider', (status: boolean) => {
       setCloseSiderRight(status);
     });
-    eventHub.on('studioIDrawResetContextSize', (size: { width: number, height: number, devicePixelRatio: number }) => {
-      setContextSize(size);
-    });
+    eventHub.on(
+      'studioIDrawResetContextSize',
+      (size: { width: number; height: number; devicePixelRatio: number }) => {
+        setContextSize(size);
+      }
+    );
   }, []);
 
   useEffect(() => {
@@ -79,30 +85,35 @@ function Studio(p: TypeProps) {
   }, [contentWidth]);
 
   useEffect(() => {
-    const newContentWidth = calcContentWidth(props, { closeSiderLeft,  closeSiderRight});
+    const newContentWidth = calcContentWidth(props, {
+      closeSiderLeft,
+      closeSiderRight
+    });
     setContentWidth(newContentWidth);
-  }, [closeSiderLeft,  closeSiderRight]);
+  }, [closeSiderLeft, closeSiderRight]);
 
   return (
     <ConfigProvider
-    theme={{ components: { Layout: { colorBgHeader: '#FFFFFF' } } }}
+      theme={{ components: { Layout: { colorBgHeader: '#FFFFFF' } } }}
     >
-      <StudioContext.Provider value={{
-        data,
-        selectedElementUUID,
-        contextSize,
-      }}>
-        <div className="studio-container" 
-          style={createStyle(props)}
-        >
-          <Layout style={{height: '100%'}}>
-            <StudioHeader 
-              height={layoutConfig.header.height}
-            />
-            <Layout style={{position: 'relative'}}>
+      <StudioContext.Provider
+        value={{
+          data,
+          selectedElementUUID,
+          contextSize
+        }}
+      >
+        <div className="studio-container" style={createStyle(props)}>
+          <Layout style={{ height: '100%' }}>
+            <StudioHeader height={layoutConfig.header.height} />
+            <Layout style={{ position: 'relative' }}>
               <SiderLeft
                 close={closeSiderLeft}
-                width={closeSiderLeft ? layoutConfig.siderLeft.asideLayout.width : layoutConfig.siderLeft.width}
+                width={
+                  closeSiderLeft
+                    ? layoutConfig.siderLeft.asideLayout.width
+                    : layoutConfig.siderLeft.width
+                }
                 // height={contentSize.height}
                 asideLayout={layoutConfig.siderLeft.asideLayout}
                 customMaterials={props.customMaterials}
@@ -123,12 +134,12 @@ function Studio(p: TypeProps) {
                 height={contentSize.height}
               />
             </Layout>
-            <StudioFooter height={layoutConfig.footer.height}/>
+            <StudioFooter height={layoutConfig.footer.height} />
           </Layout>
         </div>
       </StudioContext.Provider>
     </ConfigProvider>
-  )
+  );
 }
 
 function createStyle(
@@ -144,23 +155,29 @@ function createStyle(
   return style;
 }
 
-function createProps (props: TypeProps) {
+function createProps(props: TypeProps) {
   const defaultProps: TypeProps = {
     studioWidth: 960,
     studioHeight: 720,
     contextWidth: 400,
     contextHeight: 300,
-    devicePixelRatio: 2,
+    devicePixelRatio: 2
   };
   return {
     ...defaultProps,
     ...props
-  }
+  };
 }
 
 function createContentSize(props: TypeProps) {
-  const width = props.studioWidth - layoutConfig.siderLeft.width - layoutConfig.siderRight.width
-  const height = props.studioHeight - layoutConfig.header.height - layoutConfig.footer.height;
+  const width =
+    props.studioWidth -
+    layoutConfig.siderLeft.width -
+    layoutConfig.siderRight.width;
+  const height =
+    props.studioHeight -
+    layoutConfig.header.height -
+    layoutConfig.footer.height;
   const contextWidth = props.contextWidth || width;
   const contextHeight = props.contextHeight || height;
   return {
@@ -169,21 +186,26 @@ function createContentSize(props: TypeProps) {
     devicePixelRatio: props.devicePixelRatio,
     contextWidth,
     contextHeight
-  }
+  };
 }
 
 function calcContentWidth(
   props: TypeProps,
-  opts: { closeSiderLeft: boolean, closeSiderRight: boolean
-}): number {
+  opts: { closeSiderLeft: boolean; closeSiderRight: boolean }
+): number {
   let contentWidth = props.studioWidth;
-  if (opts.closeSiderLeft !== true) {
-    contentWidth = contentWidth - layoutConfig.siderLeft.width;
+  if (opts.closeSiderLeft === true && opts.closeSiderRight === true) {
+    contentWidth = contentWidth - layoutConfig.siderLeft.asideLayout.width;
+  } else {
+    if (opts.closeSiderLeft !== true) {
+      contentWidth = contentWidth - layoutConfig.siderLeft.width;
+    }
+    if (opts.closeSiderRight !== true) {
+      contentWidth = contentWidth - layoutConfig.siderRight.width;
+    }
   }
-  if (opts.closeSiderRight !== true) {
-    contentWidth = contentWidth - layoutConfig.siderRight.width;
-  }
+
   return contentWidth;
 }
 
-export default Studio
+export default Studio;

@@ -1,5 +1,6 @@
 import {
-  TypeData, TypeDataBase,
+  TypeData,
+  TypeDataBase,
   TypeElement,
   TypeElemDesc
 } from '@idraw/types';
@@ -9,7 +10,8 @@ import { parseElementExtension } from './extension';
 const { isColorStr } = util;
 
 export function getElement(
-  data: TypeData, uuid: string
+  data: TypeData,
+  uuid: string
 ): TypeElement<keyof TypeElemDesc> | null {
   if (data && data.elements && data.elements.length > 0) {
     for (let i = 0; i < data.elements.length; i++) {
@@ -21,22 +23,32 @@ export function getElement(
   return null;
 }
 
-export function checkElementAttrs(
-  attrs: { x: number, y: number, w: number, h: number, angle: number }
-): boolean {
+export function checkElementAttrs(attrs: {
+  x: number;
+  y: number;
+  w: number;
+  h: number;
+  angle: number;
+}): boolean {
   const { x, y, w, h, angle } = attrs;
-  if (!(isNumber(x) && isNumber(y) && isNumber(w) && isNumber(h) && isNumber(angle))) {
+  if (
+    !(
+      isNumber(x) &&
+      isNumber(y) &&
+      isNumber(w) &&
+      isNumber(h) &&
+      isNumber(angle)
+    )
+  ) {
     return false;
   }
-  if (!(angle >= -360 && angle <= 360 )) {
+  if (!(angle >= -360 && angle <= 360)) {
     return false;
   }
   return true;
 }
 
-export function checkRectDesc(
-  desc: any
-): boolean {
+export function checkRectDesc(desc: any): boolean {
   const { borderColor, borderRadius, borderWidth, color } = desc;
   if (!isColorStr(color)) {
     return false;
@@ -50,20 +62,16 @@ export function checkRectDesc(
   if (typeof borderWidth === 'number' && !isNumber(borderWidth)) {
     return false;
   }
-  
+
   return true;
 }
 
 function isNumber(data: any) {
-  return (typeof data === 'number' && (data > 0 || data <= 0))
+  return typeof data === 'number' && (data > 0 || data <= 0);
 }
 
 export function isUnIntegerNumber(data: any) {
-  return (
-    typeof data === 'number' 
-    && /^[0-9]{1,}$/.test(`${data}`)
-    && data >= 0
-  )
+  return typeof data === 'number' && /^[0-9]{1,}$/.test(`${data}`) && data >= 0;
 }
 
 // TODO
@@ -78,9 +86,11 @@ export function initData(data: TypeData | TypeDataBase): TypeData {
   return result;
 }
 
-
-export function getSelectedElement (uuid: string, data: TypeData): TypeElement<keyof TypeElemDesc> | null {
-  let elem: TypeElement<keyof TypeElemDesc>|null = null;
+export function getSelectedElement(
+  uuid: string,
+  data: TypeData
+): TypeElement<keyof TypeElemDesc> | null {
+  let elem: TypeElement<keyof TypeElemDesc> | null = null;
   if (data && Array.isArray(data?.elements)) {
     for (let i = 0; i < data?.elements.length; i++) {
       if (data?.elements[i]?.uuid === uuid) {
