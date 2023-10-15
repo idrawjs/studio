@@ -1,0 +1,58 @@
+.idraw-studio-header {
+  background: #ffffff;
+  border-bottom: 1px solid #dadce0;
+  height: 40px;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px;
+}
+
+.idraw-studio-header-box {
+  display: flex;
+  padding: 0 6px;
+  min-width: 40px;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+
+  &::after {
+    position: absolute;
+    content: '';
+    background: #dadce0;
+    width: 1px;
+    right: 0;
+    top: 8px;
+    bottom: 8px;
+  }
+
+  &.no-border {
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.idraw-studio-header-box-text {
+  color: #444444;
+  font-size: 12px;
+  padding-right: 4px;
+}
+
+.idraw-studio-header-icon {
+  color: #666666;
+  line-height: 40px;
+  font-size: 18px;
+  cursor: pointer;
+
+  &.icon-disable {
+    color: #cccccc;
+    &:hover {
+      color: #cccccc;
+    }
+  }
+
+  &:hover {
+    color: #1890ff;
+  }
+}
