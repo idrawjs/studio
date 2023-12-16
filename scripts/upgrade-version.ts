@@ -2,6 +2,7 @@ import { readJSONFile, writeJSONFile } from './util/file';
 import { getRootPackageJSON, getAllSubPackageDirs } from './util/project';
 const pkg = getRootPackageJSON();
 const version = pkg.version;
+
 async function run() {
   const pkgDirs = getAllSubPackageDirs();
   const allPkgMap: Record<string, { file: string; json: any }> = {};
@@ -12,7 +13,9 @@ async function run() {
   });
   for (const key in allPkgMap) {
     if (allPkgMap.hasOwnProperty(key)) {
-      console.log(`Upgrade [${key}] from ${allPkgMap[key].json.version} to ${version}`);
+      console.log(
+        `Upgrade [${key}] from ${allPkgMap[key].json.version} to ${version}`
+      );
       allPkgMap[key].json.version = version;
       if (allPkgMap[key]?.json?.dependencies) {
         for (const depName in allPkgMap[key].json.dependencies) {
