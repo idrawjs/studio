@@ -5,7 +5,7 @@ import { Project } from 'ts-morph';
 import type { CompilerOptions as TsMorphCompilerOptions } from 'ts-morph';
 import type { CompilerOptions } from 'typescript';
 import * as glob from 'glob';
-import less from 'less';
+// import less from 'less';
 import { packages } from './config';
 import { joinPackagePath, joinProjectPath } from './util/project';
 import { removeFullDir } from './util/file';
@@ -19,15 +19,14 @@ function write(filePath, content) {
 }
 
 async function buildLess(dirName: string) {
-  // bundle css
-  const lessPath = joinPackagePath(dirName, 'src', 'index.less');
-  const lessInput = fs.readFileSync(lessPath, { encoding: 'utf8' });
-
-  const { css } = await less.render(lessInput, {
-    filename: lessPath,
-    plugins: []
-  });
-  write(joinPackagePath(dirName, 'dist', 'index.css'), css);
+  // // bundle css
+  // const lessPath = joinPackagePath(dirName, 'src', 'index.less');
+  // const lessInput = fs.readFileSync(lessPath, { encoding: 'utf8' });
+  // const { css } = await less.render(lessInput, {
+  //   filename: lessPath,
+  //   plugins: []
+  // });
+  // write(joinPackagePath(dirName, 'dist', 'index.css'), css);
 
   // single less
   const pattern = '**/*.less';
