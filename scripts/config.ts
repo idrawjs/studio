@@ -2,7 +2,7 @@
 // @ts-nocheck
 const packages = [
   {
-    dirName: 'base',
+    dirName: 'studio-base',
     globalName: 'iDrawStudioBase'
   },
   {

@@ -2,9 +2,10 @@ import process from 'node:process';
 import * as dotenv from 'dotenv';
 import chalk from 'chalk';
 import { createServer } from 'vite';
-import pluginReact from '@vitejs/plugin-react';
+// import pluginReact from '@vitejs/plugin-react';
+import pluginReact from '@vitejs/plugin-react-swc';
 import type { UserConfig } from 'vite';
-import { joinPackagePath } from './util/project';
+import { joinPackagePath, joinProjectPath } from './util/project';
 
 dotenv.config();
 
@@ -28,8 +29,8 @@ async function dev() {
 
 function getViteConfig(): UserConfig {
   const viteConfig: UserConfig = {
-    root: joinPackagePath(pkgName),
-    publicDir: joinPackagePath(pkgName, 'demo', 'public'),
+    root: joinProjectPath(),
+    publicDir: joinProjectPath('public'),
     server: {
       port: 8080,
       host: '127.0.0.1',
@@ -38,8 +39,15 @@ function getViteConfig(): UserConfig {
     plugins: [pluginReact()],
     resolve: {
       alias: {
-        '@idraw/studio-base': joinPackagePath('base', 'src', 'index.ts'),
-        '@idraw/studio': joinPackagePath('studio', 'src', 'index.ts')
+        react: joinProjectPath('node_modules', 'react'),
+        'react-dom': joinProjectPath('node_modules', 'react-dom'),
+        antd: joinProjectPath('node_modules', 'antd'),
+        '@ant-design/icons': joinProjectPath(
+          'node_modules',
+          '@ant-design/icons'
+        ),
+        '@idraw/studio-base': joinPackagePath('studio-base', 'src'),
+        '@idraw/studio': joinPackagePath('studio', 'src')
       }
     },
     esbuild: {

@@ -1,0 +1,22 @@
+// @import "../variable.less";
+
+@base-scale-selector: ~'@{prefix}-base-scale-selector';
+
+.@{base-scale-selector} {
+  // border: 1px solid #f0f0f0;
+  width: 100px;
+  display: inline-flex;
+  align-items: center;
+  .ant-btn-icon {
+    display: inline-flex;
+  }
+}
+
+.@{base-scale-selector}-menu-item {
+  display: inline-flex;
+  width: 150px;
+
+  .@{base-scale-selector}-input {
+    width: 100%;
+  }
+}

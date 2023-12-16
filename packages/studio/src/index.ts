@@ -1,1 +1,2 @@
-export * from './main';
+export { Studio } from './view';
+export type { StudioProps } from './view';
