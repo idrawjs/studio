@@ -84,7 +84,7 @@ git clone git@github.com:idrawjs/studio.git
 
 cd studio
 
-npm install
+pnpm i
 
 npm run dev
 ```
