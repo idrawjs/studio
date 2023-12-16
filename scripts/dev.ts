@@ -46,6 +46,11 @@ function getViteConfig(): UserConfig {
           'node_modules',
           '@ant-design/icons'
         ),
+        '@idraw/studio-base/dist/css': joinPackagePath(
+          'studio-base',
+          'src',
+          'css'
+        ),
         '@idraw/studio-base': joinPackagePath('studio-base', 'src'),
         '@idraw/studio': joinPackagePath('studio', 'src')
       }

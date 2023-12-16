@@ -4,7 +4,7 @@ import { Tree } from 'antd';
 import DownOutlined from '@ant-design/icons/DownOutlined';
 import type { CSSProperties } from 'react';
 import type { TreeProps } from 'antd';
-import { ElementPosition } from '@idraw/types';
+import type { ElementPosition } from 'idraw';
 import { ConfigContext } from '../config-provider';
 import { wrapTreeViewData } from './wrap';
 import type { TreeNodeProps } from './tree-node';
@@ -13,7 +13,10 @@ import type { ElementTreeData } from '../../types';
 const { DirectoryTree } = Tree;
 const modName = 'base-element-tree';
 
-export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle'> & {
+export type ElementTreeProps = Pick<
+  TreeNodeProps,
+  'onTitleChange' | 'onOperationToggle'
+> & {
   height: number;
   className?: string;
   style?: CSSProperties;
@@ -34,7 +37,19 @@ const treePosToElementPosition = (pos: string) => {
 };
 
 export const ElementTree = (props: ElementTreeProps) => {
-  const { height, className, style, treeData, onTitleChange, onOperationToggle, onSelect, selectedKeys, onDrop, defaultExpandedKeys, onDelete } = props;
+  const {
+    height,
+    className,
+    style,
+    treeData,
+    onTitleChange,
+    onOperationToggle,
+    onSelect,
+    selectedKeys,
+    onDrop,
+    defaultExpandedKeys,
+    onDelete
+  } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
   const onSelectNode: TreeProps['onSelect'] = (selectedKeys, info) => {
@@ -49,7 +64,12 @@ export const ElementTree = (props: ElementTreeProps) => {
   };
 
   return useMemo(() => {
-    const wrappedTreeData = wrapTreeViewData(treeData || [], { getPrefixName, onTitleChange, onOperationToggle, onDelete: onElementDelete });
+    const wrappedTreeData = wrapTreeViewData(treeData || [], {
+      getPrefixName,
+      onTitleChange,
+      onOperationToggle,
+      onDelete: onElementDelete
+    });
 
     return (
       <DirectoryTree

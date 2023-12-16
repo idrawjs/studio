@@ -8,6 +8,12 @@
     "dist/**/*.ts",
     "dist/**/*.js"
   ],
+  "exports": {
+    "./*": [
+      "./dist/*",
+      "./dist/*.d.ts"
+    ]
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idrawjs/studio.git"
