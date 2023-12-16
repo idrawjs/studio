@@ -160,7 +160,7 @@ importers:
   packages/studio:
     dependencies:
       '@idraw/studio-base':
-        specifier: ^0.4.0-alpha.4
+        specifier: ^0.4.0-alpha.5
         version: link:../studio-base
       antd:
         specifier: ^5.12.1
