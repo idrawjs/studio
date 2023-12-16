@@ -18,9 +18,10 @@ jobs:
       - run: npm install --global pnpm
       - run: pnpm i
       - run: npm run build
-      - run: npm publish --provenance --access public -w ./packages/studio-base --tag next
+      # - run: npm publish --provenance --access public -w ./packages/studio-base --tag next
+      - run: npm publish --provenance --access public -w ./packages/studio-base
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-      - run: npm publish --provenance --access public -w ./packages/studio --tag next
+      - run: npm publish --provenance --access public -w ./packages/studio
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
