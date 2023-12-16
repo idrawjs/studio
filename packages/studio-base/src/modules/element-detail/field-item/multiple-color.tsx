@@ -1,4 +1,4 @@
-import { useContext, useMemo, useRef } from 'react';
+import React, { useContext, useMemo, useRef } from 'react';
 import type { ElementSize } from 'idraw';
 import { colorToCSS } from 'idraw';
 import { ConfigContext } from '../../config-provider';

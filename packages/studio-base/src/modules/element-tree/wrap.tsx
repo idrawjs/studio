@@ -1,3 +1,4 @@
+import React from 'react';
 import type { ElementTreeNode, ElementTreeData, ElementTreeViewNode, ElementTreeViewData } from '../../types';
 import { TreeNode } from './tree-node';
 import type { TreeNodeProps } from './tree-node';

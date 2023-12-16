@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState, useEffect, useRef } from 'react';
+import React, { useContext, useMemo, useState, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import type { GradientStop, LinearGradientColor, RadialGradientColor } from 'idraw';
 import { colorToLinearGradientCSS } from 'idraw';
@@ -68,7 +68,7 @@ export function GradientPicker(props: GradientPickerProps) {
   const onMouseDownGradient = (e: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
     e.stopPropagation();
     isPointMoving.current = true;
-    let offset = getStopOffset(e);
+    const offset = getStopOffset(e);
     let gradient: null | LinearGradientColor | RadialGradientColor = null;
     if (mode === 'linear-gradient') {
       gradient = internalLinearGradient;

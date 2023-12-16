@@ -1,4 +1,4 @@
-import { useContext, useMemo, useState, useEffect, useRef } from 'react';
+import React, { useContext, useMemo, useState, useEffect, useRef } from 'react';
 import type { LinearGradientColor, RadialGradientColor, GradientStop, ElementSize } from 'idraw';
 import { colorToLinearGradientCSS } from 'idraw';
 import { Radio, Row, Col, Form, InputNumber } from 'antd';
@@ -180,7 +180,9 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
   };
 
   const onLinearValuesChange = (value: LinearFieldType) => {
-    const newLinear: LinearGradientColor = { ...internalLinearGradient } as LinearGradientColor;
+    const newLinear: LinearGradientColor = {
+      ...internalLinearGradient
+    } as LinearGradientColor;
     if (value?.start) {
       newLinear.start = { ...newLinear.start, ...value.start };
     }
@@ -191,7 +193,9 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
   };
 
   const onRadialValuesChange = (value: RadialFieldType) => {
-    const newRadial: RadialGradientColor = { ...internalRadialGradient } as RadialGradientColor;
+    const newRadial: RadialGradientColor = {
+      ...internalRadialGradient
+    } as RadialGradientColor;
     if (value?.inner) {
       newRadial.inner = { ...newRadial.inner, ...value.inner };
     }
@@ -350,7 +354,7 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
           className={internalPickerClassName}
           onChange={(e) => {
             setCurrentPickedColor(e);
-            triggerChange({ color: e });
+            triggerChange({ color: e as any });
           }}
         />
       </div>

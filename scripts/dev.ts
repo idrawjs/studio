@@ -42,15 +42,8 @@ function getViteConfig(): UserConfig {
         react: joinProjectPath('node_modules', 'react'),
         'react-dom': joinProjectPath('node_modules', 'react-dom'),
         antd: joinProjectPath('node_modules', 'antd'),
-        '@ant-design/icons': joinProjectPath(
-          'node_modules',
-          '@ant-design/icons'
-        ),
-        '@idraw/studio-base/dist/css': joinPackagePath(
-          'studio-base',
-          'src',
-          'css'
-        ),
+        '@ant-design/icons': joinProjectPath('node_modules', '@ant-design/icons'),
+        '@idraw/studio-base/dist/css': joinPackagePath('studio-base', 'src', 'css'),
         '@idraw/studio-base': joinPackagePath('studio-base', 'src'),
         '@idraw/studio': joinPackagePath('studio', 'src')
       }

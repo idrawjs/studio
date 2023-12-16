@@ -43,7 +43,7 @@ export const Studio = (props: StudioProps) => {
 
   return useMemo(() => {
     return (
-      <ConfigProvider topPrefix="my-studio-app" localeCode={state.localeCode} container={refDashboard.current}>
+      <ConfigProvider localeCode={state.localeCode} container={refDashboard.current}>
         <Provider value={{ state, dispatch }}>
           <AntdConfigProvider theme={{ algorithm: state.themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
             <Dashboard
