@@ -9,7 +9,7 @@ interface ColorPickerProps {
 
 function parseColor(hex: string) {
   let _hex = hex.toLocaleUpperCase();
-  let rgba = { r: 0, g: 0, b: 0, a: 1 };
+  const rgba = { r: 0, g: 0, b: 0, a: 1 };
 
   if (/^\#[0-9a-f]{3,3}$/i.test(_hex)) {
     _hex = `#${_hex[1]}${_hex[1]}${_hex[2]}${_hex[2]}${_hex[3]}${_hex[3]}FF`;
