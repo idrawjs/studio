@@ -23,8 +23,7 @@
     "packages/*/src",
     "packages/*/__tests__",
     "packages/*/dev",
-    "examples", 
-    "node_modules/idraw/dist/esm/index.d.ts"
+    "examples"
   ],
   "exclude": [
     "packages/*/dist",

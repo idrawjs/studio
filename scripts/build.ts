@@ -1,14 +1,45 @@
+import fs from 'node:fs';
+import path from 'node:path';
 import ts from 'typescript';
 import { Project } from 'ts-morph';
 import type { CompilerOptions as TsMorphCompilerOptions } from 'ts-morph';
 import type { CompilerOptions } from 'typescript';
-import path from 'path';
 import * as glob from 'glob';
+import less from 'less';
 import { packages } from './config';
 import { joinPackagePath, joinProjectPath } from './util/project';
 import { removeFullDir } from './util/file';
 
-build();
+function write(filePath, content) {
+  const fileDir = path.dirname(filePath);
+  if (!(fs.existsSync(fileDir) && fs.statSync(fileDir).isDirectory())) {
+    fs.mkdirSync(fileDir, { recursive: true });
+  }
+  fs.writeFileSync(filePath, content);
+}
+
+async function buildLess(dirName: string) {
+  // bundle css
+  const lessPath = joinPackagePath(dirName, 'src', 'index.less');
+  const lessInput = fs.readFileSync(lessPath, { encoding: 'utf8' });
+
+  const { css } = await less.render(lessInput, {
+    filename: lessPath,
+    plugins: []
+  });
+  write(joinPackagePath(dirName, 'dist', 'index.css'), css);
+
+  // single less
+  const pattern = '**/*.less';
+  const cwd = joinPackagePath(dirName, 'src', 'css');
+  const files = glob.sync(pattern, { cwd });
+  files.forEach((file) => {
+    const css = fs.readFileSync(joinPackagePath(dirName, 'src', 'css', file), {
+      encoding: 'utf8'
+    });
+    write(joinPackagePath(dirName, 'dist', 'css', file), css);
+  });
+}
 
 async function build() {
   for (let i = 0; i < packages.length; i++) {
@@ -20,11 +51,13 @@ async function build() {
     removeFullDir(`${pkgDir}/dist`);
     buildPackage(dirName);
     console.log(`Build ESM of ${dirName} successfully!`);
+    await buildLess(dirName);
+    console.log(`Build CSS of ${dirName} successfully!`);
   }
 }
 
 function buildPackage(dirName: string) {
-  const pattern = '**/*.ts';
+  const pattern = '**/*.{ts,tsx}';
   const cwd = joinPackagePath(dirName, 'src');
   const files = glob.sync(pattern, { cwd });
 
@@ -38,7 +71,6 @@ function buildPackage(dirName: string) {
     // const compilerOptions = tsConfig.compilerOptions;
     const compilerOptions: CompilerOptions = {
       noUnusedLocals: true,
-
       declaration: true,
       sourceMap: false,
       target: ts.ScriptTarget.ES2015,
@@ -50,7 +82,7 @@ function buildPackage(dirName: string) {
       esModuleInterop: true,
       removeComments: true,
       // lib: ['ES2016', 'dom'],
-      outDir: joinPackagePath(dirName, 'dist', 'esm'),
+      outDir: joinPackagePath(dirName, 'dist'),
       rootDir: joinPackagePath(dirName, 'src'),
       skipLibCheck: true
     };
@@ -78,3 +110,5 @@ function buildPackage(dirName: string) {
     program.emit();
   }
 }
+
+build();

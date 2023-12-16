@@ -7,11 +7,8 @@
   "scripts": {
     "postinstall": "npm run build",
     "dev": "vite-node ./scripts/dev.ts",
-    "dev:mod": "vite-node ./scripts/dev-mod.ts",
-    "build": "npm run build:mod && npm run build:bundle && npm run build:min",
+    "build": "vite-node ./scripts/build.ts",
     "build:bundle": "vite-node ./scripts/build-bundle.ts",
-    "build:mod": "vite-node ./scripts/build-module.ts",
-    "build:min": "vite-node ./scripts/minify.ts",
     "snapshot": "npm run build:bundle && vite-node ./scripts/snapshot.ts",
     "e2e": "jest --config jest.e2e.config.js",
     "clear": "rm -rf node_modules/ && rm -rf ./packages/*/dist/ && rm -rf ./packages/*/esm/ && rm -rf ./packages/*/node_modules/",

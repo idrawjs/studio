@@ -1,4 +1,4 @@
-let topPrefix = 'idraw-studio-base';
+let topPrefix = 'idraw-studio';
 
 export function setClassNameTopPrefix(prefix: string) {
   topPrefix = prefix;
@@ -8,7 +8,9 @@ export function getClassNameTopPrefix(): string {
   return topPrefix;
 }
 
-export function createPrefixName(modName: string): (...args: string[]) => string {
+export function createPrefixName(
+  modName: string
+): (...args: string[]) => string {
   return (...args: string[]) => {
     return [topPrefix, modName, ...args].join('-');
   };
