@@ -73,6 +73,7 @@ function buildPackage(dirName: string) {
       noUnusedLocals: true,
       declaration: true,
       sourceMap: false,
+      jsx: ts.JsxEmit.React,
       target: ts.ScriptTarget.ES2015,
       moduleResolution: ts.ModuleResolutionKind.NodeJs,
       allowJs: false,
