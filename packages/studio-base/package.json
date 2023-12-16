@@ -6,7 +6,9 @@
   "types": "dist/index.d.ts",
   "files": [
     "dist/**/*.ts",
-    "dist/**/*.js"
+    "dist/**/*.js",
+    "dist/**/*.css",
+    "dist/**/*.less"
   ],
   "repository": {
     "type": "git",
