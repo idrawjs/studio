@@ -1,6 +1,11 @@
-// import * as React from 'react';
+import React from 'react';
 import { createContext, useEffect, useState } from 'react';
-import { createPrefixName, getPrefixName, getClassNameTopPrefix, setClassNameTopPrefix } from '../../css';
+import {
+  createPrefixName,
+  getPrefixName,
+  getClassNameTopPrefix,
+  setClassNameTopPrefix
+} from '../../css';
 import { LocaleCode } from '../../locale';
 import { DEFAULT_LOCALE_CODE } from '../../locale';
 
@@ -30,14 +35,22 @@ const getDefaultConfigValue = (customValue?: Partial<ConfigContextValue>) => {
   return value;
 };
 
-export const ConfigContext: React.Context<ConfigContextValue> = createContext<ConfigContextValue>(getDefaultConfigValue());
+export const ConfigContext: React.Context<ConfigContextValue> =
+  createContext<ConfigContextValue>(getDefaultConfigValue());
 
-export interface ConfigProviderProps extends Pick<Partial<ConfigContextValue>, 'topPrefix' | 'localeCode' | 'container'> {
+export interface ConfigProviderProps
+  extends Pick<
+    Partial<ConfigContextValue>,
+    'topPrefix' | 'localeCode' | 'container'
+  > {
   children?: React.ReactNode;
 }
 export const ConfigProvider: React.FC<ConfigProviderProps> = (props) => {
   const { children, topPrefix, localeCode, container } = props;
-  const contextValue: ConfigContextValue = getDefaultConfigValue({ topPrefix, localeCode });
+  const contextValue: ConfigContextValue = getDefaultConfigValue({
+    topPrefix,
+    localeCode
+  });
   const [context, setContext] = useState<ConfigContextValue>(contextValue);
 
   useEffect(() => {
@@ -47,5 +60,9 @@ export const ConfigProvider: React.FC<ConfigProviderProps> = (props) => {
     });
   }, [localeCode, container]);
 
-  return <ConfigContext.Provider value={{ ...context }}>{children}</ConfigContext.Provider>;
+  return (
+    <ConfigContext.Provider value={{ ...context }}>
+      {children}
+    </ConfigContext.Provider>
+  );
 };
