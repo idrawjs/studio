@@ -1,22 +1,16 @@
 {
   "private": false,
-  "version": "0.4.0-alpha.2",
+  "version": "0.4.0-alpha.3",
   "workspaces": [
     "packages/*"
   ],
   "scripts": {
     "postinstall": "npm run build",
     "dev": "vite-node ./scripts/dev.ts",
-    "build": "vite-node ./scripts/build.ts",
+    "build": "vite-node ./scripts/build.ts && npm run build:bundle",
     "build:bundle": "vite-node ./scripts/build-bundle.ts",
-    "snapshot": "npm run build:bundle && vite-node ./scripts/snapshot.ts",
-    "e2e": "jest --config jest.e2e.config.js",
     "clear": "rm -rf node_modules/ && rm -rf ./packages/*/dist/ && rm -rf ./packages/*/esm/ && rm -rf ./packages/*/node_modules/",
     "jest": "jest --config jest.config.js",
-    "jest:update": "jest --update-snapshot --config jest.config.js",
-    "cover": "jest --config jest.cover.js",
-    "beforetest": "npm run build",
-    "test": "npm run jest",
     "serve": "http-server ./",
     "lint": "eslint  --fix --ext .ts packages/*/src/**",
     "precommit": "npm run lint",
