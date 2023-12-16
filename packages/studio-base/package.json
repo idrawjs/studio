@@ -1,0 +1,20 @@
+{
+  "name": "@idraw/studio-base",
+  "version": "0.4.0-alpha.0",
+  "files": [
+    "dist"
+  ],
+  "peerDependencies": {
+    "antd": "^5.12.1",
+    "classnames": "^2.3.2",
+    "idraw": "^0.1.0-beta.0",
+    "react": "^18.2.0",
+    "react-color": "^2.19.3",
+    "react-dom": "^18.2.0"
+  },
+  "devDependencies": {
+    "@types/react": "^18.2.45",
+    "@types/react-color": "^3.0.10",
+    "@types/react-dom": "^18.2.18"
+  }
+}
