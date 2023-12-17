@@ -15,5 +15,5 @@
     "skipLibCheck": true,
     "allowJs": true
   },
-  "exclude": ["node_modules", "lib", "es", "dist"]
+  "exclude": ["node_modules", "dist"]
 }
