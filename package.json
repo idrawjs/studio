@@ -3,19 +3,20 @@
     "dev": "vite-node ./scripts/dev.ts",
     "build": "vite-node ./scripts/build.ts",
     "docs": "npm run build && node ./scripts/docs.js"
-  }, 
+  },
   "devDependencies": {
     "@types/node": "^20.10.4",
     "@types/react": "^18.2.45",
     "@types/react-dom": "^18.2.18",
     "@vitejs/plugin-react": "^4.2.1",
     "less": "^4.2.0",
+    "prettier": "^3.1.1",
     "typescript": "^5.3.3",
     "vite": "^5.0.10",
     "vite-node": "^1.0.4"
   },
   "dependencies": {
-    "@idraw/studio": "0.4.0-alpha.5",  
+    "@idraw/studio": "0.4.0-alpha.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },

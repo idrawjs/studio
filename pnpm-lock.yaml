@@ -31,6 +31,9 @@ devDependencies:
   less:
     specifier: ^4.2.0
     version: 4.2.0
+  prettier:
+    specifier: ^3.1.1
+    version: 3.1.1
   typescript:
     specifier: ^5.3.3
     version: 5.3.3
@@ -1347,6 +1350,12 @@ packages:
       nanoid: 3.3.7
       picocolors: 1.0.0
       source-map-js: 1.0.2
+    dev: true
+
+  /prettier@3.1.1:
+    resolution: {integrity: sha512-22UbSzg8luF4UuZtzgiUOfcGM8s4tjBv6dJRT7j275NXsy2jb4aJa4NNveul5x4eqlF1wuhuR2RElK71RvmVaw==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /prop-types@15.8.1:
