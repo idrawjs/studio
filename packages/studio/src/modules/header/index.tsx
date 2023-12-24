@@ -13,10 +13,11 @@ const modName = 'mod-header';
 export interface ModProps extends ToolbarProps {
   className?: string;
   style?: CSSProperties;
+  logo?: React.ReactNode;
 }
 
 export const Header = (props: ModProps) => {
-  const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting } = props;
+  const { logo, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -34,7 +35,7 @@ export const Header = (props: ModProps) => {
     return (
       <div style={style} className={classnames(rootClassName, className)}>
         <div className={leftClassName}>
-          <span>@idraw/studio</span>
+          {logo}
           <NavMenu />
           <Toolbar
             className={centerClassName}

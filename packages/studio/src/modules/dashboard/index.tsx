@@ -20,10 +20,11 @@ export interface DashboardProps {
   style?: CSSProperties;
   width: number;
   height: number;
+  logo?: React.ReactNode;
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, style, width, height } = props;
+  const { className, style, width, height, logo } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const prefixName = createPrefixName(modName);
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
@@ -58,6 +59,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
       <div ref={ref} className={classnames(prefixName(), className)} style={{ ...style, ...{ width, height, padding: 0 } }}>
         <div className={prefixName('header')} style={{ height: headerHeight }}>
           <Header
+            logo={logo}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
             onClickToggleLayer={() => {

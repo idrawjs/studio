@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.4.0-alpha.5",
+  "version": "0.4.0-alpha.6",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -20,10 +20,10 @@
   "author": "chenshenhai",
   "license": "MIT",
   "dependencies": {
-    "@idraw/studio-base": "^0.4.0-alpha.5",
+    "@idraw/studio-base": "^0.4.0-alpha.6",
     "antd": "^5.12.1",
     "classnames": "^2.3.2",
-    "idraw": "^0.4.0-beta.1"
+    "idraw": "^0.4.0-beta.4"
   },
   "peerDependencies": {
     "react": "^18.2.0",

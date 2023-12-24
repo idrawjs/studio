@@ -1,17 +1,13 @@
 import React, { useRef, useContext, useMemo, useEffect } from 'react';
 import classnames from 'classnames';
-import {
-  iDraw,
-  middlewareEventSelect,
-  middlewareEventScale,
-  middlewareEventRuler,
-  findElementsFromListByPositions
-} from 'idraw';
+import { iDraw, middlewareEventSelect, middlewareEventScale, findElementsFromListByPositions } from 'idraw';
 import { ConfigContext, getElementTree } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
+import { Dropdown } from 'antd';
 import { Context } from '../context';
 import { setIDraw, eventHub } from '../../shared';
 import type { StudioState } from '../../types';
+import { createContextMenuOptions } from '../action';
 
 const modName = 'mod-sketch';
 
@@ -33,29 +29,19 @@ export const Sketch = (props: SketchProps) => {
   const modClassName = getPrefixName(modName);
 
   useEffect(() => {
-    if (refIDraw?.current) {
-      const idraw: iDraw = refIDraw.current;
-      idraw.trigger(middlewareEventRuler, { show: !!state.showRuler });
-    }
-  }, [state.showRuler]);
-
-  useEffect(() => {
     if (ref?.current) {
       if (!refIDraw?.current) {
         const options = {
           width,
           height,
-          devicePixelRatio
+          devicePixelRatio: 1
         };
         const idraw = new iDraw(ref.current, options);
         refIDraw.current = idraw;
 
         idraw.on(middlewareEventSelect, ({ uuids, positions }) => {
           if (positions && Array.isArray(positions)) {
-            const elems = findElementsFromListByPositions(
-              positions,
-              state.data.elements
-            );
+            const elems = findElementsFromListByPositions(positions, state.data.elements);
             uuids = elems.map((e: { uuid: any }) => e.uuid);
           }
           dispatch({
@@ -67,18 +53,9 @@ export const Sketch = (props: SketchProps) => {
         });
 
         idraw.on('change', ({ data, type }) => {
-          if (
-            [
-              'add-element',
-              'update-element',
-              'delete-element',
-              'move-element'
-            ].includes(type)
-          ) {
+          if (['add-element', 'update-element', 'delete-element', 'move-element'].includes(type)) {
             const payload: Partial<StudioState> = { data: { ...data } };
-            if (
-              ['add-element', 'delete-element', 'move-element'].includes(type)
-            ) {
+            if (['add-element', 'delete-element', 'move-element'].includes(type)) {
               payload.treeData = getElementTree(data);
             }
             dispatch({
@@ -168,11 +145,9 @@ export const Sketch = (props: SketchProps) => {
 
   return useMemo(() => {
     return (
-      <div
-        ref={ref}
-        className={classnames(modClassName, className)}
-        style={{ ...style, ...{ width, height, padding: 0 } }}
-      ></div>
+      <Dropdown menu={{ items: createContextMenuOptions() }} trigger={['contextMenu']}>
+        <div ref={ref} className={classnames(modClassName, className)} style={{ ...style, ...{ width, height, padding: 0 } }}></div>
+      </Dropdown>
     );
   }, []);
 };

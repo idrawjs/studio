@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio-base",
-  "version": "0.4.0-alpha.5",
+  "version": "0.4.0-alpha.6",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -22,7 +22,7 @@
   "peerDependencies": {
     "antd": "^5.12.1",
     "classnames": "^2.3.2",
-    "idraw": "^0.4.0-beta.1",
+    "idraw": "^0.4.0-beta.4",
     "react": "^18.2.0",
     "react-color": "^2.19.3",
     "react-dom": "^18.2.0"

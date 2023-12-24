@@ -1,13 +1,14 @@
-import React, { useMemo, useState, useRef } from 'react';
+import React, { useMemo, useState, useRef, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import type { ElementType, ElementOperations } from 'idraw';
+import type { ElementType, ElementOperations, ElementPosition } from 'idraw';
 import { Input } from 'antd';
+import type { InputRef } from 'antd';
 import IconVisible from '../../icons/visible';
 import IconInvisible from '../../icons/invisible';
 // import IconUnlock from '../../icons/unlock';
 // import IconLock from '../../icons/lock';
-import IconCheck from '../../icons/check';
+// import IconCheck from '../../icons/check';
 import IconRect from '../../icons/rect';
 import IconCircle from '../../icons/circle';
 import IconText from '../../icons/text';
@@ -16,7 +17,7 @@ import IconStar from '../../icons/star';
 import IconImage from '../../icons/image';
 import IconPath from '../../icons/path';
 import IconHTML from '../../icons/html';
-import IconEdit from '../../icons/edit';
+// import IconEdit from '../../icons/edit';
 // import IconDelete from '../../icons/delete';
 
 import IconCloseCircle from '../../icons/close-circle';
@@ -24,9 +25,11 @@ import IconCloseCircle from '../../icons/close-circle';
 const modName = 'node';
 
 export interface TreeNodeProps {
+  uuid: string;
   nodeKey: string;
   title: string;
-  operatinos: ElementOperations;
+  operations: ElementOperations;
+  position: ElementPosition;
   className?: string;
   type?: ElementType;
   style?: CSSProperties;
@@ -34,10 +37,11 @@ export interface TreeNodeProps {
   onTitleChange?: (e: { uuid: string; value: string }) => void;
   onOperationToggle?: (e: { uuid: string; operations: ElementOperations }) => void;
   onDelete?: (e: { uuid: string }) => void;
+  onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
 }
 
 export const TreeNode = (props: TreeNodeProps) => {
-  const { className, style, type, nodeKey, title, getPrefixName, onTitleChange, onOperationToggle, onDelete, operatinos } = props;
+  const { className, style, type, uuid, nodeKey, title, position, getPrefixName, onTitleChange, onOperationToggle, onDelete, onSelect, operations } = props;
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [showAction, setShowAction] = useState<boolean>(false);
   const refTitle = useRef<string>(title);
@@ -48,6 +52,8 @@ export const TreeNode = (props: TreeNodeProps) => {
   const titleInputClassName = getPrefixName(modName, 'title', 'input');
   const titleIconClassName = getPrefixName(modName, 'title', 'icon');
   const actionClassName = getPrefixName(modName, 'action');
+  const clickTime = useRef<number>(0);
+  const refInput = useRef<InputRef | null>(null);
 
   // useEffect(() => {
   //   refTitle.current = title;
@@ -71,15 +77,21 @@ export const TreeNode = (props: TreeNodeProps) => {
   //   setIsEdit(true);
   // };
 
+  useEffect(() => {
+    if (isEdit === true) {
+      refInput.current?.focus();
+    }
+  }, [isEdit]);
+
   const onTitleInputBlur = (e: React.FocusEvent<HTMLInputElement, Element>) => {
     setIsEdit(false);
     onTitleChange?.({ uuid: nodeKey, value: e.target.value || '' });
   };
-  const onTitleInputOk = (e: any) => {
-    e.stopPropagation();
-    setIsEdit(false);
-    onTitleChange?.({ uuid: nodeKey, value: refTitle.current || '' });
-  };
+  // const onTitleInputOk = (e: any) => {
+  //   e.stopPropagation();
+  //   setIsEdit(false);
+  //   onTitleChange?.({ uuid: nodeKey, value: refTitle.current || '' });
+  // };
   const onTitleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     refTitle.current = e.target.value || '';
   };
@@ -105,10 +117,26 @@ export const TreeNode = (props: TreeNodeProps) => {
     setShowAction(false);
   };
 
-  const onClickToEdit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    e.stopPropagation();
-    e.preventDefault();
-    setIsEdit(true);
+  // const onClickToEdit = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+  //   e.stopPropagation();
+  //   e.preventDefault();
+  //   setIsEdit(true);
+  // };
+
+  const onClickTitle = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    const nowTime = Date.now();
+    const countTime = nowTime - clickTime.current;
+    clickTime.current = nowTime;
+
+    onSelect?.({
+      uuids: [uuid],
+      positions: [position]
+    });
+    if (countTime <= 300 && countTime > 0) {
+      e.stopPropagation();
+      e.preventDefault();
+      setIsEdit(true);
+    }
   };
 
   const onClickToDelete = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
@@ -125,7 +153,7 @@ export const TreeNode = (props: TreeNodeProps) => {
     onOperationToggle?.({
       uuid: nodeKey,
       operations: {
-        invisible: !operatinos.invisible
+        invisible: !operations.invisible
       }
     });
   };
@@ -136,7 +164,7 @@ export const TreeNode = (props: TreeNodeProps) => {
   //   onOperationToggle?.({
   //     uuid: nodeKey,
   //     operations: {
-  //       lock: !operatinos.lock
+  //       lock: !operations.lock
   //     }
   //   });
   // };
@@ -165,24 +193,31 @@ export const TreeNode = (props: TreeNodeProps) => {
     }
 
     return (
-      <span key={nodeKey} style={style} className={classnames(rootClassName, className)} onMouseOver={onNodeMouseOver} onMouseLeave={onNodeMouseLeave}>
+      <span
+        key={nodeKey}
+        style={style}
+        className={classnames(rootClassName, className)}
+        onClick={onClickTitle}
+        onMouseOver={onNodeMouseOver}
+        onMouseLeave={onNodeMouseLeave}
+      >
         <span className={titleClassName}>
           {getIcon(type)}
           <span>{title}</span>
         </span>
         {showAction && (
           <span className={actionClassName}>
-            {operatinos.invisible ? (
+            {operations.invisible ? (
               <IconInvisible className={iconClassName} onClick={onClickToggleVisible} />
             ) : (
               <IconVisible className={iconClassName} onClick={onClickToggleVisible} />
             )}
-            {/* {operatinos.lock ? (
+            {/* {operations.lock ? (
             <IconLock className={iconClassName} onClick={onClickToggleLock} />
           ) : (
             <IconUnlock className={iconClassName} onClick={onClickToggleLock} />
           )} */}
-            <IconEdit className={iconClassName} onClick={onClickToEdit} />
+            {/* <IconEdit className={iconClassName} onClick={onClickToEdit} /> */}
             <IconCloseCircle className={iconClassName} onClick={onClickToDelete} />
           </span>
         )}
@@ -190,17 +225,18 @@ export const TreeNode = (props: TreeNodeProps) => {
         {isEdit && (
           <span className={titleInputClassName}>
             <Input
+              ref={refInput}
               size="small"
               defaultValue={title}
               onBlur={onTitleInputBlur}
               onClick={onTitleInputClick}
               onKeyDown={onTitleInputKeyDown}
               onChange={onTitleInputChange}
-              addonAfter={<IconCheck onClick={onTitleInputOk} />}
+              // addonAfter={<IconCheck onClick={onTitleInputOk} />}
             />
           </span>
         )}
       </span>
     );
-  }, [nodeKey, title, isEdit, type, showAction, operatinos]);
+  }, [nodeKey, title, isEdit, type, showAction, operations]);
 };

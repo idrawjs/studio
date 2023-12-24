@@ -1,9 +1,8 @@
-import React, { useState, useMemo, useContext } from 'react';
+import React, { useEffect, useState, useMemo, useContext } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Button, type ButtonProps } from 'antd';
 import { ConfigContext } from '@idraw/studio-base';
-import { Context } from '../context';
 import IconLayer from '../../icons/layer';
 import IconSetting from '../../icons/setting';
 // import IconMouse from '../../icons/mouse';
@@ -11,6 +10,8 @@ import IconSetting from '../../icons/setting';
 // import IconHand from '../../icons/hand';
 // import IconMore from '../../icons/more';
 import IconRuler from '../../icons/ruler';
+import IconDrag from '../../icons/drag';
+import { getIDraw } from '../../shared';
 
 // const RadioButton = Radio.Button;
 // const RadioGroup = Radio.Group;
@@ -37,16 +38,17 @@ export const Toolbar = (props: ToolbarProps) => {
   // const middleClassName = getPrefixName('middle');
   const btnClassName = getPrefixName('btn');
   // const modeSwitchClassName = getPrefixName('mode-switch');
-  const { state, dispatch } = useContext(Context);
+  const [toggleDrag, setToggleDrag] = useState<boolean>(false);
+  const [toggleRuler, setToggleRuler] = useState<boolean>(true);
 
-  const onClickToggleRuler = () => {
-    dispatch({
-      payload: {
-        showRuler: !state.showRuler
-      },
-      type: 'update'
+  useEffect(() => {
+    const idraw = getIDraw();
+    idraw?.reset({
+      enableRuler: toggleRuler,
+      enableDrag: toggleDrag,
+      enableSelect: !toggleDrag
     });
-  };
+  }, [toggleDrag, toggleRuler]);
 
   const btnProps: ButtonProps = {
     size: 'small',
@@ -77,12 +79,22 @@ export const Toolbar = (props: ToolbarProps) => {
           <Button {...btnProps} type={openRightSider ? 'primary' : 'default'} icon={<IconSetting style={iconStyle} />} onClick={onClickToggleSetting} />
           <Button
             {...btnProps}
-            type={state.showRuler ? 'primary' : 'default'}
+            type={toggleRuler ? 'primary' : 'default'}
             icon={<IconRuler style={{ ...iconStyle, fontSize: 20 }} />}
-            onClick={onClickToggleRuler}
+            onClick={() => {
+              setToggleRuler(!toggleRuler);
+            }}
+          />
+          <Button
+            {...btnProps}
+            type={toggleDrag ? 'primary' : 'default'}
+            icon={<IconDrag style={{ ...iconStyle, fontSize: 20 }} />}
+            onClick={() => {
+              setToggleDrag(!toggleDrag);
+            }}
           />
         </div>
       </div>
     );
-  }, [openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, state.showRuler]);
+  }, [openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, toggleDrag, toggleRuler]);
 };

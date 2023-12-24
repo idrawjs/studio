@@ -19,10 +19,11 @@ export type StudioProps = DashboardProps & {
     offsetX: number;
     offsetY: number;
   };
+  logo?: React.ReactNode;
 };
 
 export const Studio = (props: StudioProps) => {
-  const { width = 1000, height = 600, style, className, data, defaultScaleInfo } = props;
+  const { width = 1000, height = 600, style, className, data, defaultScaleInfo, logo } = props;
   const [state, dispatch] = useReducer(
     createStudioReducer,
     createStudioContextState({ themeMode: defaultThemeMode, data, scaleInfo: { ...defaultScaleInfo, from: 'init' } })
@@ -47,6 +48,7 @@ export const Studio = (props: StudioProps) => {
         <Provider value={{ state, dispatch }}>
           <AntdConfigProvider theme={{ algorithm: state.themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
             <Dashboard
+              logo={logo}
               ref={refDashboard}
               width={width}
               height={height}
