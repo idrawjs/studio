@@ -3,7 +3,7 @@ import classnames from 'classnames';
 import { Tree } from 'antd';
 import DownOutlined from '@ant-design/icons/DownOutlined';
 import type { CSSProperties } from 'react';
-import type { TreeProps } from 'antd';
+import type { TreeProps, TreeDataNode } from 'antd';
 import type { ElementPosition } from 'idraw';
 import { ConfigContext } from '../config-provider';
 import { wrapTreeViewData } from './wrap';
@@ -13,10 +13,7 @@ import type { ElementTreeData } from '../../types';
 const { DirectoryTree } = Tree;
 const modName = 'base-element-tree';
 
-export type ElementTreeProps = Pick<
-  TreeNodeProps,
-  'onTitleChange' | 'onOperationToggle'
-> & {
+export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle'> & {
   height: number;
   className?: string;
   style?: CSSProperties;
@@ -24,6 +21,7 @@ export type ElementTreeProps = Pick<
   selectedKeys?: string[];
   defaultExpandedKeys?: string[];
   expandedKeys?: string[];
+  onExpand?: (keys: string[], e: { expanded: boolean; nativeEvent: React.PointerEvent; node: TreeDataNode }) => void;
   defaultExpandAll?: boolean;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onDrop?: (e: { from: ElementPosition; to: ElementPosition }) => void;
@@ -36,7 +34,7 @@ const treePosToElementPosition = (pos: string) => {
   return elemPos;
 };
 
-export const ElementTree = (props: ElementTreeProps) => {
+export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) => {
   const {
     height,
     className,
@@ -48,7 +46,9 @@ export const ElementTree = (props: ElementTreeProps) => {
     selectedKeys,
     onDrop,
     defaultExpandedKeys,
-    onDelete
+    expandedKeys,
+    onDelete,
+    onExpand
   } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -68,16 +68,19 @@ export const ElementTree = (props: ElementTreeProps) => {
       getPrefixName,
       onTitleChange,
       onOperationToggle,
-      onDelete: onElementDelete
+      onDelete: onElementDelete,
+      position: []
     });
 
     return (
       <DirectoryTree
+        ref={ref}
         height={height}
         style={style}
         className={classnames(getPrefixName(), className)}
         showLine
         blockNode
+        multiple
         selectedKeys={selectedKeys}
         switcherIcon={<DownOutlined />}
         // icon={(props: any) => {
@@ -88,8 +91,9 @@ export const ElementTree = (props: ElementTreeProps) => {
         onSelect={onSelectNode}
         treeData={wrappedTreeData}
         defaultExpandedKeys={defaultExpandedKeys}
-        // expandedKeys={expandedKeys}
+        expandedKeys={expandedKeys}
         // defaultExpandAll={defaultExpandAll}
+        onExpand={onExpand as any}
         draggable={{
           icon: false,
           nodeDraggable: () => true
@@ -112,4 +116,4 @@ export const ElementTree = (props: ElementTreeProps) => {
       />
     );
   }, [className, style, onSelectNode, treeData, selectedKeys]);
-};
+});

@@ -2,17 +2,20 @@ import React, { useContext, useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { ConfigContext, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
-import { Dropdown, Button, Space } from 'antd';
+import { Dropdown, Button, Space, Modal } from 'antd';
 import type { MenuProps, MenuItemProps, ButtonProps } from 'antd';
+import { downloadFileFromText } from 'idraw';
 // import IconMouse from '../../icons/mouse';
 // import IconPen from '../../icons/pen';
 // import IconHand from '../../icons/hand';
-// import IconMore from '../../icons/more';
-import IconFile from '../../icons/file';
+// import IconFile from '../../icons/file';
+import IconMore from '../../icons/more';
 import IconApp from '../../icons/app';
 import IconDown from '../../icons/down';
 import { eventHub } from '../../shared';
 import { ElementType } from 'idraw';
+import { ExportFile, exportFileDialogWidth } from '../export-image-file';
+import { getIDraw } from '../../shared';
 
 const modName = 'mod-nav-menu';
 
@@ -23,25 +26,135 @@ export interface NavMenuProps {
 
 export const NavMenu = (props: NavMenuProps) => {
   const { className, style } = props;
+  const [modal, contextHolder] = Modal.useModal();
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
+  const rootClassName = getPrefixName();
+  const dropdownClassName = getPrefixName('dropdown');
+  // const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
 
   const clickToAddElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
     domEvent.preventDefault();
     eventHub.trigger('addElement', { type: key as ElementType, element: {} });
   };
 
+  const resetDevicePixelRatio = (radio: number) => {
+    const idraw = getIDraw();
+    idraw?.resize({
+      devicePixelRatio: radio
+    });
+  };
+
   const navItemsMap: Record<string, MenuProps['items']> = {
-    file: [
+    // file: [
+    //   {
+    //     key: 'import',
+    //     label: 'Import',
+    //     disabled: true
+    //   },
+    //   {
+    //     key: 'export-whole-content',
+    //     label: 'Export whole content',
+    //     onClick: () => {
+    //       modal.info({
+    //         icon: null,
+    //         title: 'Whole Content',
+    //         width: exportFileBoxWidth,
+    //         content: <ExportFile />,
+    //         footer: null,
+    //         closable: true
+    //       });
+    //     }
+    //   }
+    // ],
+    more: [
       {
-        key: 'import',
-        label: 'Import',
+        key: 'about-idraw-stuido',
+        label: 'About @idraw/studio',
         disabled: true
       },
       {
-        key: 'export',
-        label: 'Export',
-        disabled: true
+        key: 'line',
+        type: 'divider'
+      },
+      {
+        key: 'file',
+        label: 'File',
+        children: [
+          {
+            key: 'import-json-file',
+            label: 'Import JSON file',
+            disabled: true
+          },
+
+          {
+            key: 'export-image-file',
+            label: 'Export image',
+            onClick: () => {
+              modal.info({
+                icon: null,
+                title: 'Whole image file',
+                width: exportFileDialogWidth,
+                content: <ExportFile />,
+                footer: null,
+                closable: true
+              });
+            }
+          },
+          {
+            key: 'export-json-file',
+            label: 'Export JSON file',
+            onClick: () => {
+              const idraw = getIDraw();
+              const data = idraw?.getData();
+              if (data) {
+                const text = JSON.stringify(data);
+                downloadFileFromText(text, { fileName: 'downdown.json' });
+              }
+            }
+          }
+        ]
+      },
+      {
+        key: 'preferences',
+        label: 'Preferences',
+        children: [
+          {
+            key: 'device-pixel-ratio',
+            label: 'Device pixel ratio',
+            type: 'group',
+            children: [
+              {
+                key: 'device-pixel-ratio-x1',
+                label: 'x1',
+                onClick: () => {
+                  resetDevicePixelRatio(1);
+                }
+              },
+              {
+                key: 'device-pixel-ratio-x2',
+                label: 'x2',
+                onClick: () => {
+                  resetDevicePixelRatio(2);
+                }
+              },
+              {
+                key: 'device-pixel-ratio-x3',
+                label: 'x3',
+                onClick: () => {
+                  resetDevicePixelRatio(3);
+                }
+              },
+              {
+                key: 'device-pixel-ratio-x4',
+                label: 'x4',
+                onClick: () => {
+                  resetDevicePixelRatio(4);
+                }
+              }
+            ]
+          }
+        ]
       }
     ],
     element: [
@@ -98,17 +211,42 @@ export const NavMenu = (props: NavMenuProps) => {
 
   const navList: Array<{ key: string; button: React.ReactNode }> = [
     // { button: <IconMouse style={{ fontSize: 20 }} /> },
-    { key: 'file', button: <IconFile style={{ fontSize: 20 }} /> },
+    // { key: 'file', button: <IconFile style={{ fontSize: 20 }} /> },
+    { key: 'more', button: <IconMore style={{ fontSize: 20 }} /> },
     { key: 'element', button: <IconApp style={{ fontSize: 20 }} /> }
-    // { key: 'more', button: <IconMore style={{ fontSize: 20 }} /> }
   ];
+
+  // const refreshSelectedKeys = () => {
+  //   const idraw = getIDraw();
+  //   const newSelectedKeys: string[] = [];
+  //   if (idraw) {
+  //     const { viewSizeInfo } = idraw.getViewInfo();
+  //     const { devicePixelRatio } = viewSizeInfo;
+  //     newSelectedKeys.push(`device-pixel-ratio-x${devicePixelRatio}`);
+  //   }
+  //   setSelectedKeys(newSelectedKeys);
+  // };
 
   return useMemo(() => {
     return (
-      <div style={style} className={classnames(getPrefixName(), className)}>
+      <div style={style} className={classnames(rootClassName, className)}>
         {navList.map((item, i) => {
           return (
-            <Dropdown key={i} menu={{ items: navItemsMap[item.key] || [] }} placement="bottom">
+            <Dropdown
+              key={i}
+              menu={{
+                // multiple: true,
+                items: navItemsMap[item.key] || []
+                // selectedKeys
+              }}
+              placement="bottom"
+              overlayClassName={dropdownClassName}
+              onOpenChange={(open: boolean) => {
+                if (open === true) {
+                  // refreshSelectedKeys();
+                }
+              }}
+            >
               <Button {...btnProps} onClick={(e) => e.preventDefault()}>
                 <Space.Compact>
                   {item.button}
@@ -118,6 +256,7 @@ export const NavMenu = (props: NavMenuProps) => {
             </Dropdown>
           );
         })}
+        {contextHolder}
       </div>
     );
   }, []);

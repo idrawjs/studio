@@ -73,7 +73,13 @@ export const PanelDetail = (props: PanelDetailProps) => {
   return useMemo(() => {
     const targetElement = getTargetElement(selectedUUIDs[0]);
     return (
-      <div style={style} className={classnames(modClassName, className)}>
+      <div
+        style={style}
+        className={classnames(modClassName, className)}
+        onContextMenu={(e) => {
+          e.preventDefault();
+        }}
+      >
         <ElementDetail element={targetElement} onChange={onChange} getElementAsset={getElementAsset} createElementAsset={createElementAsset} />
       </div>
     );

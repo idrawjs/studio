@@ -13,16 +13,7 @@
   <a href="https://idraw.js.org/studio/" target="_blank">idraw.js.org/studio/</a>
 </p>
 
-> Note:
-> At present, the development content of the main branch is v0.4, and it is currently in the development and reconstruction stage, mainly based on the v0.3 version for optimization and reconstruction.
-> The npm module is version v0.2.0-alpha.*. If you encounter any problems while using the npm module, you can view the content of this branch: [https://github.com/idrawjs/studio/tree/v0.3](https://github.com/idrawjs/studio/tree/v0.3)
-
-
-> 注意:
-> 当前`main`分支开发内容为`v0.4`，目前处于开发重构阶段，主要基于`v0.3`版本进行优化重构。
-> 目前npm 模块是`v0.3 `版本。 如果你在使用npm模块的过程中遇到什么问题，可以查看这个分支的内容： [https://github.com/idrawjs/studio/tree/v0.3](https://github.com/idrawjs/studio/tree/v0.3)
-
-
+ 
 ## @idraw/studio Preview
 
 You can click [idraw.js.org/studio/](https://idraw.js.org/studio) to experience it.
@@ -84,7 +75,7 @@ git clone git@github.com:idrawjs/studio.git
 
 cd studio
 
-npm install
+pnpm install
 
 npm run dev
 ```

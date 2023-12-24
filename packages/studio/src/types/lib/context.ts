@@ -14,8 +14,6 @@ export interface StudioState {
     offsetY?: number;
     from: 'event' | 'control' | 'init';
   };
-  showRuler: boolean;
-  // scale: number;
 }
 
 export type StudioActionType = 'update' | 'updateThemeMode' | 'updateData' | 'updateTreeData';

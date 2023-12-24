@@ -15,8 +15,7 @@ export function createStudioContextState(opts?: Partial<StudioState>): StudioSta
       scale: 1,
       from: 'control',
       ...(opts?.scaleInfo || {})
-    },
-    showRuler: true
+    }
   };
 }
 
