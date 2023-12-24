@@ -72,6 +72,12 @@ const App = () => {
 
   return (
     <Studio
+      logo={
+        <span style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+          <img style={{ width: 24, marginRight: 10 }} src="https://github.com/idrawjs/idraw/assets/8216630/bcf8fbc6-6374-4cb9-a67f-1687d029a863" />
+          <span>@idraw/studio</span>
+        </span>
+      }
       width={width}
       height={height}
       style={style}
