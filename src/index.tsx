@@ -96,7 +96,7 @@ const App = () => {
         // offsetY: -500
 
         scale: 0.12,
-        offsetX: -800,
+        offsetX: -300,
         offsetY: -500
         // offsetY: 4100
 
