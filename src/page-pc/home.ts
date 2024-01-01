@@ -12,6 +12,18 @@ const page: Element<'group'> = {
     background: '#FFFFFF',
     children: [
       {
+        uuid: 'dbb6b4a1-2389-f47d-b216-096631321d66',
+        name: 'Background',
+        type: 'rect',
+        x: 0,
+        y: 0,
+        w: 1440,
+        h: 5453,
+        detail: {
+          background: '#FFFFFF'
+        }
+      },
+      {
         uuid: '35441409-a63e-7577-ec56-f659ea1292d2',
         name: 'Header',
         type: 'group',
