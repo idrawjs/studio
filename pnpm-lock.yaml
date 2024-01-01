@@ -16,6 +16,9 @@ dependencies:
     version: 18.2.0(react@18.2.0)
 
 devDependencies:
+  '@idraw/types':
+    specifier: 0.4.0-beta.6
+    version: 0.4.0-beta.6
   '@types/node':
     specifier: ^20.10.4
     version: 20.10.4
@@ -622,7 +625,6 @@ packages:
 
   /@idraw/types@0.4.0-beta.6:
     resolution: {integrity: sha512-/M9mr2MABjXMOvBbGGSO+jC5pclivRlGjSXBVQMFnPHsTvs47Kq1qwbEeNrWxGNaW/VQvwtUg2iMPkQyW+jF2g==}
-    dev: false
 
   /@idraw/util@0.4.0-beta.6:
     resolution: {integrity: sha512-EWGGArPhkHLLhdCgqyIZsOTNXytDCfxfGYud38SU7haOgA7+fmi1jUaLNOS840wI21p1uBbbPfqv3lz+b4ux8w==}
