@@ -24,6 +24,26 @@ export interface Locale<T = LocaleCode> {
     opacity: string;
     mixedBorderWidth: string;
     mixedBorderRadius: string;
+    overflow: string;
+    hidden: string;
+    visible: string;
+    deepResizeInGroup: string;
+  };
+  Menu: {
+    about: string;
+    file: string;
+    importJSONFile: string;
+    exportJSONFile: string;
+    exportImage: string;
+    preferences: string;
+    rect: string;
+    circle: string;
+    text: string;
+    image: string;
+    html: string;
+    svg: string;
+    group: string;
+    devicePixelRatio: string;
   };
 }
 

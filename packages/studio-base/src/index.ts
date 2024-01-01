@@ -12,4 +12,4 @@ export { ElementDetail, type ElementDetailProps } from './modules/element-detail
 export { getElementTree } from './tools';
 export * from './locale/types';
 
-export { IconRect, IconCircle, IconText, IconImage, IconStar, IconHTML, IconGroup } from './icons';
+export { IconRect, IconCircle, IconText, IconImage, IconStar, IconHTML, IconGroup, IconVerticalRight, IconDoubleLeft, IconLeft } from './icons';

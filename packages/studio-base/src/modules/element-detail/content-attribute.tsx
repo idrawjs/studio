@@ -28,7 +28,8 @@ export interface ContentAttributeProps {
 type FieldType = Pick<ElementBaseDetail, 'background' | 'opacity'>;
 
 const elementToFormData = (element?: Element | null) => {
-  let { background, opacity } = element?.detail || {};
+  let { opacity } = element?.detail || {};
+  const { background } = element?.detail || {};
   if (!(typeof opacity === 'number' && opacity >= 0 && opacity <= 1)) {
     opacity = 1;
   }

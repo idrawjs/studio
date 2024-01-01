@@ -21,10 +21,11 @@ export interface DashboardProps {
   width: number;
   height: number;
   logo?: React.ReactNode;
+  defaultSelectedElementUUIDs?: string[];
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, style, width, height, logo } = props;
+  const { className, style, width, height, logo, defaultSelectedElementUUIDs } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const prefixName = createPrefixName(modName);
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
@@ -119,7 +120,11 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
               width: centerWidth + rightWidth
             }}
           >
-            <div>{openLeftSider && <PanelLayer height={height - headerHeight} className={prefixName('left')} />}</div>
+            <div>
+              {openLeftSider && (
+                <PanelLayer height={height - headerHeight} className={prefixName('left')} defaultSelectedElementUUIDs={defaultSelectedElementUUIDs} />
+              )}
+            </div>
             <div style={{ width: layout.centerWidth + layout.rightWidth, display: 'flex', flexDirection: 'row' }}>
               <Sketch className={prefixName('center')} width={centerWidth} height={height - headerHeight} />
               <div className={prefixName('right')} style={{ width: rightWidth, height: height - headerHeight }}>

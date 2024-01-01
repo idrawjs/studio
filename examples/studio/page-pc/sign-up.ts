@@ -9,8 +9,19 @@ const page: Element<'group'> = {
   w: 1440,
   h: 950,
   detail: {
-    background: '#FFFFFF',
     children: [
+      {
+        uuid: 'a547676e-ee4b-73bf-ec1b-e0cbb6a74107',
+        name: 'Background',
+        type: 'rect',
+        x: 0,
+        y: 0,
+        w: 1440,
+        h: 950,
+        detail: {
+          background: '#FFFFFF'
+        }
+      },
       {
         uuid: '78f2de65-bc43-5609-a56f-49be8cf6ee04',
         type: 'text',

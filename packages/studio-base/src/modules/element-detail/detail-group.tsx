@@ -5,6 +5,7 @@ import type { Element, ElementGroupDetail } from 'idraw';
 import { Row, Col, Form, Select } from 'antd';
 import type { FormInstance } from 'antd';
 import { ConfigContext } from '../config-provider';
+import { useModuleLocale } from './hooks';
 
 const modName = 'base-element-detail-group';
 
@@ -35,6 +36,7 @@ export const DetailGroup = (props: DetailGroupProps) => {
   const colClassName = getPrefixName('col');
   const formItemClassName = getPrefixName('form-item');
   const ref = useRef<FormInstance>(null);
+  const moduleLocale = useModuleLocale();
 
   useEffect(() => {
     const initialValues = elementToFormData(element);
@@ -50,11 +52,14 @@ export const DetailGroup = (props: DetailGroupProps) => {
       <div style={style} className={classnames(rootClassName, className)}>
         <Form ref={ref} style={style} className={rootClassName} onValuesChange={onValuesChange}>
           <Row className={rowClassName}>
+            <Col className={colClassName} span="10">
+              {moduleLocale.overflow}
+            </Col>
             <Col span="12" className={colClassName}>
               <Form.Item className={formItemClassName} name="overflow">
                 <Select size="small" disabled={disabled}>
-                  <Select.Option value="visible">Visible</Select.Option>
-                  <Select.Option value="hidden">Hidden</Select.Option>
+                  <Select.Option value="visible">{moduleLocale.visible}</Select.Option>
+                  <Select.Option value="hidden">{moduleLocale.hidden}</Select.Option>
                 </Select>
               </Form.Item>
             </Col>
@@ -62,5 +67,5 @@ export const DetailGroup = (props: DetailGroupProps) => {
         </Form>
       </div>
     );
-  }, [style, className]);
+  }, [style, className, moduleLocale]);
 };

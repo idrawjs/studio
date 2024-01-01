@@ -1,6 +1,6 @@
-import type { iDraw as IDraw } from 'idraw';
+import type { iDraw as IDraw, Data } from 'idraw';
 import { EventEmitter } from 'idraw';
-import type { ElementType, Element, RecursivePartial } from 'idraw';
+import type { ElementType, Element, ElementPosition, RecursivePartial } from 'idraw';
 
 let idraw: IDraw | null = null;
 
@@ -16,6 +16,16 @@ export interface SharedEvent {
   addElement: {
     type: ElementType;
     element: RecursivePartial<Omit<Element, 'uuid' | 'type'>>;
+  };
+  deleteElement: {
+    uuid: string;
+  };
+  resetEditingView: {
+    type: 'go-to-group' | 'back-one' | 'back-root';
+    position: ElementPosition | null;
+  };
+  resetData: {
+    data: Data;
   };
 }
 
