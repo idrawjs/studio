@@ -1,11 +1,13 @@
 import type { Dispatch } from 'react';
-import type { Data } from 'idraw';
+import type { Data, ElementPosition } from 'idraw';
 import type { ElementTreeData, LocaleCode } from '@idraw/studio-base';
 
 export interface StudioState {
   localeCode: LocaleCode;
   themeMode: 'light' | 'dark';
   data: Data;
+  editingData: Data;
+  editingDataPostion: ElementPosition;
   treeData: ElementTreeData;
   selectedUUIDs: string[];
   scaleInfo: {
@@ -16,7 +18,7 @@ export interface StudioState {
   };
 }
 
-export type StudioActionType = 'update' | 'updateThemeMode' | 'updateData' | 'updateTreeData';
+export type StudioActionType = 'update' | 'updateThemeMode' | 'updateTreeData';
 
 export type StudioAction = {
   type: StudioActionType;

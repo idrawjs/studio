@@ -26,6 +26,7 @@ export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperatio
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onDrop?: (e: { from: ElementPosition; to: ElementPosition }) => void;
   onDelete?: (e: { uuid: string }) => void;
+  onGoToGroup?: (e: { uuid: string; position: ElementPosition }) => void;
 };
 
 const treePosToElementPosition = (pos: string) => {
@@ -48,7 +49,8 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     defaultExpandedKeys,
     expandedKeys,
     onDelete,
-    onExpand
+    onExpand,
+    onGoToGroup
   } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -69,7 +71,9 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
       onTitleChange,
       onOperationToggle,
       onDelete: onElementDelete,
-      position: []
+      onGoToGroup,
+      position: [],
+      selectedKeys: selectedKeys || []
     });
 
     return (

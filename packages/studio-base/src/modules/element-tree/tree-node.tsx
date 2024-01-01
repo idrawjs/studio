@@ -17,7 +17,7 @@ import IconStar from '../../icons/star';
 import IconImage from '../../icons/image';
 import IconPath from '../../icons/path';
 import IconHTML from '../../icons/html';
-// import IconEdit from '../../icons/edit';
+import IconArrowRight from '../../icons/arrow-right';
 // import IconDelete from '../../icons/delete';
 
 import IconCloseCircle from '../../icons/close-circle';
@@ -38,10 +38,28 @@ export interface TreeNodeProps {
   onOperationToggle?: (e: { uuid: string; operations: ElementOperations }) => void;
   onDelete?: (e: { uuid: string }) => void;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
+  onGoToGroup?: (e: { uuid: string; position: ElementPosition }) => void;
+  isSelected: boolean;
 }
 
 export const TreeNode = (props: TreeNodeProps) => {
-  const { className, style, type, uuid, nodeKey, title, position, getPrefixName, onTitleChange, onOperationToggle, onDelete, onSelect, operations } = props;
+  const {
+    className,
+    style,
+    type,
+    uuid,
+    nodeKey,
+    title,
+    position,
+    getPrefixName,
+    onTitleChange,
+    onOperationToggle,
+    onDelete,
+    onSelect,
+    onGoToGroup,
+    operations,
+    isSelected
+  } = props;
   const [isEdit, setIsEdit] = useState<boolean>(false);
   const [showAction, setShowAction] = useState<boolean>(false);
   const refTitle = useRef<string>(title);
@@ -52,6 +70,7 @@ export const TreeNode = (props: TreeNodeProps) => {
   const titleInputClassName = getPrefixName(modName, 'title', 'input');
   const titleIconClassName = getPrefixName(modName, 'title', 'icon');
   const actionClassName = getPrefixName(modName, 'action');
+  const selectedClassName = getPrefixName(modName, 'selected');
   const clickTime = useRef<number>(0);
   const refInput = useRef<InputRef | null>(null);
 
@@ -158,6 +177,12 @@ export const TreeNode = (props: TreeNodeProps) => {
     });
   };
 
+  const onClickGoToGroup = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onGoToGroup?.({ uuid, position });
+  };
+
   // const onClickToggleLock = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
   //   e.stopPropagation();
   //   e.preventDefault();
@@ -196,7 +221,7 @@ export const TreeNode = (props: TreeNodeProps) => {
       <span
         key={nodeKey}
         style={style}
-        className={classnames(rootClassName, className)}
+        className={classnames(rootClassName, className, isSelected ? selectedClassName : null)}
         onClick={onClickTitle}
         onMouseOver={onNodeMouseOver}
         onMouseLeave={onNodeMouseLeave}
@@ -207,11 +232,13 @@ export const TreeNode = (props: TreeNodeProps) => {
         </span>
         {showAction && (
           <span className={actionClassName}>
+            {type === 'group' && <IconArrowRight className={iconClassName} onClick={onClickGoToGroup} />}
             {operations.invisible ? (
               <IconInvisible className={iconClassName} onClick={onClickToggleVisible} />
             ) : (
               <IconVisible className={iconClassName} onClick={onClickToggleVisible} />
             )}
+
             {/* {operations.lock ? (
             <IconLock className={iconClassName} onClick={onClickToggleLock} />
           ) : (
@@ -238,5 +265,5 @@ export const TreeNode = (props: TreeNodeProps) => {
         )}
       </span>
     );
-  }, [nodeKey, title, isEdit, type, showAction, operations]);
+  }, [nodeKey, title, isEdit, type, showAction, operations, isSelected]);
 };

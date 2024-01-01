@@ -1,4 +1,4 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useContext, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { ConfigContext, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
@@ -16,7 +16,13 @@ import { eventHub } from '../../shared';
 import { ElementType } from 'idraw';
 import { ExportFile, exportFileDialogWidth } from '../export-image-file';
 import { getIDraw } from '../../shared';
+import { useLocale } from '../../locale';
+import { pickJSONFile } from '../../util/file';
 
+const useModuleLocale = () => {
+  const [moduleLocale] = useLocale('NavMenu');
+  return moduleLocale;
+};
 const modName = 'mod-nav-menu';
 
 export interface NavMenuProps {
@@ -31,8 +37,8 @@ export const NavMenu = (props: NavMenuProps) => {
   const getPrefixName = createPrefixName(modName);
   const rootClassName = getPrefixName();
   const dropdownClassName = getPrefixName('dropdown');
-  // const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
-
+  const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
+  const moduleLocale = useModuleLocale();
   const clickToAddElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
     domEvent.preventDefault();
     eventHub.trigger('addElement', { type: key as ElementType, element: {} });
@@ -70,7 +76,7 @@ export const NavMenu = (props: NavMenuProps) => {
     more: [
       {
         key: 'about-idraw-stuido',
-        label: 'About @idraw/studio',
+        label: moduleLocale.about,
         disabled: true
       },
       {
@@ -79,17 +85,27 @@ export const NavMenu = (props: NavMenuProps) => {
       },
       {
         key: 'file',
-        label: 'File',
+        label: moduleLocale.file,
         children: [
           {
             key: 'import-json-file',
-            label: 'Import JSON file',
-            disabled: true
+            label: moduleLocale.importJSONFile,
+            onClick: () => {
+              pickJSONFile({
+                success: ({ json }) => {
+                  // TODO
+                  eventHub.trigger('resetData', { data: json });
+                },
+                error: () => {
+                  // TODO
+                }
+              });
+            }
           },
 
           {
-            key: 'export-image-file',
-            label: 'Export image',
+            key: 'export-image',
+            label: moduleLocale.exportImage,
             onClick: () => {
               modal.info({
                 icon: null,
@@ -103,10 +119,10 @@ export const NavMenu = (props: NavMenuProps) => {
           },
           {
             key: 'export-json-file',
-            label: 'Export JSON file',
+            label: moduleLocale.exportJSONFile,
             onClick: () => {
               const idraw = getIDraw();
-              const data = idraw?.getData();
+              const data = idraw?.getData({ compact: true });
               if (data) {
                 const text = JSON.stringify(data);
                 downloadFileFromText(text, { fileName: 'downdown.json' });
@@ -117,11 +133,11 @@ export const NavMenu = (props: NavMenuProps) => {
       },
       {
         key: 'preferences',
-        label: 'Preferences',
+        label: moduleLocale.preferences,
         children: [
           {
             key: 'device-pixel-ratio',
-            label: 'Device pixel ratio',
+            label: moduleLocale.devicePixelRatio,
             type: 'group',
             children: [
               {
@@ -160,44 +176,44 @@ export const NavMenu = (props: NavMenuProps) => {
     element: [
       {
         key: 'rect',
-        label: 'Rect',
+        label: moduleLocale.rect,
         icon: <IconRect />,
         onClick: clickToAddElement
       },
       {
         key: 'circle',
-        label: 'Circle',
+        label: moduleLocale.circle,
         icon: <IconCircle />,
         onClick: clickToAddElement
       },
       {
         key: 'text',
-        label: 'Text',
+        label: moduleLocale.text,
         icon: <IconText />,
         onClick: clickToAddElement
       },
       {
         key: 'image',
-        label: 'Image',
+        label: moduleLocale.image,
         icon: <IconImage />,
         onClick: clickToAddElement
       },
       {
         key: 'svg',
-        label: 'SVG',
+        label: moduleLocale.svg,
         icon: <IconStar />,
         onClick: clickToAddElement
       },
       {
         key: 'html',
-        label: 'HTML',
+        label: moduleLocale.html,
         disabled: true,
         icon: <IconHTML />,
         onClick: clickToAddElement
       },
       {
         key: 'group',
-        label: 'Group',
+        label: moduleLocale.group,
         icon: <IconGroup />,
         onClick: clickToAddElement
       }
@@ -216,16 +232,16 @@ export const NavMenu = (props: NavMenuProps) => {
     { key: 'element', button: <IconApp style={{ fontSize: 20 }} /> }
   ];
 
-  // const refreshSelectedKeys = () => {
-  //   const idraw = getIDraw();
-  //   const newSelectedKeys: string[] = [];
-  //   if (idraw) {
-  //     const { viewSizeInfo } = idraw.getViewInfo();
-  //     const { devicePixelRatio } = viewSizeInfo;
-  //     newSelectedKeys.push(`device-pixel-ratio-x${devicePixelRatio}`);
-  //   }
-  //   setSelectedKeys(newSelectedKeys);
-  // };
+  const refreshSelectedKeys = () => {
+    const idraw = getIDraw();
+    const newSelectedKeys: string[] = [];
+    if (idraw) {
+      const { viewSizeInfo } = idraw.getViewInfo();
+      const { devicePixelRatio } = viewSizeInfo;
+      newSelectedKeys.push(`device-pixel-ratio-x${devicePixelRatio}`);
+    }
+    setSelectedKeys(newSelectedKeys);
+  };
 
   return useMemo(() => {
     return (
@@ -234,16 +250,17 @@ export const NavMenu = (props: NavMenuProps) => {
           return (
             <Dropdown
               key={i}
+              trigger={['click', 'click']}
               menu={{
                 // multiple: true,
-                items: navItemsMap[item.key] || []
-                // selectedKeys
+                items: navItemsMap[item.key] || [],
+                selectedKeys
               }}
               placement="bottom"
               overlayClassName={dropdownClassName}
               onOpenChange={(open: boolean) => {
                 if (open === true) {
-                  // refreshSelectedKeys();
+                  refreshSelectedKeys();
                 }
               }}
             >
@@ -259,5 +276,5 @@ export const NavMenu = (props: NavMenuProps) => {
         {contextHolder}
       </div>
     );
-  }, []);
+  }, [selectedKeys, moduleLocale]);
 };

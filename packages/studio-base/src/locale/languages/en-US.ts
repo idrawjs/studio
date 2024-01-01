@@ -21,7 +21,27 @@ const localeValues: Locale = {
     gradient: 'Gradient',
     opacity: 'Opacity',
     mixedBorderWidth: 'Mixed',
-    mixedBorderRadius: 'Mixed'
+    mixedBorderRadius: 'Mixed',
+    overflow: 'Overflow',
+    hidden: 'Hidden',
+    visible: 'Visible',
+    deepResizeInGroup: 'Deep resize in group'
+  },
+  Menu: {
+    about: 'About @idraw/studio',
+    file: 'File',
+    importJSONFile: 'Import JSON file',
+    exportJSONFile: 'Export JSON file',
+    exportImage: 'Export image',
+    preferences: 'Preferences',
+    rect: 'Rect',
+    circle: 'Circle',
+    text: 'Text',
+    image: 'Image',
+    html: 'HTML',
+    svg: 'SVG',
+    group: 'Group',
+    devicePixelRatio: 'Device pixel ratio'
   }
 };
 

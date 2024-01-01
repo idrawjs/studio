@@ -18,21 +18,21 @@ export const PanelDetail = (props: PanelDetailProps) => {
   const { createPrefixName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
   const getPrefixName = createPrefixName(modName);
-  const { selectedUUIDs, data } = state;
+  const { selectedUUIDs, editingData } = state;
   const modClassName = getPrefixName();
 
   const onChange = useCallback(
     (e: RecursivePartial<Element>) => {
       if (selectedUUIDs?.length === 1 && selectedUUIDs[0]) {
         const uuid = selectedUUIDs[0];
-        updateElementInList(uuid, e, data.elements);
+        updateElementInList(uuid, e, editingData.elements);
         dispatch({
           type: 'update',
-          payload: { data: { ...data } }
+          payload: { editingData: { ...editingData } }
         });
       }
     },
-    [data, selectedUUIDs]
+    [editingData, selectedUUIDs]
   );
 
   const getTargetElement = useCallback(
@@ -40,34 +40,34 @@ export const PanelDetail = (props: PanelDetailProps) => {
       if (selectedUUIDs?.length > 1) {
         return null;
       }
-      return findElementFromList(uuid, data.elements);
+      return findElementFromList(uuid, editingData.elements);
     },
-    [data, selectedUUIDs[0]]
+    [editingData, selectedUUIDs[0]]
   );
 
   const getElementAsset = useCallback(
     (assetId?: string) => {
       let resource: string | null = null;
       if (assetId && isAssetId(assetId)) {
-        resource = data.assets?.[assetId]?.value || null;
+        resource = editingData.assets?.[assetId]?.value || null;
       }
       return resource;
     },
-    [data, selectedUUIDs[0]]
+    [editingData, selectedUUIDs[0]]
   );
   const createElementAsset = useCallback(
     (assetItem: ElementAssetsItem) => {
       const assetId = createAssetId(assetItem.value);
-      if (!data.assets) {
-        data.assets = {};
+      if (!editingData.assets) {
+        editingData.assets = {};
       }
-      data.assets[assetId] = assetItem;
+      editingData.assets[assetId] = assetItem;
       return {
         assetId,
         assetItem
       };
     },
-    [data, selectedUUIDs[0]]
+    [editingData, selectedUUIDs[0]]
   );
 
   return useMemo(() => {

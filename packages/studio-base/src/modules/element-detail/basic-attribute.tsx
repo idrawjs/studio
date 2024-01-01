@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element } from 'idraw';
 import { formatNumber, is, limitAngle } from 'idraw';
-import { InputNumber, Col, Row, Form } from 'antd';
+import { InputNumber, Col, Row, Form, Switch } from 'antd';
 import type { FormInstance } from 'antd';
 import { ConfigContext } from '../config-provider';
 import IconConstrain from '../../icons/constrain';
@@ -51,17 +51,17 @@ export const BasicAttribute = (props: BasicAttributeProps) => {
   const moduleLocale = useModuleLocale();
   const onValuesChange = (e: FieldType) => {
     if (element?.operations?.limitRatio === true) {
-      if ((e as Object)?.hasOwnProperty('w')) {
-        e.h = formatNumber(((e as Element).w / element.w) * element.h);
-      } else if ((e as Object)?.hasOwnProperty('h')) {
-        e.w = formatNumber(((e as Element).h / element.h) * element.w);
+      if ((e as any)?.hasOwnProperty('w')) {
+        e.h = formatNumber(((e as any).w / element.w) * element.h);
+      } else if ((e as any)?.hasOwnProperty('h')) {
+        e.w = formatNumber(((e as any).h / element.h) * element.w);
       }
     }
     onChange?.(e);
   };
 
   useEffect(() => {
-    const { x, y, w, h, angle = 0, operations = {} } = element || {};
+    const { type, x, y, w, h, angle = 0, operations = {} } = element || {};
     const initialValues: FieldType = {
       x,
       y,
@@ -72,6 +72,9 @@ export const BasicAttribute = (props: BasicAttributeProps) => {
         limitRatio: operations.limitRatio
       }
     };
+    if (type === 'group') {
+      (initialValues.operations as any).deepResize = operations.deepResize;
+    }
     ref.current?.setFieldsValue(initialValues);
   }, [element]);
 
@@ -128,7 +131,6 @@ export const BasicAttribute = (props: BasicAttributeProps) => {
             </Form.Item>
           </Col>
         </Row>
-
         <Row className={rowClassName}>
           <Col span={10} className={colClassName}>
             <Form.Item<FieldType> className={formItemClassName} name="angle">
@@ -145,6 +147,19 @@ export const BasicAttribute = (props: BasicAttributeProps) => {
             </Form.Item>
           </Col>
         </Row>
+
+        {element?.type === 'group' && (
+          <Row className={rowClassName}>
+            <Col span={18} className={colClassName}>
+              {moduleLocale.deepResizeInGroup}
+            </Col>
+            <Col span={6} className={colClassName}>
+              <Form.Item<FieldType> className={formItemClassName} name={['operations', 'deepResize']}>
+                <Switch size="small" />
+              </Form.Item>
+            </Col>
+          </Row>
+        )}
       </Form>
     );
   }, [moduleLocale, disabled, element]);

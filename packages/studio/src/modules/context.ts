@@ -1,7 +1,48 @@
 import { createContext } from 'react';
-import { StudioState, StudioAction, StudioContext } from '../types';
+import { ElementPosition, getElementPositionFromList } from 'idraw';
+import { getElementTree } from '@idraw/studio-base';
+import type { Data } from 'idraw';
+import { StudioState, StudioAction, StudioContext, StudioProps } from '../types';
+import { cloneEditingDataByPosition } from '../util/data';
+
+const defaultThemeMode = 'dark';
+const defaultLocale = 'en-US';
+
+export function createStudioContextStateByProps(props?: StudioProps): StudioState {
+  const data = {
+    elements: [],
+    ...(props?.data || {})
+  };
+  let editingDataPostion: ElementPosition = [];
+  let editingData: Data = data;
+  if (props?.defaultEditingGroupUUID) {
+    editingDataPostion = getElementPositionFromList(props.defaultEditingGroupUUID, data.elements);
+  }
+  editingData = cloneEditingDataByPosition(editingDataPostion, data);
+  const treeData = getElementTree(editingData);
+
+  return {
+    localeCode: props?.defaultLocale || defaultLocale,
+    themeMode: props?.defaultThemeMode || defaultThemeMode,
+    data,
+    editingData,
+    editingDataPostion,
+    treeData,
+    selectedUUIDs: props?.defaultSelectedElementUUIDs || [],
+    scaleInfo: {
+      scale: 1,
+      // from: 'control',
+      from: 'init',
+      ...(props?.defaultScaleInfo || {})
+    }
+  };
+}
 
 export function createStudioContextState(opts?: Partial<StudioState>): StudioState {
+  const data = {
+    elements: [],
+    ...(opts?.data || {})
+  };
   return {
     localeCode: 'en-US',
     themeMode: opts?.themeMode || 'light',
@@ -9,6 +50,8 @@ export function createStudioContextState(opts?: Partial<StudioState>): StudioSta
       elements: [],
       ...(opts?.data || {})
     },
+    editingData: cloneEditingDataByPosition([], data),
+    editingDataPostion: [],
     treeData: [],
     selectedUUIDs: [],
     scaleInfo: {
@@ -41,17 +84,6 @@ export function createStudioReducer(state: StudioState, action: StudioAction): S
         }
       };
     }
-    case 'updateData': {
-      if (!action?.payload?.data) {
-        return state;
-      }
-      return {
-        ...state,
-        ...{
-          studioData: action?.payload?.data
-        }
-      };
-    }
     case 'updateTreeData': {
       if (!action?.payload?.treeData) {
         return state;
@@ -63,31 +95,6 @@ export function createStudioReducer(state: StudioState, action: StudioAction): S
         }
       };
     }
-
-    // case 'updateViewDrawData': {
-    //   if (!action?.payload?.viewDrawData) {
-    //     return state;
-    //   }
-    //   return {
-    //     ...state,
-    //     ...{
-    //       viewDrawData: action?.payload?.viewDrawData
-    //     }
-    //   };
-    // }
-    // case 'switchStudioDataType': {
-    //   if (!action?.payload?.activeStudioDataType) {
-    //     return state;
-    //   }
-    //   const newState = {
-    //     ...state,
-    //     ...{
-    //       activeStudioDataType: action?.payload.activeStudioDataType,
-    //       viewDrawData: parseDrawData(action?.payload?.activeStudioDataType, state.studioData)
-    //     }
-    //   };
-    //   return newState;
-    // }
 
     default:
       return state;
