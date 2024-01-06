@@ -17,6 +17,13 @@ const localeValues: Locale = {
     svg: 'SVG片段',
     group: '群组',
     devicePixelRatio: '设备像素比例'
+  },
+  contextMenu: {
+    copy: '复制',
+    paste: '粘贴',
+    cut: '剪切'
+    // bringToFront: '移到上一个',
+    // sendToBack: '移到下一个'
   }
 };
 

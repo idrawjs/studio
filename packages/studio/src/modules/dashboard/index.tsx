@@ -7,6 +7,8 @@ import { PanelDetail } from '../panel-detail';
 import { Header } from '../header';
 import { Sketch } from '../sketch';
 // import SplitPane from '../split-pane';
+import { handleHotKey } from '../hot-key';
+import type { SharedEvent, SharedStore } from '../../types';
 
 const modName = 'mod-dashboard';
 const leftSiderDefaultWidth = 240;
@@ -22,14 +24,23 @@ export interface DashboardProps {
   height: number;
   logo?: React.ReactNode;
   defaultSelectedElementUUIDs?: string[];
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, style, width, height, logo, defaultSelectedElementUUIDs } = props;
+  const { className, style, width, height, logo, defaultSelectedElementUUIDs, sharedStore, sharedEvent } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const prefixName = createPrefixName(modName);
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
   const [openRightSider, setOpenRightSider] = useState<boolean>(true);
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleHotKey);
+    return () => {
+      window.removeEventListener('keydown', handleHotKey);
+    };
+  }, []);
 
   const [layout, setLayout] = useState<{
     leftWidth: number;
@@ -60,6 +71,8 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
       <div ref={ref} className={classnames(prefixName(), className)} style={{ ...style, ...{ width, height, padding: 0 } }}>
         <div className={prefixName('header')} style={{ height: headerHeight }}>
           <Header
+            sharedEvent={sharedEvent}
+            sharedStore={sharedStore}
             logo={logo}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
@@ -122,11 +135,17 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
           >
             <div>
               {openLeftSider && (
-                <PanelLayer height={height - headerHeight} className={prefixName('left')} defaultSelectedElementUUIDs={defaultSelectedElementUUIDs} />
+                <PanelLayer
+                  height={height - headerHeight}
+                  className={prefixName('left')}
+                  defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
+                  sharedEvent={sharedEvent}
+                  sharedStore={sharedStore}
+                />
               )}
             </div>
             <div style={{ width: layout.centerWidth + layout.rightWidth, display: 'flex', flexDirection: 'row' }}>
-              <Sketch className={prefixName('center')} width={centerWidth} height={height - headerHeight} />
+              <Sketch className={prefixName('center')} width={centerWidth} height={height - headerHeight} sharedStore={sharedStore} sharedEvent={sharedEvent} />
               <div className={prefixName('right')} style={{ width: rightWidth, height: height - headerHeight }}>
                 <PanelDetail />
               </div>

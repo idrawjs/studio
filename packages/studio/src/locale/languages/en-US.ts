@@ -17,6 +17,13 @@ const localeValues: Locale = {
     svg: 'SVG',
     group: 'Group',
     devicePixelRatio: 'Device pixel ratio'
+  },
+  contextMenu: {
+    copy: 'Copy',
+    paste: 'Paste',
+    cut: 'Cut'
+    // bringToFront: 'Bring to front',
+    // sendToBack: 'Send to back'
   }
 };
 

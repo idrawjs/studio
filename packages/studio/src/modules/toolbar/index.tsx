@@ -11,7 +11,7 @@ import IconSetting from '../../icons/setting';
 // import IconMore from '../../icons/more';
 import IconRuler from '../../icons/ruler';
 import IconDrag from '../../icons/drag';
-import { getIDraw } from '../../shared';
+import type { SharedEvent, SharedStore } from '../../types';
 
 // const RadioButton = Radio.Button;
 // const RadioGroup = Radio.Group;
@@ -24,10 +24,12 @@ export interface ToolbarProps {
   openRightSider: boolean;
   onClickToggleLayer?: () => void;
   onClickToggleSetting?: () => void;
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const Toolbar = (props: ToolbarProps) => {
-  const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting } = props;
+  const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore } = props;
   // const [mode, setMode] = useState<string>('select');
   const iconStyle = { fontSize: 16 };
   const { createPrefixName } = useContext(ConfigContext);
@@ -42,7 +44,7 @@ export const Toolbar = (props: ToolbarProps) => {
   const [toggleRuler, setToggleRuler] = useState<boolean>(true);
 
   useEffect(() => {
-    const idraw = getIDraw();
+    const idraw = sharedStore.get('idraw');
     idraw?.reset({
       enableRuler: toggleRuler,
       enableDrag: toggleDrag,

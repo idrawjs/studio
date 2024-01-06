@@ -6,8 +6,8 @@ import { updateElementInList, moveElementPosition, getGroupQueueFromList, findEl
 import type { ElementPosition } from 'idraw';
 import { Dropdown, Button } from 'antd';
 import { Context } from '../context';
-import { eventHub, getIDraw } from '../../shared';
-import { createContextMenuOptions } from '../action';
+import type { SharedEvent, SharedStore } from '../../types';
+import { useContextMenuOptions } from '../context-menu';
 
 const modName = 'mod-panel-layer';
 
@@ -16,15 +16,19 @@ export interface PanelLayerProps {
   height: number;
   style?: CSSProperties;
   defaultSelectedElementUUIDs?: string[];
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const PanelLayer = (props: PanelLayerProps) => {
-  const { className, style, height, defaultSelectedElementUUIDs = [] } = props;
+  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
   const { treeData, selectedUUIDs, editingData } = state;
-  const refTree = useRef<any>(null);
+  const refTree = useRef<{
+    scrollTo: (e: { key: string | number; align?: 'top' | 'bottom' | 'auto'; offset?: number }) => void;
+  } | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultSelectedElementUUIDs);
   const rootClassName = getPrefixName();
   const contentClassName = getPrefixName('content');
@@ -32,10 +36,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
   const headerTitleClassName = getPrefixName('header', 'title');
   const headerBtnClassName = getPrefixName('header', 'btn');
   // const footerClassName = getPrefixName('footer');
-  // const selectElements = (uuids: string[]) => {
-  //   const idraw = getIDraw();
-  //   idraw?.selectElements(uuids);
-  // };
+  const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   const getCurrentName = () => {
     if (state.editingDataPostion.length === 0) {
@@ -46,7 +47,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
   };
 
   const selectElementsByPositions = (positions: ElementPosition[]) => {
-    const idraw = getIDraw();
+    const idraw = sharedStore.get('idraw');
     idraw?.selectElementsByPositions(positions);
   };
 
@@ -66,20 +67,21 @@ export const PanelLayer = (props: PanelLayerProps) => {
           newExpandedKeys.push(uuid);
         }
       });
-      refTree.current?.scrollTo({
-        key: selectedUUIDs[0],
-        align: 'auto'
-      });
+      // refTree.current?.scrollTo({
+      //   key: selectedUUIDs[0],
+      //   align: 'top'
+      //   // offset: 0
+      // });
       setExpandedKeys(newExpandedKeys);
     }
   }, [selectedUUIDs, editingData]);
 
   const onClickBackRootEdit = () => {
-    eventHub.trigger('resetEditingView', { type: 'back-root', position: null });
+    sharedEvent.trigger('resetEditingView', { type: 'back-root', position: null });
   };
 
   const onClickBackOne = () => {
-    eventHub.trigger('resetEditingView', { type: 'back-one', position: null });
+    sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
   };
 
   return useMemo(() => {
@@ -119,7 +121,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
           <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(state.editingDataPostion.length > 0)} onClick={onClickBackOne} />
           <span className={headerTitleClassName}>{getCurrentName()}</span>
         </div>
-        <Dropdown menu={{ items: createContextMenuOptions() }} trigger={['contextMenu']}>
+        <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
           <div className={contentClassName}>
             <ElementTree
               ref={refTree}
@@ -160,10 +162,10 @@ export const PanelLayer = (props: PanelLayerProps) => {
                 });
               }}
               onDelete={({ uuid }) => {
-                eventHub.trigger('deleteElement', { uuid });
+                sharedEvent.trigger('deleteElement', { uuid });
               }}
               onGoToGroup={(e) => {
-                eventHub.trigger('resetEditingView', { type: 'go-to-group', position: e.position });
+                sharedEvent.trigger('resetEditingView', { type: 'go-to-group', position: e.position });
               }}
               onExpand={(keys, { node }) => {
                 const currentKey = node.key as string;
@@ -183,5 +185,5 @@ export const PanelLayer = (props: PanelLayerProps) => {
         {/* <div className={footerClassName}>footer</div> */}
       </div>
     );
-  }, [treeData, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPostion]);
+  }, [treeData, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPostion, contextMenuOptions]);
 };

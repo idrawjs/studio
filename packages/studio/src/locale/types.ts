@@ -20,6 +20,13 @@ export interface Locale<T = LocaleCode> {
     group: string;
     devicePixelRatio: string;
   };
+  contextMenu: {
+    copy: string;
+    paste: string;
+    cut: string;
+    // bringToFront: string;
+    // sendToBack: string;
+  };
 }
 
 export type LocaleMap = Record<LocaleCode, Locale>;
