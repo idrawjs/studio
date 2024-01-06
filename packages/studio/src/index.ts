@@ -1,2 +1,2 @@
-export { Studio } from './view';
-export type { StudioProps } from './view';
+export { Studio } from './studio';
+export type { StudioProps } from './types';

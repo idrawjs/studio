@@ -7,6 +7,7 @@ import { Context } from '../context';
 import { NavMenu } from '../nav-menu';
 import { Toolbar } from '../toolbar';
 import type { ToolbarProps } from '../toolbar';
+import type { SharedEvent, SharedStore } from '../../types';
 
 const modName = 'mod-header';
 
@@ -14,10 +15,12 @@ export interface ModProps extends ToolbarProps {
   className?: string;
   style?: CSSProperties;
   logo?: React.ReactNode;
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const Header = (props: ModProps) => {
-  const { logo, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting } = props;
+  const { logo, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore, sharedEvent } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -36,13 +39,15 @@ export const Header = (props: ModProps) => {
       <div style={style} className={classnames(rootClassName, className)}>
         <div className={leftClassName}>
           {logo}
-          <NavMenu />
+          <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} />
           <Toolbar
             className={centerClassName}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
             onClickToggleLayer={onClickToggleLayer}
             onClickToggleSetting={onClickToggleSetting}
+            sharedStore={sharedStore}
+            sharedEvent={sharedEvent}
           />
         </div>
 

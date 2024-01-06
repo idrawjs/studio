@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { ConfigContext } from '@idraw/studio-base';
 import { Button, Spin, Form, Input, Select, Divider } from 'antd';
-import { getIDraw } from '../../shared';
+import type { SharedEvent, SharedStore } from '../../types';
 
 const modName = 'mod-export-image-file';
 
@@ -18,6 +18,8 @@ const optionsWidth = exportFileBoxWidth - previewSize;
 export interface ExportFileProps {
   className?: string;
   style?: CSSProperties;
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 interface FileInfo {
@@ -32,7 +34,7 @@ const defaultFileOptions = {
 };
 
 export const ExportFile = (props: ExportFileProps) => {
-  const { className, style } = props;
+  const { className, style, sharedStore } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
   const rootClassName = getPrefixName();
@@ -45,7 +47,7 @@ export const ExportFile = (props: ExportFileProps) => {
   const [form] = Form.useForm();
 
   const resetImage = useCallback((pixelRatio: number) => {
-    const idraw = getIDraw();
+    const idraw = sharedStore.get('idraw');
     if (!idraw) {
       return;
     }

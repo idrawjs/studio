@@ -6,9 +6,8 @@ import { ConfigContext, getElementTree } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
 import { Dropdown } from 'antd';
 import { Context } from '../context';
-import { setIDraw, eventHub } from '../../shared';
-import type { StudioState } from '../../types';
-import { createContextMenuOptions } from '../action';
+import type { StudioState, SharedEvent, SharedEventMap, SharedStore } from '../../types';
+import { useContextMenuOptions } from '../context-menu';
 import { cloneEditingDataByPosition, updateEditingDataChildrenToData } from '../../util/data';
 
 const modName = 'mod-sketch';
@@ -18,13 +17,16 @@ export interface SketchProps {
   style?: CSSProperties;
   width: number;
   height: number;
+
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const Sketch = (props: SketchProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const refIDraw = useRef<iDraw | null>(null);
   const refHasFirstDraw = useRef<boolean>(false);
-  const { className, style, width, height } = props;
+  const { className, style, width, height, sharedEvent, sharedStore } = props;
   const { getPrefixName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
   const { editingData } = state;
@@ -32,6 +34,7 @@ export const Sketch = (props: SketchProps) => {
   const refEditingDataPosition = useRef<ElementPosition>([]);
   const refEditingData = useRef<Data>(state.editingData);
   const refData = useRef<Data>(state.data);
+  const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   useEffect(() => {
     refEditingDataPosition.current = [...state.editingDataPostion];
@@ -55,8 +58,10 @@ export const Sketch = (props: SketchProps) => {
     const idraw = new iDraw(ref.current, options);
     refIDraw.current = idraw;
 
-    idraw.on(middlewareEventSelect, ({ uuids, positions }) => {
+    const listenMiddlewareEventSelect = (e: { uuids: string[]; positions: ElementPosition[] }) => {
       const editingData = refEditingData.current;
+      let { uuids } = e;
+      const { positions } = e;
       if (positions && Array.isArray(positions)) {
         const elems = findElementsFromListByPositions(positions, editingData.elements);
         uuids = elems.map((e: { uuid: any }) => e.uuid);
@@ -67,9 +72,10 @@ export const Sketch = (props: SketchProps) => {
           selectedUUIDs: uuids
         }
       });
-    });
+    };
 
-    idraw.on('change', ({ data, type }) => {
+    const listenDataChange = (e: { data: Data; type: string }) => {
+      const { data, type } = e;
       const editingData = refEditingData.current;
       if (['add-element', 'update-element', 'delete-element', 'move-element', 'drag-element', 'resize-element'].includes(type)) {
         const payload: Partial<StudioState> = { editingData: { ...data } };
@@ -81,9 +87,10 @@ export const Sketch = (props: SketchProps) => {
           payload
         });
       }
-    });
+    };
 
-    idraw.on(middlewareEventScale, ({ scale }) => {
+    const listenMiddlewareEventScale = (e: { scale: number }) => {
+      const { scale } = e;
       dispatch({
         type: 'update',
         payload: {
@@ -93,17 +100,13 @@ export const Sketch = (props: SketchProps) => {
           }
         }
       });
-    });
+    };
 
-    eventHub.on('addElement', ({ type, element }) => {
-      // const data = refData.current;
-      // const editingData = refEditingData.current;
-      // const editingDataPosition = refEditingDataPosition.current;
-
+    const createElementCallback = (e: SharedEventMap['createElement']) => {
+      const { type, element } = e;
       const elem = idraw.createElement(type, { element, viewCenter: true });
       const newEditingData = idraw.addElement(elem);
       const newTreeData = getElementTree(newEditingData);
-
       dispatch({
         type: 'update',
         payload: {
@@ -112,9 +115,10 @@ export const Sketch = (props: SketchProps) => {
         }
       });
       idraw.selectElements([elem.uuid]);
-    });
+    };
 
-    eventHub.on('deleteElement', ({ uuid }) => {
+    const deleteElementCallback = (e: SharedEventMap['deleteElement']) => {
+      const { uuid } = e;
       idraw?.deleteElement(uuid);
       const editingData = idraw?.getData();
       if (editingData) {
@@ -125,9 +129,10 @@ export const Sketch = (props: SketchProps) => {
         });
         idraw.trigger(middlewareEventSelectClear, {});
       }
-    });
+    };
 
-    eventHub.on('resetEditingView', ({ type, position }) => {
+    const resetEditingViewCallback = (e: SharedEventMap['resetEditingView']) => {
+      const { type, position } = e;
       const idraw = refIDraw?.current;
       if (!idraw) {
         return;
@@ -206,9 +211,10 @@ export const Sketch = (props: SketchProps) => {
         });
         idraw.trigger(middlewareEventSelectClear, {});
       }
-    });
+    };
 
-    eventHub.on('resetData', ({ data }) => {
+    const resetDataCallback = (e: SharedEventMap['resetData']) => {
+      const { data } = e;
       const newEditingDataPostion: ElementPosition = [];
       const newEditingData = cloneEditingDataByPosition(newEditingDataPostion, data);
       const newTreeData = getElementTree(newEditingData);
@@ -228,7 +234,15 @@ export const Sketch = (props: SketchProps) => {
         offsetY: 0
       });
       idraw.trigger(middlewareEventSelectClear, {});
-    });
+    };
+
+    idraw.on(middlewareEventSelect, listenMiddlewareEventSelect);
+    idraw.on('change', listenDataChange);
+    idraw.on(middlewareEventScale, listenMiddlewareEventScale);
+    sharedEvent.on('createElement', createElementCallback);
+    sharedEvent.on('deleteElement', deleteElementCallback);
+    sharedEvent.on('resetEditingView', resetEditingViewCallback);
+    sharedEvent.on('resetData', resetDataCallback);
 
     if (!refHasFirstDraw.current) {
       if (state.scaleInfo) {
@@ -244,8 +258,20 @@ export const Sketch = (props: SketchProps) => {
       refHasFirstDraw.current = true;
     }
 
-    setIDraw(idraw);
-  }, [dispatch, state.scaleInfo]);
+    sharedStore.set('idraw', idraw);
+
+    return () => {
+      refHasFirstDraw.current = false;
+      idraw.off(middlewareEventSelect, listenMiddlewareEventSelect);
+      idraw.off('change', listenDataChange);
+      idraw.off(middlewareEventScale, listenMiddlewareEventScale);
+      // sharedEvent.off('addElement', createElementCallback);
+      // sharedEvent.off('deleteElement', deleteElementCallback);
+      // sharedEvent.off('resetEditingView', resetEditingViewCallback);
+      // sharedEvent.off('resetData', resetDataCallback);
+      sharedStore.set('idraw', null);
+    };
+  }, []);
 
   useEffect(() => {
     if (refIDraw?.current) {
@@ -283,9 +309,16 @@ export const Sketch = (props: SketchProps) => {
 
   return useMemo(() => {
     return (
-      <Dropdown menu={{ items: createContextMenuOptions() }} trigger={['contextMenu']}>
-        <div ref={ref} className={classnames(modClassName, className)} style={{ ...style, ...{ width, height, padding: 0 } }}></div>
+      <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
+        <div
+          ref={ref}
+          className={classnames(modClassName, className)}
+          style={{ ...style, ...{ width, height, padding: 0 } }}
+          // onKeyDown={(e: React.KeyboardEvent) => {
+          //   console.log('onKeyDown e ========= ', e);
+          // }}
+        ></div>
       </Dropdown>
     );
-  }, []);
+  }, [contextMenuOptions]);
 };

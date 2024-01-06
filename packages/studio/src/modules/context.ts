@@ -84,18 +84,6 @@ export function createStudioReducer(state: StudioState, action: StudioAction): S
         }
       };
     }
-    case 'updateTreeData': {
-      if (!action?.payload?.treeData) {
-        return state;
-      }
-      return {
-        ...state,
-        ...{
-          studioData: action?.payload?.treeData
-        }
-      };
-    }
-
     default:
       return state;
   }

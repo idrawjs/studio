@@ -12,12 +12,11 @@ import { downloadFileFromText } from 'idraw';
 import IconMore from '../../icons/more';
 import IconApp from '../../icons/app';
 import IconDown from '../../icons/down';
-import { eventHub } from '../../shared';
 import { ElementType } from 'idraw';
 import { ExportFile, exportFileDialogWidth } from '../export-image-file';
-import { getIDraw } from '../../shared';
 import { useLocale } from '../../locale';
 import { pickJSONFile } from '../../util/file';
+import type { SharedEvent, SharedStore } from '../../types';
 
 const useModuleLocale = () => {
   const [moduleLocale] = useLocale('NavMenu');
@@ -28,10 +27,12 @@ const modName = 'mod-nav-menu';
 export interface NavMenuProps {
   className?: string;
   style?: CSSProperties;
+  sharedStore: SharedStore;
+  sharedEvent: SharedEvent;
 }
 
 export const NavMenu = (props: NavMenuProps) => {
-  const { className, style } = props;
+  const { className, style, sharedStore, sharedEvent } = props;
   const [modal, contextHolder] = Modal.useModal();
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -39,13 +40,13 @@ export const NavMenu = (props: NavMenuProps) => {
   const dropdownClassName = getPrefixName('dropdown');
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const moduleLocale = useModuleLocale();
-  const clickToAddElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
+  const clickToCreateElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
     domEvent.preventDefault();
-    eventHub.trigger('addElement', { type: key as ElementType, element: {} });
+    sharedEvent.trigger('createElement', { type: key as ElementType, element: {} });
   };
 
   const resetDevicePixelRatio = (radio: number) => {
-    const idraw = getIDraw();
+    const idraw = sharedStore.get('idraw');
     idraw?.resize({
       devicePixelRatio: radio
     });
@@ -94,7 +95,7 @@ export const NavMenu = (props: NavMenuProps) => {
               pickJSONFile({
                 success: ({ json }) => {
                   // TODO
-                  eventHub.trigger('resetData', { data: json });
+                  sharedEvent.trigger('resetData', { data: json });
                 },
                 error: () => {
                   // TODO
@@ -111,7 +112,7 @@ export const NavMenu = (props: NavMenuProps) => {
                 icon: null,
                 title: 'Whole image file',
                 width: exportFileDialogWidth,
-                content: <ExportFile />,
+                content: <ExportFile sharedEvent={sharedEvent} sharedStore={sharedStore} />,
                 footer: null,
                 closable: true
               });
@@ -121,7 +122,7 @@ export const NavMenu = (props: NavMenuProps) => {
             key: 'export-json-file',
             label: moduleLocale.exportJSONFile,
             onClick: () => {
-              const idraw = getIDraw();
+              const idraw = sharedStore.get('idraw');
               const data = idraw?.getData({ compact: true });
               if (data) {
                 const text = JSON.stringify(data);
@@ -178,44 +179,44 @@ export const NavMenu = (props: NavMenuProps) => {
         key: 'rect',
         label: moduleLocale.rect,
         icon: <IconRect />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'circle',
         label: moduleLocale.circle,
         icon: <IconCircle />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'text',
         label: moduleLocale.text,
         icon: <IconText />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'image',
         label: moduleLocale.image,
         icon: <IconImage />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'svg',
         label: moduleLocale.svg,
         icon: <IconStar />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'html',
         label: moduleLocale.html,
         disabled: true,
         icon: <IconHTML />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       },
       {
         key: 'group',
         label: moduleLocale.group,
         icon: <IconGroup />,
-        onClick: clickToAddElement
+        onClick: clickToCreateElement
       }
     ]
   };
@@ -233,7 +234,7 @@ export const NavMenu = (props: NavMenuProps) => {
   ];
 
   const refreshSelectedKeys = () => {
-    const idraw = getIDraw();
+    const idraw = sharedStore.get('idraw');
     const newSelectedKeys: string[] = [];
     if (idraw) {
       const { viewSizeInfo } = idraw.getViewInfo();
