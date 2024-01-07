@@ -23,7 +23,7 @@
     "@idraw/studio-base": "^0.4.0-alpha.7",
     "antd": "^5.12.1",
     "classnames": "^2.3.2",
-    "idraw": "^0.4.0-beta.6",
+    "idraw": "^0.4.0-beta.7",
     "is-hotkey": "^0.2.0"
   },
   "peerDependencies": {
