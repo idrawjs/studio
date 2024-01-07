@@ -1,4 +1,4 @@
-import type { Data } from '@idraw/types';
+import type { Data } from 'idraw';
 import signIn from './page-pc/sign-in';
 import signUp from './page-pc/sign-up';
 import home from './page-pc/home';
