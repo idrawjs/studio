@@ -33,7 +33,7 @@ The preview of `@idraw/studo`.
 # Install peer dependcies
 npm install antd idraw
 
-npm install @idraw/studio;
+npm install @idraw/studio
 ```
 
 ```js
