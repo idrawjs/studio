@@ -1,12 +1,24 @@
 import isHotkey from 'is-hotkey';
+import type { SharedEvent, SharedStore } from '../types';
 
-export const handleHotKey = (e: KeyboardEvent) => {
+export const handleHotKey = (
+  e: KeyboardEvent,
+  opts: {
+    sharedEvent: SharedEvent;
+    sharedStore: SharedStore;
+  }
+) => {
+  const { sharedEvent } = opts;
   if (isHotkey('mod+c', e)) {
-    console.log('Copy ... '); // TODO
+    sharedEvent.trigger('copy', undefined);
   } else if (isHotkey('mod+v', e)) {
-    console.log('Paste ... '); //  TODO
+    sharedEvent.trigger('paste', undefined);
   } else if (isHotkey('mod+x', e)) {
-    console.log('Cut ... '); //  TODO
+    sharedEvent.trigger('cut', undefined);
+  } else if (isHotkey('del', e)) {
+    sharedEvent.trigger('delete', undefined);
+  } else if (isHotkey('backspace', e)) {
+    sharedEvent.trigger('delete', undefined);
   } else if (isHotkey('mod+s', e)) {
     console.log('Save ... '); //  TODO
   }

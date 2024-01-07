@@ -66,6 +66,10 @@ export const Sketch = (props: SketchProps) => {
         const elems = findElementsFromListByPositions(positions, editingData.elements);
         uuids = elems.map((e: { uuid: any }) => e.uuid);
       }
+      // TODO
+      // sharedEvent.trigger('scrollToLayer', {
+      //   uuid: uuids[0]
+      // });
       dispatch({
         type: 'update',
         payload: {
@@ -243,6 +247,7 @@ export const Sketch = (props: SketchProps) => {
     sharedEvent.on('deleteElement', deleteElementCallback);
     sharedEvent.on('resetEditingView', resetEditingViewCallback);
     sharedEvent.on('resetData', resetDataCallback);
+    sharedEvent.on('dispatch', dispatch);
 
     if (!refHasFirstDraw.current) {
       if (state.scaleInfo) {

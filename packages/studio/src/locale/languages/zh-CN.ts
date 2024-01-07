@@ -1,4 +1,4 @@
-import type { Locale } from '../types';
+import type { Locale } from '../../types';
 
 const localeValues: Locale = {
   locale: 'zh-CN',
@@ -21,7 +21,8 @@ const localeValues: Locale = {
   contextMenu: {
     copy: '复制',
     paste: '粘贴',
-    cut: '剪切'
+    cut: '剪切',
+    delete: '删除'
     // bringToFront: '移到上一个',
     // sendToBack: '移到下一个'
   }

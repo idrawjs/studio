@@ -1,6 +1,6 @@
 import { useContext, useMemo } from 'react';
 import { Context } from '../modules/context';
-import type { Locale, LocaleModuleName } from './types';
+import type { Locale, LocaleModuleName } from '../types';
 import { localeMap } from './languages';
 
 export const useLocale = <M extends LocaleModuleName = LocaleModuleName>(moduleName: M): readonly [NonNullable<Locale[M]>] => {
@@ -16,5 +16,3 @@ export const useLocale = <M extends LocaleModuleName = LocaleModuleName>(moduleN
 
   return [getLocale] as const;
 };
-
-export * from './types';

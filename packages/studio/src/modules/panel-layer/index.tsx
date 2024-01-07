@@ -52,6 +52,18 @@ export const PanelLayer = (props: PanelLayerProps) => {
   };
 
   useEffect(() => {
+    sharedEvent.on('scrollToLayer', ({ uuid }) => {
+      if (uuid) {
+        refTree.current?.scrollTo({
+          key: uuid,
+          align: 'top'
+          // offset: 0
+        });
+      }
+    });
+  }, []);
+
+  useEffect(() => {
     if (!selectedUUIDs[0]) {
       return;
     }
@@ -67,11 +79,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
           newExpandedKeys.push(uuid);
         }
       });
-      // refTree.current?.scrollTo({
-      //   key: selectedUUIDs[0],
-      //   align: 'top'
-      //   // offset: 0
-      // });
+
       setExpandedKeys(newExpandedKeys);
     }
   }, [selectedUUIDs, editingData]);

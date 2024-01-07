@@ -30,6 +30,9 @@ The preview of `@idraw/studo`.
 ## Usage
 
 ```sh 
+# Install peer dependcies
+npm install antd idraw
+
 npm install @idraw/studio;
 ```
 

@@ -2,9 +2,11 @@ import type { Dispatch } from 'react';
 import type { Data, ElementPosition } from 'idraw';
 import type { ElementTreeData, LocaleCode } from '@idraw/studio-base';
 
+export type StudioThemeMode = 'light' | 'dark';
+
 export interface StudioState {
   localeCode: LocaleCode;
-  themeMode: 'light' | 'dark';
+  themeMode: StudioThemeMode;
   data: Data;
   editingData: Data;
   editingDataPostion: ElementPosition;
@@ -18,7 +20,7 @@ export interface StudioState {
   };
 }
 
-export type StudioActionType = 'update' | 'updateThemeMode' | 'updateTreeData';
+export type StudioActionType = 'update' | 'updateThemeMode';
 
 export type StudioAction = {
   type: StudioActionType;

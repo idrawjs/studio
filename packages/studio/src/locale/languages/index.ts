@@ -1,4 +1,4 @@
-import type { LocaleMap } from '../types';
+import type { LocaleMap } from '../../types';
 import enUS from './en-US';
 import zhCN from './zh-CN';
 

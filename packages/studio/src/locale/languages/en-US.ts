@@ -1,4 +1,4 @@
-import type { Locale } from '../types';
+import type { Locale } from '../../types';
 
 const localeValues: Locale = {
   locale: 'en-US',
@@ -21,7 +21,8 @@ const localeValues: Locale = {
   contextMenu: {
     copy: 'Copy',
     paste: 'Paste',
-    cut: 'Cut'
+    cut: 'Cut',
+    delete: 'Delete'
     // bringToFront: 'Bring to front',
     // sendToBack: 'Send to back'
   }

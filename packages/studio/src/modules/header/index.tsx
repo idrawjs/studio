@@ -15,12 +15,13 @@ export interface ModProps extends ToolbarProps {
   className?: string;
   style?: CSSProperties;
   logo?: React.ReactNode;
+  navigationMenu?: React.ReactNode;
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
 }
 
 export const Header = (props: ModProps) => {
-  const { logo, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore, sharedEvent } = props;
+  const { logo, navigationMenu, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore, sharedEvent } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const getPrefixName = createPrefixName(modName);
@@ -39,7 +40,7 @@ export const Header = (props: ModProps) => {
       <div style={style} className={classnames(rootClassName, className)}>
         <div className={leftClassName}>
           {logo}
-          <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} />
+          {navigationMenu ? navigationMenu : <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} />}
           <Toolbar
             className={centerClassName}
             openLeftSider={openLeftSider}

@@ -10,6 +10,7 @@ export { ElementTree, type ElementTreeProps } from './modules/element-tree';
 export { ElementDetail, type ElementDetailProps } from './modules/element-detail';
 
 export { getElementTree } from './tools';
+export { setClassNameTopPrefix } from './css/index';
 export * from './locale/types';
 
 export { IconRect, IconCircle, IconText, IconImage, IconStar, IconHTML, IconGroup, IconVerticalRight, IconDoubleLeft, IconLeft } from './icons';

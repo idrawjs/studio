@@ -42,7 +42,7 @@ export const NavMenu = (props: NavMenuProps) => {
   const moduleLocale = useModuleLocale();
   const clickToCreateElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
     domEvent.preventDefault();
-    sharedEvent.trigger('createElement', { type: key as ElementType, element: {} });
+    sharedEvent.trigger('createElement', { type: key as ElementType, element: { name: key } });
   };
 
   const resetDevicePixelRatio = (radio: number) => {
