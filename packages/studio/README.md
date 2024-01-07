@@ -13,7 +13,7 @@
   <a href="https://idraw.js.org/studio/" target="_blank">idraw.js.org/studio/</a>
 </p>
 
-
+ 
 ## @idraw/studio Preview
 
 You can click [idraw.js.org/studio/](https://idraw.js.org/studio) to experience it.
@@ -30,7 +30,10 @@ The preview of `@idraw/studo`.
 ## Usage
 
 ```sh 
-npm install @idraw/studio;
+# Install peer dependcies
+npm install antd idraw
+
+npm install @idraw/studio
 ```
 
 ```js
@@ -75,7 +78,7 @@ git clone git@github.com:idrawjs/studio.git
 
 cd studio
 
-pnpm i
+pnpm install
 
 npm run dev
 ```
