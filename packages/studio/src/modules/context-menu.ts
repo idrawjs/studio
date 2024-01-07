@@ -10,22 +10,28 @@ export function useContextMenuOptions(opts: { sharedEvent: SharedEvent; sharedSt
       label: moduleLocale.copy,
       key: 'copy',
       onClick: () => {
-        sharedEvent.trigger('copy', undefined);
+        sharedEvent.trigger('copy');
       }
     },
     {
       label: moduleLocale.paste,
       key: 'paste-here',
       onClick: () => {
-        sharedEvent.trigger('paste', undefined);
+        sharedEvent.trigger('paste');
       }
     },
     {
       label: moduleLocale.cut,
       key: 'cut',
-      disabled: true,
       onClick: () => {
-        sharedEvent.trigger('cut', undefined);
+        sharedEvent.trigger('cut');
+      }
+    },
+    {
+      label: moduleLocale.delete,
+      key: 'delete',
+      onClick: () => {
+        sharedEvent.trigger('delete');
       }
     }
     // {

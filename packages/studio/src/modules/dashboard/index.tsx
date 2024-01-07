@@ -23,22 +23,29 @@ export interface DashboardProps {
   width: number;
   height: number;
   logo?: React.ReactNode;
+  navigationMenu?: React.ReactNode;
   defaultSelectedElementUUIDs?: string[];
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, style, width, height, logo, defaultSelectedElementUUIDs, sharedStore, sharedEvent } = props;
+  const { className, style, width, height, logo, navigationMenu, defaultSelectedElementUUIDs, sharedStore, sharedEvent } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const prefixName = createPrefixName(modName);
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
   const [openRightSider, setOpenRightSider] = useState<boolean>(true);
 
   useEffect(() => {
-    window.addEventListener('keydown', handleHotKey);
+    const hotKeyCallback = (e: KeyboardEvent) => {
+      if (['INPUT', 'TEXTAREA'].includes((e.target as any).nodeName)) {
+        return;
+      }
+      handleHotKey(e, { sharedEvent, sharedStore });
+    };
+    window.addEventListener('keydown', hotKeyCallback);
     return () => {
-      window.removeEventListener('keydown', handleHotKey);
+      window.removeEventListener('keydown', hotKeyCallback);
     };
   }, []);
 
@@ -74,6 +81,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
             sharedEvent={sharedEvent}
             sharedStore={sharedStore}
             logo={logo}
+            navigationMenu={navigationMenu}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
             onClickToggleLayer={() => {

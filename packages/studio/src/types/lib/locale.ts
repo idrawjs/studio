@@ -24,6 +24,7 @@ export interface Locale<T = LocaleCode> {
     copy: string;
     paste: string;
     cut: string;
+    delete: string;
     // bringToFront: string;
     // sendToBack: string;
   };
