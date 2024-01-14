@@ -30,11 +30,11 @@ const elementToFormData = (element?: Element<'group'> | null) => {
 export const DetailGroup = (props: DetailGroupProps) => {
   const { className, style, element, onChange, disabled } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const rowClassName = getPrefixName('row');
-  const colClassName = getPrefixName('col');
-  const formItemClassName = getPrefixName('form-item');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const rowClassName = generateClassName('row');
+  const colClassName = generateClassName('col');
+  const formItemClassName = generateClassName('form-item');
   const ref = useRef<FormInstance>(null);
   const moduleLocale = useModuleLocale();
 

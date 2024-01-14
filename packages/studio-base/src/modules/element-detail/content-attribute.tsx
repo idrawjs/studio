@@ -44,11 +44,11 @@ export const ContentAttribute = (props: ContentAttributeProps) => {
   const { style, element, disabled, onChange, getElementAsset, createElementAsset } = props;
   const ref = useRef<FormInstance>(null);
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const rowClassName = getPrefixName('row');
-  const colClassName = getPrefixName('col');
-  const formItemClassName = getPrefixName('form-item');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const rowClassName = generateClassName('row');
+  const colClassName = generateClassName('col');
+  const formItemClassName = generateClassName('form-item');
   const onValuesChange = (value: FieldType) => {
     const boxDetail = value;
     onChange?.({ detail: boxDetail } as Partial<Element>);

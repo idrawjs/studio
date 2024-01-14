@@ -17,8 +17,8 @@ export interface DetailRectProps {
 export const DetailRect = (props: DetailRectProps) => {
   const { className, style } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
 
   return useMemo(() => {
     return (

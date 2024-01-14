@@ -24,18 +24,18 @@ export const PanelLayer = (props: PanelLayerProps) => {
   const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
   const { treeData, selectedUUIDs, editingData } = state;
   const refTree = useRef<{
     scrollTo: (e: { key: string | number; align?: 'top' | 'bottom' | 'auto'; offset?: number }) => void;
   } | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultSelectedElementUUIDs);
-  const rootClassName = getPrefixName();
-  const contentClassName = getPrefixName('content');
-  const headerClassName = getPrefixName('header');
-  const headerTitleClassName = getPrefixName('header', 'title');
-  const headerBtnClassName = getPrefixName('header', 'btn');
-  // const footerClassName = getPrefixName('footer');
+  const rootClassName = generateClassName();
+  const contentClassName = generateClassName('content');
+  const headerClassName = generateClassName('header');
+  const headerTitleClassName = generateClassName('header', 'title');
+  const headerBtnClassName = generateClassName('header', 'btn');
+  // const footerClassName = generateClassName('footer');
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   const getCurrentName = () => {

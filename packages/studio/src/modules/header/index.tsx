@@ -24,15 +24,15 @@ export const Header = (props: ModProps) => {
   const { logo, navigationMenu, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore, sharedEvent } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const leftClassName = getPrefixName('left');
-  const rightClassName = getPrefixName('right');
-  const centerClassName = getPrefixName('center');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const leftClassName = generateClassName('left');
+  const rightClassName = generateClassName('right');
+  const centerClassName = generateClassName('center');
 
-  const localeClassName = getPrefixName('locale');
-  const scaleClassName = getPrefixName('scale');
-  const switchClassName = getPrefixName('switch');
+  const localeClassName = generateClassName('locale');
+  const scaleClassName = generateClassName('scale');
+  const switchClassName = generateClassName('switch');
   const { localeCode, scaleInfo } = state;
 
   return useMemo(() => {

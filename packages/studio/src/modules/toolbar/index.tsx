@@ -2,15 +2,7 @@ import React, { useEffect, useState, useMemo, useContext } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Button, type ButtonProps } from 'antd';
-import { ConfigContext } from '@idraw/studio-base';
-import IconLayer from '../../icons/layer';
-import IconSetting from '../../icons/setting';
-// import IconMouse from '../../icons/mouse';
-// import IconPen from '../../icons/pen';
-// import IconHand from '../../icons/hand';
-// import IconMore from '../../icons/more';
-import IconRuler from '../../icons/ruler';
-import IconDrag from '../../icons/drag';
+import { ConfigContext, IconLayer, IconSetting, IconRuler, IconDrag } from '@idraw/studio-base';
 import type { SharedEvent, SharedStore } from '../../types';
 
 // const RadioButton = Radio.Button;
@@ -33,13 +25,13 @@ export const Toolbar = (props: ToolbarProps) => {
   // const [mode, setMode] = useState<string>('select');
   const iconStyle = { fontSize: 16 };
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const leftClassName = getPrefixName('left');
-  const rightClassName = getPrefixName('right');
-  // const middleClassName = getPrefixName('middle');
-  const btnClassName = getPrefixName('btn');
-  // const modeSwitchClassName = getPrefixName('mode-switch');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const leftClassName = generateClassName('left');
+  const rightClassName = generateClassName('right');
+  // const middleClassName = generateClassName('middle');
+  const btnClassName = generateClassName('btn');
+  // const modeSwitchClassName = generateClassName('mode-switch');
   const [toggleDrag, setToggleDrag] = useState<boolean>(false);
   const [toggleRuler, setToggleRuler] = useState<boolean>(true);
 

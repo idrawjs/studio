@@ -17,13 +17,13 @@ export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }
   const [imageSrc, setImageSrc] = useState<string>(value);
   const [actionStatus, setActionStatus] = useState<'free' | 'picking'>('free');
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const boxClassName = getPrefixName('box');
-  const entityClassName = getPrefixName('entity');
-  const actionClassName = getPrefixName('action');
-  const actionTextClassName = getPrefixName('action-text');
-  const actionUploadClassName = getPrefixName('action-upload');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const boxClassName = generateClassName('box');
+  const entityClassName = generateClassName('entity');
+  const actionClassName = generateClassName('action');
+  const actionTextClassName = generateClassName('action-text');
+  const actionUploadClassName = generateClassName('action-upload');
 
   const calcTextAreaSize = useCallback(
     (str: string) => {

@@ -13,11 +13,11 @@ export interface ModProps {
 export const Mod = (props: ModProps) => {
   const { className, style } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
 
   return useMemo(() => {
     return (
-      <div style={style} className={classnames(getPrefixName(), className)}>
+      <div style={style} className={classnames(generateClassName(), className)}>
         Mod
       </div>
     );

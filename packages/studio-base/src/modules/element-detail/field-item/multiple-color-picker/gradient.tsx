@@ -38,14 +38,14 @@ export function GradientPicker(props: GradientPickerProps) {
   const isPointMoving = useRef<boolean>(false);
 
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
 
-  const gradientRootClassName = getPrefixName('gradient-root');
-  const gradientDeleteClassName = getPrefixName('gradient-delete');
-  const gradientClassName = getPrefixName('gradient');
-  const gradientBarClassName = getPrefixName('gradient-bar');
-  const gradientStopClassName = getPrefixName('gradient-point');
-  const gradientStopActiveClassName = getPrefixName('gradient-point-active');
+  const gradientRootClassName = generateClassName('gradient-root');
+  const gradientDeleteClassName = generateClassName('gradient-delete');
+  const gradientClassName = generateClassName('gradient');
+  const gradientBarClassName = generateClassName('gradient-bar');
+  const gradientStopClassName = generateClassName('gradient-point');
+  const gradientStopActiveClassName = generateClassName('gradient-point-active');
 
   useEffect(() => {
     const newCSS = colorToLinearGradientCSS(value);

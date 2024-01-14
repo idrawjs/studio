@@ -1,1 +1,1 @@
-export { createPrefixName, getPrefixName, setClassNameTopPrefix, getClassNameTopPrefix } from './variable';
+export { createPrefixName, generateClassName, setClassNameTopPrefix, getClassNameTopPrefix } from './variable';

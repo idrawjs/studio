@@ -5,29 +5,28 @@ import { Switch } from 'antd';
 import { createPrefixName } from '../../css';
 import IconDark from '../../icons/dark';
 import IconLight from '../../icons/light';
+import type { ThemeMode } from '../../types';
 
 const modName = 'base-theme-switch';
 
 const prefixName = createPrefixName(modName);
 
-export type ThemeKey = 'dark' | 'light';
-
 export interface ThemeSwitchProps {
   className?: string;
   style?: CSSProperties;
-  onChange?: (e: { theme: ThemeKey }) => void;
-  theme?: ThemeKey;
-  defaultTheme?: ThemeKey;
+  onChange?: (e: { theme: ThemeMode }) => void;
+  theme?: ThemeMode;
+  defaultTheme?: ThemeMode;
 }
 
-const getChecked = (theme?: ThemeKey) => {
+const getChecked = (theme?: ThemeMode) => {
   if (typeof theme === 'undefined') {
     return;
   }
   return theme === 'light' ? true : false;
 };
 
-function getTheme(checked: boolean): ThemeKey {
+function getTheme(checked: boolean): ThemeMode {
   if (checked === true) {
     return 'light';
   } else {

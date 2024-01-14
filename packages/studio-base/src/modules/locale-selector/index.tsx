@@ -20,11 +20,11 @@ export interface LocaleSelectorProps {
 export const LocaleSelector = (props: LocaleSelectorProps) => {
   const { className, style, defaultValue, value, onChange } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
 
   return useMemo(() => {
     return (
-      <Select style={style} className={classnames(getPrefixName(), className)} size="small" defaultValue={defaultValue} value={value} onChange={onChange}>
+      <Select style={style} className={classnames(generateClassName(), className)} size="small" defaultValue={defaultValue} value={value} onChange={onChange}>
         <Option value="en-US">English</Option>
         <Option value="zh-CN">中文</Option>
       </Select>

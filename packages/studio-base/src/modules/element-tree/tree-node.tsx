@@ -33,7 +33,7 @@ export interface TreeNodeProps {
   className?: string;
   type?: ElementType;
   style?: CSSProperties;
-  getPrefixName: (...args: string[]) => string;
+  generateClassName: (...args: string[]) => string;
   onTitleChange?: (e: { uuid: string; value: string }) => void;
   onOperationToggle?: (e: { uuid: string; operations: ElementOperations }) => void;
   onDelete?: (e: { uuid: string }) => void;
@@ -51,7 +51,7 @@ export const TreeNode = (props: TreeNodeProps) => {
     nodeKey,
     title,
     position,
-    getPrefixName,
+    generateClassName,
     onTitleChange,
     onOperationToggle,
     onDelete,
@@ -64,13 +64,13 @@ export const TreeNode = (props: TreeNodeProps) => {
   const [showAction, setShowAction] = useState<boolean>(false);
   const refTitle = useRef<string>(title);
 
-  const rootClassName = getPrefixName(modName);
-  const iconClassName = getPrefixName(modName, 'icon');
-  const titleClassName = getPrefixName(modName, 'title');
-  const titleInputClassName = getPrefixName(modName, 'title', 'input');
-  const titleIconClassName = getPrefixName(modName, 'title', 'icon');
-  const actionClassName = getPrefixName(modName, 'action');
-  const selectedClassName = getPrefixName(modName, 'selected');
+  const rootClassName = generateClassName(modName);
+  const iconClassName = generateClassName(modName, 'icon');
+  const titleClassName = generateClassName(modName, 'title');
+  const titleInputClassName = generateClassName(modName, 'title', 'input');
+  const titleIconClassName = generateClassName(modName, 'title', 'icon');
+  const actionClassName = generateClassName(modName, 'action');
+  const selectedClassName = generateClassName(modName, 'selected');
   const clickTime = useRef<number>(0);
   const refInput = useRef<InputRef | null>(null);
 

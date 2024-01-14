@@ -17,9 +17,9 @@ export const PanelDetail = (props: PanelDetailProps) => {
   const { className, style } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
   const { selectedUUIDs, editingData } = state;
-  const modClassName = getPrefixName();
+  const modClassName = generateClassName();
 
   const onChange = useCallback(
     (e: RecursivePartial<Element>) => {

@@ -1,23 +1,15 @@
-import React, { useReducer, useMemo, useContext, useRef, useEffect, useImperativeHandle } from 'react';
-import { ConfigProvider as AntdConfigProvider, theme } from 'antd';
-import { ConfigContext, ConfigProvider } from '@idraw/studio-base';
-import classnames from 'classnames';
-import { EventEmitter, Store } from 'idraw';
+import React, { useReducer, useMemo, useRef, useEffect, useImperativeHandle } from 'react';
+import { ConfigProvider } from '@idraw/studio-base';
+import { EventEmitter, Store, findElementFromListByPosition } from 'idraw';
 import { Dashboard } from './modules';
 import { Provider, createStudioContextStateByProps, createStudioReducer } from './modules/context';
-import type { StudioProps, SharedEventMap, SharedStorage, SharedEvent, SharedStore, StudioImperativeHandle } from './types';
+import type { StudioProps, SharedEventMap, SharedStorage, SharedEvent, SharedStore, StudioImperativeHandle, StudioActionType, StudioState } from './types';
 import { createSharedDefaultStorage } from './shared/store';
 import { initActionEvent } from './shared/event';
 
-const themeName = 'theme';
-
 export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
-  const { width = 1000, height = 600, style, className, logo, navigationMenu, defaultSelectedElementUUIDs, prefiexName } = props;
+  const { width = 1000, height = 600, style, className, logo, navigationMenu, defaultSelectedElementUUIDs, prefiexName, onEditGroupElement } = props;
   const [state, dispatch] = useReducer(createStudioReducer, createStudioContextStateByProps(props));
-  const { createPrefixName } = useContext(ConfigContext);
-  const themePrefixName = createPrefixName(themeName);
-  const themeClassName = themePrefixName();
-  const themeDarkClassName = themePrefixName('dark');
 
   const refDashboard = useRef<HTMLDivElement | null>(null);
   const refSharedEvent = useRef<SharedEvent | null>(new EventEmitter<SharedEventMap>());
@@ -26,6 +18,28 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
       defaultStorage: createSharedDefaultStorage()
     })
   );
+
+  // useEffect(() => {
+  //   if (data) {
+  //     dispatch({
+  //       type: 'update',
+  //       payload: {
+  //         data,
+  //         editingData: cloneEditingDataByPosition([], data),
+  //         editingDataPostion: [],
+  //         treeData: getElementTree(data)
+  //       }
+  //     });
+  //   }
+  // }, [data]);
+
+  useEffect(() => {
+    const elem = findElementFromListByPosition(state.editingDataPostion, state.data.elements);
+    onEditGroupElement?.({
+      uuid: elem?.uuid,
+      position: [...state.editingDataPostion]
+    });
+  }, [state.editingDataPostion]);
 
   useImperativeHandle(
     ref,
@@ -36,6 +50,13 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
         },
         getSharedStore() {
           return refSharedStore.current;
+        },
+        dispatch(e: { type: StudioActionType; payload: Partial<StudioState> }) {
+          const { type, payload } = e;
+          dispatch({
+            type,
+            payload
+          });
         }
       };
       return handle;
@@ -84,24 +105,22 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
 
   return useMemo(() => {
     return (
-      <ConfigProvider localeCode={state.localeCode} container={refDashboard.current} topPrefix={prefiexName}>
+      <ConfigProvider localeCode={state.localeCode} container={refDashboard.current} topPrefix={prefiexName} themeMode={state.themeMode}>
         <Provider value={{ state, dispatch }}>
-          <AntdConfigProvider theme={{ algorithm: state.themeMode === 'dark' ? theme.darkAlgorithm : theme.defaultAlgorithm }}>
-            <Dashboard
-              logo={logo}
-              navigationMenu={navigationMenu}
-              ref={refDashboard}
-              width={width}
-              height={height}
-              style={style}
-              className={classnames([themeClassName, state.themeMode === 'dark' ? themeDarkClassName : '', className])}
-              defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
-              sharedEvent={refSharedEvent.current as SharedEvent}
-              sharedStore={refSharedStore.current as SharedStore}
-            />
-          </AntdConfigProvider>
+          <Dashboard
+            logo={logo}
+            navigationMenu={navigationMenu}
+            ref={refDashboard}
+            width={width}
+            height={height}
+            style={style}
+            className={className}
+            defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
+            sharedEvent={refSharedEvent.current as SharedEvent}
+            sharedStore={refSharedStore.current as SharedStore}
+          />
         </Provider>
       </ConfigProvider>
     );
-  }, [themeClassName, themeDarkClassName, prefiexName, width, height, state, dispatch, refDashboard]);
+  }, [prefiexName, width, height, state, dispatch, refDashboard]);
 });

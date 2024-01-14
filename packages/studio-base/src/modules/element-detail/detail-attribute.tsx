@@ -27,8 +27,8 @@ export interface DetailAttributeProps {
 export const DetailAttribute = (props: DetailAttributeProps) => {
   const { element, onChange, disabled, getElementAsset, createElementAsset } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
   return useMemo(() => {
     return (
       <div className={rootClassName}>
