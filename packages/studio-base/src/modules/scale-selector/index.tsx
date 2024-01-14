@@ -20,9 +20,9 @@ export interface ScaleSelectorProps {
 export const ScaleSelector = (props: ScaleSelectorProps) => {
   const { className, style, defaultValue, value, onChange } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const menuItemClassName = getPrefixName('menu-item');
-  const inputClassName = getPrefixName('input');
+  const generateClassName = createPrefixName(modName);
+  const menuItemClassName = generateClassName('menu-item');
+  const inputClassName = generateClassName('input');
   const [customValue, setCustomValue] = useState<number>(100);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export const ScaleSelector = (props: ScaleSelectorProps) => {
 
   return useMemo(() => {
     return (
-      <Dropdown className={classnames(getPrefixName(), className)} menu={menuProps}>
+      <Dropdown className={classnames(generateClassName(), className)} menu={menuProps}>
         <Button icon={<IconScale />} size="small">{`${formatNumber(parseFloat(value || '1') * 100)}%`}</Button>
       </Dropdown>
     );

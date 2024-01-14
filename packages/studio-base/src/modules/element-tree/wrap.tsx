@@ -5,7 +5,7 @@ import { TreeNode } from './tree-node';
 import type { TreeNodeProps } from './tree-node';
 
 type WrapOptions = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle' | 'onDelete' | 'onGoToGroup'> & {
-  getPrefixName: (...args: string[]) => string;
+  generateClassName: (...args: string[]) => string;
   position: ElementPosition;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   selectedKeys: string[];
@@ -38,7 +38,7 @@ const wrapTreeViewNode = (treeNode: ElementTreeNode, opts: WrapOptions) => {
         operations={treeNode.operations}
         nodeKey={treeNode.key}
         type={treeNode.type}
-        getPrefixName={opts.getPrefixName}
+        generateClassName={opts.generateClassName}
         onTitleChange={onTitleChange}
         onOperationToggle={onOperationToggle}
         onDelete={onDelete}

@@ -5,13 +5,7 @@ import { ConfigContext, IconRect, IconCircle, IconText, IconStar, IconGroup, Ico
 import { Dropdown, Button, Space, Modal } from 'antd';
 import type { MenuProps, MenuItemProps, ButtonProps } from 'antd';
 import { downloadFileFromText } from 'idraw';
-// import IconMouse from '../../icons/mouse';
-// import IconPen from '../../icons/pen';
-// import IconHand from '../../icons/hand';
-// import IconFile from '../../icons/file';
-import IconMore from '../../icons/more';
-import IconApp from '../../icons/app';
-import IconDown from '../../icons/down';
+import { IconMore, IconApp, IconDown } from '@idraw/studio-base';
 import { ElementType } from 'idraw';
 import { ExportFile, exportFileDialogWidth } from '../export-image-file';
 import { useLocale } from '../../locale';
@@ -35,9 +29,9 @@ export const NavMenu = (props: NavMenuProps) => {
   const { className, style, sharedStore, sharedEvent } = props;
   const [modal, contextHolder] = Modal.useModal();
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const dropdownClassName = getPrefixName('dropdown');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const dropdownClassName = generateClassName('dropdown');
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const moduleLocale = useModuleLocale();
   const clickToCreateElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {
@@ -53,27 +47,6 @@ export const NavMenu = (props: NavMenuProps) => {
   };
 
   const navItemsMap: Record<string, MenuProps['items']> = {
-    // file: [
-    //   {
-    //     key: 'import',
-    //     label: 'Import',
-    //     disabled: true
-    //   },
-    //   {
-    //     key: 'export-whole-content',
-    //     label: 'Export whole content',
-    //     onClick: () => {
-    //       modal.info({
-    //         icon: null,
-    //         title: 'Whole Content',
-    //         width: exportFileBoxWidth,
-    //         content: <ExportFile />,
-    //         footer: null,
-    //         closable: true
-    //       });
-    //     }
-    //   }
-    // ],
     more: [
       {
         key: 'about-idraw-stuido',

@@ -42,12 +42,12 @@ export const BasicAttribute = (props: BasicAttributeProps) => {
   const { className, style, element, onChange, disabled } = props;
   const ref = useRef<FormInstance>(null);
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const rowClassName = getPrefixName('row');
-  const colClassName = getPrefixName('col');
-  const inputClassName = getPrefixName('input');
-  const formItemClassName = getPrefixName('form-item');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const rowClassName = generateClassName('row');
+  const colClassName = generateClassName('col');
+  const inputClassName = generateClassName('input');
+  const formItemClassName = generateClassName('form-item');
   const moduleLocale = useModuleLocale();
   const onValuesChange = (e: FieldType) => {
     if (element?.operations?.limitRatio === true) {

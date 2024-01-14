@@ -10,8 +10,8 @@ const modName = 'base-split-pane';
 const prefixName = createPrefixName(modName);
 
 const useModuleClassName = () => {
-  const { getPrefixName } = useContext(ConfigContext);
-  const modClassName = getPrefixName(modName);
+  const { generateClassName } = useContext(ConfigContext);
+  const modClassName = generateClassName(modName);
   return { modClassName };
 };
 

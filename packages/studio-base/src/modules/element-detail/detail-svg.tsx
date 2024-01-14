@@ -29,8 +29,8 @@ type FieldType = Pick<Required<ElementSVGDetail>, 'svg'> & {
 export const DetailSVG = (props: DetailSVGProps) => {
   const { className, style, element, onChange, getElementAsset, createElementAsset, disabled } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
 
   const ref = useRef<FormInstance>(null);
 

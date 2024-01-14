@@ -17,8 +17,8 @@ export interface DetailCircleProps {
 export const DetailCircle = (props: DetailCircleProps) => {
   const { className, style } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
 
   return useMemo(() => {
     return (

@@ -36,11 +36,11 @@ const defaultFileOptions = {
 export const ExportFile = (props: ExportFileProps) => {
   const { className, style, sharedStore } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const previewClassName = getPrefixName('preview');
-  const optionsClassName = getPrefixName('options');
-  const canvasClassName = getPrefixName('canvas');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const previewClassName = generateClassName('preview');
+  const optionsClassName = generateClassName('options');
+  const canvasClassName = generateClassName('canvas');
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [imageSrc, setImageSrc] = useState<string | null>(null);

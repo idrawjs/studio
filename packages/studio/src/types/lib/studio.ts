@@ -1,9 +1,13 @@
-import type { Data } from 'idraw';
+import type { CSSProperties } from 'react';
+import type { Data, ElementPosition } from 'idraw';
 import type { LocaleCode } from '@idraw/studio-base';
 import type { DashboardProps } from '../../modules';
 import type { SharedEvent, SharedStore } from './shared';
+import type { StudioActionType, StudioState } from './context';
 
 export type StudioProps = Omit<DashboardProps, 'sharedEvent' | 'sharedStore'> & {
+  className?: string;
+  style?: CSSProperties;
   data: Data;
   prefiexName?: string;
   defaultLocale?: LocaleCode;
@@ -14,9 +18,11 @@ export type StudioProps = Omit<DashboardProps, 'sharedEvent' | 'sharedStore'> & 
     offsetY: number;
   };
   defaultEditingGroupUUID?: string;
+  onEditGroupElement?: (e: { uuid?: string; position: ElementPosition }) => void;
 };
 
 export interface StudioImperativeHandle {
   getSharedStore: () => SharedStore | null;
   getSharedEvent: () => SharedEvent | null;
+  dispatch(e: { type: StudioActionType; payload: Partial<StudioState> }): void;
 }

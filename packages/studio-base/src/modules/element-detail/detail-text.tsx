@@ -43,12 +43,12 @@ const elementToFormData = (element?: Element<'text'> | null) => {
 export const DetailText = (props: DetailTextProps) => {
   const { className, style, element, onChange, disabled } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const rowClassName = getPrefixName('row');
-  const colClassName = getPrefixName('col');
-  const swithClassName = getPrefixName('switch');
-  const formItemClassName = getPrefixName('form-item');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const rowClassName = generateClassName('row');
+  const colClassName = generateClassName('col');
+  const swithClassName = generateClassName('switch');
+  const formItemClassName = generateClassName('form-item');
   const ref = useRef<FormInstance>(null);
 
   useEffect(() => {

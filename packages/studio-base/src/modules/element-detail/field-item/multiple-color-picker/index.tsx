@@ -48,16 +48,16 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
   const refRadialForm = useRef<FormInstance>(null);
 
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const headerClassName = getPrefixName('header');
-  const internalPickerClassName = getPrefixName('internal-picker');
-  const radioGroupClassName = getPrefixName('radio-group');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const headerClassName = generateClassName('header');
+  const internalPickerClassName = generateClassName('internal-picker');
+  const radioGroupClassName = generateClassName('radio-group');
 
-  const rowClassName = getPrefixName('row');
-  const colClassName = getPrefixName('col');
-  const inputClassName = getPrefixName('input');
-  const formItemClassName = getPrefixName('form-item');
+  const rowClassName = generateClassName('row');
+  const colClassName = generateClassName('col');
+  const inputClassName = generateClassName('input');
+  const formItemClassName = generateClassName('form-item');
 
   useEffect(() => {
     setCSS(colorToLinearGradientCSS(value));

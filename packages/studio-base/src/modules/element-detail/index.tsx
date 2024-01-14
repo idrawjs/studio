@@ -27,7 +27,7 @@ export interface ElementDetailProps {
 export const ElementDetail = (props: ElementDetailProps) => {
   const { className, style, element: elem, onChange, getElementAsset, createElementAsset } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
   const moduleLocale = useModuleLocale();
   let element: Element | null | undefined = elem;
   if (elem) {
@@ -101,7 +101,7 @@ export const ElementDetail = (props: ElementDetailProps) => {
 
   return useMemo(() => {
     return (
-      <div style={style} className={classnames(getPrefixName(), className)}>
+      <div style={style} className={classnames(generateClassName(), className)}>
         <Collapse ghost items={items} size="small" defaultActiveKey={items.map((i) => i.key) as string[]} />
       </div>
     );

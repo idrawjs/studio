@@ -27,10 +27,10 @@ export const Sketch = (props: SketchProps) => {
   const refIDraw = useRef<iDraw | null>(null);
   const refHasFirstDraw = useRef<boolean>(false);
   const { className, style, width, height, sharedEvent, sharedStore } = props;
-  const { getPrefixName } = useContext(ConfigContext);
+  const { generateClassName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
   const { editingData } = state;
-  const modClassName = getPrefixName(modName);
+  const modClassName = generateClassName(modName);
   const refEditingDataPosition = useRef<ElementPosition>([]);
   const refEditingData = useRef<Data>(state.editingData);
   const refData = useRef<Data>(state.data);

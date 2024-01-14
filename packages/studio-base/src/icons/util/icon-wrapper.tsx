@@ -5,8 +5,8 @@ import { ConfigContext } from '../../modules/config-provider';
 const iconPrefixBaseName = 'icon';
 
 export const useIconClassName = () => {
-  const { getPrefixName } = useContext(ConfigContext);
-  const iconClassName = getPrefixName(iconPrefixBaseName);
+  const { generateClassName } = useContext(ConfigContext);
+  const iconClassName = generateClassName(iconPrefixBaseName);
   return { iconClassName };
 };
 

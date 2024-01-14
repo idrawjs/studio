@@ -14,6 +14,6 @@ export function createPrefixName(modName: string): (...args: string[]) => string
   };
 }
 
-export function getPrefixName(...args: string[]) {
+export function generateClassName(...args: string[]) {
   return [topPrefix, ...args].join('-');
 }

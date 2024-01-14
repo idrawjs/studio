@@ -35,9 +35,9 @@ export function MultipleColor(props: MultipleColorProps) {
   const refAppend = useRef<HTMLDivElement>(null);
 
   const { createPrefixName, container } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
-  const previewClassName = getPrefixName('preview');
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
+  const previewClassName = generateClassName('preview');
 
   const getContainer = () => {
     return container || document.body;

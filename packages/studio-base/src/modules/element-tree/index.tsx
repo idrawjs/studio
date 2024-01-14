@@ -53,7 +53,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     onGoToGroup
   } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
+  const generateClassName = createPrefixName(modName);
   const onSelectNode: TreeProps['onSelect'] = (selectedKeys, info) => {
     const pos = treePosToElementPosition(info.node.pos);
     const positions: ElementPosition[] = [pos];
@@ -67,7 +67,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
 
   return useMemo(() => {
     const wrappedTreeData = wrapTreeViewData(treeData || [], {
-      getPrefixName,
+      generateClassName,
       onTitleChange,
       onOperationToggle,
       onDelete: onElementDelete,
@@ -81,7 +81,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
         ref={ref}
         height={height}
         style={style}
-        className={classnames(getPrefixName(), className)}
+        className={classnames(generateClassName(), className)}
         showLine
         blockNode
         multiple

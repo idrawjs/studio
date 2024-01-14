@@ -13,8 +13,8 @@ export interface ChildProps {
 export const Child = (props: ChildProps) => {
   const { className, style } = props;
   const { createPrefixName } = useContext(ConfigContext);
-  const getPrefixName = createPrefixName(modName);
-  const rootClassName = getPrefixName();
+  const generateClassName = createPrefixName(modName);
+  const rootClassName = generateClassName();
 
   return useMemo(() => {
     return (
