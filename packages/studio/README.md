@@ -22,9 +22,11 @@ The preview of `@idraw/studo`.
 
 
 <p align="center">
-  <img width="1145" alt="image" src="https://github.com/idrawjs/studio/assets/8216630/62b9bc71-5fca-421d-9c6e-b7512edc77f2" width="700">
 
-  <img width="1145" alt="image" src="https://github.com/idrawjs/studio/assets/8216630/5b4cc1dc-89e1-4f67-84fa-578667d42bf7" width="700">
+  <img width="700" alt="idraw-studio-light-theme" src="https://github.com/idrawjs/studio/assets/8216630/8a49bab8-1e4a-44dd-9836-b6ce3861aaea" />
+
+  <img width="600" alt="idraw-studio-dark-theme" src="https://github.com/idrawjs/studio/assets/8216630/479fce0b-891f-47f2-ace8-d91580e68b4b" />
+
 </p>
 
 ## Usage
