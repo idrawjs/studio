@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Studio } from '@idraw/studio';
 import data from './data';
+import { base64 } from './logo';
 import './index.less';
 const dom = document.querySelector('#app') as HTMLDivElement;
 const root = createRoot(dom);
@@ -75,7 +76,7 @@ const App = () => {
       logo={
         <>
           <a href="/" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            <img style={{ width: 24, marginRight: 10 }} src="https://github.com/idrawjs/idraw/assets/8216630/bcf8fbc6-6374-4cb9-a67f-1687d029a863" />
+            <img style={{ width: 24, marginRight: 10 }} src={base64} />
           </a>
           <span>@idraw/studio</span>
         </>
