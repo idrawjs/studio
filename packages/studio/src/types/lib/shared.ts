@@ -47,6 +47,8 @@ export interface SharedEventMap {
   scrollToLayer: { uuid: string };
   switchTheme: { theme: StudioThemeMode };
   changeLocale: { locale: LocaleCode };
+  trackDataChange: { data: Data };
+  trackEditingDataChange: { editingData: Data; editingDataPostion: ElementPosition };
 }
 
 export type SharedEvent = EventEmitter<SharedEventMap>;

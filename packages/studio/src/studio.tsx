@@ -103,6 +103,16 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     sharedEvent?.trigger('changeLocale', { locale: state.localeCode });
   }, [state.localeCode]);
 
+  useEffect(() => {
+    const sharedEvent = refSharedEvent.current;
+    sharedEvent?.trigger('trackDataChange', { data: state.data });
+  }, [state.data]);
+
+  useEffect(() => {
+    const sharedEvent = refSharedEvent.current;
+    sharedEvent?.trigger('trackEditingDataChange', { editingData: state.editingData, editingDataPostion: state.editingDataPostion });
+  }, [state.editingData, state.editingDataPostion]);
+
   return useMemo(() => {
     return (
       <ConfigProvider localeCode={state.localeCode} container={refDashboard.current} topPrefix={prefiexName} themeMode={state.themeMode}>
