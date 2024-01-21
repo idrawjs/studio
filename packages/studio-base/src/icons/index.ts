@@ -3,6 +3,7 @@ import IconAlignLeft from './align-left';
 import IconAlignRight from './align-right';
 import IconArrowRight from './arrow-right';
 import IconApp from './app';
+import IconAppStore from './app-store';
 import IconBorderBottom from './border-bottom';
 import IconBorderDash from './border-dash';
 import IconBorderLeft from './border-left';
@@ -18,17 +19,21 @@ import IconCornerRadiusTopLeft from './corner-radius-top-left';
 import IconCornerRadiusTopRight from './corner-radius-top-right';
 import IconCornerRadius from './corner-radius';
 import IconDark from './dark';
+import IconDatabase from './database';
 import IconDelete from './delete';
 import IconDoubleCircle from './double-circle';
 import IconDoubleLeft from './double-left';
 import IconDown from './down';
 import IconDrag from './drag';
 import IconEdit from './edit';
+import IconExperiment from './experiment';
 import IconFile from './file';
 import IconFullCornerRadius from './full-corner-radius';
 import IconGroup from './group';
 import IconHand from './hand';
+import IconHome from './home';
 import IconHTML from './html';
+import IconIndent from './indent';
 import IconImage from './image';
 import IconInvisible from './invisible';
 import IconLayer from './layer';
@@ -37,8 +42,10 @@ import IconLight from './light';
 import IconLock from './lock';
 import IconMore from './more';
 import IconMouse from './mouse';
+import IconOutdent from './outdent';
 import IconPath from './path';
 import IconPen from './pen';
+import IconPlus from './plus';
 import IconPosition from './position';
 import IconRect from './rect';
 import IconResize from './resize';
@@ -61,6 +68,7 @@ export {
   IconAlignLeft,
   IconAlignRight,
   IconApp,
+  IconAppStore,
   IconArrowRight,
   IconBorderBottom,
   IconBorderDash,
@@ -77,17 +85,21 @@ export {
   IconCornerRadiusTopRight,
   IconCornerRadius,
   IconDark,
+  IconDatabase,
   IconDelete,
   IconDoubleCircle,
   IconDoubleLeft,
   IconDown,
   IconDrag,
   IconEdit,
+  IconExperiment,
   IconFile,
   IconFullCornerRadius,
   IconGroup,
   IconHand,
+  IconHome,
   IconHTML,
+  IconIndent,
   IconImage,
   IconInvisible,
   IconLayer,
@@ -96,8 +108,10 @@ export {
   IconLock,
   IconMore,
   IconMouse,
+  IconOutdent,
   IconPath,
   IconPen,
+  IconPlus,
   IconPosition,
   IconRect,
   IconResize,
