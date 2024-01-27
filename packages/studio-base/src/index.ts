@@ -11,6 +11,7 @@ export { ElementDetail, type ElementDetailProps } from './modules/element-detail
 
 export { getElementTree } from './tools';
 export { setClassNameTopPrefix, generateClassName } from './css/index';
+export { useThemeClassName } from './hooks/theme';
 export * from './locale/types';
 
 export {

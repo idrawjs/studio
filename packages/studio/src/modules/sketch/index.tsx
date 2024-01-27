@@ -37,10 +37,10 @@ export const Sketch = (props: SketchProps) => {
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   useEffect(() => {
-    refEditingDataPosition.current = [...state.editingDataPostion];
+    refEditingDataPosition.current = [...state.editingDataPosition];
     refData.current = state.data;
     refEditingData.current = state.editingData;
-  }, [state.editingDataPostion, state.data, state.editingData]);
+  }, [state.editingDataPosition, state.data, state.editingData]);
 
   useEffect(() => {
     if (!ref?.current) {
@@ -153,8 +153,8 @@ export const Sketch = (props: SketchProps) => {
 
       if (type === 'go-to-group' && position) {
         // update new editing data
-        const newEditingDataPostion = [...editingDataPosition, ...position];
-        const newEditingData = cloneEditingDataByPosition(newEditingDataPostion, data);
+        const newEditingDataPosition = [...editingDataPosition, ...position];
+        const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
         const newTreeData = getElementTree(newEditingData);
 
         dispatch({
@@ -162,65 +162,68 @@ export const Sketch = (props: SketchProps) => {
           payload: {
             data: { ...data },
             editingData: { ...newEditingData },
-            editingDataPostion: newEditingDataPostion,
+            editingDataPosition: newEditingDataPosition,
             treeData: newTreeData
           }
         });
-        idraw.setViewScale({
-          scale: 1,
-          offsetX: 0,
-          offsetY: 0
-        });
+        // idraw.setViewScale({
+        //   scale: 1,
+        //   offsetX: 0,
+        //   offsetY: 0
+        // });
+        idraw.centerContent({ data: newEditingData });
 
         idraw.trigger(middlewareEventSelectClear, {});
       } else if (type === 'back-one' && editingDataPosition.length > 0) {
-        const newEditingDataPostion = [...editingDataPosition];
-        newEditingDataPostion.pop();
+        const newEditingDataPosition = [...editingDataPosition];
+        newEditingDataPosition.pop();
 
-        const newEditingData = cloneEditingDataByPosition(newEditingDataPostion, data);
+        const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
         const newTreeData = getElementTree(newEditingData);
         dispatch({
           type: 'update',
           payload: {
             data: { ...data },
             editingData: { ...newEditingData },
-            editingDataPostion: [...newEditingDataPostion],
+            editingDataPosition: [...newEditingDataPosition],
             treeData: newTreeData
           }
         });
-        idraw.setViewScale({
-          scale: 1,
-          offsetX: 0,
-          offsetY: 0
-        });
+        // idraw.setViewScale({
+        //   scale: 1,
+        //   offsetX: 0,
+        //   offsetY: 0
+        // });
+        idraw.centerContent({ data: newEditingData });
         idraw.trigger(middlewareEventSelectClear, {});
       } else if (type === 'back-root') {
         // update new editing data
-        const newEditingDataPostion: ElementPosition = [];
-        const newEditingData = cloneEditingDataByPosition(newEditingDataPostion, data);
+        const newEditingDataPosition: ElementPosition = [];
+        const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
         const newTreeData = getElementTree(newEditingData);
         dispatch({
           type: 'update',
           payload: {
             data: { ...data },
             editingData: newEditingData,
-            editingDataPostion: newEditingDataPostion,
+            editingDataPosition: newEditingDataPosition,
             treeData: newTreeData
           }
         });
-        idraw.setViewScale({
-          scale: 1,
-          offsetX: 0,
-          offsetY: 0
-        });
+        // idraw.setViewScale({
+        //   scale: 1,
+        //   offsetX: 0,
+        //   offsetY: 0
+        // });
+        idraw.centerContent({ data: newEditingData });
         idraw.trigger(middlewareEventSelectClear, {});
       }
     };
 
     const resetDataCallback = (e: SharedEventMap['resetData']) => {
       const { data } = e;
-      const newEditingDataPostion: ElementPosition = [];
-      const newEditingData = cloneEditingDataByPosition(newEditingDataPostion, data);
+      const newEditingDataPosition: ElementPosition = [];
+      const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
       const newTreeData = getElementTree(newEditingData);
 
       dispatch({
@@ -228,7 +231,7 @@ export const Sketch = (props: SketchProps) => {
         payload: {
           data: { ...data },
           editingData: { ...newEditingData },
-          editingDataPostion: newEditingDataPostion,
+          editingDataPosition: newEditingDataPosition,
           treeData: newTreeData
         }
       });
