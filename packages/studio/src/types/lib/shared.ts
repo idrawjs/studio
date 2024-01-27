@@ -48,7 +48,7 @@ export interface SharedEventMap {
   switchTheme: { theme: StudioThemeMode };
   changeLocale: { locale: LocaleCode };
   trackDataChange: { data: Data };
-  trackEditingDataChange: { editingData: Data; editingDataPostion: ElementPosition };
+  trackEditingDataChange: { editingData: Data; editingDataPosition: ElementPosition };
 }
 
 export type SharedEvent = EventEmitter<SharedEventMap>;

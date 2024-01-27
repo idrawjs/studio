@@ -25,5 +25,5 @@ export const IconWrapper = (props: IconWrapperProps) => {
         {children}
       </span>
     );
-  }, [iconClassName]);
+  }, [iconClassName, style, className]);
 };

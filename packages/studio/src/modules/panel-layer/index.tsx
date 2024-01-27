@@ -39,10 +39,10 @@ export const PanelLayer = (props: PanelLayerProps) => {
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   const getCurrentName = () => {
-    if (state.editingDataPostion.length === 0) {
+    if (state.editingDataPosition.length === 0) {
       return '';
     }
-    const elem = findElementFromListByPosition(state.editingDataPostion, state.data.elements);
+    const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
     return elem?.name || elem?.type || '';
   };
 
@@ -123,10 +123,10 @@ export const PanelLayer = (props: PanelLayerProps) => {
             className={headerBtnClassName}
             size="small"
             icon={<IconDoubleLeft />}
-            disabled={!(state.editingDataPostion.length > 0)}
+            disabled={!(state.editingDataPosition.length > 0)}
             onClick={onClickBackRootEdit}
           />
-          <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(state.editingDataPostion.length > 0)} onClick={onClickBackOne} />
+          <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(state.editingDataPosition.length > 0)} onClick={onClickBackOne} />
           <span className={headerTitleClassName}>{getCurrentName()}</span>
         </div>
         <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
@@ -193,5 +193,5 @@ export const PanelLayer = (props: PanelLayerProps) => {
         {/* <div className={footerClassName}>footer</div> */}
       </div>
     );
-  }, [treeData, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPostion, contextMenuOptions]);
+  }, [treeData, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPosition, contextMenuOptions]);
 };

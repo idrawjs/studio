@@ -19,27 +19,13 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     })
   );
 
-  // useEffect(() => {
-  //   if (data) {
-  //     dispatch({
-  //       type: 'update',
-  //       payload: {
-  //         data,
-  //         editingData: cloneEditingDataByPosition([], data),
-  //         editingDataPostion: [],
-  //         treeData: getElementTree(data)
-  //       }
-  //     });
-  //   }
-  // }, [data]);
-
   useEffect(() => {
-    const elem = findElementFromListByPosition(state.editingDataPostion, state.data.elements);
+    const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
     onEditGroupElement?.({
       uuid: elem?.uuid,
-      position: [...state.editingDataPostion]
+      position: [...state.editingDataPosition]
     });
-  }, [state.editingDataPostion]);
+  }, [state.editingDataPosition]);
 
   useImperativeHandle(
     ref,
@@ -110,8 +96,8 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
 
   useEffect(() => {
     const sharedEvent = refSharedEvent.current;
-    sharedEvent?.trigger('trackEditingDataChange', { editingData: state.editingData, editingDataPostion: state.editingDataPostion });
-  }, [state.editingData, state.editingDataPostion]);
+    sharedEvent?.trigger('trackEditingDataChange', { editingData: state.editingData, editingDataPosition: state.editingDataPosition });
+  }, [state.editingData, state.editingDataPosition]);
 
   return useMemo(() => {
     return (

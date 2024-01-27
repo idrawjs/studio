@@ -9,7 +9,7 @@ export interface StudioState {
   themeMode: StudioThemeMode;
   data: Data;
   editingData: Data;
-  editingDataPostion: ElementPosition;
+  editingDataPosition: ElementPosition;
   treeData: ElementTreeData;
   selectedUUIDs: string[];
   scaleInfo: {

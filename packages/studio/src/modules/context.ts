@@ -13,12 +13,12 @@ export function createStudioContextStateByProps(props?: StudioProps): StudioStat
     elements: [],
     ...(props?.data || {})
   };
-  let editingDataPostion: ElementPosition = [];
+  let editingDataPosition: ElementPosition = [];
   let editingData: Data = data;
   if (props?.defaultEditingGroupUUID) {
-    editingDataPostion = getElementPositionFromList(props.defaultEditingGroupUUID, data.elements);
+    editingDataPosition = getElementPositionFromList(props.defaultEditingGroupUUID, data.elements);
   }
-  editingData = cloneEditingDataByPosition(editingDataPostion, data);
+  editingData = cloneEditingDataByPosition(editingDataPosition, data);
   const treeData = getElementTree(editingData);
 
   return {
@@ -26,7 +26,7 @@ export function createStudioContextStateByProps(props?: StudioProps): StudioStat
     themeMode: props?.defaultThemeMode || defaultThemeMode,
     data,
     editingData,
-    editingDataPostion,
+    editingDataPosition,
     treeData,
     selectedUUIDs: props?.defaultSelectedElementUUIDs || [],
     scaleInfo: {
@@ -51,7 +51,7 @@ export function createStudioContextState(opts?: Partial<StudioState>): StudioSta
       ...(opts?.data || {})
     },
     editingData: cloneEditingDataByPosition([], data),
-    editingDataPostion: [],
+    editingDataPosition: [],
     treeData: [],
     selectedUUIDs: [],
     scaleInfo: {
