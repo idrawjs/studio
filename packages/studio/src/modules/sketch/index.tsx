@@ -121,6 +121,30 @@ export const Sketch = (props: SketchProps) => {
       idraw.selectElements([elem.uuid]);
     };
 
+    const addElementCallback = (e: SharedEventMap['addElement']) => {
+      const { element, position = [] } = e;
+      const centerPoint = idraw.getViewCenter();
+      const newEditingData = idraw.addElement(
+        {
+          ...element,
+          ...{
+            x: centerPoint.x - element.w / 2,
+            y: centerPoint.y - element.h / 2
+          }
+        },
+        { position }
+      );
+      const newTreeData = getElementTree(newEditingData);
+      dispatch({
+        type: 'update',
+        payload: {
+          editingData: { ...newEditingData },
+          treeData: newTreeData
+        }
+      });
+      idraw.selectElements([element.uuid]);
+    };
+
     const deleteElementCallback = (e: SharedEventMap['deleteElement']) => {
       const { uuid } = e;
       idraw?.deleteElement(uuid);
@@ -247,6 +271,7 @@ export const Sketch = (props: SketchProps) => {
     idraw.on('change', listenDataChange);
     idraw.on(middlewareEventScale, listenMiddlewareEventScale);
     sharedEvent.on('createElement', createElementCallback);
+    sharedEvent.on('addElement', addElementCallback);
     sharedEvent.on('deleteElement', deleteElementCallback);
     sharedEvent.on('resetEditingView', resetEditingViewCallback);
     sharedEvent.on('resetData', resetDataCallback);
@@ -273,7 +298,8 @@ export const Sketch = (props: SketchProps) => {
       idraw.off(middlewareEventSelect, listenMiddlewareEventSelect);
       idraw.off('change', listenDataChange);
       idraw.off(middlewareEventScale, listenMiddlewareEventScale);
-      // sharedEvent.off('addElement', createElementCallback);
+      // sharedEvent.off('createElement', createElementCallback);
+      // sharedEvent.off('addElement', addElementCallback);
       // sharedEvent.off('deleteElement', deleteElementCallback);
       // sharedEvent.off('resetEditingView', resetEditingViewCallback);
       // sharedEvent.off('resetData', resetDataCallback);

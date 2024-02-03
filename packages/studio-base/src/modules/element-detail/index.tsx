@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementType, RecursivePartial } from 'idraw';
 import { getDefaultElementDetailConfig } from 'idraw';
-import { Collapse } from 'antd';
+import { Collapse, Empty } from 'antd';
 import type { CollapseProps } from 'antd';
 import { ConfigContext } from '../config-provider';
 import { BasicAttribute } from './basic-attribute';
@@ -59,7 +59,7 @@ export const ElementDetail = (props: ElementDetailProps) => {
     {
       key: 'border-attribute',
       label: moduleLocale.borderAttribute,
-      children: (
+      children: ['rect', 'circle', 'text', 'image', 'group'].includes(elem?.type as string) ? (
         <BorderAttribute
           element={element}
           disabled={!element}
@@ -67,6 +67,8 @@ export const ElementDetail = (props: ElementDetailProps) => {
             onChange?.(e);
           }}
         />
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
       )
     },
     {
@@ -87,7 +89,7 @@ export const ElementDetail = (props: ElementDetailProps) => {
     {
       key: 'shadow-attribute',
       label: moduleLocale.shadowAttribute,
-      children: (
+      children: ['rect', 'circle', 'text', 'image', 'group'].includes(elem?.type as string) ? (
         <ShadowAttribute
           element={element}
           disabled={!element}
@@ -95,6 +97,8 @@ export const ElementDetail = (props: ElementDetailProps) => {
             onChange?.(e);
           }}
         />
+      ) : (
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
       )
     }
   ];

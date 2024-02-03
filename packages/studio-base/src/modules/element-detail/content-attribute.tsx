@@ -67,12 +67,12 @@ export const ContentAttribute = (props: ContentAttributeProps) => {
     return (
       <>
         <Form ref={ref} style={style} className={rootClassName} onValuesChange={onValuesChange}>
-          {['rect', 'circle', 'text', 'group'].includes(element?.type as string) && (
+          {['rect', 'circle', 'text', 'group', 'path'].includes(element?.type as string) && (
             <Row className={rowClassName}>
               <Col className={colClassName} span="10">
                 {moduleLocale.background}
               </Col>
-              <Col className={colClassName} span="12">
+              <Col className={colClassName} span="14">
                 <Form.Item className={formItemClassName} name="background">
                   <MultipleColor
                     elementSize={element ? getElementSize(element) : undefined}
@@ -91,7 +91,7 @@ export const ContentAttribute = (props: ContentAttributeProps) => {
             <Col className={colClassName} span="10">
               {moduleLocale.opacity}
             </Col>
-            <Col className={colClassName} span="12">
+            <Col className={colClassName} span="14">
               <Form.Item className={formItemClassName} name="opacity">
                 <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={0.1} />
               </Form.Item>
