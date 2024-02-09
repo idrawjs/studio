@@ -10,13 +10,13 @@
 </p>
 
 <p align="center">
-  <a href="https://idraw.js.org/studio/" target="_blank">idraw.js.org/studio/</a>
+  <a href="https://idrawjs.com/studio/" target="_blank">idrawjs.com/studio/</a>
 </p>
 
  
 ## @idraw/studio Preview
 
-You can click [idraw.js.org/studio/](https://idraw.js.org/studio) to experience it.
+You can click [idrawjs.com/studio/](https://idrawjs.com/studio) to experience it.
 
 The preview of `@idraw/studo`. 
 
