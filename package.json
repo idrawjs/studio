@@ -5,20 +5,20 @@
     "docs": "npm run build && node ./scripts/docs.js"
   },
   "devDependencies": {
-    "@types/node": "^20.10.4",
-    "@types/react": "^18.2.45",
-    "@types/react-dom": "^18.2.18",
+    "@types/node": "^20.11.17",
+    "@types/react": "^18.2.55",
+    "@types/react-dom": "^18.2.19",
     "@vitejs/plugin-react": "^4.2.1",
     "less": "^4.2.0",
-    "prettier": "^3.1.1",
+    "prettier": "^3.2.5",
     "typescript": "^5.3.3",
-    "vite": "^5.0.10",
-    "vite-node": "^1.0.4"
+    "vite": "^5.1.1",
+    "vite-node": "^1.2.2"
   },
   "dependencies": {
-    "@idraw/studio": "0.4.0-alpha.11",
-    "antd": "^5.12.8",
-    "idraw": "0.4.0-beta.11",
+    "@idraw/studio": "0.4.0-alpha.12",
+    "antd": "^5.14.0",
+    "idraw": "0.4.0-beta.12",
     "react": "^18.2.0",
     "react-dom": "^18.2.0"
   },
