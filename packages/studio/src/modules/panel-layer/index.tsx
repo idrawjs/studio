@@ -6,8 +6,7 @@ import { updateElementInList, moveElementPosition, getGroupQueueFromList, findEl
 import type { ElementPosition } from 'idraw';
 import { Dropdown, Button } from 'antd';
 import { Context } from '../context';
-import type { SharedEvent, SharedStore } from '../../types';
-import { useContextMenuOptions } from '../context-menu';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../../types';
 
 const modName = 'mod-panel-layer';
 
@@ -18,10 +17,11 @@ export interface PanelLayerProps {
   defaultSelectedElementUUIDs?: string[];
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
+  useContextMenuOptions: HookUseContextMenuOptions;
 }
 
 export const PanelLayer = (props: PanelLayerProps) => {
-  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent } = props;
+  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const generateClassName = createPrefixName(modName);
@@ -159,7 +159,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
                 }
               }}
               onDrop={(e) => {
-                const elements = moveElementPosition(editingData.elements, {
+                const { elements } = moveElementPosition(editingData.elements, {
                   from: e.from,
                   to: e.to
                 });

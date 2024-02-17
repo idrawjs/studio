@@ -40,6 +40,9 @@ export interface SharedEventMap {
   resetData: {
     data: Data;
   };
+  resetEditingData: {
+    editingData: Data;
+  };
   copy: void;
   paste: void;
   cut: void;

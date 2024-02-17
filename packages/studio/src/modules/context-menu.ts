@@ -1,8 +1,8 @@
 import type { MenuProps } from 'antd';
 import { useLocale } from '../locale';
-import type { SharedEvent, SharedStore } from '../types';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../types';
 
-export function useContextMenuOptions(opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }): [MenuProps['items']] {
+export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }) => {
   const [moduleLocale] = useLocale('contextMenu');
   const { sharedEvent } = opts;
   const items: MenuProps['items'] = [
@@ -52,7 +52,7 @@ export function useContextMenuOptions(opts: { sharedEvent: SharedEvent; sharedSt
     // }
   ];
   return [items];
-}
+};
 
 // export function createContextMenuOptions() {
 //   const items: MenuProps['items'] = [

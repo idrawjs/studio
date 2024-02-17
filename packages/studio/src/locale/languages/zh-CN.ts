@@ -18,6 +18,12 @@ const localeValues: Locale = {
     group: '群组',
     devicePixelRatio: '设备像素比例'
   },
+  Toolbar: {
+    layers: '图层',
+    ruler: '标尺',
+    attributes: '属性',
+    hand: '拖拽工具'
+  },
   contextMenu: {
     copy: '复制',
     paste: '粘贴',

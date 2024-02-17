@@ -18,6 +18,12 @@ const localeValues: Locale = {
     group: 'Group',
     devicePixelRatio: 'Device pixel ratio'
   },
+  Toolbar: {
+    layers: 'Layers',
+    ruler: 'Ruler',
+    attributes: 'Attributes',
+    hand: 'Hand tool'
+  },
   contextMenu: {
     copy: 'Copy',
     paste: 'Paste',

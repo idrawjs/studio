@@ -2,7 +2,7 @@ import React, { useMemo, useEffect, useContext, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementTextDetail } from 'idraw';
-import { getElementSize } from 'idraw';
+import { getElementSize, formatNumber, is } from 'idraw';
 import { Radio, Row, Col, Form, InputNumber } from 'antd';
 import type { FormInstance } from 'antd';
 import { ConfigContext } from '../config-provider';
@@ -16,6 +16,13 @@ import IconAlignRight from '../../icons/align-right';
 
 const modName = 'base-element-detail-text';
 const iconStyle = { fontSize: 20 };
+
+const formatter = (val: any) => {
+  if (is.number(val * 1)) {
+    return formatNumber(val * 1);
+  }
+  return val;
+};
 
 export interface DetailTextProps {
   className?: string;
@@ -121,7 +128,7 @@ export const DetailText = (props: DetailTextProps) => {
             </Col>
             <Col span="14" className={colClassName}>
               <Form.Item className={formItemClassName} name="fontSize">
-                <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={1} min={0} />
+                <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={1} min={0} formatter={formatter} parser={formatter} />
               </Form.Item>
             </Col>
           </Row>
@@ -131,7 +138,16 @@ export const DetailText = (props: DetailTextProps) => {
             </Col>
             <Col span="14" className={colClassName}>
               <Form.Item className={formItemClassName} name="fontWeight">
-                <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={100} max={1000} min={100} />
+                <InputNumber
+                  disabled={disabled}
+                  size="small"
+                  style={{ width: '100%' }}
+                  step={100}
+                  max={1000}
+                  min={100}
+                  formatter={formatter}
+                  parser={formatter}
+                />
               </Form.Item>
             </Col>
           </Row>
@@ -141,7 +157,7 @@ export const DetailText = (props: DetailTextProps) => {
             </Col>
             <Col span="14" className={colClassName}>
               <Form.Item className={formItemClassName} name="lineHeight">
-                <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={1} min={0} />
+                <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={1} min={0} formatter={formatter} parser={formatter} />
               </Form.Item>
             </Col>
           </Row>
