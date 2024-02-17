@@ -6,8 +6,8 @@ import { ConfigContext, getElementTree } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
 import { Dropdown } from 'antd';
 import { Context } from '../context';
-import type { StudioState, SharedEvent, SharedEventMap, SharedStore } from '../../types';
-import { useContextMenuOptions } from '../context-menu';
+import type { StudioState, SharedEvent, SharedEventMap, SharedStore, HookUseContextMenuOptions } from '../../types';
+
 import { cloneEditingDataByPosition, updateEditingDataChildrenToData } from '../../util/data';
 
 const modName = 'mod-sketch';
@@ -17,16 +17,16 @@ export interface SketchProps {
   style?: CSSProperties;
   width: number;
   height: number;
-
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
+  useContextMenuOptions: HookUseContextMenuOptions;
 }
 
 export const Sketch = (props: SketchProps) => {
   const ref = useRef<HTMLDivElement | null>(null);
   const refIDraw = useRef<iDraw | null>(null);
   const refHasFirstDraw = useRef<boolean>(false);
-  const { className, style, width, height, sharedEvent, sharedStore } = props;
+  const { className, style, width, height, sharedEvent, sharedStore, useContextMenuOptions } = props;
   const { generateClassName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
   const { editingData } = state;
@@ -81,9 +81,9 @@ export const Sketch = (props: SketchProps) => {
     const listenDataChange = (e: { data: Data; type: string }) => {
       const { data, type } = e;
       const editingData = refEditingData.current;
-      if (['add-element', 'update-element', 'delete-element', 'move-element', 'drag-element', 'resize-element'].includes(type)) {
+      if (['addElement', 'updateElement', 'deleteElement', 'moveElement', 'dragElement', 'resizeElement'].includes(type)) {
         const payload: Partial<StudioState> = { editingData: { ...data } };
-        if (['add-element', 'delete-element', 'move-element'].includes(type)) {
+        if (['addElement', 'deleteElement', 'moveElement'].includes(type)) {
           payload.treeData = getElementTree(editingData);
         }
         dispatch({
@@ -267,6 +267,19 @@ export const Sketch = (props: SketchProps) => {
       idraw.trigger(middlewareEventSelectClear, {});
     };
 
+    const resetEditingDataCallback = (e: SharedEventMap['resetEditingData']) => {
+      const { editingData } = e;
+      const newTreeData = getElementTree(editingData);
+      dispatch({
+        type: 'update',
+        payload: {
+          editingData: { ...editingData },
+          treeData: newTreeData
+        }
+      });
+      idraw.trigger(middlewareEventSelectClear, {});
+    };
+
     idraw.on(middlewareEventSelect, listenMiddlewareEventSelect);
     idraw.on('change', listenDataChange);
     idraw.on(middlewareEventScale, listenMiddlewareEventScale);
@@ -275,6 +288,7 @@ export const Sketch = (props: SketchProps) => {
     sharedEvent.on('deleteElement', deleteElementCallback);
     sharedEvent.on('resetEditingView', resetEditingViewCallback);
     sharedEvent.on('resetData', resetDataCallback);
+    sharedEvent.on('resetEditingData', resetEditingDataCallback);
     sharedEvent.on('dispatch', dispatch);
 
     if (!refHasFirstDraw.current) {

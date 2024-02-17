@@ -20,6 +20,12 @@ export interface Locale<T = LocaleCode> {
     group: string;
     devicePixelRatio: string;
   };
+  Toolbar: {
+    layers: string;
+    ruler: string;
+    attributes: string;
+    hand: string;
+  };
   contextMenu: {
     copy: string;
     paste: string;

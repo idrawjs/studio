@@ -6,9 +6,25 @@ import { Provider, createStudioContextStateByProps, createStudioReducer } from '
 import type { StudioProps, SharedEventMap, SharedStorage, SharedEvent, SharedStore, StudioImperativeHandle, StudioActionType, StudioState } from './types';
 import { createSharedDefaultStorage } from './shared/store';
 import { initActionEvent } from './shared/event';
+import { useContextMenuOptions as useInnerContextMenuOptions } from './modules/context-menu';
+
+import { handleKeyboard as handleInnerKeyboard } from './modules/hot-key';
 
 export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
-  const { width = 1000, height = 600, style, className, logo, navigationMenu, defaultSelectedElementUUIDs, prefiexName, onEditGroupElement } = props;
+  const {
+    width = 1000,
+    height = 600,
+    style,
+    className,
+    logo,
+    navigationMenu,
+    navigationCenter,
+    defaultSelectedElementUUIDs,
+    prefiexName,
+    onEditGroupElement,
+    useContextMenuOptions = useInnerContextMenuOptions,
+    handleKeyboard = handleInnerKeyboard
+  } = props;
   const [state, dispatch] = useReducer(createStudioReducer, createStudioContextStateByProps(props));
 
   const refDashboard = useRef<HTMLDivElement | null>(null);
@@ -106,6 +122,7 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
           <Dashboard
             logo={logo}
             navigationMenu={navigationMenu}
+            navigationCenter={navigationCenter}
             ref={refDashboard}
             width={width}
             height={height}
@@ -114,6 +131,8 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
             defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
             sharedEvent={refSharedEvent.current as SharedEvent}
             sharedStore={refSharedStore.current as SharedStore}
+            useContextMenuOptions={useContextMenuOptions}
+            handleKeyboard={handleKeyboard}
           />
         </Provider>
       </ConfigProvider>

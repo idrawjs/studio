@@ -1,7 +1,7 @@
 import isHotkey from 'is-hotkey';
 import type { SharedEvent, SharedStore } from '../types';
 
-export const handleHotKey = (
+export const handleKeyboard = (
   e: KeyboardEvent,
   opts: {
     sharedEvent: SharedEvent;

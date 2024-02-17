@@ -134,13 +134,6 @@ export const NavMenu = (props: NavMenuProps) => {
                 onClick: () => {
                   resetDevicePixelRatio(3);
                 }
-              },
-              {
-                key: 'device-pixel-ratio-x4',
-                label: 'x4',
-                onClick: () => {
-                  resetDevicePixelRatio(4);
-                }
               }
             ]
           }

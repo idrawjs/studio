@@ -2,7 +2,6 @@ export * from './types';
 
 export { ConfigContext, ConfigProvider, type ConfigContextValue } from './modules/config-provider';
 export { SplitPane, SplitPaneItem } from './modules/split-pane';
-export { Toolbar, type ToolbarProps } from './modules/toolbar';
 export { ThemeSwitch, type ThemeSwitchProps } from './modules/theme-switch';
 export { LocaleSelector, type LocaleSelectorProps } from './modules/locale-selector';
 export { ScaleSelector, type ScaleSelectorProps } from './modules/scale-selector';
@@ -45,6 +44,7 @@ export {
   IconEdit,
   IconExperiment,
   IconFile,
+  IconFileCopy,
   IconFullCornerRadius,
   IconGroup,
   IconHand,
@@ -64,6 +64,7 @@ export {
   IconPen,
   IconPlus,
   IconPosition,
+  IconRedo,
   IconRect,
   IconResize,
   IconRotation,
@@ -73,6 +74,7 @@ export {
   IconSolidColor,
   IconStar,
   IconText,
+  IconUndo,
   IconUnlock,
   IconVerticalBottom,
   IconVerticalMiddle,

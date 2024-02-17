@@ -28,6 +28,7 @@ import IconDrag from './drag';
 import IconEdit from './edit';
 import IconExperiment from './experiment';
 import IconFile from './file';
+import IconFileCopy from './file-copy';
 import IconFullCornerRadius from './full-corner-radius';
 import IconGroup from './group';
 import IconHand from './hand';
@@ -47,6 +48,7 @@ import IconPath from './path';
 import IconPen from './pen';
 import IconPlus from './plus';
 import IconPosition from './position';
+import IconRedo from './redo';
 import IconRect from './rect';
 import IconResize from './resize';
 import IconRotation from './rotation';
@@ -56,6 +58,7 @@ import IconSetting from './setting';
 import IconSolidColor from './solid-color';
 import IconStar from './star';
 import IconText from './text';
+import IconUndo from './undo';
 import IconUnlock from './unlock';
 import IconVerticalBottom from './vertical-bottom';
 import IconVerticalMiddle from './vertical-middle';
@@ -94,6 +97,7 @@ export {
   IconEdit,
   IconExperiment,
   IconFile,
+  IconFileCopy,
   IconFullCornerRadius,
   IconGroup,
   IconHand,
@@ -113,6 +117,7 @@ export {
   IconPen,
   IconPlus,
   IconPosition,
+  IconRedo,
   IconRect,
   IconResize,
   IconRotation,
@@ -122,6 +127,7 @@ export {
   IconSolidColor,
   IconStar,
   IconText,
+  IconUndo,
   IconUnlock,
   IconVerticalBottom,
   IconVerticalMiddle,

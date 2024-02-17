@@ -7,8 +7,7 @@ import { PanelDetail } from '../panel-detail';
 import { Header } from '../header';
 import { Sketch } from '../sketch';
 // import SplitPane from '../split-pane';
-import { handleHotKey } from '../hot-key';
-import type { SharedEvent, SharedStore } from '../../types';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../../types';
 
 const modName = 'mod-dashboard';
 const leftSiderDefaultWidth = 240;
@@ -24,13 +23,35 @@ export interface DashboardProps {
   height: number;
   logo?: React.ReactNode;
   navigationMenu?: React.ReactNode;
+  navigationCenter?: React.ReactNode;
   defaultSelectedElementUUIDs?: string[];
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
+  useContextMenuOptions: HookUseContextMenuOptions;
+  handleKeyboard: (
+    e: KeyboardEvent,
+    opts: {
+      sharedEvent: SharedEvent;
+      sharedStore: SharedStore;
+    }
+  ) => void;
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
-  const { className, style, width, height, logo, navigationMenu, defaultSelectedElementUUIDs, sharedStore, sharedEvent } = props;
+  const {
+    className,
+    style,
+    width,
+    height,
+    logo,
+    navigationMenu,
+    navigationCenter,
+    defaultSelectedElementUUIDs,
+    sharedStore,
+    sharedEvent,
+    useContextMenuOptions,
+    handleKeyboard
+  } = props;
   const { createPrefixName } = useContext(ConfigContext);
   const prefixName = createPrefixName(modName);
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
@@ -41,7 +62,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
       if (['INPUT', 'TEXTAREA'].includes((e.target as any).nodeName)) {
         return;
       }
-      handleHotKey(e, { sharedEvent, sharedStore });
+      handleKeyboard(e, { sharedEvent, sharedStore });
     };
     window.addEventListener('keydown', hotKeyCallback);
     return () => {
@@ -60,8 +81,8 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
   });
 
   useEffect(() => {
-    const newLeftWidth = leftSiderDefaultWidth;
-    const newRightWidth = rightSiderDefaultWidth;
+    const newLeftWidth = openLeftSider ? leftSiderDefaultWidth : 0;
+    const newRightWidth = openRightSider ? rightSiderDefaultWidth : 0;
     const newCenterWidth = width - newLeftWidth - newRightWidth;
 
     setLayout({
@@ -69,7 +90,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
       rightWidth: newRightWidth,
       centerWidth: newCenterWidth
     });
-  }, [height, width]);
+  }, [height, width, openLeftSider, openRightSider]);
 
   return useMemo(() => {
     const { leftWidth, rightWidth, centerWidth } = layout;
@@ -82,6 +103,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
             sharedStore={sharedStore}
             logo={logo}
             navigationMenu={navigationMenu}
+            navigationCenter={navigationCenter}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
             onClickToggleLayer={() => {
@@ -149,11 +171,19 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
                   defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
                   sharedEvent={sharedEvent}
                   sharedStore={sharedStore}
+                  useContextMenuOptions={useContextMenuOptions}
                 />
               )}
             </div>
             <div style={{ width: layout.centerWidth + layout.rightWidth, display: 'flex', flexDirection: 'row' }}>
-              <Sketch className={prefixName('center')} width={centerWidth} height={height - headerHeight} sharedStore={sharedStore} sharedEvent={sharedEvent} />
+              <Sketch
+                className={prefixName('center')}
+                width={centerWidth}
+                height={height - headerHeight}
+                sharedStore={sharedStore}
+                sharedEvent={sharedEvent}
+                useContextMenuOptions={useContextMenuOptions}
+              />
               <div className={prefixName('right')} style={{ width: rightWidth, height: height - headerHeight }}>
                 <PanelDetail />
               </div>

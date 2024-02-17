@@ -16,12 +16,25 @@ export interface ModProps extends ToolbarProps {
   style?: CSSProperties;
   logo?: React.ReactNode;
   navigationMenu?: React.ReactNode;
+  navigationCenter?: React.ReactNode;
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
 }
 
 export const Header = (props: ModProps) => {
-  const { logo, navigationMenu, className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore, sharedEvent } = props;
+  const {
+    logo,
+    navigationMenu,
+    navigationCenter,
+    className,
+    style,
+    openLeftSider,
+    openRightSider,
+    onClickToggleLayer,
+    onClickToggleSetting,
+    sharedStore,
+    sharedEvent
+  } = props;
   const { state, dispatch } = useContext(Context);
   const { createPrefixName } = useContext(ConfigContext);
   const generateClassName = createPrefixName(modName);
@@ -42,7 +55,6 @@ export const Header = (props: ModProps) => {
           {logo}
           {navigationMenu ? navigationMenu : <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} />}
           <Toolbar
-            className={centerClassName}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
             onClickToggleLayer={onClickToggleLayer}
@@ -51,6 +63,8 @@ export const Header = (props: ModProps) => {
             sharedEvent={sharedEvent}
           />
         </div>
+
+        {navigationCenter && <div className={centerClassName}>{navigationCenter}</div>}
 
         <div className={rightClassName}>
           <ScaleSelector
