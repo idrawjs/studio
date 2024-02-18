@@ -1,7 +1,6 @@
 import React, { useContext, useMemo } from 'react';
 import classnames from 'classnames';
 import { Tree } from 'antd';
-import DownOutlined from '@ant-design/icons/DownOutlined';
 import type { CSSProperties } from 'react';
 import type { TreeProps, TreeDataNode } from 'antd';
 import type { ElementPosition } from 'idraw';
@@ -9,6 +8,7 @@ import { ConfigContext } from '../config-provider';
 import { wrapTreeViewData } from './wrap';
 import type { TreeNodeProps } from './tree-node';
 import type { ElementTreeData } from '../../types';
+import { IconDown } from '../../icons';
 
 const { DirectoryTree } = Tree;
 const modName = 'base-element-tree';
@@ -86,7 +86,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
         blockNode
         multiple
         selectedKeys={selectedKeys}
-        switcherIcon={<DownOutlined />}
+        switcherIcon={<IconDown />}
         // icon={(props: any) => {
         //   const type: ElementType | undefined = props?.data?.title?.props?.type;
         //   return getIcon(type);

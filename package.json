@@ -23,7 +23,6 @@
     "antd": "5.12.1"
   },
   "devDependencies": {
-    "@ant-design/icons": "^5.2.6",
     "@babel/core": "^7.22.19",
     "@babel/preset-env": "^7.22.15",
     "@babel/preset-typescript": "^7.22.15",
