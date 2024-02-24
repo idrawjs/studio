@@ -22,7 +22,8 @@ const localeValues: Locale = {
     layers: 'Layers',
     ruler: 'Ruler',
     attributes: 'Attributes',
-    hand: 'Hand tool'
+    hand: 'Hand tool',
+    centerContent: 'Center content'
   },
   contextMenu: {
     copy: 'Copy',

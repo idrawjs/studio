@@ -25,6 +25,7 @@ export interface Locale<T = LocaleCode> {
     ruler: string;
     attributes: string;
     hand: string;
+    centerContent: string;
   };
   contextMenu: {
     copy: string;

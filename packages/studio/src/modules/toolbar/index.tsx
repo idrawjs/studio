@@ -2,7 +2,7 @@ import React, { useEffect, useState, useMemo, useContext } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Button, type ButtonProps, Tooltip } from 'antd';
-import { ConfigContext, IconLayer, IconSetting, IconRuler, IconDrag } from '@idraw/studio-base';
+import { ConfigContext, IconLayer, IconSetting, IconRuler, IconDrag, IconAim } from '@idraw/studio-base';
 import type { SharedEvent, SharedStore } from '../../types';
 import { useLocale } from '../../locale';
 
@@ -84,6 +84,17 @@ export const Toolbar = (props: ToolbarProps) => {
               icon={<IconDrag style={{ ...iconStyle, fontSize: 20 }} />}
               onClick={() => {
                 setToggleDrag(!toggleDrag);
+              }}
+            />
+          </Tooltip>
+          <Tooltip title={moduleLocale.centerContent}>
+            <Button
+              {...btnProps}
+              type="text"
+              icon={<IconAim style={{ ...iconStyle, fontSize: 20 }} />}
+              onClick={() => {
+                const idraw = sharedStore.get('idraw');
+                idraw?.centerContent();
               }}
             />
           </Tooltip>
