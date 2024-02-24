@@ -22,7 +22,8 @@ const localeValues: Locale = {
     layers: '图层',
     ruler: '标尺',
     attributes: '属性',
-    hand: '拖拽工具'
+    hand: '拖拽工具',
+    centerContent: '内容居中'
   },
   contextMenu: {
     copy: '复制',

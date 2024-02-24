@@ -1,11 +1,12 @@
-import React, { CSSProperties, useMemo, useContext } from 'react';
+import React, { CSSProperties, useMemo } from 'react';
 import classnames from 'classnames';
-import { ConfigContext } from '../../modules/config-provider';
+// import { ConfigContext } from '../../modules/config-provider';
+import { generateClassName } from '../../css';
 
 const iconPrefixBaseName = 'icon';
 
 export const useIconClassName = () => {
-  const { generateClassName } = useContext(ConfigContext);
+  // const { generateClassName } = useContext(ConfigContext);
   const iconClassName = generateClassName(iconPrefixBaseName);
   return { iconClassName };
 };
