@@ -6,14 +6,14 @@ settings:
 
 dependencies:
   '@idraw/studio':
-    specifier: 0.4.0-alpha.13
-    version: 0.4.0-alpha.13(antd@5.14.0)(idraw@0.4.0-beta.13)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0)
+    specifier: 0.4.0-alpha.14
+    version: 0.4.0-alpha.14(antd@5.14.0)(idraw@0.4.0-beta.14)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0)
   antd:
     specifier: ^5.14.0
     version: 5.14.0(react-dom@18.2.0)(react@18.2.0)
   idraw:
-    specifier: 0.4.0-beta.13
-    version: 0.4.0-beta.13
+    specifier: 0.4.0-beta.14
+    version: 0.4.0-beta.14
   react:
     specifier: ^18.2.0
     version: 18.2.0
@@ -567,79 +567,79 @@ packages:
       react: 18.2.0
     dev: false
 
-  /@idraw/board@0.4.0-beta.13(@idraw/renderer@0.4.0-beta.13)(@idraw/util@0.4.0-beta.13):
-    resolution: {integrity: sha512-ZQmPmEps33WBrlsQgP4V4nRNCynHoIrh5LTxEwRfxsrs4pXf4rStyy7wb3HwrpXUI0BO1UbzxoO6COm2cwTDzA==}
+  /@idraw/board@0.4.0-beta.14(@idraw/renderer@0.4.0-beta.14)(@idraw/util@0.4.0-beta.14):
+    resolution: {integrity: sha512-zExc7ApG40KHMfJYO+Yh7WX+1PrP8davglU2bbBRjyIyoI3LwofU+Fi/CPcTs6FX7AogsRZCsxCmumydiWtOFw==}
     peerDependencies:
-      '@idraw/renderer': ^0.4.0-beta.13
-      '@idraw/util': ^0.4.0-beta.13
+      '@idraw/renderer': ^0.4.0-beta.14
+      '@idraw/util': ^0.4.0-beta.14
     dependencies:
-      '@idraw/renderer': 0.4.0-beta.13(@idraw/util@0.4.0-beta.13)
-      '@idraw/util': 0.4.0-beta.13
+      '@idraw/renderer': 0.4.0-beta.14(@idraw/util@0.4.0-beta.14)
+      '@idraw/util': 0.4.0-beta.14
     dev: false
 
-  /@idraw/core@0.4.0-beta.13(@idraw/board@0.4.0-beta.13)(@idraw/renderer@0.4.0-beta.13)(@idraw/util@0.4.0-beta.13):
-    resolution: {integrity: sha512-6fXnXMt0cjKJdDjVTVU4y5rIC1d2BJxizXgo/aOvuU3oLrajF7WFVyNormSD9JI2292vDDEtixghjaI45AmgKQ==}
+  /@idraw/core@0.4.0-beta.14(@idraw/board@0.4.0-beta.14)(@idraw/renderer@0.4.0-beta.14)(@idraw/util@0.4.0-beta.14):
+    resolution: {integrity: sha512-ETvPorckR4SsxEu6K6on++j5GLUdxcRFrajn16byF2EIH8w47Bf+NLRxLbxxKzN+BZaymbXb8QLfJJ8V4DWPsg==}
     peerDependencies:
-      '@idraw/board': ^0.4.0-beta.13
-      '@idraw/renderer': ^0.4.0-beta.13
-      '@idraw/util': ^0.4.0-beta.13
+      '@idraw/board': ^0.4.0-beta.14
+      '@idraw/renderer': ^0.4.0-beta.14
+      '@idraw/util': ^0.4.0-beta.14
     dependencies:
-      '@idraw/board': 0.4.0-beta.13(@idraw/renderer@0.4.0-beta.13)(@idraw/util@0.4.0-beta.13)
-      '@idraw/renderer': 0.4.0-beta.13(@idraw/util@0.4.0-beta.13)
-      '@idraw/util': 0.4.0-beta.13
+      '@idraw/board': 0.4.0-beta.14(@idraw/renderer@0.4.0-beta.14)(@idraw/util@0.4.0-beta.14)
+      '@idraw/renderer': 0.4.0-beta.14(@idraw/util@0.4.0-beta.14)
+      '@idraw/util': 0.4.0-beta.14
     dev: false
 
-  /@idraw/renderer@0.4.0-beta.13(@idraw/util@0.4.0-beta.13):
-    resolution: {integrity: sha512-zOpicvhgqluGOCUvpgRLHEEIZ2ZQvl7FX+4bhZ6uTZLNj0a4xk0g9UDS6rifzidvhQJEyycKHyx4BXDe5iUK5w==}
+  /@idraw/renderer@0.4.0-beta.14(@idraw/util@0.4.0-beta.14):
+    resolution: {integrity: sha512-bP1NacfhTkpG9SiPvFqUUOZHWxzcW5RlaXgx4m5UVzQtbs7Wp9sgy8a6LcFVUhTU9VI72i1Dct6Obq8X2YqB3w==}
     peerDependencies:
-      '@idraw/util': ^0.4.0-beta.13
+      '@idraw/util': ^0.4.0-beta.14
     dependencies:
-      '@idraw/util': 0.4.0-beta.13
+      '@idraw/util': 0.4.0-beta.14
     dev: false
 
-  /@idraw/studio-base@0.4.0-alpha.13(antd@5.14.0)(classnames@2.5.1)(idraw@0.4.0-beta.13)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-AKPF4cUfgpJEVKaZgPkKGamoi7MkJWHxGqx7NR7Rzp/POW2ZwS+0rZuRXQkpgy0pvfi4sgWpsZ5ZxIttv9IGNA==}
+  /@idraw/studio-base@0.4.0-alpha.14(antd@5.14.0)(classnames@2.5.1)(idraw@0.4.0-beta.14)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-tWCK6XPM1Ok+ZL6jTxv6Ll/S5q1P65X32B+NMmInvC/VroImQVpOQ94IBT+ABGvQXGqxfWDEK9EooSlVujfuxA==}
     peerDependencies:
       antd: ^5.12.1
       classnames: ^2.3.2
-      idraw: ^0.4.0-beta.13
+      idraw: ^0.4.0-beta.14
       react: ^18.2.0
       react-color: ^2.19.3
       react-dom: ^18.2.0
     dependencies:
       antd: 5.14.0(react-dom@18.2.0)(react@18.2.0)
       classnames: 2.5.1
-      idraw: 0.4.0-beta.13
+      idraw: 0.4.0-beta.14
       react: 18.2.0
       react-color: 2.19.3(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@idraw/studio@0.4.0-alpha.13(antd@5.14.0)(idraw@0.4.0-beta.13)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0):
-    resolution: {integrity: sha512-EZ8kpOlw/aO+82ts1SCASMrnUEUyM6wuZfnLMM3jOZPuXKrAtqmJ6JKBma6cH4C55Ho3AJrXzarxSbjyB3uwLw==}
+  /@idraw/studio@0.4.0-alpha.14(antd@5.14.0)(idraw@0.4.0-beta.14)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0):
+    resolution: {integrity: sha512-Gd5VJcjXasTtS0Cda7Fkeh2/jbdByblscSlghszUntJaycFD5KRZ5AulpFb5NZvL+IdbULbwu9ZoNLrropsyNQ==}
     peerDependencies:
       antd: ^5.12.1
-      idraw: ^0.4.0-beta.13
+      idraw: ^0.4.0-beta.14
       react: ^18.2.0
       react-color: ^2.19.3
       react-dom: ^18.2.0
     dependencies:
-      '@idraw/studio-base': 0.4.0-alpha.13(antd@5.14.0)(classnames@2.5.1)(idraw@0.4.0-beta.13)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0)
+      '@idraw/studio-base': 0.4.0-alpha.14(antd@5.14.0)(classnames@2.5.1)(idraw@0.4.0-beta.14)(react-color@2.19.3)(react-dom@18.2.0)(react@18.2.0)
       antd: 5.14.0(react-dom@18.2.0)(react@18.2.0)
       classnames: 2.5.1
-      idraw: 0.4.0-beta.13
+      idraw: 0.4.0-beta.14
       is-hotkey: 0.2.0
       react: 18.2.0
       react-color: 2.19.3(react@18.2.0)
       react-dom: 18.2.0(react@18.2.0)
     dev: false
 
-  /@idraw/types@0.4.0-beta.13:
-    resolution: {integrity: sha512-8yDOktjH57GNrSzMPbpDEchEm5G9leXq5LaGxlJ7ayUS/jJGdqjwv1IIC5J758d+s5YOixX5KDdaUFIOfcqSOg==}
+  /@idraw/types@0.4.0-beta.14:
+    resolution: {integrity: sha512-VJ9nrEFbTBDrOyQOJrjz0k41LhYJZwSGsBh7IUnGK+QOihUyWMrXam7p2LeeeqrpqvX0dn4mFMGIsuLixmav4Q==}
     dev: false
 
-  /@idraw/util@0.4.0-beta.13:
-    resolution: {integrity: sha512-vmHYQUlknf2cFoRV/ULuJRKLhkKKCnDB3LnlWAFkkuCeIFGgKfjZsBYVReu/Ee9mIFAl4cBfQlLwTG5Tmb7B0w==}
+  /@idraw/util@0.4.0-beta.14:
+    resolution: {integrity: sha512-jPbBdGBtxgPO7YfrjkQiobHR7iXveQQXX92OZPnn34duCcNRjLYjq8O+DDaXbqOxyWXYjl6XhSXl/M4zb9XZgQ==}
     dev: false
 
   /@jridgewell/gen-mapping@0.3.3:
@@ -1202,14 +1202,14 @@ packages:
     dev: true
     optional: true
 
-  /idraw@0.4.0-beta.13:
-    resolution: {integrity: sha512-6ncshoiDK4SunbNQlkDZJybRRZ3u81WYJ75KWXp27pmPPsVertJl5VYb/I1eIKVIc6lhzKkhNogde3F4GuHemw==}
+  /idraw@0.4.0-beta.14:
+    resolution: {integrity: sha512-7zCjOzqsl0u1RwuL+/KSnr5V55TB43YMpF5fGQDz1tfElhWkRuhSebuqDMSfwg53idhzFE3qYOjXN8mYyFpHnQ==}
     dependencies:
-      '@idraw/board': 0.4.0-beta.13(@idraw/renderer@0.4.0-beta.13)(@idraw/util@0.4.0-beta.13)
-      '@idraw/core': 0.4.0-beta.13(@idraw/board@0.4.0-beta.13)(@idraw/renderer@0.4.0-beta.13)(@idraw/util@0.4.0-beta.13)
-      '@idraw/renderer': 0.4.0-beta.13(@idraw/util@0.4.0-beta.13)
-      '@idraw/types': 0.4.0-beta.13
-      '@idraw/util': 0.4.0-beta.13
+      '@idraw/board': 0.4.0-beta.14(@idraw/renderer@0.4.0-beta.14)(@idraw/util@0.4.0-beta.14)
+      '@idraw/core': 0.4.0-beta.14(@idraw/board@0.4.0-beta.14)(@idraw/renderer@0.4.0-beta.14)(@idraw/util@0.4.0-beta.14)
+      '@idraw/renderer': 0.4.0-beta.14(@idraw/util@0.4.0-beta.14)
+      '@idraw/types': 0.4.0-beta.14
+      '@idraw/util': 0.4.0-beta.14
     dev: false
 
   /image-size@0.5.5:
