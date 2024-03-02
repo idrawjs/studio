@@ -163,6 +163,13 @@ export const PanelLayer = (props: PanelLayerProps) => {
                   from: e.from,
                   to: e.to
                 });
+
+                const targetElem = findElementFromListByPosition(e.to, editingData.elements);
+                if (targetElem) {
+                  targetElem.x = 0;
+                  targetElem.y = 0;
+                }
+
                 const treeData = getElementTree(editingData);
                 dispatch({
                   type: 'update',

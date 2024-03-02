@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useMemo, useEffect } from 'react';
 import classnames from 'classnames';
-import { iDraw, middlewareEventSelect, middlewareEventScale, findElementsFromListByPositions, middlewareEventSelectClear } from 'idraw';
-import type { Data, ElementPosition } from 'idraw';
+import { iDraw, findElementsFromListByPositions, eventKeys, getElementPositionFromList, findElementFromListByPosition, calcElementCenter } from 'idraw';
+import type { Data, ElementPosition, Element } from 'idraw';
 import { ConfigContext, getElementTree } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
 import { Dropdown } from 'antd';
@@ -34,13 +34,15 @@ export const Sketch = (props: SketchProps) => {
   const refEditingDataPosition = useRef<ElementPosition>([]);
   const refEditingData = useRef<Data>(state.editingData);
   const refData = useRef<Data>(state.data);
+  const refSelectedUUIDs = useRef<string[]>([]);
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   useEffect(() => {
     refEditingDataPosition.current = [...state.editingDataPosition];
     refData.current = state.data;
     refEditingData.current = state.editingData;
-  }, [state.editingDataPosition, state.data, state.editingData]);
+    refSelectedUUIDs.current = [...state.selectedUUIDs];
+  }, [state.editingDataPosition, state.data, state.editingData, state.selectedUUIDs]);
 
   useEffect(() => {
     if (!ref?.current) {
@@ -66,10 +68,6 @@ export const Sketch = (props: SketchProps) => {
         const elems = findElementsFromListByPositions(positions, editingData.elements);
         uuids = elems.map((e: { uuid: any }) => e.uuid);
       }
-      // TODO
-      // sharedEvent.trigger('scrollToLayer', {
-      //   uuid: uuids[0]
-      // });
       dispatch({
         type: 'update',
         payload: {
@@ -106,11 +104,52 @@ export const Sketch = (props: SketchProps) => {
       });
     };
 
+    const listenMiddlewareEventTextChange = (e: any) => {
+      const { element } = e;
+      idraw.updateElement(element);
+      const newEditingData = {
+        ...(idraw.getData() as Data)
+      };
+      const newTreeData = getElementTree(newEditingData);
+      dispatch({
+        type: 'update',
+        payload: {
+          editingData: { ...newEditingData },
+          treeData: newTreeData
+        }
+      });
+    };
+
     const createElementCallback = (e: SharedEventMap['createElement']) => {
       const { type, element } = e;
       const elem = idraw.createElement(type, { element, viewCenter: true });
-      const newEditingData = idraw.addElement(elem);
+      let centerPoint = idraw.getViewCenter();
+
+      const selectUUIDs = refSelectedUUIDs.current;
+      let addPosition: ElementPosition = [];
+      const currentData = idraw.getData() as Data;
+      if (Array.isArray(selectUUIDs) && selectUUIDs.length === 1) {
+        const uuid = selectUUIDs[0];
+        const selectedPos = getElementPositionFromList(uuid, currentData.elements);
+        let selectedElem = findElementFromListByPosition(selectedPos, currentData.elements) as Element<'group'>;
+        if (selectedPos.length > 1) {
+          addPosition = [...selectedPos];
+          let targetIndex = addPosition.pop() as number;
+          targetIndex += 1;
+          const parentPos = [...addPosition];
+          addPosition.push(targetIndex);
+          selectedElem = findElementFromListByPosition(parentPos, currentData.elements) as Element<'group'>;
+          centerPoint = calcElementCenter(selectedElem);
+          elem.x = centerPoint.x - elem.w / 2;
+          elem.y = centerPoint.y - elem.h / 2;
+        }
+      }
+
+      const newEditingData = idraw.addElement(elem, {
+        position: addPosition
+      });
       const newTreeData = getElementTree(newEditingData);
+
       dispatch({
         type: 'update',
         payload: {
@@ -123,7 +162,22 @@ export const Sketch = (props: SketchProps) => {
 
     const addElementCallback = (e: SharedEventMap['addElement']) => {
       const { element, position = [] } = e;
-      const centerPoint = idraw.getViewCenter();
+      let centerPoint = idraw.getViewCenter();
+
+      const selectUUIDs = refSelectedUUIDs.current;
+      let addPosition: ElementPosition = position;
+      const currentData = idraw.getData() as Data;
+      if (Array.isArray(selectUUIDs) && selectUUIDs.length === 1) {
+        const uuid = selectUUIDs[0];
+        const selectedPos = getElementPositionFromList(uuid, currentData.elements);
+        const selectedElem = findElementFromListByPosition(selectedPos, currentData.elements) as Element<'group'>;
+        if (selectedPos.length > 0 && selectedElem?.type === 'group' && Array.isArray(selectedElem.detail.children)) {
+          addPosition = [...selectedPos];
+          addPosition.push(selectedElem.detail.children.length);
+          centerPoint = calcElementCenter(selectedElem);
+        }
+      }
+
       const newEditingData = idraw.addElement(
         {
           ...element,
@@ -132,8 +186,9 @@ export const Sketch = (props: SketchProps) => {
             y: centerPoint.y - element.h / 2
           }
         },
-        { position }
+        { position: addPosition }
       );
+
       const newTreeData = getElementTree(newEditingData);
       dispatch({
         type: 'update',
@@ -155,7 +210,7 @@ export const Sketch = (props: SketchProps) => {
           type: 'update',
           payload: { editingData: { ...editingData }, treeData }
         });
-        idraw.trigger(middlewareEventSelectClear, {});
+        idraw.trigger(eventKeys.clearSelect, {});
       }
     };
 
@@ -197,7 +252,7 @@ export const Sketch = (props: SketchProps) => {
         // });
         idraw.centerContent({ data: newEditingData });
 
-        idraw.trigger(middlewareEventSelectClear, {});
+        idraw.trigger(eventKeys.clearSelect, {});
       } else if (type === 'back-one' && editingDataPosition.length > 0) {
         const newEditingDataPosition = [...editingDataPosition];
         newEditingDataPosition.pop();
@@ -219,7 +274,7 @@ export const Sketch = (props: SketchProps) => {
         //   offsetY: 0
         // });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(middlewareEventSelectClear, {});
+        idraw.trigger(eventKeys.clearSelect, {});
       } else if (type === 'back-root') {
         // update new editing data
         const newEditingDataPosition: ElementPosition = [];
@@ -240,7 +295,7 @@ export const Sketch = (props: SketchProps) => {
         //   offsetY: 0
         // });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(middlewareEventSelectClear, {});
+        idraw.trigger(eventKeys.clearSelect, {});
       }
     };
 
@@ -264,7 +319,7 @@ export const Sketch = (props: SketchProps) => {
         offsetX: 0,
         offsetY: 0
       });
-      idraw.trigger(middlewareEventSelectClear, {});
+      idraw.trigger(eventKeys.clearSelect, {});
     };
 
     const resetEditingDataCallback = (e: SharedEventMap['resetEditingData']) => {
@@ -277,12 +332,13 @@ export const Sketch = (props: SketchProps) => {
           treeData: newTreeData
         }
       });
-      idraw.trigger(middlewareEventSelectClear, {});
+      idraw.trigger(eventKeys.clearSelect, {});
     };
 
-    idraw.on(middlewareEventSelect, listenMiddlewareEventSelect);
-    idraw.on('change', listenDataChange);
-    idraw.on(middlewareEventScale, listenMiddlewareEventScale);
+    idraw.on(eventKeys.select, listenMiddlewareEventSelect);
+    idraw.on(eventKeys.change, listenDataChange);
+    idraw.on(eventKeys.scale, listenMiddlewareEventScale);
+    idraw.on(eventKeys.textChange, listenMiddlewareEventTextChange);
     sharedEvent.on('createElement', createElementCallback);
     sharedEvent.on('addElement', addElementCallback);
     sharedEvent.on('deleteElement', deleteElementCallback);
@@ -309,9 +365,10 @@ export const Sketch = (props: SketchProps) => {
 
     return () => {
       refHasFirstDraw.current = false;
-      idraw.off(middlewareEventSelect, listenMiddlewareEventSelect);
-      idraw.off('change', listenDataChange);
-      idraw.off(middlewareEventScale, listenMiddlewareEventScale);
+      idraw.off(eventKeys.select, listenMiddlewareEventSelect);
+      idraw.off(eventKeys.change, listenDataChange);
+      idraw.off(eventKeys.scale, listenMiddlewareEventScale);
+      idraw.off(eventKeys.textChange, listenMiddlewareEventTextChange);
       // sharedEvent.off('createElement', createElementCallback);
       // sharedEvent.off('addElement', addElementCallback);
       // sharedEvent.off('deleteElement', deleteElementCallback);

@@ -77,6 +77,9 @@ export function MultipleColor(props: MultipleColorProps) {
           }
           readOnly={!isHex}
           value={valueStr}
+          onChange={(e) => {
+            onChange?.(e.target.value);
+          }}
         />
         <div ref={refAppend}></div>
       </>
