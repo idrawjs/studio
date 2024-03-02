@@ -240,105 +240,107 @@ export const BorderAttribute = (props: BorderAttributeProps) => {
           )}
         </>
 
-        <>
-          <Row className={rowClassName}>
-            <Col span={16} className={colClassName}>
-              {splitBorderRadius ? (
-                <Input
-                  className={inputClassName}
-                  size="small"
-                  prefix={<IconCornerRadius style={{ fontSize: 14 }} />}
-                  disabled
-                  value={moduleLocale.mixedBorderRadius}
-                />
-              ) : (
-                <Form.Item className={formItemClassName} name="borderRadius">
-                  <InputNumber
+        {!['circle'].includes(element?.type as string) && (
+          <>
+            <Row className={rowClassName}>
+              <Col span={16} className={colClassName}>
+                {splitBorderRadius ? (
+                  <Input
                     className={inputClassName}
                     size="small"
-                    placeholder="Radius"
                     prefix={<IconCornerRadius style={{ fontSize: 14 }} />}
-                    disabled={disabled || splitBorderRadius || internalDisableBorderRadius}
-                    min={0}
+                    disabled
+                    value={moduleLocale.mixedBorderRadius}
                   />
-                </Form.Item>
-              )}
-            </Col>
-            <Col span={4} className={colClassName}>
-              <Button
-                icon={<IconFullCornerRadius />}
-                size="small"
-                disabled={disabled || internalDisableBorderRadius}
-                type={splitBorderRadius ? 'primary' : 'default'}
-                onClick={() => {
-                  const newSplitBorderRadius = !splitBorderRadius;
-                  setSplitBorderRadius(newSplitBorderRadius);
-                  if (!newSplitBorderRadius) {
-                    const originFields = elementToFormData(element);
-                    const borderRadius = originFields.borderRadius || originFields.borderRadiusList?.[0] || 0;
-                    onValuesChange({ borderRadius });
-                  }
-                }}
-              />
-            </Col>
-          </Row>
-          {splitBorderRadius && (
-            <>
-              <Row className={rowClassName}>
-                <Col span={12} className={colClassName}>
-                  <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 0]}>
+                ) : (
+                  <Form.Item className={formItemClassName} name="borderRadius">
                     <InputNumber
                       className={inputClassName}
                       size="small"
-                      placeholder=""
-                      prefix={<IconCornerRadiusTopLeft />}
-                      disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
+                      placeholder="Radius"
+                      prefix={<IconCornerRadius style={{ fontSize: 14 }} />}
+                      disabled={disabled || splitBorderRadius || internalDisableBorderRadius}
                       min={0}
                     />
                   </Form.Item>
-                </Col>
-                <Col span={12} className={colClassName}>
-                  <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 1]}>
-                    <InputNumber
-                      className={inputClassName}
-                      size="small"
-                      placeholder=""
-                      prefix={<IconCornerRadiusTopRight />}
-                      disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
-                      min={0}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-              <Row className={rowClassName}>
-                <Col span={12} className={colClassName}>
-                  <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 2]}>
-                    <InputNumber
-                      className={inputClassName}
-                      size="small"
-                      placeholder=""
-                      prefix={<IconCornerRadiusBottomLeft />}
-                      disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
-                      min={0}
-                    />
-                  </Form.Item>
-                </Col>
-                <Col span={12} className={colClassName}>
-                  <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 3]}>
-                    <InputNumber
-                      className={inputClassName}
-                      size="small"
-                      placeholder=""
-                      prefix={<IconCornerRadiusBottomRight />}
-                      disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
-                      min={0}
-                    />
-                  </Form.Item>
-                </Col>
-              </Row>
-            </>
-          )}
-        </>
+                )}
+              </Col>
+              <Col span={4} className={colClassName}>
+                <Button
+                  icon={<IconFullCornerRadius />}
+                  size="small"
+                  disabled={disabled || internalDisableBorderRadius}
+                  type={splitBorderRadius ? 'primary' : 'default'}
+                  onClick={() => {
+                    const newSplitBorderRadius = !splitBorderRadius;
+                    setSplitBorderRadius(newSplitBorderRadius);
+                    if (!newSplitBorderRadius) {
+                      const originFields = elementToFormData(element);
+                      const borderRadius = originFields.borderRadius || originFields.borderRadiusList?.[0] || 0;
+                      onValuesChange({ borderRadius });
+                    }
+                  }}
+                />
+              </Col>
+            </Row>
+            {splitBorderRadius && (
+              <>
+                <Row className={rowClassName}>
+                  <Col span={12} className={colClassName}>
+                    <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 0]}>
+                      <InputNumber
+                        className={inputClassName}
+                        size="small"
+                        placeholder=""
+                        prefix={<IconCornerRadiusTopLeft />}
+                        disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12} className={colClassName}>
+                    <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 1]}>
+                      <InputNumber
+                        className={inputClassName}
+                        size="small"
+                        placeholder=""
+                        prefix={<IconCornerRadiusTopRight />}
+                        disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+                <Row className={rowClassName}>
+                  <Col span={12} className={colClassName}>
+                    <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 2]}>
+                      <InputNumber
+                        className={inputClassName}
+                        size="small"
+                        placeholder=""
+                        prefix={<IconCornerRadiusBottomLeft />}
+                        disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12} className={colClassName}>
+                    <Form.Item<FieldType> className={formItemClassName} name={['borderRadiusList', 3]}>
+                      <InputNumber
+                        className={inputClassName}
+                        size="small"
+                        placeholder=""
+                        prefix={<IconCornerRadiusBottomRight />}
+                        disabled={disabled || !splitBorderRadius || internalDisableBorderRadius}
+                        min={0}
+                      />
+                    </Form.Item>
+                  </Col>
+                </Row>
+              </>
+            )}
+          </>
+        )}
         <Row className={rowClassName}>
           <Col className={colClassName} span="11">
             <Form.Item className={formItemClassName} name="boxSizing">

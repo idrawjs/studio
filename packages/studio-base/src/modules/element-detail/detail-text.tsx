@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementTextDetail } from 'idraw';
 import { getElementSize, formatNumber, is } from 'idraw';
-import { Radio, Row, Col, Form, InputNumber } from 'antd';
+import { Radio, Row, Col, Form, InputNumber, Input } from 'antd';
 import type { FormInstance } from 'antd';
 import { ConfigContext } from '../config-provider';
 import { MultipleColor } from './field-item/multiple-color';
@@ -16,6 +16,8 @@ import IconAlignRight from '../../icons/align-right';
 
 const modName = 'base-element-detail-text';
 const iconStyle = { fontSize: 20 };
+
+const { TextArea } = Input;
 
 const formatter = (val: any) => {
   if (is.number(val * 1)) {
@@ -32,11 +34,12 @@ export interface DetailTextProps {
   disabled?: boolean;
 }
 
-type FieldType = Pick<ElementTextDetail, 'color' | 'textAlign' | 'verticalAlign' | 'fontSize' | 'fontWeight' | 'lineHeight'>;
+type FieldType = Pick<ElementTextDetail, 'text' | 'color' | 'textAlign' | 'verticalAlign' | 'fontSize' | 'fontWeight' | 'lineHeight'>;
 
 const elementToFormData = (element?: Element<'text'> | null) => {
-  const { color, textAlign, verticalAlign, fontSize, fontWeight, lineHeight } = element?.detail || {};
+  const { color, textAlign, verticalAlign, fontSize, fontWeight, lineHeight, text = '' } = element?.detail || {};
   const formData: FieldType = {
+    text,
     color,
     textAlign,
     verticalAlign,
@@ -158,6 +161,13 @@ export const DetailText = (props: DetailTextProps) => {
             <Col span="14" className={colClassName}>
               <Form.Item className={formItemClassName} name="lineHeight">
                 <InputNumber disabled={disabled} size="small" style={{ width: '100%' }} step={1} min={0} formatter={formatter} parser={formatter} />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row className={rowClassName}>
+            <Col span="24" className={colClassName}>
+              <Form.Item className={formItemClassName} name="text" style={{ width: '100%' }}>
+                <TextArea disabled={disabled} style={{ width: '100%' }} rows={3} />
               </Form.Item>
             </Col>
           </Row>

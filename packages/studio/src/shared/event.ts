@@ -1,4 +1,4 @@
-import { findElementsFromList, deepCloneElement, getElementPositionFromList, middlewareEventSelectClear } from 'idraw';
+import { findElementsFromList, deepCloneElement, getElementPositionFromList, eventKeys } from 'idraw';
 import { getElementTree } from '@idraw/studio-base';
 import type { Data, Element } from 'idraw';
 import type { SharedEvent, SharedStore } from '../types';
@@ -106,7 +106,7 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
         treeData
       }
     });
-    idraw?.trigger(middlewareEventSelectClear);
+    idraw?.trigger(eventKeys.clearSelect);
   });
 
   sharedEvent.on('delete', () => {
@@ -128,7 +128,7 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
             treeData
           }
         });
-        idraw?.trigger(middlewareEventSelectClear);
+        idraw?.trigger(eventKeys.clearSelect);
       }
     }
   });
