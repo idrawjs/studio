@@ -58,6 +58,7 @@ export const Sketch = (props: SketchProps) => {
       devicePixelRatio: window.devicePixelRatio
     };
     const idraw = new iDraw(ref.current, options);
+    idraw.enable('ruler');
     refIDraw.current = idraw;
 
     const listenMiddlewareEventSelect = (e: { uuids: string[]; positions: ElementPosition[] }) => {

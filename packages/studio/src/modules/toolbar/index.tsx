@@ -42,12 +42,17 @@ export const Toolbar = (props: ToolbarProps) => {
 
   useEffect(() => {
     const idraw = sharedStore.get('idraw');
-    idraw?.reset({
-      enableRuler: toggleRuler,
-      enableDrag: toggleDrag,
-      enableSelect: !toggleDrag
-    });
-  }, [toggleDrag, toggleRuler]);
+    if (toggleRuler === true) {
+      idraw?.enable('ruler');
+    } else {
+      idraw?.disable('ruler');
+    }
+  }, [toggleRuler]);
+
+  useEffect(() => {
+    const idraw = sharedStore.get('idraw');
+    idraw?.setMode(toggleDrag ? 'drag' : 'select');
+  }, [toggleDrag]);
 
   const btnProps: ButtonProps = {
     size: 'small',

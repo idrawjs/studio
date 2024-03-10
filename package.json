@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "0.4.0-alpha.15",
+  "version": "0.4.0-alpha.16",
   "workspaces": [
     "packages/*"
   ],
@@ -19,7 +19,7 @@
     "upgrade:version": "vite-node ./scripts/upgrade-version.ts && pnpm i"
   },
   "dependencies": {
-    "idraw": "0.4.0-beta.15",
+    "idraw": "0.4.0-beta.16",
     "antd": "5.12.1"
   },
   "devDependencies": {
