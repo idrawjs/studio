@@ -1,4 +1,4 @@
-import type { Data, DataUnderlay, Element, ElementPosition } from 'idraw';
+import type { Data, DataLayout, Element, ElementPosition } from 'idraw';
 import { getElementPositionFromList, deepClone, findElementFromListByPosition } from 'idraw';
 
 export function cloneEditingData(editingUUID: string | null, data: Data): Data {
@@ -22,10 +22,7 @@ export function cloneEditingDataByPosition(position: ElementPosition, data: Data
   if (elem?.type === 'group') {
     const { w, h, detail } = elem as Element<'group'>;
     const { children, ...restDetail } = detail;
-    const underlay: DataUnderlay = {
-      type: 'rect',
-      x: 0,
-      y: 0,
+    const layout: DataLayout = {
       w,
       h,
       detail: {
@@ -33,7 +30,7 @@ export function cloneEditingDataByPosition(position: ElementPosition, data: Data
       }
     };
     editingData.elements = deepClone(children || []);
-    editingData.underlay = underlay;
+    editingData.layout = layout;
   }
   return editingData;
 }
