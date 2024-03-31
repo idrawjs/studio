@@ -6,7 +6,8 @@ import { Col, Row, Form, InputNumber } from 'antd';
 import type { FormInstance } from 'antd';
 import { useModuleLocale } from './hooks';
 import { generateClassName } from '../../css';
-import { MultipleColor } from './field-item/multiple-color';
+
+import { MultipleColor } from '../element-detail/field-item/multiple-color';
 
 const modName = 'base-element-shadow-attribute';
 
@@ -38,6 +39,7 @@ export const ShadowAttribute = (props: ShadowAttributeProps) => {
   const rowClassName = generateClassName(modName, 'row');
   const colClassName = generateClassName(modName, 'col');
   const formItemClassName = generateClassName(modName, 'form-item');
+
   const onValuesChange = (value: FieldType) => {
     const boxDetail = value;
     onChange?.({ detail: boxDetail } as Partial<Element>);

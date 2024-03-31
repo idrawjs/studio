@@ -1,8 +1,5 @@
-import React, { useContext, useMemo } from 'react';
-// import classnames from 'classnames';
+import React, { useMemo } from 'react';
 import type { Element, ElementAssetsItem } from 'idraw';
-import { ConfigContext } from '../config-provider';
-// import { Input, Col, Row, Form } from 'antd';
 import { DetailCircle } from './detail-circle';
 import { DetailImage } from './detail-image';
 import { DetailPath } from './detail-path';
@@ -10,6 +7,7 @@ import { DetailRect } from './detail-rect';
 import { DetailSVG } from './detail-svg';
 import { DetailText } from './detail-text';
 import { DetailGroup } from './detail-group';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail-attribute';
 
@@ -26,9 +24,8 @@ export interface DetailAttributeProps {
 
 export const DetailAttribute = (props: DetailAttributeProps) => {
   const { element, onChange, disabled, getElementAsset, createElementAsset } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
+
+  const rootClassName = generateClassName(modName);
   return useMemo(() => {
     return (
       <div className={rootClassName}>

@@ -1,16 +1,16 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementType, RecursivePartial } from 'idraw';
 import { getDefaultElementDetailConfig } from 'idraw';
 import { Collapse, Empty } from 'antd';
 import type { CollapseProps } from 'antd';
-import { ConfigContext } from '../config-provider';
 import { BasicAttribute } from './basic-attribute';
 import { BorderAttribute } from './border-attribute';
 import { ContentAttribute, ContentAttributeProps } from './content-attribute';
 import { ShadowAttribute } from './shadow-attribute';
 import { useModuleLocale } from './hooks';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail';
 const defaultDetail = getDefaultElementDetailConfig();
@@ -26,9 +26,9 @@ export interface ElementDetailProps {
 
 export const ElementDetail = (props: ElementDetailProps) => {
   const { className, style, element: elem, onChange, getElementAsset, createElementAsset } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
+
   const moduleLocale = useModuleLocale();
+  const rootClassName = generateClassName(modName);
   let element: Element | null | undefined = elem;
   if (elem) {
     element = {
@@ -105,7 +105,7 @@ export const ElementDetail = (props: ElementDetailProps) => {
 
   return useMemo(() => {
     return (
-      <div style={style} className={classnames(generateClassName(), className)}>
+      <div style={style} className={classnames(rootClassName, className)}>
         <Collapse ghost items={items} size="small" defaultActiveKey={items.map((i) => i.key) as string[]} />
       </div>
     );

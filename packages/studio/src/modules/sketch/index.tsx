@@ -79,6 +79,7 @@ export const Sketch = (props: SketchProps) => {
 
     const listenDataChange = (e: { data: Data; type: string }) => {
       const { data, type } = e;
+
       const editingData = refEditingData.current;
       if (['addElement', 'updateElement', 'deleteElement', 'moveElement', 'dragElement', 'resizeElement'].includes(type)) {
         const payload: Partial<StudioState> = { editingData: { ...data } };
@@ -88,6 +89,18 @@ export const Sketch = (props: SketchProps) => {
         dispatch({
           type: 'update',
           payload
+        });
+      } else if (type === 'changeLayout') {
+        if (data.layout) {
+          const layout = { ...data.layout };
+          if (layout.detail) {
+            layout.detail = { ...layout.detail };
+          }
+          data.layout = { ...data.layout };
+        }
+        dispatch({
+          type: 'updateEditingDataLayoutToTargetGroup',
+          payload: { editingData: { ...data } }
         });
       }
     };

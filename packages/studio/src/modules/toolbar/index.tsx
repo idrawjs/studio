@@ -1,8 +1,8 @@
-import React, { useEffect, useState, useMemo, useContext } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Button, type ButtonProps, Tooltip } from 'antd';
-import { ConfigContext, IconLayer, IconSetting, IconRuler, IconDrag, IconAim } from '@idraw/studio-base';
+import { generateClassName, IconLayer, IconSetting, IconRuler, IconDrag, IconAim } from '@idraw/studio-base';
 import type { SharedEvent, SharedStore } from '../../types';
 import { useLocale } from '../../locale';
 
@@ -28,13 +28,11 @@ export const Toolbar = (props: ToolbarProps) => {
   const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore } = props;
   // const [mode, setMode] = useState<string>('select');
   const iconStyle = { fontSize: 16 };
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const leftClassName = generateClassName('left');
-  const rightClassName = generateClassName('right');
+  const rootClassName = generateClassName(modName);
+  const leftClassName = generateClassName(modName, 'left');
+  const rightClassName = generateClassName(modName, 'right');
   // const middleClassName = generateClassName('middle');
-  const btnClassName = generateClassName('btn');
+  const btnClassName = generateClassName(modName, 'btn');
   // const modeSwitchClassName = generateClassName('mode-switch');
   const [toggleDrag, setToggleDrag] = useState<boolean>(false);
   const [toggleRuler, setToggleRuler] = useState<boolean>(true);

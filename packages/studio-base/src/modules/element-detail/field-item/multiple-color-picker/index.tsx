@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useState, useEffect, useRef } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import type { LinearGradientColor, RadialGradientColor, GradientStop, ElementSize } from 'idraw';
 import { colorToLinearGradientCSS } from 'idraw';
 import { Radio, Row, Col, Form, InputNumber } from 'antd';
@@ -7,8 +7,8 @@ import { SolidColorPicker } from './solid-color-picker';
 import { modName } from './config';
 import type { ColorValue, ColorModeType } from './types';
 import { GradientPicker } from './gradient';
+import { generateClassName } from '../../../../css';
 
-import { ConfigContext } from '../../../config-provider';
 import IconSolidColor from '../../../../icons/solid-color';
 import IconResize from '../../../../icons/resize';
 import IconDoubleCircle from '../../../../icons/double-circle';
@@ -47,17 +47,15 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
   const refLinearForm = useRef<FormInstance>(null);
   const refRadialForm = useRef<FormInstance>(null);
 
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const headerClassName = generateClassName('header');
-  const internalPickerClassName = generateClassName('internal-picker');
-  const radioGroupClassName = generateClassName('radio-group');
+  const rootClassName = generateClassName(modName);
+  const headerClassName = generateClassName(modName, 'header');
+  const internalPickerClassName = generateClassName(modName, 'internal-picker');
+  const radioGroupClassName = generateClassName(modName, 'radio-group');
 
-  const rowClassName = generateClassName('row');
-  const colClassName = generateClassName('col');
-  const inputClassName = generateClassName('input');
-  const formItemClassName = generateClassName('form-item');
+  const rowClassName = generateClassName(modName, 'row');
+  const colClassName = generateClassName(modName, 'col');
+  const inputClassName = generateClassName(modName, 'input');
+  const formItemClassName = generateClassName(modName, 'form-item');
 
   useEffect(() => {
     setCSS(colorToLinearGradientCSS(value));

@@ -1,11 +1,11 @@
-import React, { useMemo, useEffect, useContext, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementGroupDetail } from 'idraw';
 import { Row, Col, Form, Select } from 'antd';
 import type { FormInstance } from 'antd';
-import { ConfigContext } from '../config-provider';
 import { useModuleLocale } from './hooks';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail-group';
 
@@ -29,12 +29,10 @@ const elementToFormData = (element?: Element<'group'> | null) => {
 
 export const DetailGroup = (props: DetailGroupProps) => {
   const { className, style, element, onChange, disabled } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const rowClassName = generateClassName('row');
-  const colClassName = generateClassName('col');
-  const formItemClassName = generateClassName('form-item');
+  const rootClassName = generateClassName(modName);
+  const rowClassName = generateClassName(modName, 'row');
+  const colClassName = generateClassName(modName, 'col');
+  const formItemClassName = generateClassName(modName, 'form-item');
   const ref = useRef<FormInstance>(null);
   const moduleLocale = useModuleLocale();
 

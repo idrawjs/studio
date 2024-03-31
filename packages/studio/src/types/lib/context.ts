@@ -20,7 +20,7 @@ export interface StudioState {
   };
 }
 
-export type StudioActionType = 'update' | 'updateThemeMode';
+export type StudioActionType = 'update' | 'updateThemeMode' | 'updateEditingDataLayoutToTargetGroup';
 
 export type StudioAction = {
   type: StudioActionType;

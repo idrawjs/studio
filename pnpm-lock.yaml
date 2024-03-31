@@ -12,8 +12,8 @@ importers:
         specifier: 5.12.1
         version: 5.12.1(react-dom@18.2.0)(react@18.2.0)
       idraw:
-        specifier: 0.4.0-beta.18
-        version: 0.4.0-beta.18
+        specifier: 0.4.0-beta.19
+        version: 0.4.0-beta.19
     devDependencies:
       '@babel/core':
         specifier: ^7.22.19
@@ -2041,6 +2041,16 @@ packages:
       '@idraw/util': 0.4.0-beta.18
     dev: false
 
+  /@idraw/board@0.4.0-beta.19(@idraw/renderer@0.4.0-beta.19)(@idraw/util@0.4.0-beta.19):
+    resolution: {integrity: sha512-KW0vdLeGxfFDQb7iv0dzCQ+yTlliMlwwzArQOy/h9PGN2mgeVw9/XzLm7bl+wEgCY+8Yep4/g743xDZ7H0Ityg==}
+    peerDependencies:
+      '@idraw/renderer': ^0.4.0-beta.19
+      '@idraw/util': ^0.4.0-beta.19
+    dependencies:
+      '@idraw/renderer': 0.4.0-beta.19(@idraw/util@0.4.0-beta.19)
+      '@idraw/util': 0.4.0-beta.19
+    dev: false
+
   /@idraw/core@0.4.0-beta.18(@idraw/board@0.4.0-beta.18)(@idraw/renderer@0.4.0-beta.18)(@idraw/util@0.4.0-beta.18):
     resolution: {integrity: sha512-WOEeS6y0Per1euTFsUQ7Wt2+eCTKl4mZ7WHZWO9ekJQfOecoGmGXGZOMpy+S19orAcH8j7qWmoFS7iMwU9HpCA==}
     peerDependencies:
@@ -2053,6 +2063,18 @@ packages:
       '@idraw/util': 0.4.0-beta.18
     dev: false
 
+  /@idraw/core@0.4.0-beta.19(@idraw/board@0.4.0-beta.19)(@idraw/renderer@0.4.0-beta.19)(@idraw/util@0.4.0-beta.19):
+    resolution: {integrity: sha512-l+SGzTA5/8bq9TuRDsoe0UloAQ5HfAOigpcRZeQNrYj5ryiRQWJRUJkxZy31rHGqj7BvaetWFRGEkR/vi8ediw==}
+    peerDependencies:
+      '@idraw/board': ^0.4.0-beta.19
+      '@idraw/renderer': ^0.4.0-beta.19
+      '@idraw/util': ^0.4.0-beta.19
+    dependencies:
+      '@idraw/board': 0.4.0-beta.19(@idraw/renderer@0.4.0-beta.19)(@idraw/util@0.4.0-beta.19)
+      '@idraw/renderer': 0.4.0-beta.19(@idraw/util@0.4.0-beta.19)
+      '@idraw/util': 0.4.0-beta.19
+    dev: false
+
   /@idraw/renderer@0.4.0-beta.18(@idraw/util@0.4.0-beta.18):
     resolution: {integrity: sha512-vKa3Uu/ou0kEBhNPLk6UeOMcN6bO2ujDSFRFps6w8EjZcDoJbjgiif41YZYxJueR/PAla9Fyfuk75k+Wbc55uQ==}
     peerDependencies:
@@ -2061,12 +2083,28 @@ packages:
       '@idraw/util': 0.4.0-beta.18
     dev: false
 
+  /@idraw/renderer@0.4.0-beta.19(@idraw/util@0.4.0-beta.19):
+    resolution: {integrity: sha512-W4vNsOfjWmLMcEPOdCTJNNsoVMupsBfU/BMgAHjUZYnBeoYzVZUcX5wVm+Iie3Kl2SoFctfUU7EJm9rZ1+G6YA==}
+    peerDependencies:
+      '@idraw/util': ^0.4.0-beta.19
+    dependencies:
+      '@idraw/util': 0.4.0-beta.19
+    dev: false
+
   /@idraw/types@0.4.0-beta.18:
     resolution: {integrity: sha512-iPzQ1+aONP4iQJkLiz73B5KpTepeQXP7LRPblVppoe7RD73Be9yJKGFjmKoXxzmoCzdAGHFnLx5dBWh/wKSC2Q==}
     dev: false
 
+  /@idraw/types@0.4.0-beta.19:
+    resolution: {integrity: sha512-gVbXGFyV53NL4cTaKRFAp95Vgu+AuRAZbt2znc5dS3729h29yYEgXv401eEKrXFGUICM3o50R0It8jpREoddaw==}
+    dev: false
+
   /@idraw/util@0.4.0-beta.18:
     resolution: {integrity: sha512-qQqtEKztW0eKxHX4kT45MRHhhnE79yd5gnbSYNmh8iPBtknB3Ot7XsabIaSgxoGn4f77RutDLUyMipSptGyvyg==}
+    dev: false
+
+  /@idraw/util@0.4.0-beta.19:
+    resolution: {integrity: sha512-neZ/BihVFB0M5CDUOvtjVWp5NtjqAoQ8Poc7eAZRtXdaVGFXLApJ6UogUt0Aoti0hVluA+s8Ki/w8y3yg3FVkQ==}
     dev: false
 
   /@isaacs/cliui@8.0.2:
@@ -4919,6 +4957,16 @@ packages:
       '@idraw/renderer': 0.4.0-beta.18(@idraw/util@0.4.0-beta.18)
       '@idraw/types': 0.4.0-beta.18
       '@idraw/util': 0.4.0-beta.18
+    dev: false
+
+  /idraw@0.4.0-beta.19:
+    resolution: {integrity: sha512-UD1YKX4WVFJi1fl/2p4LSe9FqJ9OGMcjQC1zRZ8BQODQJRrWTZQGLjsBCM9iAU/eT04NmU37TIXcQRFi59lWzw==}
+    dependencies:
+      '@idraw/board': 0.4.0-beta.19(@idraw/renderer@0.4.0-beta.19)(@idraw/util@0.4.0-beta.19)
+      '@idraw/core': 0.4.0-beta.19(@idraw/board@0.4.0-beta.19)(@idraw/renderer@0.4.0-beta.19)(@idraw/util@0.4.0-beta.19)
+      '@idraw/renderer': 0.4.0-beta.19(@idraw/util@0.4.0-beta.19)
+      '@idraw/types': 0.4.0-beta.19
+      '@idraw/util': 0.4.0-beta.19
     dev: false
 
   /ieee754@1.2.1:

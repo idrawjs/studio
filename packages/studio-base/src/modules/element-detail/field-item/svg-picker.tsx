@@ -1,9 +1,8 @@
-import React, { useState, useContext, useMemo, useCallback } from 'react';
-import { Input, Popover, message } from 'antd';
+import React, { useState, useMemo, useCallback } from 'react';
+import { message } from 'antd';
 import { is, pickFile, parseFileToText } from 'idraw';
-import { ConfigContext } from '../../config-provider';
+import { generateClassName } from '../../../css';
 
-const { TextArea } = Input;
 const modName = 'base-element-field-svg-picker';
 interface SVGPickerProps {
   value?: string;
@@ -24,14 +23,11 @@ export const SVGPicker: React.FC<SVGPickerProps> = ({ value = '', onChange }) =>
   const [svgText, setSvgText] = useState<string>(value);
   const [actionStatus, setActionStatus] = useState<'free' | 'picking'>('free');
 
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const boxClassName = generateClassName('box');
-  const entityClassName = generateClassName('entity');
-  const actionClassName = generateClassName('action');
-  const actionTextClassName = generateClassName('action-text');
-  const actionUploadClassName = generateClassName('action-upload');
+  const rootClassName = generateClassName(modName);
+  const boxClassName = generateClassName(modName, 'box');
+  const entityClassName = generateClassName(modName, 'entity');
+  const actionClassName = generateClassName(modName, 'action');
+  const actionUploadClassName = generateClassName(modName, 'action-upload');
 
   const triggerChange = (val: string) => {
     onChange?.(val || value);
