@@ -1,7 +1,7 @@
-import React, { useState, useContext, useMemo } from 'react';
+import React, { useState, useMemo } from 'react';
 import { Input, Popover, message } from 'antd';
 import { is, pickFile, parseFileToBase64 } from 'idraw';
-import { ConfigContext } from '../../config-provider';
+import { generateClassName } from '../../../css';
 
 const { TextArea } = Input;
 const modName = 'base-element-field-image-picker';
@@ -16,20 +16,18 @@ const supportTypes = ['image/png', 'image/jpeg', 'image/jpg', 'image/png'];
 export const ImagePicker: React.FC<ImagePickerProps> = ({ value = '', onChange }) => {
   const [imageSrc, setImageSrc] = useState<string>(value);
   const [actionStatus, setActionStatus] = useState<'free' | 'picking'>('free');
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const boxClassName = generateClassName('box');
-  const entityClassName = generateClassName('entity');
-  const actionClassName = generateClassName('action');
-  const actionTextClassName = generateClassName('action-text');
-  const actionUploadClassName = generateClassName('action-upload');
+  const rootClassName = generateClassName(modName);
+  const boxClassName = generateClassName(modName, 'box');
+  const entityClassName = generateClassName(modName, 'entity');
+  const actionClassName = generateClassName(modName, 'action');
+  const actionTextClassName = generateClassName(modName, 'action-text');
+  const actionUploadClassName = generateClassName(modName, 'action-upload');
 
   const calcTextAreaSize = useCallback(
     (str: string) => {
       const _str = str || '';
       let rows = 3;
-      let width = 300;
+      const width = 300;
       if (_str.length > 128) {
         rows = 10;
       }

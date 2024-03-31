@@ -1,15 +1,15 @@
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element } from 'idraw';
 import { formatNumber, is, limitAngle } from 'idraw';
 import { InputNumber, Col, Row, Form, Switch } from 'antd';
 import type { FormInstance } from 'antd';
-import { ConfigContext } from '../config-provider';
 import IconConstrain from '../../icons/constrain';
 import IconRotation from '../../icons/rotation';
 import { SwitchButton } from './field-item/switch-button';
 import { useModuleLocale } from './hooks';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-basic-attribute';
 
@@ -41,13 +41,11 @@ const angleFormatter = (val: any) => {
 export const BasicAttribute = (props: BasicAttributeProps) => {
   const { className, style, element, onChange, disabled } = props;
   const ref = useRef<FormInstance>(null);
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const rowClassName = generateClassName('row');
-  const colClassName = generateClassName('col');
-  const inputClassName = generateClassName('input');
-  const formItemClassName = generateClassName('form-item');
+  const rootClassName = generateClassName(modName);
+  const rowClassName = generateClassName(modName, 'row');
+  const colClassName = generateClassName(modName, 'col');
+  const inputClassName = generateClassName(modName, 'input');
+  const formItemClassName = generateClassName(modName, 'form-item');
   const moduleLocale = useModuleLocale();
   const onValuesChange = (e: FieldType) => {
     if (element?.operations?.limitRatio === true) {

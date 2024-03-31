@@ -1,11 +1,11 @@
-import React, { useContext, useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Dropdown, InputNumber, Button } from 'antd';
 import type { MenuProps } from 'antd';
 import { formatNumber } from 'idraw';
-import { ConfigContext } from '../config-provider';
 import IconScale from '../../icons/scale';
+import { generateClassName } from '../../css';
 
 const modName = 'base-scale-selector';
 
@@ -19,10 +19,10 @@ export interface ScaleSelectorProps {
 
 export const ScaleSelector = (props: ScaleSelectorProps) => {
   const { className, style, defaultValue, value, onChange } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const menuItemClassName = generateClassName('menu-item');
-  const inputClassName = generateClassName('input');
+
+  const rootClassName = generateClassName(modName);
+  const menuItemClassName = generateClassName(modName, 'menu-item');
+  const inputClassName = generateClassName(modName, 'input');
   const [customValue, setCustomValue] = useState<number>(100);
 
   useEffect(() => {
@@ -82,7 +82,7 @@ export const ScaleSelector = (props: ScaleSelectorProps) => {
 
   return useMemo(() => {
     return (
-      <Dropdown className={classnames(generateClassName(), className)} menu={menuProps}>
+      <Dropdown className={classnames(rootClassName, className)} menu={menuProps}>
         <Button icon={<IconScale />} size="small">{`${formatNumber(parseFloat(value || '1') * 100)}%`}</Button>
       </Dropdown>
     );

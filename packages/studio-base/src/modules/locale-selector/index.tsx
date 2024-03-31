@@ -1,9 +1,9 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { Select } from 'antd';
-import { ConfigContext } from '../config-provider';
 import type { LocaleCode } from '../../locale';
+import { generateClassName } from '../../css';
 
 const Option = Select.Option;
 
@@ -19,12 +19,17 @@ export interface LocaleSelectorProps {
 
 export const LocaleSelector = (props: LocaleSelectorProps) => {
   const { className, style, defaultValue, value, onChange } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
 
   return useMemo(() => {
     return (
-      <Select style={style} className={classnames(generateClassName(), className)} size="small" defaultValue={defaultValue} value={value} onChange={onChange}>
+      <Select
+        style={style}
+        className={classnames(generateClassName(modName), className)}
+        size="small"
+        defaultValue={defaultValue}
+        value={value}
+        onChange={onChange}
+      >
         <Option value="en-US">English</Option>
         <Option value="zh-CN">中文</Option>
       </Select>

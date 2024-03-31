@@ -1,14 +1,14 @@
-import React, { useContext, useMemo } from 'react';
+import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import { Tree } from 'antd';
 import type { CSSProperties } from 'react';
 import type { TreeProps, TreeDataNode } from 'antd';
 import type { ElementPosition } from 'idraw';
-import { ConfigContext } from '../config-provider';
 import { wrapTreeViewData } from './wrap';
 import type { TreeNodeProps } from './tree-node';
 import type { ElementTreeData } from '../../types';
 import { IconDown } from '../../icons';
+import { generateClassName } from '../../css';
 
 const { DirectoryTree } = Tree;
 const modName = 'base-element-tree';
@@ -52,8 +52,6 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     onExpand,
     onGoToGroup
   } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
   const onSelectNode: TreeProps['onSelect'] = (selectedKeys, info) => {
     const pos = treePosToElementPosition(info.node.pos);
     const positions: ElementPosition[] = [pos];
@@ -67,6 +65,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
 
   return useMemo(() => {
     const wrappedTreeData = wrapTreeViewData(treeData || [], {
+      parentModName: modName,
       generateClassName,
       onTitleChange,
       onOperationToggle,
@@ -81,7 +80,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
         ref={ref}
         height={height}
         style={style}
-        className={classnames(generateClassName(), className)}
+        className={classnames(generateClassName(modName), className)}
         showLine
         blockNode
         multiple

@@ -5,6 +5,7 @@ import { TreeNode } from './tree-node';
 import type { TreeNodeProps } from './tree-node';
 
 type WrapOptions = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle' | 'onDelete' | 'onGoToGroup'> & {
+  parentModName: string;
   generateClassName: (...args: string[]) => string;
   position: ElementPosition;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
@@ -26,12 +27,13 @@ export function wrapTreeViewData(treeData: ElementTreeData, opts: WrapOptions): 
 }
 
 const wrapTreeViewNode = (treeNode: ElementTreeNode, opts: WrapOptions) => {
-  const { onTitleChange, onOperationToggle, onDelete, onSelect, onGoToGroup, position, selectedKeys } = opts;
+  const { parentModName, onTitleChange, onOperationToggle, onDelete, onSelect, onGoToGroup, position, selectedKeys } = opts;
   const node: ElementTreeViewNode = {
     key: treeNode.key,
     // title: treeNode.title,
     title: (
       <TreeNode
+        parentModName={parentModName}
         uuid={treeNode.key}
         title={treeNode.title}
         position={position}

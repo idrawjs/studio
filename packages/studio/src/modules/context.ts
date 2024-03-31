@@ -3,7 +3,7 @@ import { ElementPosition, getElementPositionFromList } from 'idraw';
 import { getElementTree } from '@idraw/studio-base';
 import type { Data } from 'idraw';
 import { StudioState, StudioAction, StudioContext, StudioProps } from '../types';
-import { cloneEditingDataByPosition } from '../util/data';
+import { cloneEditingDataByPosition, updateEditingDataLayoutToTargetGroup } from '../util/data';
 
 const defaultThemeMode = 'dark';
 const defaultLocale = 'en-US';
@@ -83,6 +83,32 @@ export function createStudioReducer(state: StudioState, action: StudioAction): S
           themeMode: action?.payload?.themeMode
         }
       };
+    }
+    case 'updateEditingDataLayoutToTargetGroup': {
+      if (!action?.payload?.editingData) {
+        return state;
+      }
+      const { editingData } = action.payload;
+
+      if (editingData.layout) {
+        const { editingDataPosition, data } = state;
+        updateEditingDataLayoutToTargetGroup(editingData, editingDataPosition, data);
+        return {
+          ...state,
+          ...{
+            data,
+            editingData
+          }
+        };
+      }
+
+      return state; // TODO
+      // return {
+      //   ...state,
+      //   ...{
+      //     themeMode: action?.payload?.themeMode
+      //   }
+      // };
     }
     default:
       return state;

@@ -1,12 +1,12 @@
-import React, { useContext, useEffect, useMemo, useRef } from 'react';
+import React, { useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import type { Element, ElementBaseDetail, ElementAssetsItem } from 'idraw';
 import { getElementSize } from 'idraw';
 import { Col, Row, Form, InputNumber } from 'antd';
 import type { FormInstance } from 'antd';
-import { ConfigContext } from '../config-provider';
 import { useModuleLocale } from './hooks';
 import { DetailAttribute } from './detail-attribute';
+import { generateClassName } from '../../css';
 
 import { MultipleColor } from './field-item/multiple-color';
 
@@ -43,12 +43,10 @@ const elementToFormData = (element?: Element | null) => {
 export const ContentAttribute = (props: ContentAttributeProps) => {
   const { style, element, disabled, onChange, getElementAsset, createElementAsset } = props;
   const ref = useRef<FormInstance>(null);
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const rowClassName = generateClassName('row');
-  const colClassName = generateClassName('col');
-  const formItemClassName = generateClassName('form-item');
+  const rootClassName = generateClassName(modName);
+  const rowClassName = generateClassName(modName, 'row');
+  const colClassName = generateClassName(modName, 'col');
+  const formItemClassName = generateClassName(modName, 'form-item');
   const onValuesChange = (value: FieldType) => {
     const boxDetail = value;
     onChange?.({ detail: boxDetail } as Partial<Element>);

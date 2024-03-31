@@ -1,8 +1,8 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element } from 'idraw';
-import { ConfigContext } from '../config-provider';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail-path';
 
@@ -16,9 +16,7 @@ export interface DetailPathProps {
 
 export const DetailPath = (props: DetailPathProps) => {
   const { className, style } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
+  const rootClassName = generateClassName(modName);
 
   return useMemo(() => {
     return (

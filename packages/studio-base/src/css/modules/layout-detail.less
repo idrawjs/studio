@@ -1,0 +1,65 @@
+// @import "../variable.less";
+
+@base-layout-detail: ~'@{prefix}-base-layout-detail';
+@base-layout-basic-attribute: ~'@{prefix}-base-layout-basic-attribute';
+
+.common-layout-detail-form-style (@detail-form-name) {
+  box-sizing: border-box;
+  padding: 0px;
+
+  .@{detail-form-name}-row {
+    padding: 2px 0;
+    box-sizing: border-box;
+  }
+
+  .@{detail-form-name}-col {
+    padding: 0 2px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+  }
+
+  .@{detail-form-name}-input {
+    // border: none;
+    // border-color: transparent;
+    padding-inline-start: 4px;
+    width: 100%;
+    input {
+      font-size: 12px;
+    }
+  }
+
+  .@{detail-form-name}-form-item {
+    margin: 0;
+    .ant-form-item-control-input {
+      min-height: auto;
+    }
+  }
+
+  .ant-form-item {
+    margin: 0;
+  }
+}
+
+.@{base-layout-detail} {
+  .ant-collapse-item {
+    border-bottom: 1px solid;
+    border-color: ~'var(--@{prefix}-border-color)';
+    border-radius: 0;
+    &:last-child {
+      border-radius: 0;
+    }
+
+    .ant-collapse-content {
+      .ant-collapse-content-box {
+        padding-top: 4px;
+        padding-left: 8px;
+        padding-right: 8px;
+      }
+    }
+  }
+}
+
+.@{base-layout-basic-attribute} {
+  .common-layout-detail-form-style (@detail-form-name: @base-layout-basic-attribute);
+}

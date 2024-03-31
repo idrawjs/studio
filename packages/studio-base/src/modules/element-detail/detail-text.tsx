@@ -1,11 +1,10 @@
-import React, { useMemo, useEffect, useContext, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import type { Element, ElementTextDetail } from 'idraw';
 import { getElementSize, formatNumber, is } from 'idraw';
 import { Radio, Row, Col, Form, InputNumber, Input } from 'antd';
 import type { FormInstance } from 'antd';
-import { ConfigContext } from '../config-provider';
 import { MultipleColor } from './field-item/multiple-color';
 import IconVerticalTop from '../../icons/vertical-top';
 import IconVerticalMiddle from '../../icons/vertical-middle';
@@ -13,6 +12,7 @@ import IconVerticalBottom from '../../icons/vertical-bottom';
 import IconAlignLeft from '../../icons/align-left';
 import IconAlignCenter from '../../icons/align-center';
 import IconAlignRight from '../../icons/align-right';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail-text';
 const iconStyle = { fontSize: 20 };
@@ -52,13 +52,12 @@ const elementToFormData = (element?: Element<'text'> | null) => {
 
 export const DetailText = (props: DetailTextProps) => {
   const { className, style, element, onChange, disabled } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const rowClassName = generateClassName('row');
-  const colClassName = generateClassName('col');
-  const swithClassName = generateClassName('switch');
-  const formItemClassName = generateClassName('form-item');
+
+  const rootClassName = generateClassName(modName);
+  const rowClassName = generateClassName(modName, 'row');
+  const colClassName = generateClassName(modName, 'col');
+  const swithClassName = generateClassName(modName, 'switch');
+  const formItemClassName = generateClassName(modName, 'form-item');
   const ref = useRef<FormInstance>(null);
 
   useEffect(() => {

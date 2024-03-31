@@ -1,7 +1,7 @@
-import React, { useMemo, useContext } from 'react';
+import React, { useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ConfigContext } from '../config-provider';
+import { generateClassName } from '../../css';
 
 const modName = 'base-xxxxxx';
 
@@ -12,9 +12,7 @@ export interface ChildProps {
 
 export const Child = (props: ChildProps) => {
   const { className, style } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
+  const rootClassName = generateClassName(modName);
 
   return useMemo(() => {
     return (

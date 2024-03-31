@@ -7,6 +7,7 @@ export { LocaleSelector, type LocaleSelectorProps } from './modules/locale-selec
 export { ScaleSelector, type ScaleSelectorProps } from './modules/scale-selector';
 export { ElementTree, type ElementTreeProps } from './modules/element-tree';
 export { ElementDetail, type ElementDetailProps } from './modules/element-detail';
+export { LayoutDetail, type LayoutDetailProps } from './modules/layout-detail';
 
 export { getElementTree } from './tools';
 export { setClassNameTopPrefix, generateClassName } from './css/index';

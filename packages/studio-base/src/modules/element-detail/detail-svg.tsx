@@ -1,11 +1,11 @@
-import React, { useMemo, useContext, useEffect, useRef } from 'react';
+import React, { useMemo, useEffect, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import { Form, type FormInstance } from 'antd';
 import classnames from 'classnames';
 import { isAssetId } from 'idraw';
 import type { Element, ElementSVGDetail, ElementAssetsItem } from 'idraw';
 import { SVGPicker } from './field-item/svg-picker';
-import { ConfigContext } from '../config-provider';
+import { generateClassName } from '../../css';
 
 const modName = 'base-element-detail-svg';
 
@@ -28,10 +28,7 @@ type FieldType = Pick<Required<ElementSVGDetail>, 'svg'> & {
 
 export const DetailSVG = (props: DetailSVGProps) => {
   const { className, style, element, onChange, getElementAsset, createElementAsset, disabled } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-
+  const rootClassName = generateClassName(modName);
   const ref = useRef<FormInstance>(null);
 
   const elementToFormData = (element: Element<'svg'> | null | undefined) => {

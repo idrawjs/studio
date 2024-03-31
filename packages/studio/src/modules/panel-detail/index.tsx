@@ -1,9 +1,9 @@
-import React, { useContext, useMemo, useCallback } from 'react';
+import React, { useContext, useMemo, useCallback, useRef, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { findElementFromList, updateElementInList, isAssetId, createAssetId } from 'idraw';
-import type { Element, ElementAssetsItem, RecursivePartial } from 'idraw';
-import { ConfigContext, ElementDetail } from '@idraw/studio-base';
+import type { Element, DataLayout, ElementAssetsItem, RecursivePartial, Data } from 'idraw';
+import { ConfigContext, ElementDetail, LayoutDetail } from '@idraw/studio-base';
 import { Context } from '../context';
 
 const modName = 'mod-panel-detail';
@@ -18,8 +18,17 @@ export const PanelDetail = (props: PanelDetailProps) => {
   const { createPrefixName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
   const generateClassName = createPrefixName(modName);
-  const { selectedUUIDs, editingData } = state;
+  const { selectedUUIDs, editingData, editingDataPosition } = state;
   const modClassName = generateClassName();
+  const refEditingData = useRef<Data>(editingData);
+
+  useEffect(() => {
+    refEditingData.current = editingData;
+  }, [editingData]);
+
+  const getCurrentEditingData = () => {
+    return refEditingData.current;
+  };
 
   const onChange = useCallback(
     (e: RecursivePartial<Element>) => {
@@ -35,12 +44,47 @@ export const PanelDetail = (props: PanelDetailProps) => {
     [editingData, selectedUUIDs]
   );
 
+  const onChangeLayout = useCallback(
+    (e: RecursivePartial<DataLayout>) => {
+      const { detail, ...restLayout } = e;
+      delete restLayout.operations;
+      const currentEditingData = getCurrentEditingData();
+      if (restLayout || detail) {
+        const layout: DataLayout = {
+          ...{ x: 0, y: 0 },
+          ...(currentEditingData.layout as DataLayout),
+          ...restLayout,
+          ...{
+            detail: {
+              ...currentEditingData.layout?.detail,
+              ...detail
+            }
+          }
+        } as DataLayout;
+        const newEditingData = {
+          ...currentEditingData,
+          ...{
+            layout
+          }
+        };
+        dispatch({
+          type: 'updateEditingDataLayoutToTargetGroup',
+          payload: {
+            editingData: newEditingData
+          }
+        });
+      }
+    },
+    [editingData, selectedUUIDs]
+  );
+
   const getTargetElement = useCallback(
     (uuid: string) => {
       if (selectedUUIDs?.length > 1) {
         return null;
       }
-      return findElementFromList(uuid, editingData.elements);
+
+      return findElementFromList(uuid, getCurrentEditingData().elements);
     },
     [editingData, selectedUUIDs[0]]
   );
@@ -49,12 +93,13 @@ export const PanelDetail = (props: PanelDetailProps) => {
     (assetId?: string) => {
       let resource: string | null = null;
       if (assetId && isAssetId(assetId)) {
-        resource = editingData.assets?.[assetId]?.value || null;
+        resource = getCurrentEditingData().assets?.[assetId]?.value || null;
       }
       return resource;
     },
     [editingData, selectedUUIDs[0]]
   );
+
   const createElementAsset = useCallback(
     (assetItem: ElementAssetsItem) => {
       const assetId = createAssetId(assetItem.value);
@@ -80,8 +125,9 @@ export const PanelDetail = (props: PanelDetailProps) => {
           e.preventDefault();
         }}
       >
+        <LayoutDetail isGroupLayout={editingDataPosition?.length > 0} layout={editingData.layout} onChange={onChangeLayout} />
         <ElementDetail element={targetElement} onChange={onChange} getElementAsset={getElementAsset} createElementAsset={createElementAsset} />
       </div>
     );
-  }, [selectedUUIDs[0]]);
+  }, [selectedUUIDs[0], editingData.layout, editingDataPosition]);
 };

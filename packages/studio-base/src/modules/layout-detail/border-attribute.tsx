@@ -5,7 +5,7 @@ import type { Element, ElementBaseDetail, RecursivePartial } from 'idraw';
 import { getElementSize } from 'idraw';
 import { Button, Input, Col, Row, Form, InputNumber, Select } from 'antd';
 import type { FormInstance } from 'antd';
-import { MultipleColor } from './field-item/multiple-color';
+import { MultipleColor } from '../element-detail/field-item/multiple-color';
 import { useModuleLocale } from './hooks';
 import { generateClassName } from '../../css';
 
@@ -89,6 +89,7 @@ export const BorderAttribute = (props: BorderAttributeProps) => {
   const colClassName = generateClassName(modName, 'col');
   const inputClassName = generateClassName(modName, 'input');
   const formItemClassName = generateClassName(modName, 'form-item');
+
   const [splitBorderRadius, setSplitBorderRadius] = useState<boolean>(Array.isArray(element?.detail?.borderRadius));
   const [splitBorderWidth, setSplitBorderWidth] = useState<boolean>(Array.isArray(element?.detail?.borderWidth));
   const [internalDisableBorderRadius, setInternalDisableBorderRadius] = useState<boolean>(splitBorderWidth);

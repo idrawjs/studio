@@ -6,9 +6,6 @@ import { Input } from 'antd';
 import type { InputRef } from 'antd';
 import IconVisible from '../../icons/visible';
 import IconInvisible from '../../icons/invisible';
-// import IconUnlock from '../../icons/unlock';
-// import IconLock from '../../icons/lock';
-// import IconCheck from '../../icons/check';
 import IconRect from '../../icons/rect';
 import IconCircle from '../../icons/circle';
 import IconText from '../../icons/text';
@@ -18,7 +15,6 @@ import IconImage from '../../icons/image';
 import IconPath from '../../icons/path';
 import IconHTML from '../../icons/html';
 import IconArrowRight from '../../icons/arrow-right';
-// import IconDelete from '../../icons/delete';
 
 import IconCloseCircle from '../../icons/close-circle';
 
@@ -33,6 +29,7 @@ export interface TreeNodeProps {
   className?: string;
   type?: ElementType;
   style?: CSSProperties;
+  parentModName: string;
   generateClassName: (...args: string[]) => string;
   onTitleChange?: (e: { uuid: string; value: string }) => void;
   onOperationToggle?: (e: { uuid: string; operations: ElementOperations }) => void;
@@ -51,6 +48,7 @@ export const TreeNode = (props: TreeNodeProps) => {
     nodeKey,
     title,
     position,
+    parentModName,
     generateClassName,
     onTitleChange,
     onOperationToggle,
@@ -64,13 +62,13 @@ export const TreeNode = (props: TreeNodeProps) => {
   const [showAction, setShowAction] = useState<boolean>(false);
   const refTitle = useRef<string>(title);
 
-  const rootClassName = generateClassName(modName);
-  const iconClassName = generateClassName(modName, 'icon');
-  const titleClassName = generateClassName(modName, 'title');
-  const titleInputClassName = generateClassName(modName, 'title', 'input');
-  const titleIconClassName = generateClassName(modName, 'title', 'icon');
-  const actionClassName = generateClassName(modName, 'action');
-  const selectedClassName = generateClassName(modName, 'selected');
+  const rootClassName = generateClassName(parentModName, modName);
+  const iconClassName = generateClassName(parentModName, modName, 'icon');
+  const titleClassName = generateClassName(parentModName, modName, 'title');
+  const titleInputClassName = generateClassName(parentModName, modName, 'title', 'input');
+  const titleIconClassName = generateClassName(parentModName, modName, 'title', 'icon');
+  const actionClassName = generateClassName(parentModName, modName, 'action');
+  const selectedClassName = generateClassName(parentModName, modName, 'selected');
   const clickTime = useRef<number>(0);
   const refInput = useRef<InputRef | null>(null);
 

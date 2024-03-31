@@ -6,6 +6,7 @@ import { Popover, Input } from 'antd';
 import { MultipleColorPicker } from './multiple-color-picker';
 import { ColorValue } from './multiple-color-picker';
 import { useModuleLocale } from '../hooks';
+import { generateClassName } from '../../../css';
 
 const modName = 'base-element-field-multiple-color';
 
@@ -34,10 +35,9 @@ export function MultipleColor(props: MultipleColorProps) {
   const isHex = typeof value === 'string' ? true : false;
   const refAppend = useRef<HTMLDivElement>(null);
 
-  const { createPrefixName, container } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const previewClassName = generateClassName('preview');
+  const { container } = useContext(ConfigContext);
+  const rootClassName = generateClassName(modName);
+  const previewClassName = generateClassName(modName, 'preview');
 
   const getContainer = () => {
     return container || document.body;

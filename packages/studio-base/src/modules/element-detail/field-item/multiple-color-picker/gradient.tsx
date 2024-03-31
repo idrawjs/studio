@@ -1,9 +1,9 @@
-import React, { useContext, useMemo, useState, useEffect, useRef } from 'react';
+import React, { useMemo, useState, useEffect, useRef } from 'react';
 import classnames from 'classnames';
 import type { GradientStop, LinearGradientColor, RadialGradientColor } from 'idraw';
 import { colorToLinearGradientCSS } from 'idraw';
-import { ConfigContext } from '../../../config-provider';
 import IconDelete from '../../../../icons/delete';
+import { generateClassName } from '../../../../css';
 
 import { modName } from './config';
 import type { ColorValue, ColorModeType, GradientColor } from './types';
@@ -37,15 +37,12 @@ export function GradientPicker(props: GradientPickerProps) {
   const [activeStop, setActiveStop] = useState<GradientStop | null>(null);
   const isPointMoving = useRef<boolean>(false);
 
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-
-  const gradientRootClassName = generateClassName('gradient-root');
-  const gradientDeleteClassName = generateClassName('gradient-delete');
-  const gradientClassName = generateClassName('gradient');
-  const gradientBarClassName = generateClassName('gradient-bar');
-  const gradientStopClassName = generateClassName('gradient-point');
-  const gradientStopActiveClassName = generateClassName('gradient-point-active');
+  const gradientRootClassName = generateClassName(modName, 'gradient-root');
+  const gradientDeleteClassName = generateClassName(modName, 'gradient-delete');
+  const gradientClassName = generateClassName(modName, 'gradient');
+  const gradientBarClassName = generateClassName(modName, 'gradient-bar');
+  const gradientStopClassName = generateClassName(modName, 'gradient-point');
+  const gradientStopActiveClassName = generateClassName(modName, 'gradient-point-active');
 
   useEffect(() => {
     const newCSS = colorToLinearGradientCSS(value);
@@ -174,7 +171,7 @@ export function GradientPicker(props: GradientPickerProps) {
     }
   };
 
-  const onMouseUpStop = (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => {
+  const onMouseUpStop = () => {
     // e.stopPropagation();
     isPointMoving.current = false;
   };
