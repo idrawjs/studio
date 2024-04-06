@@ -19,3 +19,20 @@ export type ElementTreeViewNode = {
 };
 
 export type ElementTreeViewData = ElementTreeViewNode[];
+
+export type PageTreeNode = {
+  uuid: string;
+  key: string;
+  title: string;
+  type?: ElementType;
+  operations: ElementOperations;
+};
+
+export type PageTreeData = PageTreeNode[];
+
+export type PageTreeViewNode = {
+  key: string;
+  title: React.ReactNode;
+};
+
+export type PageTreeViewData = PageTreeViewNode[];

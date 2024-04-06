@@ -1,7 +1,7 @@
-import React, { useContext, useMemo, useState } from 'react';
+import React, { useMemo, useState } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ConfigContext, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
+import { generateClassName, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
 import { Dropdown, Button, Space, Modal } from 'antd';
 import type { MenuProps, MenuItemProps, ButtonProps } from 'antd';
 import { downloadFileFromText } from 'idraw';
@@ -28,10 +28,8 @@ export interface NavMenuProps {
 export const NavMenu = (props: NavMenuProps) => {
   const { className, style, sharedStore, sharedEvent } = props;
   const [modal, contextHolder] = Modal.useModal();
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const dropdownClassName = generateClassName('dropdown');
+  const rootClassName = generateClassName(modName);
+  const dropdownClassName = generateClassName(modName, 'dropdown');
   const [selectedKeys, setSelectedKeys] = useState<string[]>([]);
   const moduleLocale = useModuleLocale();
   const clickToCreateElement: MenuItemProps['onClick'] = ({ key, domEvent }) => {

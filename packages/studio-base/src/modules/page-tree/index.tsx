@@ -2,31 +2,28 @@ import React, { useMemo } from 'react';
 import classnames from 'classnames';
 import { Tree } from 'antd';
 import type { CSSProperties } from 'react';
-import type { TreeProps, TreeDataNode } from 'antd';
+import type { TreeProps } from 'antd';
 import type { ElementPosition } from 'idraw';
 import { wrapTreeViewData } from './wrap';
 import type { TreeNodeProps } from './tree-node';
-import type { ElementTreeData } from '../../types';
+import type { PageTreeData } from '../../types';
 import { IconDown } from '../../icons';
 import { generateClassName } from '../../css';
 
 const { DirectoryTree } = Tree;
-const modName = 'base-element-tree';
+const modName = 'base-page-tree';
 
-export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle'> & {
+export type PageTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle'> & {
   height: number;
   className?: string;
   style?: CSSProperties;
-  treeData?: ElementTreeData;
+  treeData?: PageTreeData;
   selectedKeys?: string[];
   defaultExpandedKeys?: string[];
   expandedKeys?: string[];
-  onExpand?: (keys: string[], e: { expanded: boolean; nativeEvent: React.PointerEvent; node: TreeDataNode }) => void;
-  defaultExpandAll?: boolean;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onDrop?: (e: { from: ElementPosition; to: ElementPosition }) => void;
   onDelete?: (e: { uuid: string }) => void;
-  onGoToGroup?: (e: { uuid: string; position: ElementPosition }) => void;
 };
 
 const treePosToElementPosition = (pos: string) => {
@@ -35,24 +32,9 @@ const treePosToElementPosition = (pos: string) => {
   return elemPos;
 };
 
-export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) => {
-  const {
-    height,
-    className,
-    style,
-    treeData,
-    onTitleChange,
-    onOperationToggle,
-    onSelect,
-    selectedKeys,
-    onDrop,
-    defaultExpandedKeys,
-    expandedKeys,
-    onDelete,
-    onExpand,
-    onGoToGroup
-  } = props;
-
+export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
+  const { height, className, style, treeData, onTitleChange, onOperationToggle, onSelect, selectedKeys, onDrop, defaultExpandedKeys, expandedKeys, onDelete } =
+    props;
   const onSelectNode: TreeProps['onSelect'] = (selectedKeys, info) => {
     const pos = treePosToElementPosition(info.node.pos);
     const positions: ElementPosition[] = [pos];
@@ -60,7 +42,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     onSelect?.({ uuids, positions });
   };
 
-  const onElementDelete: ElementTreeProps['onDelete'] = ({ uuid }) => {
+  const onElementDelete: PageTreeProps['onDelete'] = ({ uuid }) => {
     onDelete?.({ uuid });
   };
 
@@ -71,7 +53,6 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
       onTitleChange,
       onOperationToggle,
       onDelete: onElementDelete,
-      onGoToGroup,
       position: [],
       selectedKeys: selectedKeys || []
     });
@@ -96,8 +77,6 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
         treeData={wrappedTreeData}
         defaultExpandedKeys={defaultExpandedKeys}
         expandedKeys={expandedKeys}
-        // defaultExpandAll={defaultExpandAll}
-        onExpand={onExpand as any}
         draggable={{
           icon: false,
           nodeDraggable: () => true

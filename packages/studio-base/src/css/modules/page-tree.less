@@ -1,0 +1,96 @@
+// @import "../variable.less";
+
+@base-page-tree: ~'@{prefix}-base-page-tree';
+
+.@{base-page-tree} {
+  // fix antd style
+  &.ant-tree {
+    .ant-tree-iconEle {
+      display: none;
+    }
+
+    .ant-tree-title {
+      display: flex;
+      width: 100%;
+    }
+
+    .ant-tree-switcher {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  }
+
+  .@{base-page-tree}-node {
+    position: relative;
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .@{base-page-tree}-node-title {
+    position: relative;
+    display: -webkit-box;
+    float: inline-start;
+    overflow: hidden;
+    height: 24px;
+    padding-left: 24px;
+    white-space: initial;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 1;
+  }
+
+  .@{base-page-tree}-node-title-input {
+    background: ~'var(--@{prefix}-bg-color)';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: inline-flex;
+    // display: none;
+    float: inline-start;
+    // overflow: hidden;
+    // white-space: nowrap;
+    // text-overflow: ellipsis;
+
+    // &.@{base-page-tree}-node-title-input-active {
+    //   display: flex;
+    // }
+  }
+
+  .@{base-page-tree}-node-title-icon {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    font-size: 14px;
+    display: inline-flex;
+    width: 14px;
+    margin-right: 6px;
+  }
+
+  .@{base-page-tree}-node-action {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    display: inline-flex;
+    float: inline-end;
+    padding: 0 8px;
+    background: ~'var(--@{prefix}-bg-color)';
+  }
+
+  .@{base-page-tree}-node-icon {
+    font-size: 12px;
+    margin-left: 4px;
+    cursor: pointer;
+  }
+
+  .@{base-page-tree}-node-selected {
+    .@{base-page-tree}-node-action {
+      background: ~'var(--@{prefix}-common-primary-color)';
+    }
+  }
+}

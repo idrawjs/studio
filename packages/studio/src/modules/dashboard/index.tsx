@@ -1,20 +1,20 @@
 import React, { useEffect, useState, useContext, forwardRef, useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ConfigContext, SplitPane } from '@idraw/studio-base';
+import { SplitPane, generateClassName } from '@idraw/studio-base';
 import { PanelLayer } from '../panel-layer';
+import { PanelPage } from '../panel-page';
 import { PanelDetail } from '../panel-detail';
 import { Header } from '../header';
 import { Sketch } from '../sketch';
 // import SplitPane from '../split-pane';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../../types';
+import { Context } from '../context';
 
 const modName = 'mod-dashboard';
 const leftSiderDefaultWidth = 240;
 const rightSiderDefaultWidth = 240;
 const headerHeight = 36;
-
-// const prefixName = createPrefixName(modName);
 
 export interface DashboardProps {
   className?: string;
@@ -52,8 +52,8 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
     useContextMenuOptions,
     handleKeyboard
   } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const prefixName = createPrefixName(modName);
+  const { state } = useContext(Context);
+  const { editMode } = state;
   const [openLeftSider, setOpenLeftSider] = useState<boolean>(true);
   const [openRightSider, setOpenRightSider] = useState<boolean>(true);
 
@@ -92,12 +92,19 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
     });
   }, [height, width, openLeftSider, openRightSider]);
 
+  const rootClassName = generateClassName(modName);
+  const headerClassName = generateClassName(modName, 'header');
+  const contentClassName = generateClassName(modName, 'content');
+  const leftClassName = generateClassName(modName, 'left');
+  const rightClassName = generateClassName(modName, 'right');
+  const centerClassName = generateClassName(modName, 'right');
+
   return useMemo(() => {
     const { leftWidth, rightWidth, centerWidth } = layout;
 
     return (
-      <div ref={ref} className={classnames(prefixName(), className)} style={{ ...style, ...{ width, height, padding: 0 } }}>
-        <div className={prefixName('header')} style={{ height: headerHeight }}>
+      <div ref={ref} className={classnames(rootClassName, className)} style={{ ...style, ...{ width, height, padding: 0 } }}>
+        <div className={headerClassName} style={{ height: headerHeight }}>
           <Header
             sharedEvent={sharedEvent}
             sharedStore={sharedStore}
@@ -139,7 +146,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
             }}
           />
         </div>
-        <div className={prefixName('content')} style={{ top: headerHeight }}>
+        <div className={contentClassName} style={{ top: headerHeight }}>
           <SplitPane
             split="vertical"
             defaultSize={centerWidth + rightWidth}
@@ -164,27 +171,37 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
             }}
           >
             <div>
-              {openLeftSider && (
-                <PanelLayer
-                  height={height - headerHeight}
-                  className={prefixName('left')}
-                  defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
-                  sharedEvent={sharedEvent}
-                  sharedStore={sharedStore}
-                  useContextMenuOptions={useContextMenuOptions}
-                />
-              )}
+              {openLeftSider &&
+                (editMode === 'page' ? (
+                  <PanelPage
+                    height={height - headerHeight}
+                    className={leftClassName}
+                    defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
+                    sharedEvent={sharedEvent}
+                    sharedStore={sharedStore}
+                    useContextMenuOptions={useContextMenuOptions}
+                  />
+                ) : (
+                  <PanelLayer
+                    height={height - headerHeight}
+                    className={leftClassName}
+                    defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
+                    sharedEvent={sharedEvent}
+                    sharedStore={sharedStore}
+                    useContextMenuOptions={useContextMenuOptions}
+                  />
+                ))}
             </div>
             <div style={{ width: layout.centerWidth + layout.rightWidth, display: 'flex', flexDirection: 'row' }}>
               <Sketch
-                className={prefixName('center')}
+                className={centerClassName}
                 width={centerWidth}
                 height={height - headerHeight}
                 sharedStore={sharedStore}
                 sharedEvent={sharedEvent}
                 useContextMenuOptions={useContextMenuOptions}
               />
-              <div className={prefixName('right')} style={{ width: rightWidth, height: height - headerHeight }}>
+              <div className={rightClassName} style={{ width: rightWidth, height: height - headerHeight }}>
                 <PanelDetail />
               </div>
             </div>
@@ -192,5 +209,5 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
         </div>
       </div>
     );
-  }, [className, openLeftSider, openRightSider, layout, height]);
+  }, [className, editMode, openLeftSider, openRightSider, layout, height]);
 });

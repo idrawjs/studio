@@ -64,6 +64,10 @@ export const Sketch = (props: SketchProps) => {
     const listenMiddlewareEventSelect = (e: { uuids: string[]; positions: ElementPosition[] }) => {
       const editingData = refEditingData.current;
       let { uuids } = e;
+      if (uuids?.length === 1 && refSelectedUUIDs.current?.length === 1 && uuids[0] === refSelectedUUIDs.current[0]) {
+        return;
+      }
+
       const { positions } = e;
       if (positions && Array.isArray(positions)) {
         const elems = findElementsFromListByPositions(positions, editingData.elements);
@@ -84,7 +88,7 @@ export const Sketch = (props: SketchProps) => {
       if (['addElement', 'updateElement', 'deleteElement', 'moveElement', 'dragElement', 'resizeElement'].includes(type)) {
         const payload: Partial<StudioState> = { editingData: { ...data } };
         if (['addElement', 'deleteElement', 'moveElement'].includes(type)) {
-          payload.treeData = getElementTree(editingData);
+          payload.elementTree = getElementTree(editingData);
         }
         dispatch({
           type: 'update',
@@ -129,7 +133,7 @@ export const Sketch = (props: SketchProps) => {
         type: 'update',
         payload: {
           editingData: { ...newEditingData },
-          treeData: newTreeData
+          elementTree: newTreeData
         }
       });
     };
@@ -168,7 +172,7 @@ export const Sketch = (props: SketchProps) => {
         type: 'update',
         payload: {
           editingData: { ...newEditingData },
-          treeData: newTreeData
+          elementTree: newTreeData
         }
       });
       idraw.selectElements([elem.uuid]);
@@ -208,7 +212,7 @@ export const Sketch = (props: SketchProps) => {
         type: 'update',
         payload: {
           editingData: { ...newEditingData },
-          treeData: newTreeData
+          elementTree: newTreeData
         }
       });
       idraw.selectElements([element.uuid]);
@@ -219,10 +223,10 @@ export const Sketch = (props: SketchProps) => {
       idraw?.deleteElement(uuid);
       const editingData = idraw?.getData();
       if (editingData) {
-        const treeData = getElementTree(editingData);
+        const elementTree = getElementTree(editingData);
         dispatch({
           type: 'update',
-          payload: { editingData: { ...editingData }, treeData }
+          payload: { editingData: { ...editingData }, elementTree }
         });
         idraw.trigger(eventKeys.clearSelect, {});
       }
@@ -244,7 +248,41 @@ export const Sketch = (props: SketchProps) => {
         updateEditingDataChildrenToData(editingDataPosition, editingData, data);
       }
 
-      if (type === 'go-to-group' && position) {
+      if (type === 'go-to-page' && position) {
+        // update new editing data
+        const newEditingDataPosition = [...position];
+        const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
+        const newTreeData = getElementTree(newEditingData);
+
+        dispatch({
+          type: 'update',
+          payload: {
+            data: { ...data },
+            editingData: { ...newEditingData },
+            editingDataPosition: newEditingDataPosition,
+            elementTree: newTreeData
+          }
+        });
+        idraw.centerContent({ data: newEditingData });
+        idraw.trigger(eventKeys.clearSelect, {});
+      } else if (type === 'go-to-group' && position) {
+        // update new editing data
+        const newEditingDataPosition = [...position];
+        const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
+        const newTreeData = getElementTree(newEditingData);
+
+        dispatch({
+          type: 'update',
+          payload: {
+            data: { ...data },
+            editingData: { ...newEditingData },
+            editingDataPosition: newEditingDataPosition,
+            elementTree: newTreeData
+          }
+        });
+        idraw.centerContent({ data: newEditingData });
+        idraw.trigger(eventKeys.clearSelect, {});
+      } else if (type === 'go-to-next-group' && position) {
         // update new editing data
         const newEditingDataPosition = [...editingDataPosition, ...position];
         const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
@@ -256,16 +294,10 @@ export const Sketch = (props: SketchProps) => {
             data: { ...data },
             editingData: { ...newEditingData },
             editingDataPosition: newEditingDataPosition,
-            treeData: newTreeData
+            elementTree: newTreeData
           }
         });
-        // idraw.setViewScale({
-        //   scale: 1,
-        //   offsetX: 0,
-        //   offsetY: 0
-        // });
         idraw.centerContent({ data: newEditingData });
-
         idraw.trigger(eventKeys.clearSelect, {});
       } else if (type === 'back-one' && editingDataPosition.length > 0) {
         const newEditingDataPosition = [...editingDataPosition];
@@ -279,7 +311,7 @@ export const Sketch = (props: SketchProps) => {
             data: { ...data },
             editingData: { ...newEditingData },
             editingDataPosition: [...newEditingDataPosition],
-            treeData: newTreeData
+            elementTree: newTreeData
           }
         });
         // idraw.setViewScale({
@@ -300,7 +332,7 @@ export const Sketch = (props: SketchProps) => {
             data: { ...data },
             editingData: newEditingData,
             editingDataPosition: newEditingDataPosition,
-            treeData: newTreeData
+            elementTree: newTreeData
           }
         });
         // idraw.setViewScale({
@@ -325,7 +357,7 @@ export const Sketch = (props: SketchProps) => {
           data: { ...data },
           editingData: { ...newEditingData },
           editingDataPosition: newEditingDataPosition,
-          treeData: newTreeData
+          elementTree: newTreeData
         }
       });
       idraw.setViewScale({
@@ -343,7 +375,7 @@ export const Sketch = (props: SketchProps) => {
         type: 'update',
         payload: {
           editingData: { ...editingData },
-          treeData: newTreeData
+          elementTree: newTreeData
         }
       });
       idraw.trigger(eventKeys.clearSelect, {});
@@ -370,6 +402,8 @@ export const Sketch = (props: SketchProps) => {
             offsetX,
             offsetY
           });
+        } else {
+          idraw.centerContent({ data: state.editingData });
         }
       }
       refHasFirstDraw.current = true;

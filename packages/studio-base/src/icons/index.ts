@@ -43,6 +43,7 @@ import IconIndent from './indent';
 import IconImage from './image';
 import IconInvisible from './invisible';
 import IconLayer from './layer';
+import IconLayout from './layout';
 import IconLeft from './left';
 import IconLight from './light';
 import IconLike from './like';
@@ -118,6 +119,7 @@ export {
   IconImage,
   IconInvisible,
   IconLayer,
+  IconLayout,
   IconLeft,
   IconLight,
   IconLike,
