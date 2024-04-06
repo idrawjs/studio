@@ -1,7 +1,7 @@
 import React, { useContext, useMemo } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ThemeSwitch, LocaleSelector, ScaleSelector, ConfigContext } from '@idraw/studio-base';
+import { ThemeSwitch, LocaleSelector, ScaleSelector, generateClassName } from '@idraw/studio-base';
 import { formatNumber } from 'idraw';
 import { Context } from '../context';
 import { NavMenu } from '../nav-menu';
@@ -36,16 +36,14 @@ export const Header = (props: ModProps) => {
     sharedEvent
   } = props;
   const { state, dispatch } = useContext(Context);
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const leftClassName = generateClassName('left');
-  const rightClassName = generateClassName('right');
-  const centerClassName = generateClassName('center');
+  const rootClassName = generateClassName(modName);
+  const leftClassName = generateClassName(modName, 'left');
+  const rightClassName = generateClassName(modName, 'right');
+  const centerClassName = generateClassName(modName, 'center');
 
-  const localeClassName = generateClassName('locale');
-  const scaleClassName = generateClassName('scale');
-  const switchClassName = generateClassName('switch');
+  const localeClassName = generateClassName(modName, 'locale');
+  const scaleClassName = generateClassName(modName, 'scale');
+  const switchClassName = generateClassName(modName, 'switch');
   const { localeCode, scaleInfo } = state;
 
   return useMemo(() => {

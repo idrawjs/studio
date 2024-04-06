@@ -1,23 +1,28 @@
 import type { CSSProperties } from 'react';
-import type { Data, ElementPosition } from 'idraw';
-import type { LocaleCode } from '@idraw/studio-base';
+import type { ElementPosition } from 'idraw';
+import type { LocaleCode, StudioData } from '@idraw/studio-base';
 import type { DashboardProps } from '../../modules';
 import type { SharedEvent, SharedStore } from './shared';
-import type { StudioActionType, StudioState } from './context';
+import type { StudioActionType, StudioState, StudioThemeMode, StudioEditMode } from './context';
 
 export type StudioProps = Omit<DashboardProps, 'sharedEvent' | 'sharedStore' | 'useContextMenuOptions' | 'handleKeyboard'> &
   Pick<Partial<DashboardProps>, 'useContextMenuOptions' | 'handleKeyboard'> & {
     className?: string;
     style?: CSSProperties;
-    data: Data;
+
     prefiexName?: string;
     defaultLocale?: LocaleCode;
-    defaultThemeMode?: 'light' | 'dark';
+    defaultThemeMode?: StudioThemeMode;
+    defaultEditMode?: StudioEditMode;
+
     defaultScaleInfo?: {
       scale: number;
       offsetX: number;
       offsetY: number;
     };
+
+    // data
+    data?: StudioData;
     defaultEditingGroupUUID?: string;
     onEditGroupElement?: (e: { uuid?: string; position: ElementPosition }) => void;
   };

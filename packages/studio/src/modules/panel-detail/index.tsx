@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { findElementFromList, updateElementInList, isAssetId, createAssetId } from 'idraw';
 import type { Element, DataLayout, ElementAssetsItem, RecursivePartial, Data } from 'idraw';
-import { ConfigContext, ElementDetail, LayoutDetail } from '@idraw/studio-base';
+import { generateClassName, ElementDetail, LayoutDetail } from '@idraw/studio-base';
 import { Context } from '../context';
 
 const modName = 'mod-panel-detail';
@@ -15,11 +15,9 @@ export interface PanelDetailProps {
 
 export const PanelDetail = (props: PanelDetailProps) => {
   const { className, style } = props;
-  const { createPrefixName } = useContext(ConfigContext);
   const { state, dispatch } = useContext(Context);
-  const generateClassName = createPrefixName(modName);
   const { selectedUUIDs, editingData, editingDataPosition } = state;
-  const modClassName = generateClassName();
+  const modClassName = generateClassName(modName);
   const refEditingData = useRef<Data>(editingData);
 
   useEffect(() => {

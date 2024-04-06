@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ConfigContext, ElementTree, getElementTree, IconDoubleLeft, IconLeft } from '@idraw/studio-base';
+import { generateClassName, ElementTree, getElementTree, IconDoubleLeft, IconLeft } from '@idraw/studio-base';
 import { updateElementInList, moveElementPosition, getGroupQueueFromList, findElementFromListByPosition } from 'idraw';
 import type { ElementPosition } from 'idraw';
 import { Dropdown, Button } from 'antd';
@@ -23,19 +23,18 @@ export interface PanelLayerProps {
 export const PanelLayer = (props: PanelLayerProps) => {
   const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions } = props;
   const { state, dispatch } = useContext(Context);
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const { treeData, selectedUUIDs, editingData } = state;
+  const { elementTree, selectedUUIDs, editingData } = state;
+
   const refTree = useRef<{
     scrollTo: (e: { key: string | number; align?: 'top' | 'bottom' | 'auto'; offset?: number }) => void;
   } | null>(null);
   const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultSelectedElementUUIDs);
-  const rootClassName = generateClassName();
-  const contentClassName = generateClassName('content');
-  const headerClassName = generateClassName('header');
-  const headerTitleClassName = generateClassName('header', 'title');
-  const headerBtnClassName = generateClassName('header', 'btn');
-  // const footerClassName = generateClassName('footer');
+  const rootClassName = generateClassName(modName);
+  const contentClassName = generateClassName(modName, 'content');
+  const headerClassName = generateClassName(modName, 'header');
+  const headerTitleClassName = generateClassName(modName, 'header', 'title');
+  const headerBtnClassName = generateClassName(modName, 'header', 'btn');
+  // const footerClassName = generateClassName(modName, 'footer');
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   const getCurrentName = () => {
@@ -92,8 +91,11 @@ export const PanelLayer = (props: PanelLayerProps) => {
     sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
   };
 
+  const headerHeight = 32;
+  const elementsHeight = height - headerHeight;
+
   return useMemo(() => {
-    if (!(Array.isArray(treeData) && treeData.length > 0)) {
+    if (!(Array.isArray(elementTree) && elementTree.length > 0)) {
       return (
         <div
           style={style}
@@ -110,6 +112,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
         </div>
       );
     }
+
     return (
       <div
         style={style}
@@ -118,7 +121,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
           e.preventDefault();
         }}
       >
-        <div className={headerClassName}>
+        <div className={headerClassName} style={{ height: headerHeight }}>
           <Button
             className={headerBtnClassName}
             size="small"
@@ -133,24 +136,24 @@ export const PanelLayer = (props: PanelLayerProps) => {
           <div className={contentClassName}>
             <ElementTree
               ref={refTree}
-              height={height}
-              treeData={treeData}
+              height={elementsHeight}
+              treeData={elementTree}
               selectedKeys={selectedUUIDs}
               expandedKeys={expandedKeys}
               onTitleChange={({ uuid, value }) => {
                 updateElementInList(uuid, { name: value }, state.editingData.elements);
-                const treeData = getElementTree(editingData);
+                const elementTree = getElementTree(editingData);
                 dispatch({
                   type: 'update',
-                  payload: { editingData: { ...editingData }, treeData }
+                  payload: { editingData: { ...editingData }, elementTree }
                 });
               }}
               onOperationToggle={({ uuid, operations }) => {
                 updateElementInList(uuid, { operations }, state.editingData.elements);
-                const treeData = getElementTree(editingData);
+                const elementTree = getElementTree(editingData);
                 dispatch({
                   type: 'update',
-                  payload: { editingData: { ...editingData }, treeData }
+                  payload: { editingData: { ...editingData }, elementTree }
                 });
               }}
               onSelect={(e) => {
@@ -170,17 +173,17 @@ export const PanelLayer = (props: PanelLayerProps) => {
                   targetElem.y = 0;
                 }
 
-                const treeData = getElementTree(editingData);
+                const elementTree = getElementTree(editingData);
                 dispatch({
                   type: 'update',
-                  payload: { editingData: { ...editingData, ...{ elements: [...elements] } }, treeData }
+                  payload: { editingData: { ...editingData, ...{ elements: [...elements] } }, elementTree }
                 });
               }}
               onDelete={({ uuid }) => {
                 sharedEvent.trigger('deleteElement', { uuid });
               }}
               onGoToGroup={(e) => {
-                sharedEvent.trigger('resetEditingView', { type: 'go-to-group', position: e.position });
+                sharedEvent.trigger('resetEditingView', { type: 'go-to-next-group', position: e.position });
               }}
               onExpand={(keys, { node }) => {
                 const currentKey = node.key as string;
@@ -200,5 +203,5 @@ export const PanelLayer = (props: PanelLayerProps) => {
         {/* <div className={footerClassName}>footer</div> */}
       </div>
     );
-  }, [treeData, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPosition, contextMenuOptions]);
+  }, [elementsHeight, elementTree, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPosition, contextMenuOptions]);
 };

@@ -1,12 +1,13 @@
 import { createContext } from 'react';
 import { ElementPosition, getElementPositionFromList } from 'idraw';
-import { getElementTree } from '@idraw/studio-base';
+import { getElementTree, getPageTree } from '@idraw/studio-base';
 import type { Data } from 'idraw';
 import { StudioState, StudioAction, StudioContext, StudioProps } from '../types';
 import { cloneEditingDataByPosition, updateEditingDataLayoutToTargetGroup } from '../util/data';
 
 const defaultThemeMode = 'dark';
 const defaultLocale = 'en-US';
+const defaultEditMode = 'data';
 
 export function createStudioContextStateByProps(props?: StudioProps): StudioState {
   const data = {
@@ -15,19 +16,30 @@ export function createStudioContextStateByProps(props?: StudioProps): StudioStat
   };
   let editingDataPosition: ElementPosition = [];
   let editingData: Data = data;
+
+  const pageTree = getPageTree(data);
+
   if (props?.defaultEditingGroupUUID) {
     editingDataPosition = getElementPositionFromList(props.defaultEditingGroupUUID, data.elements);
   }
+
+  if (props?.defaultEditMode === 'page' && editingDataPosition.length !== 1 && pageTree.length > 0) {
+    editingDataPosition = [0];
+  }
+
   editingData = cloneEditingDataByPosition(editingDataPosition, data);
-  const treeData = getElementTree(editingData);
+
+  const elementTree = getElementTree(editingData);
 
   return {
     localeCode: props?.defaultLocale || defaultLocale,
     themeMode: props?.defaultThemeMode || defaultThemeMode,
+    editMode: props?.defaultEditMode || defaultEditMode,
     data,
     editingData,
     editingDataPosition,
-    treeData,
+    elementTree,
+    pageTree,
     selectedUUIDs: props?.defaultSelectedElementUUIDs || [],
     scaleInfo: {
       scale: 1,
@@ -44,15 +56,17 @@ export function createStudioContextState(opts?: Partial<StudioState>): StudioSta
     ...(opts?.data || {})
   };
   return {
-    localeCode: 'en-US',
-    themeMode: opts?.themeMode || 'light',
+    localeCode: defaultLocale,
+    themeMode: opts?.themeMode || defaultThemeMode,
+    editMode: opts?.editMode || defaultEditMode,
     data: {
       elements: [],
       ...(opts?.data || {})
     },
     editingData: cloneEditingDataByPosition([], data),
     editingDataPosition: [],
-    treeData: [],
+    elementTree: [],
+    pageTree: [],
     selectedUUIDs: [],
     scaleInfo: {
       scale: 1,

@@ -34,7 +34,7 @@ export interface SharedEventMap {
     uuid: string;
   };
   resetEditingView: {
-    type: 'go-to-group' | 'back-one' | 'back-root';
+    type: 'go-to-page' | 'go-to-group' | 'go-to-next-group' | 'back-one' | 'back-root';
     position: ElementPosition | null;
   };
   resetData: {

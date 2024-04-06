@@ -6,10 +6,11 @@ export { ThemeSwitch, type ThemeSwitchProps } from './modules/theme-switch';
 export { LocaleSelector, type LocaleSelectorProps } from './modules/locale-selector';
 export { ScaleSelector, type ScaleSelectorProps } from './modules/scale-selector';
 export { ElementTree, type ElementTreeProps } from './modules/element-tree';
+export { PageTree, type PageTreeProps } from './modules/page-tree';
 export { ElementDetail, type ElementDetailProps } from './modules/element-detail';
 export { LayoutDetail, type LayoutDetailProps } from './modules/layout-detail';
 
-export { getElementTree } from './tools';
+export { getElementTree, getPageTree } from './tools';
 export { setClassNameTopPrefix, generateClassName } from './css/index';
 export { useThemeClassName } from './hooks/theme';
 export * from './locale/types';
@@ -60,6 +61,7 @@ export {
   IconImage,
   IconInvisible,
   IconLayer,
+  IconLayout,
   IconLeft,
   IconLight,
   IconLike,

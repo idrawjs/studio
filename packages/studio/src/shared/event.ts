@@ -57,13 +57,13 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
         idraw.addElement(elem, { position });
       });
       const editingData = idraw?.getData() as Data;
-      const treeData = getElementTree(editingData);
+      const elementTree = getElementTree(editingData);
 
       sharedEvent.trigger('dispatch', {
         type: 'update',
         payload: {
           editingData,
-          treeData
+          elementTree
         }
       });
       idraw.selectElement(targetElements[0].uuid);
@@ -97,13 +97,13 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
     }
 
     const editingData = idraw?.getData() as Data;
-    const treeData = getElementTree(editingData);
+    const elementTree = getElementTree(editingData);
 
     sharedEvent.trigger('dispatch', {
       type: 'update',
       payload: {
         editingData,
-        treeData
+        elementTree
       }
     });
     idraw?.trigger(eventKeys.clearSelect);
@@ -120,12 +120,12 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
           idraw?.deleteElement(elements[i].uuid);
         }
         const editingData = idraw?.getData() as Data;
-        const treeData = getElementTree(editingData);
+        const elementTree = getElementTree(editingData);
         sharedEvent.trigger('dispatch', {
           type: 'update',
           payload: {
             editingData,
-            treeData
+            elementTree
           }
         });
         idraw?.trigger(eventKeys.clearSelect);

@@ -1,16 +1,22 @@
 import type { Dispatch } from 'react';
 import type { Data, ElementPosition } from 'idraw';
-import type { ElementTreeData, LocaleCode } from '@idraw/studio-base';
+import type { ElementTreeData, PageTreeData, LocaleCode } from '@idraw/studio-base';
 
 export type StudioThemeMode = 'light' | 'dark';
+
+export type StudioEditMode = 'data' | 'page';
 
 export interface StudioState {
   localeCode: LocaleCode;
   themeMode: StudioThemeMode;
+  editMode: StudioEditMode;
+
   data: Data;
   editingData: Data;
   editingDataPosition: ElementPosition;
-  treeData: ElementTreeData;
+  elementTree: ElementTreeData;
+  pageTree: PageTreeData;
+
   selectedUUIDs: string[];
   scaleInfo: {
     scale: number;

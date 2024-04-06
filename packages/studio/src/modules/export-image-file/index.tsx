@@ -1,7 +1,7 @@
-import React, { useContext, useMemo, useEffect, useState, useCallback } from 'react';
+import React, { useMemo, useEffect, useState, useCallback } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { ConfigContext } from '@idraw/studio-base';
+import { generateClassName } from '@idraw/studio-base';
 import { Button, Spin, Form, Input, Select, Divider } from 'antd';
 import type { SharedEvent, SharedStore } from '../../types';
 
@@ -35,12 +35,10 @@ const defaultFileOptions = {
 
 export const ExportFile = (props: ExportFileProps) => {
   const { className, style, sharedStore } = props;
-  const { createPrefixName } = useContext(ConfigContext);
-  const generateClassName = createPrefixName(modName);
-  const rootClassName = generateClassName();
-  const previewClassName = generateClassName('preview');
-  const optionsClassName = generateClassName('options');
-  const canvasClassName = generateClassName('canvas');
+  const rootClassName = generateClassName(modName);
+  const previewClassName = generateClassName(modName, 'preview');
+  const optionsClassName = generateClassName(modName, 'options');
+  const canvasClassName = generateClassName(modName, 'canvas');
   const [fileInfo, setFileInfo] = useState<FileInfo | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const [imageSrc, setImageSrc] = useState<string | null>(null);
