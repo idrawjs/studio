@@ -20,6 +20,7 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     navigationMenu,
     navigationCenter,
     defaultSelectedElementUUIDs,
+    defaultEditMode,
     prefiexName,
     onEditGroupElement,
     useContextMenuOptions = useInnerContextMenuOptions,
@@ -36,11 +37,15 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
   );
 
   useEffect(() => {
-    const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
-    onEditGroupElement?.({
-      uuid: elem?.uuid,
-      position: [...state.editingDataPosition]
-    });
+    if (defaultEditMode === 'page') {
+      // TODO
+    } else {
+      const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
+      onEditGroupElement?.({
+        uuid: elem?.uuid,
+        position: [...state.editingDataPosition]
+      });
+    }
   }, [state.editingDataPosition]);
 
   useImperativeHandle(

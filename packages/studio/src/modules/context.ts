@@ -3,17 +3,20 @@ import { ElementPosition, getElementPositionFromList } from 'idraw';
 import { getElementTree, getPageTree } from '@idraw/studio-base';
 import type { Data } from 'idraw';
 import { StudioState, StudioAction, StudioContext, StudioProps } from '../types';
-import { cloneEditingDataByPosition, updateEditingDataLayoutToTargetGroup } from '../util/data';
+import { cloneEditingDataByPosition, updateEditingDataLayoutToTargetGroup, wrapPageData } from '../util/data';
 
 const defaultThemeMode = 'dark';
 const defaultLocale = 'en-US';
 const defaultEditMode = 'data';
 
 export function createStudioContextStateByProps(props?: StudioProps): StudioState {
-  const data = {
+  let data = {
     elements: [],
     ...(props?.data || {})
   };
+  if (props?.defaultEditMode === 'page') {
+    data = wrapPageData(data);
+  }
   let editingDataPosition: ElementPosition = [];
   let editingData: Data = data;
 

@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo, useState, useContext } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { generateClassName, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
@@ -11,6 +11,7 @@ import { ExportFile, exportFileDialogWidth } from '../export-image-file';
 import { useLocale } from '../../locale';
 import { pickJSONFile } from '../../util/file';
 import type { SharedEvent, SharedStore } from '../../types';
+import { Context } from '../context';
 
 const useModuleLocale = () => {
   const [moduleLocale] = useLocale('NavMenu');
@@ -36,6 +37,10 @@ export const NavMenu = (props: NavMenuProps) => {
     domEvent.preventDefault();
     sharedEvent.trigger('createElement', { type: key as ElementType, element: { name: key } });
   };
+
+  const { state } = useContext(Context);
+  const { editMode, pageTree } = state;
+  const disabledAddElement = !!(editMode === 'page' && pageTree.length === 0);
 
   const resetDevicePixelRatio = (radio: number) => {
     const idraw = sharedStore.get('idraw');
@@ -143,29 +148,34 @@ export const NavMenu = (props: NavMenuProps) => {
         key: 'rect',
         label: moduleLocale.rect,
         icon: <IconRect />,
+        disabled: disabledAddElement,
         onClick: clickToCreateElement
       },
       {
         key: 'circle',
         label: moduleLocale.circle,
         icon: <IconCircle />,
+        disabled: disabledAddElement,
         onClick: clickToCreateElement
       },
       {
         key: 'text',
         label: moduleLocale.text,
         icon: <IconText />,
+        disabled: disabledAddElement,
         onClick: clickToCreateElement
       },
       {
         key: 'image',
         label: moduleLocale.image,
         icon: <IconImage />,
+        disabled: disabledAddElement,
         onClick: clickToCreateElement
       },
       {
         key: 'svg',
         label: moduleLocale.svg,
+        disabled: disabledAddElement,
         icon: <IconStar />,
         onClick: clickToCreateElement
       },
@@ -180,6 +190,7 @@ export const NavMenu = (props: NavMenuProps) => {
         key: 'group',
         label: moduleLocale.group,
         icon: <IconGroup />,
+        disabled: disabledAddElement,
         onClick: clickToCreateElement
       }
     ]

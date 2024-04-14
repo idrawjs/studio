@@ -49,6 +49,7 @@ export {
   IconEdit,
   IconExperiment,
   IconFile,
+  IconFileAdd,
   IconFileCopy,
   IconFullCornerRadius,
   IconGitHub,

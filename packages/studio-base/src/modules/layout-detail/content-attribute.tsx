@@ -2,7 +2,7 @@ import React, { useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import type { Element, DataLayout, RecursivePartial } from 'idraw';
 import { getElementSize } from 'idraw';
-import { Col, Row, Form } from 'antd';
+import { Col, Row, Form, Select } from 'antd';
 import type { FormInstance } from 'antd';
 import { useModuleLocale } from './hooks';
 import { MultipleColor } from '../element-detail/field-item/multiple-color';
@@ -10,7 +10,7 @@ import { generateClassName } from '../../css';
 
 const modName = 'base-element-content-attribute';
 
-type LayoutDetailContent = Pick<DataLayout['detail'], 'background'>;
+type LayoutDetailContent = Pick<DataLayout['detail'], 'background' | 'overflow'>;
 
 export interface ContentAttributeProps {
   className?: string;
@@ -23,10 +23,11 @@ export interface ContentAttributeProps {
 type FieldType = LayoutDetailContent;
 
 const elementToFormData = (detail?: LayoutDetailContent | null) => {
-  const { background } = detail || {};
+  const { background, overflow = 'visible' } = detail || {};
 
   const formData: FieldType = {
-    background
+    background,
+    overflow
   };
   return formData;
 };
@@ -69,6 +70,19 @@ export const ContentAttribute = (props: ContentAttributeProps) => {
                   //   onValuesChange({ background: value });
                   // }}
                 />
+              </Form.Item>
+            </Col>
+          </Row>
+          <Row className={rowClassName}>
+            <Col className={colClassName} span="10">
+              {moduleLocale.overflow}
+            </Col>
+            <Col span="12" className={colClassName}>
+              <Form.Item className={formItemClassName} name="overflow">
+                <Select size="small" disabled={disabled}>
+                  <Select.Option value="visible">{moduleLocale.visible}</Select.Option>
+                  <Select.Option value="hidden">{moduleLocale.hidden}</Select.Option>
+                </Select>
               </Form.Item>
             </Col>
           </Row>

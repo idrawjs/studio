@@ -2,12 +2,14 @@ import React, { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { generateClassName, ElementTree, PageTree, getElementTree, IconDoubleLeft, IconLeft, IconLayout, getPageTree } from '@idraw/studio-base';
-import { updateElementInList, moveElementPosition, getGroupQueueFromList, findElementFromListByPosition } from 'idraw';
+import { updateElementInList, moveElementPosition, getGroupQueueFromList, findElementFromListByPosition, eventKeys } from 'idraw';
 import type { ElementPosition } from 'idraw';
-import { Dropdown, Button, Collapse } from 'antd';
+import { Dropdown, Button, Collapse, Empty } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Context } from '../context';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions, StudioState } from '../../types';
+import { useLocale } from '../../locale';
+import { AddPageButton } from './add-page-button';
 
 const modName = 'mod-panel-page';
 
@@ -31,6 +33,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions } = props;
   const { state, dispatch } = useContext(Context);
   const { pageTree, elementTree, selectedUUIDs, editingData, editingDataPosition, data } = state;
+
   const refElementTree = useRef<{
     scrollTo: (e: { key: string | number; align?: 'top' | 'bottom' | 'auto'; offset?: number }) => void;
   } | null>(null);
@@ -50,6 +53,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const headerTitleClassName = generateClassName(modName, 'header', 'title');
   const headerBtnClassName = generateClassName(modName, 'header', 'btn');
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
+  const [moduleLocale] = useLocale('contextMenu');
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
 
   const getSelectedPageKeys = () => {
@@ -62,7 +66,20 @@ export const PanelPage = (props: PanelPageProps) => {
   };
   const [selectedPageUUIDs, setSelectedPageUUIDs] = useState<string[]>(getSelectedPageKeys());
 
-  useEffect(() => {}, [editingDataPosition]);
+  useEffect(() => {
+    if (editingDataPosition.length === 1 && pageTree.length > 0) {
+      const pageUUID = pageTree[editingDataPosition[0]]?.uuid;
+      if (pageUUID && !selectedPageUUIDs.includes(pageUUID)) {
+        setSelectedPageUUIDs([pageUUID]);
+        // setTimeout(() => {
+        //   // TODO
+        //   refPageTree.current?.scrollTo({
+        //     key: pageUUID
+        //   });
+        // }, 300);
+      }
+    }
+  }, [editingDataPosition]);
 
   const resetContentHeight = () => {
     const keys = refContentActiveKeys.current;
@@ -96,7 +113,7 @@ export const PanelPage = (props: PanelPageProps) => {
       const pageKeys: string[] = [];
       if (pageTree.length > 0) {
         pageKeys.push(pageTree[0].uuid);
-        sharedEvent.trigger('resetEditingView', { type: 'go-to-group', position: [0] });
+        sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: [0] });
       }
       setSelectedPageUUIDs(pageKeys);
       idraw?.enable('selectInGroup');
@@ -166,107 +183,118 @@ export const PanelPage = (props: PanelPageProps) => {
   const items: CollapseProps['items'] = [
     {
       key: pageTreeKey,
+      collapsible: inPageOverview ? 'disabled' : undefined,
       label: (
         <div className={headerClassName} style={{ height: headerHeight }}>
           <span style={{ marginRight: 10 }}>Pages</span>
-          <Button
-            className={headerBtnClassName}
-            size="small"
-            icon={<IconLayout />}
-            type={inPageOverview ? 'primary' : 'default'}
-            onClick={(e) => {
-              e.stopPropagation();
-              setInPageOverview(!inPageOverview);
-            }}
-          />
+          <div style={{ display: 'flex' }}>
+            <AddPageButton parentModName={modName} sharedEvent={sharedEvent} sharedStore={sharedStore} />
+            <Button
+              className={headerBtnClassName}
+              style={{ marginLeft: '10px' }}
+              size="small"
+              icon={<IconLayout />}
+              type={inPageOverview ? 'primary' : 'default'}
+              onClick={(e) => {
+                e.stopPropagation();
+                setInPageOverview(!inPageOverview);
+              }}
+            />
+          </div>
         </div>
       ),
       children: (
         <div className={contentClassName} style={{ height: pageTreeHeight }}>
-          <PageTree
-            ref={refPageTree}
-            height={pageTreeHeight}
-            treeData={pageTree}
-            selectedKeys={selectedPageUUIDs}
-            onTitleChange={({ uuid, value }) => {
-              updateElementInList(uuid, { name: value }, data.elements);
+          {pageTree.length > 0 ? (
+            <PageTree
+              ref={refPageTree}
+              height={pageTreeHeight}
+              treeData={pageTree}
+              selectedKeys={selectedPageUUIDs}
+              onTitleChange={({ uuid, value }) => {
+                updateElementInList(uuid, { name: value }, data.elements);
 
-              const pageTree = getPageTree(data);
-              const payload: Partial<StudioState> = {
-                pageTree,
-                data: { ...data }
-              };
-              if (editingDataPosition.length === 0) {
-                payload.editingData = { ...data };
-                const elementTree = getElementTree(data);
-                payload.elementTree = elementTree;
-              }
-              dispatch({
-                type: 'update',
-                payload
-              });
-            }}
-            onOperationToggle={({}) => {
-              // updateElementInList(uuid, { operations }, state.editingData.elements);
-              // const elementTree = getElementTree(editingData);
-              // dispatch({
-              //   type: 'update',
-              //   payload: { editingData: { ...editingData }, elementTree }
-              // });
-            }}
-            onSelect={(e) => {
-              if (e?.positions.length === 1) {
-                if (inPageOverview) {
-                  if (!selectedPageUUIDs?.includes(e.uuids[0])) {
-                    selectElementsByPositions(e.positions);
-                    setSelectedPageUUIDs([e.uuids[0]]);
+                const pageTree = getPageTree(data);
+                const payload: Partial<StudioState> = {
+                  pageTree,
+                  data: { ...data }
+                };
+                if (editingDataPosition.length === 0) {
+                  payload.editingData = { ...data };
+                  const elementTree = getElementTree(data);
+                  payload.elementTree = elementTree;
+                }
+                dispatch({
+                  type: 'update',
+                  payload
+                });
+              }}
+              onOperationToggle={({}) => {
+                // updateElementInList(uuid, { operations }, state.editingData.elements);
+                // const elementTree = getElementTree(editingData);
+                // dispatch({
+                //   type: 'update',
+                //   payload: { editingData: { ...editingData }, elementTree }
+                // });
+              }}
+              onSelect={(e) => {
+                if (e?.positions.length === 1) {
+                  if (inPageOverview) {
+                    if (!selectedPageUUIDs?.includes(e.uuids[0])) {
+                      selectElementsByPositions(e.positions);
+                      setSelectedPageUUIDs([e.uuids[0]]);
+                    }
+                    return;
                   }
+                  const idraw = sharedStore.get('idraw');
+                  idraw?.trigger(eventKeys.clearSelect);
+                  sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: e.positions[0] });
+
+                  const keys: string[] = [];
+                  const elem = findElementFromListByPosition(e.positions[0], state.data.elements);
+                  if (elem?.uuid) {
+                    keys.push(elem.uuid);
+                    setSelectedPageUUIDs(keys);
+                  }
+                }
+              }}
+              onDrop={(e) => {
+                if (!(e.from.length === 1 && e.to.length === 1)) {
                   return;
                 }
+                const { elements } = moveElementPosition(data.elements, {
+                  from: e.from,
+                  to: e.to
+                });
 
-                sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: e.positions[0] });
-
-                const keys: string[] = [];
-                const elem = findElementFromListByPosition(e.positions[0], state.data.elements);
-                if (elem?.uuid) {
-                  keys.push(elem.uuid);
-                  setSelectedPageUUIDs(keys);
+                const pageTree = getPageTree(data);
+                const payload: Partial<StudioState> = {
+                  pageTree,
+                  data: { ...data, ...{ elements } }
+                };
+                if (editingDataPosition.length === 0) {
+                  payload.editingData = { ...data, ...{ elements } };
+                  const elementTree = getElementTree(data);
+                  payload.elementTree = elementTree;
                 }
-              }
-            }}
-            onDrop={(e) => {
-              if (!(e.from.length === 1 && e.to.length === 1)) {
-                return;
-              }
-              const { elements } = moveElementPosition(data.elements, {
-                from: e.from,
-                to: e.to
-              });
-
-              const pageTree = getPageTree(data);
-              const payload: Partial<StudioState> = {
-                pageTree,
-                data: { ...data, ...{ elements } }
-              };
-              if (editingDataPosition.length === 0) {
-                payload.editingData = { ...data, ...{ elements } };
-                const elementTree = getElementTree(data);
-                payload.elementTree = elementTree;
-              }
-              dispatch({
-                type: 'update',
-                payload
-              });
-            }}
-            onDelete={({}) => {
-              // sharedEvent.trigger('deleteElement', { uuid });
-            }}
-          />
+                dispatch({
+                  type: 'update',
+                  payload
+                });
+              }}
+              onDelete={({ uuid }) => {
+                sharedEvent.trigger('deletePage', { uuid });
+              }}
+            />
+          ) : (
+            <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
+          )}
         </div>
       )
     },
     {
       key: elementTreeKey,
+      collapsible: inPageOverview ? 'disabled' : undefined,
       label: (
         <div className={headerClassName} style={{ height: headerHeight }}>
           <div style={{ display: 'inline-flex' }}>
@@ -282,74 +310,77 @@ export const PanelPage = (props: PanelPageProps) => {
           <span className={headerTitleClassName}>{getCurrentName()}</span>
         </div>
       ),
-      collapsible: inPageOverview ? 'disabled' : undefined,
       children: inPageOverview ? null : (
         <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
           <div className={contentClassName} style={{ height: elementTreeHeight }}>
-            <ElementTree
-              ref={refElementTree}
-              height={elementTreeHeight}
-              treeData={elementTree}
-              selectedKeys={selectedUUIDs}
-              expandedKeys={expandedElementKeys}
-              onTitleChange={({ uuid, value }) => {
-                updateElementInList(uuid, { name: value }, state.editingData.elements);
-                const elementTree = getElementTree(editingData);
-                dispatch({
-                  type: 'update',
-                  payload: { editingData: { ...editingData }, elementTree }
-                });
-              }}
-              onOperationToggle={({ uuid, operations }) => {
-                updateElementInList(uuid, { operations }, state.editingData.elements);
-                const elementTree = getElementTree(editingData);
-                dispatch({
-                  type: 'update',
-                  payload: { editingData: { ...editingData }, elementTree }
-                });
-              }}
-              onSelect={(e) => {
-                if (!selectedUUIDs?.includes(e.uuids[0])) {
-                  selectElementsByPositions(e.positions);
-                }
-              }}
-              onDrop={(e) => {
-                const { elements } = moveElementPosition(editingData.elements, {
-                  from: e.from,
-                  to: e.to
-                });
-
-                const targetElem = findElementFromListByPosition(e.to, editingData.elements);
-                if (targetElem) {
-                  targetElem.x = 0;
-                  targetElem.y = 0;
-                }
-
-                const elementTree = getElementTree(editingData);
-                dispatch({
-                  type: 'update',
-                  payload: { editingData: { ...editingData, ...{ elements: [...elements] } }, elementTree }
-                });
-              }}
-              onDelete={({ uuid }) => {
-                sharedEvent.trigger('deleteElement', { uuid });
-              }}
-              onGoToGroup={(e) => {
-                sharedEvent.trigger('resetEditingView', { type: 'go-to-next-group', position: e.position });
-              }}
-              onExpand={(keys, { node }) => {
-                const currentKey = node.key as string;
-                if (currentKey) {
-                  let newKeys = [...expandedElementKeys];
-                  if (expandedElementKeys.includes(currentKey)) {
-                    newKeys.splice(newKeys.indexOf(currentKey), 1);
-                  } else {
-                    newKeys = [...newKeys, ...[currentKey]];
+            {elementTree.length > 0 ? (
+              <ElementTree
+                ref={refElementTree}
+                height={elementTreeHeight}
+                treeData={elementTree}
+                selectedKeys={selectedUUIDs}
+                expandedKeys={expandedElementKeys}
+                onTitleChange={({ uuid, value }) => {
+                  updateElementInList(uuid, { name: value }, state.editingData.elements);
+                  const elementTree = getElementTree(editingData);
+                  dispatch({
+                    type: 'update',
+                    payload: { editingData: { ...editingData }, elementTree }
+                  });
+                }}
+                onOperationToggle={({ uuid, operations }) => {
+                  updateElementInList(uuid, { operations }, state.editingData.elements);
+                  const elementTree = getElementTree(editingData);
+                  dispatch({
+                    type: 'update',
+                    payload: { editingData: { ...editingData }, elementTree }
+                  });
+                }}
+                onSelect={(e) => {
+                  if (!selectedUUIDs?.includes(e.uuids[0])) {
+                    selectElementsByPositions(e.positions);
                   }
-                  setExpandedElementKeys(newKeys);
-                }
-              }}
-            />
+                }}
+                onDrop={(e) => {
+                  const { elements } = moveElementPosition(editingData.elements, {
+                    from: e.from,
+                    to: e.to
+                  });
+
+                  const targetElem = findElementFromListByPosition(e.to, editingData.elements);
+                  if (targetElem) {
+                    targetElem.x = 0;
+                    targetElem.y = 0;
+                  }
+
+                  const elementTree = getElementTree(editingData);
+                  dispatch({
+                    type: 'update',
+                    payload: { editingData: { ...editingData, ...{ elements: [...elements] } }, elementTree }
+                  });
+                }}
+                onDelete={({ uuid }) => {
+                  sharedEvent.trigger('deleteElement', { uuid });
+                }}
+                onGoToGroup={(e) => {
+                  sharedEvent.trigger('resetEditingView', { type: 'go-to-next-group', position: e.position });
+                }}
+                onExpand={(keys, { node }) => {
+                  const currentKey = node.key as string;
+                  if (currentKey) {
+                    let newKeys = [...expandedElementKeys];
+                    if (expandedElementKeys.includes(currentKey)) {
+                      newKeys.splice(newKeys.indexOf(currentKey), 1);
+                    } else {
+                      newKeys = [...newKeys, ...[currentKey]];
+                    }
+                    setExpandedElementKeys(newKeys);
+                  }
+                }}
+              />
+            ) : (
+              <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description={false} />
+            )}
           </div>
         </Dropdown>
       )
@@ -357,24 +388,6 @@ export const PanelPage = (props: PanelPageProps) => {
   ];
 
   return useMemo(() => {
-    if (!(Array.isArray(elementTree) && elementTree.length > 0)) {
-      return (
-        <div
-          style={style}
-          className={classnames(rootClassName, className)}
-          onContextMenu={(e) => {
-            e.preventDefault();
-          }}
-        >
-          <div className={headerClassName}>...</div>
-          <div className={contentClassName}>
-            <div style={{ padding: '20px 0', textAlign: 'center' }}>Empty</div>
-          </div>
-          {/* <div className={footerClassName}>...</div> */}
-        </div>
-      );
-    }
-
     return (
       <div
         style={style}
@@ -401,15 +414,15 @@ export const PanelPage = (props: PanelPageProps) => {
     height,
     pageTreeHeight,
     elementTreeHeight,
+    pageTree,
     elementTree,
     selectedUUIDs,
     expandedElementKeys,
     data.elements,
     editingData.elements,
     editingDataPosition,
-    contextMenuOptions,
-    resetContentHeight,
     inPageOverview,
-    selectedPageUUIDs
+    selectedPageUUIDs,
+    moduleLocale
   ]);
 };
