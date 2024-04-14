@@ -33,6 +33,12 @@ export interface SharedEventMap {
   deleteElement: {
     uuid: string;
   };
+  addPage: {
+    element: Element<'group'>;
+  };
+  deletePage: {
+    uuid: string;
+  };
   resetEditingView: {
     type: 'go-to-page' | 'go-to-group' | 'go-to-next-group' | 'back-one' | 'back-root';
     position: ElementPosition | null;

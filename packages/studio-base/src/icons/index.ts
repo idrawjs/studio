@@ -32,6 +32,7 @@ import IconEdit from './edit';
 import IconExperiment from './experiment';
 import IconFile from './file';
 import IconFileCopy from './file-copy';
+import IconFileAdd from './file-add';
 import IconFullCornerRadius from './full-corner-radius';
 import IconGitHub from './github';
 import IconGroup from './group';
@@ -107,6 +108,7 @@ export {
   IconEdit,
   IconExperiment,
   IconFile,
+  IconFileAdd,
   IconFileCopy,
   IconFullCornerRadius,
   IconGitHub,

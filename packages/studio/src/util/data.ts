@@ -1,5 +1,6 @@
 import type { Data, DataLayout, Element, ElementPosition } from 'idraw';
-import { getElementPositionFromList, deepClone, findElementFromListByPosition, is } from 'idraw';
+import { getElementPositionFromList, deepClone, findElementFromListByPosition, is, calcElementListSize, createUUID } from 'idraw';
+import type { StudioData } from '@idraw/studio-base';
 
 export function cloneEditingData(editingUUID: string | null, data: Data): Data {
   if (!editingUUID) {
@@ -31,11 +32,11 @@ export function cloneEditingDataByPosition(position: ElementPosition, data: Data
         ...restDetail
       },
       operations: {
-        disableTop: true,
-        disableTopLeft: true,
-        disableTopRight: true,
-        disableLeft: true,
-        disableBottomLeft: true
+        disabledTop: true,
+        disabledTopLeft: true,
+        disabledTopRight: true,
+        disabledLeft: true,
+        disabledBottomLeft: true
       }
     };
     editingData.elements = deepClone(children || []);
@@ -72,4 +73,60 @@ export function updateEditingDataLayoutToTargetGroup(editingData: Data, editingP
       };
     }
   }
+}
+
+export function wrapPageData(data: Data | StudioData): StudioData {
+  let pageData: StudioData = data;
+
+  for (let i = 0; i < data.elements.length; i++) {
+    const elem = data.elements[i];
+    if (elem.type === 'group' && elem.extends?.isPage === true) {
+      return pageData;
+    }
+  }
+
+  const listSize = calcElementListSize(data.elements);
+  let { x, y, w, h } = listSize;
+  if (is.x(data?.layout?.x)) {
+    x = Math.min(x, data.layout?.x as number);
+  }
+  if (is.y(data?.layout?.y)) {
+    y = Math.min(y, data.layout?.y as number);
+  }
+  if (is.w(data?.layout?.w)) {
+    w = Math.max(w, data.layout?.w as number);
+  }
+  if (is.h(data?.layout?.h)) {
+    h = Math.max(h, data.layout?.h as number);
+  }
+
+  data.elements.forEach((elem) => {
+    elem.x -= x;
+    elem.y -= y;
+  });
+
+  pageData = {
+    elements: [
+      {
+        uuid: createUUID(),
+        name: 'Default page',
+        type: 'group',
+        x: 0,
+        y: 0,
+        w,
+        h,
+        detail: {
+          ...data.layout?.detail,
+          children: data.elements,
+          ...(w === 0 || h === 0 ? { overflow: 'visible' } : {})
+        },
+        extends: {
+          isPage: true
+        }
+      }
+    ],
+    assets: data.assets
+  };
+
+  return pageData;
 }

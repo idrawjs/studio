@@ -2,13 +2,13 @@ import React, { useRef, useContext, useMemo, useEffect } from 'react';
 import classnames from 'classnames';
 import { iDraw, findElementsFromListByPositions, eventKeys, getElementPositionFromList, findElementFromListByPosition, calcElementCenter } from 'idraw';
 import type { Data, ElementPosition, Element } from 'idraw';
-import { ConfigContext, getElementTree } from '@idraw/studio-base';
+import { ConfigContext, getElementTree, getPageTree } from '@idraw/studio-base';
+import type { PageTreeData } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
 import { Dropdown } from 'antd';
 import { Context } from '../context';
 import type { StudioState, SharedEvent, SharedEventMap, SharedStore, HookUseContextMenuOptions } from '../../types';
-
-import { cloneEditingDataByPosition, updateEditingDataChildrenToData } from '../../util/data';
+import { cloneEditingDataByPosition, updateEditingDataChildrenToData, wrapPageData } from '../../util/data';
 
 const modName = 'mod-sketch';
 
@@ -232,6 +232,121 @@ export const Sketch = (props: SketchProps) => {
       }
     };
 
+    const addPageCallback = (e: SharedEventMap['addPage']) => {
+      const { element } = e;
+      const { w, h, detail } = element;
+      const data = refData.current;
+      data.elements = [...data.elements, ...[element]];
+      const { children, ...restDetail } = detail;
+      const editingData: Data = {
+        elements: element.detail.children,
+        layout: {
+          x: 0,
+          y: 0,
+          w,
+          h,
+          detail: restDetail,
+          operations: {
+            disabledTop: true,
+            disabledTopLeft: true,
+            disabledTopRight: true,
+            disabledBottomLeft: true,
+            disabledLeft: true
+          }
+        }
+      };
+
+      const pageTree = getElementTree(data);
+      const elementTree = getElementTree(editingData);
+      idraw.centerContent({ data: editingData });
+      dispatch({
+        type: 'update',
+        payload: {
+          data: { ...data },
+          editingData: editingData,
+          elementTree,
+          pageTree,
+          editingDataPosition: [pageTree.length - 1]
+        }
+      });
+    };
+
+    const deletePageCallback = (e: SharedEventMap['deletePage']) => {
+      const { uuid } = e;
+      if (!uuid) {
+        return;
+      }
+
+      const data = refData.current;
+      let index = -1;
+      const payload: Partial<StudioState> = {
+        pageTree: []
+      };
+      for (let i = 0; i < data.elements.length; i++) {
+        if (data.elements[i]?.uuid === uuid) {
+          data.elements.splice(i, 1);
+          data.elements = [...data.elements];
+          index = i;
+          break;
+        }
+      }
+      const pageTree = getElementTree(data);
+      payload.data = { ...data };
+      payload.pageTree = pageTree;
+
+      if (refEditingDataPosition.current.length === 1 && index === refEditingDataPosition.current[0]) {
+        let nextPage = data?.elements?.[index];
+        let pageIndex = index;
+        while (!nextPage?.extends?.isPage && pageIndex > 0) {
+          pageIndex--;
+          nextPage = data?.elements?.[pageIndex];
+        }
+        if (nextPage) {
+          const { children, ...restDetail } = (nextPage as Element<'group'>).detail;
+          const newEditingData: Data = {
+            elements: children || [],
+            layout: {
+              x: 0,
+              y: 0,
+              w: nextPage.w,
+              h: nextPage.h,
+              detail: restDetail,
+              operations: {
+                disabledTop: true,
+                disabledTopLeft: true,
+                disabledTopRight: true,
+                disabledBottomLeft: true,
+                disabledLeft: true
+              }
+            }
+          };
+
+          const elementTree = getElementTree(newEditingData);
+          payload.editingData = newEditingData;
+          payload.editingDataPosition = [pageIndex];
+          payload.elementTree = elementTree;
+          idraw.centerContent({ data: newEditingData });
+        } else {
+          payload.editingData = { elements: [] };
+          payload.editingDataPosition = [];
+          payload.elementTree = [];
+        }
+      } else if (refEditingDataPosition.current.length === 0) {
+        payload.editingData = { ...data };
+      }
+
+      if (pageTree.length === 0) {
+        payload.elementTree = [];
+        payload.editingDataPosition = [];
+        payload.editingData = { elements: [] };
+      }
+      dispatch({
+        type: 'update',
+        payload
+      });
+      // idraw.trigger(eventKeys.clearSelect, {});
+    };
+
     const resetEditingViewCallback = (e: SharedEventMap['resetEditingView']) => {
       const { type, position } = e;
       const idraw = refIDraw?.current;
@@ -240,12 +355,14 @@ export const Sketch = (props: SketchProps) => {
       }
 
       const editingDataPosition = refEditingDataPosition.current;
-      const data = refData.current;
       const editingData = refEditingData.current;
+      let data = refData.current;
 
       // update current position editing data to data
       if (editingDataPosition.length > 0) {
         updateEditingDataChildrenToData(editingDataPosition, editingData, data);
+      } else if (editingDataPosition.length === 0) {
+        data = editingData;
       }
 
       if (type === 'go-to-page' && position) {
@@ -346,10 +463,22 @@ export const Sketch = (props: SketchProps) => {
     };
 
     const resetDataCallback = (e: SharedEventMap['resetData']) => {
-      const { data } = e;
-      const newEditingDataPosition: ElementPosition = [];
-      const newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
-      const newTreeData = getElementTree(newEditingData);
+      let { data } = e;
+
+      let newEditingDataPosition: ElementPosition = [];
+
+      let newPageTree: PageTreeData = getPageTree(data);
+      if (state.editMode === 'page') {
+        data = wrapPageData(data);
+        newPageTree = getPageTree(data);
+        if (newPageTree.length > 0) {
+          const pageUUID = newPageTree[0].uuid;
+          newEditingDataPosition = getElementPositionFromList(pageUUID, data.elements);
+        }
+      }
+
+      let newEditingData = cloneEditingDataByPosition(newEditingDataPosition, data);
+      const newElementTree = getElementTree(newEditingData);
 
       dispatch({
         type: 'update',
@@ -357,14 +486,16 @@ export const Sketch = (props: SketchProps) => {
           data: { ...data },
           editingData: { ...newEditingData },
           editingDataPosition: newEditingDataPosition,
-          elementTree: newTreeData
+          elementTree: newElementTree,
+          pageTree: newPageTree
         }
       });
-      idraw.setViewScale({
-        scale: 1,
-        offsetX: 0,
-        offsetY: 0
-      });
+      // idraw.setViewScale({
+      //   scale: 1,
+      //   offsetX: 0,
+      //   offsetY: 0
+      // });
+      idraw.centerContent({ data: newEditingData });
       idraw.trigger(eventKeys.clearSelect, {});
     };
 
@@ -388,6 +519,8 @@ export const Sketch = (props: SketchProps) => {
     sharedEvent.on('createElement', createElementCallback);
     sharedEvent.on('addElement', addElementCallback);
     sharedEvent.on('deleteElement', deleteElementCallback);
+    sharedEvent.on('addPage', addPageCallback);
+    sharedEvent.on('deletePage', deletePageCallback);
     sharedEvent.on('resetEditingView', resetEditingViewCallback);
     sharedEvent.on('resetData', resetDataCallback);
     sharedEvent.on('resetEditingData', resetEditingDataCallback);
