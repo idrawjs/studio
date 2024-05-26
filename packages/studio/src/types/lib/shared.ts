@@ -35,6 +35,7 @@ export interface SharedEventMap {
   };
   addPage: {
     element: Element<'group'>;
+    inPageOverview: boolean;
   };
   deletePage: {
     uuid: string;
@@ -58,6 +59,7 @@ export interface SharedEventMap {
   changeLocale: { locale: LocaleCode };
   trackDataChange: { data: Data };
   trackEditingDataChange: { editingData: Data; editingDataPosition: ElementPosition };
+  switchPageOverview: { isPageOverview: boolean };
 }
 
 export type SharedEvent = EventEmitter<SharedEventMap>;

@@ -233,12 +233,13 @@ export const Sketch = (props: SketchProps) => {
     };
 
     const addPageCallback = (e: SharedEventMap['addPage']) => {
-      const { element } = e;
+      const { element, inPageOverview } = e;
+
       const { w, h, detail } = element;
       const data = refData.current;
       data.elements = [...data.elements, ...[element]];
       const { children, ...restDetail } = detail;
-      const editingData: Data = {
+      let editingData: Data = {
         elements: element.detail.children,
         layout: {
           x: 0,
@@ -257,6 +258,12 @@ export const Sketch = (props: SketchProps) => {
       };
 
       const pageTree = getElementTree(data);
+      let editingDataPosition: ElementPosition = [pageTree.length - 1];
+      if (inPageOverview === true) {
+        editingData = data;
+        editingDataPosition = [];
+      }
+
       const elementTree = getElementTree(editingData);
       idraw.centerContent({ data: editingData });
       dispatch({
@@ -266,7 +273,7 @@ export const Sketch = (props: SketchProps) => {
           editingData: editingData,
           elementTree,
           pageTree,
-          editingDataPosition: [pageTree.length - 1]
+          editingDataPosition
         }
       });
     };

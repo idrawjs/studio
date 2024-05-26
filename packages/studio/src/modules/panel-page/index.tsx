@@ -55,6 +55,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
   const [moduleLocale] = useLocale('contextMenu');
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
+  const refInPageOverview = useRef<boolean>(inPageOverview);
 
   const getSelectedPageKeys = () => {
     const keys: string[] = [];
@@ -65,6 +66,21 @@ export const PanelPage = (props: PanelPageProps) => {
     return keys;
   };
   const [selectedPageUUIDs, setSelectedPageUUIDs] = useState<string[]>(getSelectedPageKeys());
+
+  useEffect(() => {
+    const idraw = sharedStore.get('idraw');
+    const listenSelectedPage = (e: { uuids: string[] }) => {
+      if (refInPageOverview.current === true) {
+        const { uuids } = e;
+        setSelectedPageUUIDs([...uuids]);
+      }
+    };
+    idraw?.on(eventKeys.select, listenSelectedPage);
+
+    return () => {
+      idraw?.off(eventKeys.select, listenSelectedPage);
+    };
+  }, []);
 
   useEffect(() => {
     if (editingDataPosition.length === 1 && pageTree.length > 0) {
@@ -121,6 +137,11 @@ export const PanelPage = (props: PanelPageProps) => {
     }
     resetContentHeight();
   }, [height, inPageOverview]);
+
+  useEffect(() => {
+    refInPageOverview.current = inPageOverview;
+    sharedEvent.trigger('switchPageOverview', { isPageOverview: !!inPageOverview });
+  }, [inPageOverview]);
 
   const getCurrentName = () => {
     if (editingDataPosition.length === 0) {
@@ -186,9 +207,8 @@ export const PanelPage = (props: PanelPageProps) => {
       collapsible: inPageOverview ? 'disabled' : undefined,
       label: (
         <div className={headerClassName} style={{ height: headerHeight }}>
-          <span style={{ marginRight: 10 }}>Pages</span>
           <div style={{ display: 'flex' }}>
-            <AddPageButton parentModName={modName} sharedEvent={sharedEvent} sharedStore={sharedStore} />
+            <span style={{ marginRight: 10 }}>Pages</span>
             <Button
               className={headerBtnClassName}
               style={{ marginLeft: '10px' }}
@@ -200,6 +220,9 @@ export const PanelPage = (props: PanelPageProps) => {
                 setInPageOverview(!inPageOverview);
               }}
             />
+          </div>
+          <div style={{ display: 'flex' }}>
+            <AddPageButton inPageOverview={inPageOverview} parentModName={modName} sharedEvent={sharedEvent} sharedStore={sharedStore} />
           </div>
         </div>
       ),
@@ -239,6 +262,9 @@ export const PanelPage = (props: PanelPageProps) => {
               }}
               onSelect={(e) => {
                 if (e?.positions.length === 1) {
+                  const idraw = sharedStore.get('idraw');
+                  idraw?.trigger(eventKeys.select, { uuids: [] });
+                  idraw?.trigger(eventKeys.clearSelect);
                   if (inPageOverview) {
                     if (!selectedPageUUIDs?.includes(e.uuids[0])) {
                       selectElementsByPositions(e.positions);
@@ -246,8 +272,7 @@ export const PanelPage = (props: PanelPageProps) => {
                     }
                     return;
                   }
-                  const idraw = sharedStore.get('idraw');
-                  idraw?.trigger(eventKeys.clearSelect);
+
                   sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: e.positions[0] });
 
                   const keys: string[] = [];
