@@ -1,4 +1,4 @@
-import React, { useMemo, useState, useContext } from 'react';
+import React, { useMemo, useState, useContext, useEffect } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { generateClassName, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML } from '@idraw/studio-base';
@@ -37,10 +37,21 @@ export const NavMenu = (props: NavMenuProps) => {
     domEvent.preventDefault();
     sharedEvent.trigger('createElement', { type: key as ElementType, element: { name: key } });
   };
-
   const { state } = useContext(Context);
   const { editMode, pageTree } = state;
-  const disabledAddElement = !!(editMode === 'page' && pageTree.length === 0);
+
+  const [isPageOverview, setIsPageOverview] = useState<boolean>(false);
+  useEffect(() => {
+    const switchPageOverviewCallback = (e: { isPageOverview: boolean }) => {
+      const { isPageOverview } = e;
+      setIsPageOverview(!!isPageOverview);
+    };
+    sharedEvent.on('switchPageOverview', switchPageOverviewCallback);
+    return () => {
+      sharedEvent.off('switchPageOverview', switchPageOverviewCallback);
+    };
+  }, []);
+  const disabledAddElement = !!(editMode === 'page' && (pageTree.length === 0 || isPageOverview));
 
   const resetDevicePixelRatio = (radio: number) => {
     const idraw = sharedStore.get('idraw');

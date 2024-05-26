@@ -13,11 +13,12 @@ jobs:
       # Setup .npmrc file to publish to npm
       - uses: actions/setup-node@v4
         with:
-          node-version: '20.x'
+          node-version: '22.x'
           registry-url: 'https://registry.npmjs.org'
-      - run: npm install --global pnpm
+      - run: npm install --global pnpm@9
       - run: pnpm i
       - run: npm run build
+      - run: npm run version:reset-for-release
       # - run: npm publish --provenance --access public -w ./packages/studio-base --tag next
       - run: npm publish --provenance --access public -w ./packages/studio-base
         env:

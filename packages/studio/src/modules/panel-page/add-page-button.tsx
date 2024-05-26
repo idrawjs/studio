@@ -14,10 +14,11 @@ export interface AddPageButtonProps {
   parentModName: string;
   sharedEvent: SharedEvent;
   sharedStore: SharedStore;
+  inPageOverview: boolean;
 }
 
 export const AddPageButton = (props: AddPageButtonProps) => {
-  const { className, style, parentModName, sharedEvent, sharedStore } = props;
+  const { className, style, parentModName, inPageOverview, sharedEvent, sharedStore } = props;
   const rootClassName = generateClassName(parentModName, modName);
 
   return useMemo(() => {
@@ -80,7 +81,8 @@ export const AddPageButton = (props: AddPageButtonProps) => {
                     }
                   };
                   sharedEvent.trigger('addPage', {
-                    element: pageElement
+                    element: pageElement,
+                    inPageOverview
                   });
                 }
               }
@@ -138,7 +140,8 @@ export const AddPageButton = (props: AddPageButtonProps) => {
                     }
                   };
                   sharedEvent.trigger('addPage', {
-                    element: pageElement
+                    element: pageElement,
+                    inPageOverview
                   });
                 }
               }
@@ -162,5 +165,5 @@ export const AddPageButton = (props: AddPageButtonProps) => {
         </Button>
       </Dropdown>
     );
-  }, [style, className]);
+  }, [style, className, inPageOverview]);
 };

@@ -65,7 +65,7 @@ export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
         className={classnames(generateClassName(modName), className)}
         showLine
         blockNode
-        // multiple
+        multiple
         selectedKeys={selectedKeys}
         switcherIcon={<IconDown />}
         // icon={(props: any) => {
