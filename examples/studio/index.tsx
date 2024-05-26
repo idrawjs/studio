@@ -34,28 +34,26 @@ const App = () => {
       height={height}
       style={style}
       data={data}
-      defaultScaleInfo={{
-        // scale: 0.4,
-        // offsetX: -200,
-        // offsetY: -200
-
-        // scale: 0.5,
-        // offsetX: 1400,
-        // offsetY: -200
-
-        // scale: 0.1,
-        // offsetX: -1000,
-        // offsetY: -500
-
-        scale: 0.12,
-        offsetX: -800,
-        offsetY: -500
-        // offsetY: 4100
-
-        // scale: 1,
-        // offsetX: 0,
-        // offsetY: 0
-      }}
+      // defaultScaleInfo={
+      //   {
+      //     // scale: 0.4,
+      //     // offsetX: -200,
+      //     // offsetY: -200
+      //     // scale: 0.5,
+      //     // offsetX: 1400,
+      //     // offsetY: -200
+      //     // scale: 0.1,
+      //     // offsetX: -1000,
+      //     // offsetY: -500
+      //     // offsetY: 4100
+      //     // scale: 1,
+      //     // offsetX: 0,
+      //     // offsetY: 0
+      //     // scale: 0.12,
+      //     // offsetX: -800,
+      //     // offsetY: -500
+      //   }
+      // }
     />
   );
 };
