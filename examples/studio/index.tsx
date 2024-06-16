@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Studio } from '@idraw/studio';
-import data from './data';
+import data from './data-iphone-demo';
 // import data from './data2';
 import './index.less';
 const dom = document.querySelector('#app') as HTMLDivElement;
@@ -34,6 +34,7 @@ const App = () => {
       height={height}
       style={style}
       data={data}
+      // defaultEditMode="page"
       // defaultScaleInfo={
       //   {
       //     // scale: 0.4,
