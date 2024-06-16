@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { createRoot } from 'react-dom/client';
 import { Studio } from '@idraw/studio';
-import data from './data';
+import data from './data-iphone-demo';
 import { base64 } from './logo';
 import './index.less';
 const dom = document.querySelector('#app') as HTMLDivElement;
@@ -73,6 +73,7 @@ const App = () => {
 
   return (
     <Studio
+      defaultEditMode="page"
       logo={
         <>
           <a href="/" style={{ display: 'inline-flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
