@@ -14,21 +14,20 @@ export interface PanelLayerProps {
   className?: string;
   height: number;
   style?: CSSProperties;
-  defaultSelectedElementUUIDs?: string[];
+  // defaultSelectedElementUUIDs?: string[];
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
   useContextMenuOptions: HookUseContextMenuOptions;
 }
 
 export const PanelLayer = (props: PanelLayerProps) => {
-  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions } = props;
+  const { className, style, height, sharedStore, sharedEvent, useContextMenuOptions } = props;
   const { state, dispatch } = useContext(Context);
   const { elementTree, selectedUUIDs, editingData } = state;
 
   const refTree = useRef<{
     scrollTo: (e: { key: string | number; align?: 'top' | 'bottom' | 'auto'; offset?: number }) => void;
   } | null>(null);
-  const [expandedKeys, setExpandedKeys] = useState<string[]>(defaultSelectedElementUUIDs);
   const rootClassName = generateClassName(modName);
   const contentClassName = generateClassName(modName, 'content');
   const headerClassName = generateClassName(modName, 'header');
@@ -72,14 +71,6 @@ export const PanelLayer = (props: PanelLayerProps) => {
       if (selectedUUIDs[0]) {
         uuidQueue.push(selectedUUIDs[0]);
       }
-      const newExpandedKeys = [...expandedKeys];
-      uuidQueue.forEach((uuid: string) => {
-        if (!newExpandedKeys.includes(uuid)) {
-          newExpandedKeys.push(uuid);
-        }
-      });
-
-      setExpandedKeys(newExpandedKeys);
     }
   }, [selectedUUIDs, editingData]);
 
@@ -139,7 +130,6 @@ export const PanelLayer = (props: PanelLayerProps) => {
               height={elementsHeight}
               treeData={elementTree}
               selectedKeys={selectedUUIDs}
-              expandedKeys={expandedKeys}
               onTitleChange={({ uuid, value }) => {
                 updateElementInList(uuid, { name: value }, state.editingData.elements);
                 const elementTree = getElementTree(editingData);
@@ -185,23 +175,11 @@ export const PanelLayer = (props: PanelLayerProps) => {
               onGoToGroup={(e) => {
                 sharedEvent.trigger('resetEditingView', { type: 'go-to-next-group', position: e.position });
               }}
-              onExpand={(keys, { node }) => {
-                const currentKey = node.key as string;
-                if (currentKey) {
-                  let newKeys = [...expandedKeys];
-                  if (expandedKeys.includes(currentKey)) {
-                    newKeys.splice(newKeys.indexOf(currentKey), 1);
-                  } else {
-                    newKeys = [...newKeys, ...[currentKey]];
-                  }
-                  setExpandedKeys(newKeys);
-                }
-              }}
             />
           </div>
         </Dropdown>
         {/* <div className={footerClassName}>footer</div> */}
       </div>
     );
-  }, [elementsHeight, elementTree, selectedUUIDs, expandedKeys, editingData.elements, state.editingDataPosition, contextMenuOptions]);
+  }, [elementsHeight, elementTree, selectedUUIDs, editingData.elements, state.editingDataPosition, contextMenuOptions]);
 };

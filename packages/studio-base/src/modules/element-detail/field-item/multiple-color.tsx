@@ -1,7 +1,7 @@
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useMemo, useRef } from 'react';
 import type { ElementSize } from 'idraw';
 import { colorToCSS } from 'idraw';
-import { ConfigContext } from '../../config-provider';
+// import { ConfigContext } from '../../config-provider';
 import { Popover, Input } from 'antd';
 import { MultipleColorPicker } from './multiple-color-picker';
 import { ColorValue } from './multiple-color-picker';
@@ -35,13 +35,13 @@ export function MultipleColor(props: MultipleColorProps) {
   const isHex = typeof value === 'string' ? true : false;
   const refAppend = useRef<HTMLDivElement>(null);
 
-  const { container } = useContext(ConfigContext);
+  // const { container } = useContext(ConfigContext);
   const rootClassName = generateClassName(modName);
   const previewClassName = generateClassName(modName, 'preview');
 
-  const getContainer = () => {
-    return container || document.body;
-  };
+  // const getContainer = () => {
+  //   return container || document.body;
+  // };
 
   return useMemo(() => {
     const css = colorToCSS(value || 'transparent');
@@ -68,8 +68,8 @@ export function MultipleColor(props: MultipleColorProps) {
                   />
                 }
                 trigger="click"
-                getPopupContainer={getContainer}
-                getTooltipContainer={getContainer}
+                // getPopupContainer={getContainer}
+                // getTooltipContainer={getContainer}
               >
                 <span className={previewClassName} style={{ background: css }} />
               </Popover>

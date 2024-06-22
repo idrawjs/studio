@@ -3,7 +3,7 @@ import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { findElementFromList, updateElementInList, isAssetId, createAssetId } from 'idraw';
 import type { Element, DataLayout, ElementAssetsItem, RecursivePartial, Data } from 'idraw';
-import { generateClassName, ElementDetail, LayoutDetail } from '@idraw/studio-base';
+import { generateClassName, ElementDesign } from '@idraw/studio-base';
 import { Context } from '../context';
 
 const modName = 'mod-panel-detail';
@@ -123,8 +123,16 @@ export const PanelDetail = (props: PanelDetailProps) => {
           e.preventDefault();
         }}
       >
-        <LayoutDetail isGroupLayout={editingDataPosition?.length > 0} layout={editingData.layout} onChange={onChangeLayout} />
-        <ElementDetail element={targetElement} onChange={onChange} getElementAsset={getElementAsset} createElementAsset={createElementAsset} />
+        <ElementDesign
+          element={targetElement}
+          onElementChange={onChange}
+          getElementAsset={getElementAsset}
+          createElementAsset={createElementAsset}
+          layout={editingData.layout}
+          onLayoutChange={onChangeLayout}
+        />
+        {/* <LayoutDetail isGroupLayout={editingDataPosition?.length > 0} layout={editingData.layout} onChange={onChangeLayout} /> */}
+        {/* <ElementDetail element={targetElement} onChange={onChange} getElementAsset={getElementAsset} createElementAsset={createElementAsset} /> */}
       </div>
     );
   }, [selectedUUIDs[0], editingData.layout, editingDataPosition]);

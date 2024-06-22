@@ -21,13 +21,14 @@
     "upgrade:version": "npm run version:reset && pnpm i"
   },
   "dependencies": {
-    "idraw": "0.4.0-beta.29",
-    "antd": "5.18.1"
+    "idraw": "0.4.0-beta.30",
+    "antd": "5.18.3"
   },
   "devDependencies": {
     "@babel/core": "^7.24.7",
     "@babel/preset-env": "^7.24.7",
     "@babel/preset-typescript": "^7.24.7",
+    "@rc-component/color-picker": "^1.5.3",
     "@rollup/plugin-json": "^6.1.0",
     "@types/glob": "^8.1.0",
     "@types/jest": "^29.5.12",

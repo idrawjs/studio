@@ -46,7 +46,9 @@ const localeValues: Locale = {
     overflow: 'Overflow',
     hidden: 'Hidden',
     visible: 'Visible',
-    deepResizeInGroup: 'Deep resize in group'
+    deepResizeInGroup: 'Deep resize in group',
+    fill: 'Fill',
+    stroke: 'Stroke'
   },
   Menu: {
     about: 'About @idraw/studio',

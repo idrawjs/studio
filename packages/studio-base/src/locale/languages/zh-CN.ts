@@ -46,7 +46,9 @@ const localeValues: Locale = {
     overflow: '溢出',
     hidden: '隐藏',
     visible: '可视',
-    deepResizeInGroup: '组内尺寸关联调整'
+    deepResizeInGroup: '组内尺寸关联调整',
+    fill: '填充',
+    stroke: '描边'
   },
   Menu: {
     about: '关于 @idraw/studio',

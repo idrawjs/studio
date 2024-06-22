@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio-base",
-  "version": "0.4.0-alpha.24",
+  "version": "0.4.0-alpha.29",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -19,17 +19,17 @@
   },
   "author": "chenshenhai",
   "license": "MIT",
+  "dependencies": {},
   "peerDependencies": {
-    "antd": "^5.18.1",
+    "@rc-component/color-picker": "^1.5.3",
+    "antd": "^5.18.3",
     "classnames": "^2.3.2",
-    "idraw": "^0.4.0-beta.29",
+    "idraw": "^0.4.0-beta.30",
     "react": "^18.3.1",
-    "react-color": "^2.19.3",
     "react-dom": "^18.3.1"
   },
   "devDependencies": {
     "@types/react": "^18.3.3",
-    "@types/react-color": "^3.0.12",
     "@types/react-dom": "^18.3.0"
   },
   "publishConfig": {

@@ -1,5 +1,6 @@
 import React from 'react';
-import { ChromePicker } from 'react-color';
+// import { ChromePicker } from 'react-color';
+import ColorPicker from '@rc-component/color-picker';
 
 interface ColorPickerProps {
   className?: string;
@@ -25,30 +26,32 @@ function parseColor(hex: string) {
   return rgba;
 }
 
-function parseRGBA2Hex(rgba: { r: number; g: number; b: number; a: number }) {
-  const list = [];
-  list.push(rgba.r.toString(16).padStart(2, '0').toLocaleUpperCase());
-  list.push(rgba.g.toString(16).padStart(2, '0').toLocaleUpperCase());
-  list.push(rgba.b.toString(16).padStart(2, '0').toLocaleUpperCase());
-  if (rgba.a < 1) {
-    list.push(
-      Math.floor(rgba.a * 255)
-        .toString(16)
-        .padStart(2, '0')
-        .toLocaleUpperCase()
-    );
-  }
+// function parseRGBA2Hex(rgba: { r: number; g: number; b: number; a: number }) {
+//   const list = [];
+//   list.push(rgba.r.toString(16).padStart(2, '0').toLocaleUpperCase());
+//   list.push(rgba.g.toString(16).padStart(2, '0').toLocaleUpperCase());
+//   list.push(rgba.b.toString(16).padStart(2, '0').toLocaleUpperCase());
+//   if (rgba.a < 1) {
+//     list.push(
+//       Math.floor(rgba.a * 255)
+//         .toString(16)
+//         .padStart(2, '0')
+//         .toLocaleUpperCase()
+//     );
+//   }
 
-  return `#${list.join('')}`;
-}
+//   return `#${list.join('')}`;
+// }
 
 export const SolidColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange, className }) => {
   return (
-    <ChromePicker
+    <ColorPicker
       className={className}
-      color={parseColor(value)}
-      onChangeComplete={(data) => {
-        const hex = parseRGBA2Hex(data?.rgb as any);
+      value={parseColor(value)}
+      onChange={(data) => {
+        const hex8 = `#${data.toHex8().toUpperCase()}`;
+        const hex = hex8.endsWith('FF') ? `#${data.toHex().toUpperCase()}` : hex8;
+
         onChange?.(hex);
       }}
     />

@@ -8,6 +8,7 @@
 @base-element-detail-attribute: ~'@{prefix}-base-element-detail-attribute';
 @base-element-detail-text: ~'@{prefix}-base-element-detail-text';
 @base-element-detail-group: ~'@{prefix}-base-element-detail-group';
+@base-element-detail-path: ~'@{prefix}-base-element-detail-path';
 
 @base-element-field-multiple-color: ~'@{prefix}-base-element-field-multiple-color';
 @base-element-field-multiple-color-picker: ~'@{prefix}-base-element-field-multiple-color-picker';
@@ -150,6 +151,7 @@
 
   .@{base-element-field-multiple-color-picker}-internal-picker {
     box-shadow: none !important;
+    width: 200px;
   }
 
   .@{base-element-field-multiple-color-picker}-row {
@@ -415,4 +417,8 @@
     justify-content: center;
     align-items: center;
   }
+}
+
+.@{base-element-detail-path} {
+  .common-element-detail-form-style (@detail-form-name: @base-element-detail-path);
 }
