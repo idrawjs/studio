@@ -8,6 +8,7 @@ export { ScaleSelector, type ScaleSelectorProps } from './modules/scale-selector
 export { ElementTree, type ElementTreeProps } from './modules/element-tree';
 export { PageTree, type PageTreeProps } from './modules/page-tree';
 export { ElementDetail, type ElementDetailProps } from './modules/element-detail';
+export { ElementDesign, type ElementDesignProps } from './modules/element-design';
 export { LayoutDetail, type LayoutDetailProps } from './modules/layout-detail';
 
 export { getElementTree, getPageTree } from './tools';

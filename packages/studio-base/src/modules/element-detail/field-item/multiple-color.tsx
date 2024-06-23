@@ -1,4 +1,4 @@
-import React, { useContext, useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useContext, useEffect } from 'react';
 import type { ElementSize } from 'idraw';
 import { colorToCSS } from 'idraw';
 import { ConfigContext } from '../../config-provider';
@@ -33,19 +33,24 @@ export function MultipleColor(props: MultipleColorProps) {
   };
   const valueStr = getColorText(value);
   const isHex = typeof value === 'string' ? true : false;
-  const refAppend = useRef<HTMLDivElement>(null);
 
   const { container } = useContext(ConfigContext);
   const rootClassName = generateClassName(modName);
   const previewClassName = generateClassName(modName, 'preview');
+  const refContainer = useRef<HTMLDivElement | null | undefined>(container);
+
+  useEffect(() => {
+    if (!refContainer.current && container) {
+      refContainer.current = container;
+    }
+  }, [container]);
 
   const getContainer = () => {
-    return container || document.body;
+    return refContainer.current || document.body;
   };
 
   return useMemo(() => {
     const css = colorToCSS(value || 'transparent');
-
     return (
       <>
         <Input
@@ -58,6 +63,8 @@ export function MultipleColor(props: MultipleColorProps) {
             ) : (
               <Popover
                 placement="left"
+                getPopupContainer={getContainer}
+                style={{ padding: 0 }}
                 content={
                   <MultipleColorPicker
                     value={value}
@@ -68,8 +75,8 @@ export function MultipleColor(props: MultipleColorProps) {
                   />
                 }
                 trigger="click"
-                getPopupContainer={getContainer}
-                getTooltipContainer={getContainer}
+                // getPopupContainer={getContainer}
+                // getTooltipContainer={getContainer}
               >
                 <span className={previewClassName} style={{ background: css }} />
               </Popover>
@@ -81,8 +88,8 @@ export function MultipleColor(props: MultipleColorProps) {
             onChange?.(e.target.value);
           }}
         />
-        <div ref={refAppend}></div>
+        {/* <div style={{}} ref={refAppend}></div> */}
       </>
     );
-  }, [value, onChange, disabled, elementSize]);
+  }, [value, onChange, disabled, elementSize, container]);
 }

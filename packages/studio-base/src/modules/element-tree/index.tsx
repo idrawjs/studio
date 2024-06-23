@@ -20,7 +20,6 @@ export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperatio
   treeData?: ElementTreeData;
   selectedKeys?: string[];
   defaultExpandedKeys?: string[];
-  expandedKeys?: string[];
   onExpand?: (keys: string[], e: { expanded: boolean; nativeEvent: React.PointerEvent; node: TreeDataNode }) => void;
   defaultExpandAll?: boolean;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
@@ -47,7 +46,6 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     selectedKeys,
     onDrop,
     defaultExpandedKeys,
-    expandedKeys,
     onDelete,
     onExpand,
     onGoToGroup
@@ -87,16 +85,10 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
         // multiple
         selectedKeys={selectedKeys}
         switcherIcon={<IconDown />}
-        // icon={(props: any) => {
-        //   const type: ElementType | undefined = props?.data?.title?.props?.type;
-        //   return getIcon(type);
-        // }}
         icon={null}
         onSelect={onSelectNode}
         treeData={wrappedTreeData}
         defaultExpandedKeys={defaultExpandedKeys}
-        expandedKeys={expandedKeys}
-        // defaultExpandAll={defaultExpandAll}
         onExpand={onExpand as any}
         draggable={{
           icon: false,

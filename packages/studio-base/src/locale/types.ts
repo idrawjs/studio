@@ -49,6 +49,8 @@ export interface Locale<T = LocaleCode> {
     hidden: string;
     visible: string;
     deepResizeInGroup: string;
+    fill: string;
+    stroke: string;
   };
   Menu: {
     about: string;

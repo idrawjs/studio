@@ -34,7 +34,7 @@ const App = () => {
       height={height}
       style={style}
       data={data}
-      // defaultEditMode="page"
+      defaultEditMode="page"
       // defaultScaleInfo={
       //   {
       //     // scale: 0.4,

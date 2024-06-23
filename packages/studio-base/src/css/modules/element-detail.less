@@ -8,6 +8,7 @@
 @base-element-detail-attribute: ~'@{prefix}-base-element-detail-attribute';
 @base-element-detail-text: ~'@{prefix}-base-element-detail-text';
 @base-element-detail-group: ~'@{prefix}-base-element-detail-group';
+@base-element-detail-path: ~'@{prefix}-base-element-detail-path';
 
 @base-element-field-multiple-color: ~'@{prefix}-base-element-field-multiple-color';
 @base-element-field-multiple-color-picker: ~'@{prefix}-base-element-field-multiple-color-picker';
@@ -67,10 +68,13 @@
 }
 
 .@{base-element-field-multiple-color-picker} {
+  margin: -12px;
   width: 224px;
   box-sizing: border-box;
+
   .@{base-element-field-multiple-color-picker}-header {
-    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 12px 12px 0 12px;
   }
   .@{base-element-field-multiple-color-picker}-radio-group {
     .ant-radio-button-wrapper {
@@ -82,7 +86,8 @@
   }
 
   .@{base-element-field-multiple-color-picker}-gradient-root {
-    margin-bottom: 10px;
+    padding: 12px 12px 0 12px;
+    // margin-bottom: 10px;
     display: flex;
     flex-direction: row;
   }
@@ -150,10 +155,22 @@
 
   .@{base-element-field-multiple-color-picker}-internal-picker {
     box-shadow: none !important;
+    width: 200px;
+    background: transparent;
+
+    .rc-color-picker-slider {
+      &.rc-color-picker-slider-alpha {
+        border-radius: 4px;
+      }
+    }
+    .rc-color-picker-handler {
+      box-shadow: 0px 0px 2px #000000ee;
+    }
   }
 
   .@{base-element-field-multiple-color-picker}-row {
-    padding: 2px 0;
+    // padding: 2px 0;
+    padding: 8px 12px 0 12px;
     box-sizing: border-box;
   }
 
@@ -415,4 +432,8 @@
     justify-content: center;
     align-items: center;
   }
+}
+
+.@{base-element-detail-path} {
+  .common-element-detail-form-style (@detail-form-name: @base-element-detail-path);
 }

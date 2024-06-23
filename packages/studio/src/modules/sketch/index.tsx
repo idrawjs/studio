@@ -248,11 +248,7 @@ export const Sketch = (props: SketchProps) => {
           h,
           detail: restDetail,
           operations: {
-            disabledTop: true,
-            disabledTopLeft: true,
-            disabledTopRight: true,
-            disabledBottomLeft: true,
-            disabledLeft: true
+            position: 'relative'
           }
         }
       };
@@ -319,11 +315,7 @@ export const Sketch = (props: SketchProps) => {
               h: nextPage.h,
               detail: restDetail,
               operations: {
-                disabledTop: true,
-                disabledTopLeft: true,
-                disabledTopRight: true,
-                disabledBottomLeft: true,
-                disabledLeft: true
+                position: 'relative'
               }
             }
           };

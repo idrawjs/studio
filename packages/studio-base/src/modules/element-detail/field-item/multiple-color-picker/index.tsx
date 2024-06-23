@@ -3,6 +3,7 @@ import type { LinearGradientColor, RadialGradientColor, GradientStop, ElementSiz
 import { colorToLinearGradientCSS } from 'idraw';
 import { Radio, Row, Col, Form, InputNumber } from 'antd';
 import type { FormInstance } from 'antd';
+import classnames from 'classnames';
 import { SolidColorPicker } from './solid-color-picker';
 import { modName } from './config';
 import type { ColorValue, ColorModeType } from './types';
@@ -19,6 +20,7 @@ type RadialFieldType = Partial<RadialGradientColor>;
 export * from './types';
 
 export type MultipleColorPickerProps = {
+  className?: string;
   value?: ColorValue;
   onChange?: (value: ColorValue) => void;
   elementSize?: ElementSize;
@@ -35,7 +37,7 @@ function checkColorModeType(color?: ColorValue): ColorModeType {
 }
 
 export function MultipleColorPicker(props: MultipleColorPickerProps) {
-  const { value, onChange, elementSize, disabledLinearGradient, disabledRadialGradient } = props;
+  const { className, value, onChange, elementSize, disabledLinearGradient, disabledRadialGradient } = props;
   const [css, setCSS] = useState(colorToLinearGradientCSS(value));
   const [mode, setMode] = useState<ColorModeType>(checkColorModeType(value));
   const [currentPickedColor, setCurrentPickedColor] = useState<string>('#000000');
@@ -205,7 +207,7 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
 
   return useMemo(() => {
     return (
-      <div className={rootClassName}>
+      <div className={classnames(rootClassName, className)}>
         {!disabledLinearGradient && !disabledRadialGradient && (
           <div className={headerClassName}>
             <Radio.Group

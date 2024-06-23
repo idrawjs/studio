@@ -32,11 +32,7 @@ export function cloneEditingDataByPosition(position: ElementPosition, data: Data
         ...restDetail
       },
       operations: {
-        disabledTop: true,
-        disabledTopLeft: true,
-        disabledTopRight: true,
-        disabledLeft: true,
-        disabledBottomLeft: true
+        position: 'relative'
       }
     };
     editingData.elements = deepClone(children || []);
