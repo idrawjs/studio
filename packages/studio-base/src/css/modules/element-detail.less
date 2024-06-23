@@ -68,10 +68,13 @@
 }
 
 .@{base-element-field-multiple-color-picker} {
+  margin: -12px;
   width: 224px;
   box-sizing: border-box;
+
   .@{base-element-field-multiple-color-picker}-header {
-    margin-bottom: 10px;
+    box-sizing: border-box;
+    padding: 12px 12px 0 12px;
   }
   .@{base-element-field-multiple-color-picker}-radio-group {
     .ant-radio-button-wrapper {
@@ -83,7 +86,8 @@
   }
 
   .@{base-element-field-multiple-color-picker}-gradient-root {
-    margin-bottom: 10px;
+    padding: 12px 12px 0 12px;
+    // margin-bottom: 10px;
     display: flex;
     flex-direction: row;
   }
@@ -152,10 +156,21 @@
   .@{base-element-field-multiple-color-picker}-internal-picker {
     box-shadow: none !important;
     width: 200px;
+    background: transparent;
+
+    .rc-color-picker-slider {
+      &.rc-color-picker-slider-alpha {
+        border-radius: 4px;
+      }
+    }
+    .rc-color-picker-handler {
+      box-shadow: 0px 0px 2px #000000ee;
+    }
   }
 
   .@{base-element-field-multiple-color-picker}-row {
-    padding: 2px 0;
+    // padding: 2px 0;
+    padding: 8px 12px 0 12px;
     box-sizing: border-box;
   }
 

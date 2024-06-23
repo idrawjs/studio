@@ -1,7 +1,7 @@
-import React, { useMemo, useRef } from 'react';
+import React, { useMemo, useRef, useContext, useEffect } from 'react';
 import type { ElementSize } from 'idraw';
 import { colorToCSS } from 'idraw';
-// import { ConfigContext } from '../../config-provider';
+import { ConfigContext } from '../../config-provider';
 import { Popover, Input } from 'antd';
 import { MultipleColorPicker } from './multiple-color-picker';
 import { ColorValue } from './multiple-color-picker';
@@ -33,19 +33,24 @@ export function MultipleColor(props: MultipleColorProps) {
   };
   const valueStr = getColorText(value);
   const isHex = typeof value === 'string' ? true : false;
-  const refAppend = useRef<HTMLDivElement>(null);
 
-  // const { container } = useContext(ConfigContext);
+  const { container } = useContext(ConfigContext);
   const rootClassName = generateClassName(modName);
   const previewClassName = generateClassName(modName, 'preview');
+  const refContainer = useRef<HTMLDivElement | null | undefined>(container);
 
-  // const getContainer = () => {
-  //   return container || document.body;
-  // };
+  useEffect(() => {
+    if (!refContainer.current && container) {
+      refContainer.current = container;
+    }
+  }, [container]);
+
+  const getContainer = () => {
+    return refContainer.current || document.body;
+  };
 
   return useMemo(() => {
     const css = colorToCSS(value || 'transparent');
-
     return (
       <>
         <Input
@@ -58,6 +63,8 @@ export function MultipleColor(props: MultipleColorProps) {
             ) : (
               <Popover
                 placement="left"
+                getPopupContainer={getContainer}
+                style={{ padding: 0 }}
                 content={
                   <MultipleColorPicker
                     value={value}
@@ -81,8 +88,8 @@ export function MultipleColor(props: MultipleColorProps) {
             onChange?.(e.target.value);
           }}
         />
-        <div ref={refAppend}></div>
+        {/* <div style={{}} ref={refAppend}></div> */}
       </>
     );
-  }, [value, onChange, disabled, elementSize]);
+  }, [value, onChange, disabled, elementSize, container]);
 }
