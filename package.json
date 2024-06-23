@@ -16,9 +16,9 @@
     "vite-node": "^1.6.0"
   },
   "dependencies": {
-    "@idraw/studio": "0.4.0-alpha.24",
-    "antd": "^5.18.1",
-    "idraw": "0.4.0-beta.29",
+    "@idraw/studio": "0.4.0-alpha.30",
+    "antd": "^5.18.3",
+    "idraw": "0.4.0-beta.30",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },
