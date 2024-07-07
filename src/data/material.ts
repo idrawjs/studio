@@ -1,5 +1,5 @@
 import type { GetTemplates, GetTemplatesOptions, TemplateItem } from '@idraw/studio';
-const basePath = '/static/material';
+import { basePath } from './base';
 
 const materialTemplateList: Array<TemplateItem> = [
   'tpl-button.json',
