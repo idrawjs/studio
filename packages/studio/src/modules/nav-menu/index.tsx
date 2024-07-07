@@ -4,9 +4,9 @@ import classnames from 'classnames';
 import { generateClassName, ConfigContext, IconRect, IconCircle, IconText, IconStar, IconGroup, IconImage, IconHTML, IconAppStore } from '@idraw/studio-base';
 import { Dropdown, Button, Space, Modal, Drawer } from 'antd';
 import type { MenuProps, MenuItemProps, ButtonProps } from 'antd';
-import { downloadFileFromText } from 'idraw';
+import { downloadFileFromText, deepCloneElement } from 'idraw';
 import { IconMore, IconApp, IconDown } from '@idraw/studio-base';
-import { ElementType } from 'idraw';
+import type { ElementType } from 'idraw';
 import { ExportFile, exportFileDialogWidth } from '../export-image-file';
 import { useLocale } from '../../locale';
 import { pickJSONFile } from '../../util/file';
@@ -287,7 +287,7 @@ export const NavMenu = (props: NavMenuProps) => {
           <TemplatePreview
             onSelect={(e) => {
               if (e.element) {
-                sharedEvent.trigger('addElement', { element: e.element, position: [] });
+                sharedEvent.trigger('addElement', { element: deepCloneElement(e.element), position: [] });
               }
               setOpenMaterialTemplates(false);
             }}

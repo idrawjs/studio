@@ -16,6 +16,6 @@ export const getDefaultPageTemplates: GetTemplates = (opts) => {
     ],
     pageSize: 8,
     current: 1,
-    total: 8
+    total: 2
   };
 };

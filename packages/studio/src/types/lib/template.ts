@@ -2,7 +2,7 @@ import type { Element } from 'idraw';
 
 export type TemplateItem = {
   name: string;
-  element: Element<'group'> | null;
+  element: Element | null;
   staticResource?: string | null;
 };
 
