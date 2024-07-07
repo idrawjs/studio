@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client';
 import { Studio } from '@idraw/studio';
 import data from './data-iphone-demo';
 import { base64 } from './logo';
+import { getPageTemplates } from './data/page';
+import { getMaterialTemplates } from './data/material';
+
 import './index.less';
 const dom = document.querySelector('#app') as HTMLDivElement;
 const root = createRoot(dom);
@@ -67,10 +70,6 @@ const App = () => {
     );
   }
 
-  // const style = { margin: 40 };
-  // const width = 800;
-  // const height = 600;
-
   return (
     <Studio
       defaultEditMode="page"
@@ -86,29 +85,8 @@ const App = () => {
       height={height}
       style={style}
       data={data}
-
-      // defaultScaleInfo={{
-      //   // scale: 0.4,
-      //   // offsetX: -200,
-      //   // offsetY: -200
-
-      //   // scale: 0.5,
-      //   // offsetX: 1400,
-      //   // offsetY: -200
-
-      //   // scale: 0.1,
-      //   // offsetX: -1000,
-      //   // offsetY: -500
-
-      //   scale: 0.12,
-      //   offsetX: -300,
-      //   offsetY: -500
-      //   // offsetY: 4100
-
-      //   // scale: 1,
-      //   // offsetX: 0,
-      //   // offsetY: 0
-      // }}
+      getPageTemplates={getPageTemplates}
+      getMaterialTemplates={getMaterialTemplates}
     />
   );
 };
