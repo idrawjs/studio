@@ -16,6 +16,7 @@ export interface ConfigContextValue {
   localeCode?: LocaleCode;
   themeMode?: ThemeMode;
   container?: HTMLDivElement | null;
+  getContainer: () => HTMLDivElement | HTMLElement;
 }
 
 const getDefaultConfigValue = (customValue?: Partial<ConfigContextValue>) => {
@@ -29,6 +30,9 @@ const getDefaultConfigValue = (customValue?: Partial<ConfigContextValue>) => {
     getClassNameTopPrefix,
     setClassNameTopPrefix,
     localeCode: DEFAULT_LOCALE_CODE,
+    getContainer: () => {
+      return customValue?.container || document.body;
+    },
     ...(customValue || {})
   };
   return value;
@@ -36,15 +40,16 @@ const getDefaultConfigValue = (customValue?: Partial<ConfigContextValue>) => {
 
 export const ConfigContext: React.Context<ConfigContextValue> = createContext<ConfigContextValue>(getDefaultConfigValue());
 
-export interface ConfigProviderProps extends Pick<Partial<ConfigContextValue>, 'topPrefix' | 'localeCode' | 'container' | 'themeMode'> {
+export interface ConfigProviderProps extends Pick<Partial<ConfigContextValue>, 'topPrefix' | 'localeCode' | 'container' | 'themeMode' | 'getContainer'> {
   children?: React.ReactNode;
 }
 
 export const ConfigProvider: React.FC<ConfigProviderProps> = (props) => {
-  const { children, topPrefix, localeCode, container, themeMode } = props;
+  const { children, topPrefix, localeCode, container, themeMode, getContainer } = props;
   const contextValue: ConfigContextValue = getDefaultConfigValue({
     topPrefix,
-    localeCode
+    localeCode,
+    getContainer
   });
   const [context, setContext] = useState<ConfigContextValue>(contextValue);
   const { className } = useThemeClassName({ themeMode });

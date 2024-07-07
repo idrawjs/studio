@@ -350,6 +350,7 @@ export function MultipleColorPicker(props: MultipleColorPickerProps) {
           />
         )}
         <SolidColorPicker
+          diabledColorBlocks={['linear-gradient', 'radial-gradient'].includes(mode)}
           value={currentPickedColor}
           className={internalPickerClassName}
           onChange={(e) => {

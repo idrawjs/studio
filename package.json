@@ -21,7 +21,7 @@
     "upgrade:version": "npm run version:reset && pnpm i"
   },
   "dependencies": {
-    "idraw": "0.4.0-beta.30",
+    "idraw": "0.4.0-beta.32",
     "antd": "5.18.3"
   },
   "devDependencies": {

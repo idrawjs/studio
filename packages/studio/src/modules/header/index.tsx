@@ -7,11 +7,11 @@ import { Context } from '../context';
 import { NavMenu } from '../nav-menu';
 import { Toolbar } from '../toolbar';
 import type { ToolbarProps } from '../toolbar';
-import type { SharedEvent, SharedStore } from '../../types';
+import type { SharedEvent, SharedStore, GetTemplates } from '../../types';
 
 const modName = 'mod-header';
 
-export interface ModProps extends ToolbarProps {
+export interface HeaderProps extends ToolbarProps {
   className?: string;
   style?: CSSProperties;
   logo?: React.ReactNode;
@@ -19,9 +19,10 @@ export interface ModProps extends ToolbarProps {
   navigationCenter?: React.ReactNode;
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
+  getMaterialTemplates?: GetTemplates;
 }
 
-export const Header = (props: ModProps) => {
+export const Header = (props: HeaderProps) => {
   const {
     logo,
     navigationMenu,
@@ -33,7 +34,8 @@ export const Header = (props: ModProps) => {
     onClickToggleLayer,
     onClickToggleSetting,
     sharedStore,
-    sharedEvent
+    sharedEvent,
+    getMaterialTemplates
   } = props;
   const { state, dispatch } = useContext(Context);
   const rootClassName = generateClassName(modName);
@@ -51,7 +53,7 @@ export const Header = (props: ModProps) => {
       <div style={style} className={classnames(rootClassName, className)}>
         <div className={leftClassName}>
           {logo}
-          {navigationMenu ? navigationMenu : <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} />}
+          {navigationMenu ? navigationMenu : <NavMenu sharedStore={sharedStore} sharedEvent={sharedEvent} getMaterialTemplates={getMaterialTemplates} />}
           <Toolbar
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}

@@ -34,7 +34,7 @@ export function MultipleColor(props: MultipleColorProps) {
   const valueStr = getColorText(value);
   const isHex = typeof value === 'string' ? true : false;
 
-  const { container } = useContext(ConfigContext);
+  const { container, getContainer } = useContext(ConfigContext);
   const rootClassName = generateClassName(modName);
   const previewClassName = generateClassName(modName, 'preview');
   const refContainer = useRef<HTMLDivElement | null | undefined>(container);
@@ -44,10 +44,6 @@ export function MultipleColor(props: MultipleColorProps) {
       refContainer.current = container;
     }
   }, [container]);
-
-  const getContainer = () => {
-    return refContainer.current || document.body;
-  };
 
   return useMemo(() => {
     const css = colorToCSS(value || 'transparent');
@@ -88,8 +84,7 @@ export function MultipleColor(props: MultipleColorProps) {
             onChange?.(e.target.value);
           }}
         />
-        {/* <div style={{}} ref={refAppend}></div> */}
       </>
     );
-  }, [value, onChange, disabled, elementSize, container]);
+  }, [value, onChange, disabled, elementSize]);
 }

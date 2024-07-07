@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState, useRef } from 'react';
+import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
 import { generateClassName, ElementTree, getElementTree, IconDoubleLeft, IconLeft } from '@idraw/studio-base';

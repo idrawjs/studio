@@ -1,9 +1,13 @@
 import React from 'react';
-import ColorPicker, { Color } from '@rc-component/color-picker';
+import ColorPicker, { Color, ColorBlock } from '@rc-component/color-picker';
+import classnames from 'classnames';
+import { generateClassName } from '../../../../css';
+import { modName } from './config';
 
 interface ColorPickerProps {
   className?: string;
   value?: string;
+  diabledColorBlocks?: boolean;
   onChange?: (color: string) => void;
 }
 
@@ -46,18 +50,73 @@ interface ColorPickerProps {
 //   return `#${list.join('')}`;
 // }
 
-export const SolidColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange, className }) => {
-  return (
-    <ColorPicker
-      className={className}
-      // value={parseColor(value)}
-      value={new Color(value)}
-      onChange={(data) => {
-        const hex8 = `#${data.toHex8().toUpperCase()}`;
-        const hex = hex8.endsWith('FF') ? `#${data.toHex().toUpperCase()}` : hex8;
+const colorPresets = [
+  'transparent',
+  '#FFFFFF',
+  '#000000',
+  '#AAAAAA',
+  '#F5222D',
+  '#FA8C16',
+  '#FADB14',
+  '#8BBB11',
+  '#52C41A',
+  '#13A8A8',
+  '#1677FF',
+  '#2F54EB',
+  '#722ED1',
+  '#EB2F96',
+  '#F5222D4D',
+  '#FA8C164D',
+  '#FADB144D',
+  '#8BBB114D',
+  '#52C41A4D',
+  '#13A8A84D',
+  '#1677FF4D',
+  '#2F54EB4D',
+  '#722ED14D',
+  '#EB2F964D'
+];
 
-        onChange?.(hex);
-      }}
-    />
+export const SolidColorPicker: React.FC<ColorPickerProps> = ({ value = '', onChange, className, diabledColorBlocks = true }) => {
+  const colorBlockClassName = generateClassName(modName, 'color-block');
+  const colorBlockActiveClassName = generateClassName(modName, 'color-block-active');
+
+  return (
+    <>
+      {!diabledColorBlocks && (
+        <div
+          style={{
+            display: 'flex',
+            flexWrap: 'wrap',
+            padding: 10,
+            paddingBottom: 0
+          }}
+        >
+          {colorPresets.map((color) => (
+            <ColorBlock
+              className={classnames(colorBlockClassName, {
+                [colorBlockActiveClassName]: color.toUpperCase() === value?.toUpperCase()
+              })}
+              key={color}
+              color={color}
+              prefixCls="rc-color-picker"
+              onClick={() => {
+                onChange?.(color);
+              }}
+            />
+          ))}
+        </div>
+      )}
+      <ColorPicker
+        className={className}
+        value={new Color(value)}
+        onChange={(data) => {
+          const hex8 = `#${data.toHex8().toUpperCase()}`;
+          const hex = hex8.endsWith('FF') ? `#${data.toHex().toUpperCase()}` : hex8;
+
+          onChange?.(hex);
+        }}
+      />
+    </>
   );
 };

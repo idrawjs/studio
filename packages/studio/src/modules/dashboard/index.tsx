@@ -8,7 +8,7 @@ import { PanelDetail } from '../panel-detail';
 import { Header } from '../header';
 import { Sketch } from '../sketch';
 // import SplitPane from '../split-pane';
-import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../../types';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions, GetTemplates } from '../../types';
 import { Context } from '../context';
 
 const modName = 'mod-dashboard';
@@ -35,6 +35,9 @@ export interface DashboardProps {
       sharedStore: SharedStore;
     }
   ) => void;
+  // api
+  getPageTemplates?: GetTemplates;
+  getMaterialTemplates?: GetTemplates;
 }
 
 export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: DashboardProps, ref: React.ForwardedRef<HTMLDivElement>) => {
@@ -50,7 +53,9 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
     sharedStore,
     sharedEvent,
     useContextMenuOptions,
-    handleKeyboard
+    handleKeyboard,
+    getPageTemplates,
+    getMaterialTemplates
   } = props;
   const { state } = useContext(Context);
   const { editMode } = state;
@@ -113,6 +118,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
             navigationCenter={navigationCenter}
             openLeftSider={openLeftSider}
             openRightSider={openRightSider}
+            getMaterialTemplates={getMaterialTemplates}
             onClickToggleLayer={() => {
               const open = openLeftSider ? false : true;
 
@@ -180,12 +186,13 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
                     sharedEvent={sharedEvent}
                     sharedStore={sharedStore}
                     useContextMenuOptions={useContextMenuOptions}
+                    getPageTemplates={getPageTemplates}
                   />
                 ) : (
                   <PanelLayer
                     height={height - headerHeight}
                     className={leftClassName}
-                    defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
+                    // defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
                     sharedEvent={sharedEvent}
                     sharedStore={sharedStore}
                     useContextMenuOptions={useContextMenuOptions}

@@ -9,6 +9,7 @@ const localeValues: Locale = {
     exportJSONFile: '导出JSON文件',
     exportImage: '导出图片',
     preferences: '预设',
+    material: '物料',
     rect: '矩形',
     circle: '圆形',
     text: '文本',
@@ -16,7 +17,8 @@ const localeValues: Locale = {
     html: 'HTML片段',
     svg: 'SVG片段',
     group: '群组',
-    devicePixelRatio: '设备像素比例'
+    devicePixelRatio: '设备像素比例',
+    materialTempate: '物料模板'
   },
   Toolbar: {
     layers: '图层',
@@ -24,6 +26,13 @@ const localeValues: Locale = {
     attributes: '属性',
     hand: '拖拽工具',
     centerContent: '内容居中'
+  },
+  PanelPage: {
+    pages: '页面',
+    addPage: '添加PC页面',
+    overview: '预览',
+    pcPageTemplates: 'PC页面模板',
+    mobilePageTemplates: '移动页面模板'
   },
   contextMenu: {
     copy: '复制',

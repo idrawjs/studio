@@ -24,6 +24,11 @@ const localeValues: Locale = {
     hidden: '隐藏',
     visible: '可视'
   },
+  ElementDesign: {
+    element: '元素',
+    layout: '布局',
+    global: '全局'
+  },
   ElementDetail: {
     basicAttributes: '基础',
     borderAttribute: '边框',

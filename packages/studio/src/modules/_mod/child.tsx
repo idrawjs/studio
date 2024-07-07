@@ -8,11 +8,12 @@ const modName = 'mod-xxxxxx';
 export interface ChildProps {
   className?: string;
   style?: CSSProperties;
+  parentModName: string;
 }
 
 export const Child = (props: ChildProps) => {
-  const { className, style } = props;
-  const rootClassName = generateClassName(modName);
+  const { className, style, parentModName } = props;
+  const rootClassName = generateClassName(parentModName, modName);
 
   return useMemo(() => {
     return (

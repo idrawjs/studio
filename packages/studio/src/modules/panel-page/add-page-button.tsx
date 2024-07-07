@@ -1,10 +1,14 @@
-import React, { useMemo } from 'react';
+import React, { useState, useMemo, useContext } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { generateClassName, IconDown, IconFileAdd } from '@idraw/studio-base';
-import { Space, Button, Dropdown } from 'antd';
-import { calcElementListSize, createUUID, type Element } from 'idraw';
-import { SharedEvent, SharedStore } from '../../types';
+import { ConfigContext, generateClassName, IconFileAdd } from '@idraw/studio-base';
+import { Button, Drawer, message } from 'antd';
+import { calcElementListSize, deepCloneElement } from 'idraw';
+import type { PointSize } from 'idraw';
+import type { SharedEvent, SharedStore, GetTemplates } from '../../types';
+import { useLocale } from '../../locale';
+import { TemplatePreview, templatePreivewDrawerStyles } from '../template-preview';
+import { getDefaultPageTemplates } from '../../shared/page';
 
 const modName = 'add-page-button';
 
@@ -15,155 +19,72 @@ export interface AddPageButtonProps {
   sharedEvent: SharedEvent;
   sharedStore: SharedStore;
   inPageOverview: boolean;
+  getPageTemplates?: GetTemplates;
 }
 
 export const AddPageButton = (props: AddPageButtonProps) => {
-  const { className, style, parentModName, inPageOverview, sharedEvent, sharedStore } = props;
+  const { className, style, parentModName, inPageOverview, sharedEvent, sharedStore, getPageTemplates } = props;
   const rootClassName = generateClassName(parentModName, modName);
+  const [moduleLocale] = useLocale('PanelPage');
+  const { getContainer } = useContext(ConfigContext);
+  const [openPageTemplates, setOpenPageTemplates] = useState(false);
+  const [messageApi, contextHolder] = message.useMessage();
 
   return useMemo(() => {
     return (
-      <Dropdown
-        trigger={['click', 'click']}
-        placement="bottom"
-        menu={{
-          items: [
-            {
-              key: 'pc-page',
-              label: 'PC page',
-              onClick: (e) => {
-                e.domEvent.stopPropagation();
-                const idraw = sharedStore.get('idraw');
-                const data = idraw?.getData();
-                if (idraw && Array.isArray(data?.elements)) {
-                  const elementListSize = calcElementListSize(data.elements);
-                  const width = 1200;
-                  const height = 800;
-                  const pageElement: Element<'group'> = {
-                    uuid: createUUID(),
-                    type: 'group',
-                    name: 'Unamed PC page',
-                    x: elementListSize.x + elementListSize.w + 100,
-                    y: elementListSize.y,
-                    w: width,
-                    h: height,
-                    detail: {
-                      background: '#FFFFFF',
-                      children: [
-                        {
-                          uuid: createUUID(),
-                          type: 'rect',
-                          name: 'Box',
-                          x: 50,
-                          y: 50,
-                          w: 1100,
-                          h: 400,
-                          detail: {
-                            background: '#D9D9D9'
-                          }
-                        },
-                        {
-                          uuid: createUUID(),
-                          type: 'rect',
-                          name: 'Box',
-                          x: 50,
-                          y: 500,
-                          w: 1100,
-                          h: 200,
-                          detail: {
-                            background: '#D9D9D9'
-                          }
-                        }
-                      ]
-                    },
-                    extends: {
-                      isPage: true
-                    }
-                  };
-                  sharedEvent.trigger('addPage', {
-                    element: pageElement,
-                    inPageOverview
-                  });
-                }
-              }
-            },
-            {
-              key: 'mobile-page',
-              label: 'Mobile page',
-              onClick: (e) => {
-                e.domEvent.stopPropagation();
-                const idraw = sharedStore.get('idraw');
-                const data = idraw?.getData();
-                if (idraw && Array.isArray(data?.elements)) {
-                  const elementListSize = calcElementListSize(data.elements);
-                  const width = 750;
-                  const height = 2000;
-                  const pageElement: Element<'group'> = {
-                    uuid: createUUID(),
-                    type: 'group',
-                    name: 'Unamed Mobile page',
-                    x: elementListSize.x + elementListSize.w + 100,
-                    y: elementListSize.y,
-                    w: width,
-                    h: height,
-                    detail: {
-                      background: '#FFFFFF',
-                      children: [
-                        {
-                          uuid: createUUID(),
-                          type: 'rect',
-                          name: 'Box',
-                          x: 40,
-                          y: 40,
-                          w: 670,
-                          h: 400,
-                          detail: {
-                            background: '#D9D9D9'
-                          }
-                        },
-                        {
-                          uuid: createUUID(),
-                          type: 'rect',
-                          name: 'Box',
-                          x: 40,
-                          y: 480,
-                          w: 670,
-                          h: 600,
-                          detail: {
-                            background: '#D9D9D9'
-                          }
-                        }
-                      ]
-                    },
-                    extends: {
-                      isPage: true
-                    }
-                  };
-                  sharedEvent.trigger('addPage', {
-                    element: pageElement,
-                    inPageOverview
-                  });
-                }
-              }
-            }
-          ]
-        }}
-      >
+      <>
         <Button
           size="small"
           type="text"
           style={style}
           className={classnames(rootClassName, className)}
           onClick={(e) => {
+            e.preventDefault();
             e.stopPropagation();
+            setOpenPageTemplates(true);
           }}
         >
-          <Space.Compact>
-            <IconFileAdd style={{ fontSize: 18 }} />
-            <IconDown style={{ fontSize: 10, marginLeft: 2 }} />
-          </Space.Compact>
+          <IconFileAdd style={{ fontSize: 18 }} />
         </Button>
-      </Dropdown>
+        <Drawer
+          title={moduleLocale.addPage}
+          placement="left"
+          onClose={() => {
+            setOpenPageTemplates(false);
+          }}
+          styles={templatePreivewDrawerStyles}
+          open={openPageTemplates}
+          getContainer={getContainer}
+        >
+          <TemplatePreview
+            getTemplates={getPageTemplates || getDefaultPageTemplates}
+            onSelect={({ element }) => {
+              if (!element) {
+                messageApi?.error('Unexpected data'); // TODO
+                return;
+              }
+              const elem = deepCloneElement(element);
+              const idraw = sharedStore.get('idraw');
+              const data = idraw?.getData();
+              const start: PointSize = { x: 0, y: 0 };
+              if (idraw && Array.isArray(data?.elements)) {
+                const elementListSize = calcElementListSize(data.elements);
+                start.x = elementListSize.x;
+                start.y = elementListSize.y;
+              }
+              sharedEvent.trigger('addPage', {
+                element: {
+                  ...elem,
+                  ...start
+                },
+                inPageOverview
+              });
+              setOpenPageTemplates(false);
+            }}
+          />
+        </Drawer>
+        {contextHolder}
+      </>
     );
-  }, [style, className, inPageOverview]);
+  }, [style, className, inPageOverview, moduleLocale, openPageTemplates]);
 };

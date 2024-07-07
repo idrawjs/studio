@@ -7,7 +7,7 @@ import type { ElementPosition } from 'idraw';
 import { Dropdown, Button, Collapse, Empty } from 'antd';
 import type { CollapseProps } from 'antd';
 import { Context } from '../context';
-import type { SharedEvent, SharedStore, HookUseContextMenuOptions, StudioState } from '../../types';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions, StudioState, GetTemplates } from '../../types';
 import { useLocale } from '../../locale';
 import { AddPageButton } from './add-page-button';
 
@@ -21,6 +21,7 @@ export interface PanelPageProps {
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
   useContextMenuOptions: HookUseContextMenuOptions;
+  getPageTemplates?: GetTemplates;
 }
 
 const pageTreeKey = 'page-tree';
@@ -30,7 +31,7 @@ const pageTreeHeightRatio = 1;
 const elementTreeHeightRatio = 3;
 
 export const PanelPage = (props: PanelPageProps) => {
-  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions } = props;
+  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions, getPageTemplates } = props;
   const { state, dispatch } = useContext(Context);
   const { pageTree, elementTree, selectedUUIDs, editingData, editingDataPosition, data } = state;
 
@@ -42,7 +43,8 @@ export const PanelPage = (props: PanelPageProps) => {
   } | null>(null);
 
   const headerHeight = 32;
-  const refContentActiveKeys = useRef<string[]>([pageTreeKey, elementTreeKey]);
+  // const refContentActiveKeys = useRef<string[]>([pageTreeKey, elementTreeKey]);
+  const [activeKeys, setActiveKeys] = useState<string[]>([pageTreeKey, elementTreeKey]);
   const [pageTreeHeight, setPageTreeHeight] = useState<number>(0);
   const [elementTreeHeight, setElementTreeHeight] = useState<number>(0);
 
@@ -53,7 +55,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const headerTitleClassName = generateClassName(modName, 'header', 'title');
   const headerBtnClassName = generateClassName(modName, 'header', 'btn');
   const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
-  const [moduleLocale] = useLocale('contextMenu');
+  const [moduleLocale] = useLocale('PanelPage');
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
   const refInPageOverview = useRef<boolean>(inPageOverview);
 
@@ -71,7 +73,7 @@ export const PanelPage = (props: PanelPageProps) => {
     const idraw = sharedStore.get('idraw');
     const listenSelectedPage = (e: { uuids: string[] }) => {
       if (refInPageOverview.current === true) {
-        const { uuids } = e;
+        const { uuids = [] } = e;
         setSelectedPageUUIDs([...uuids]);
       }
     };
@@ -97,8 +99,7 @@ export const PanelPage = (props: PanelPageProps) => {
     }
   }, [editingDataPosition]);
 
-  const resetContentHeight = () => {
-    const keys = refContentActiveKeys.current;
+  const resetContentHeight = (keys: string[]) => {
     const totalRatio = pageTreeHeightRatio + elementTreeHeightRatio;
     if (keys.includes(pageTreeKey) && keys.includes(elementTreeKey)) {
       const restHeight = height - headerHeight * 2;
@@ -120,10 +121,12 @@ export const PanelPage = (props: PanelPageProps) => {
 
   useEffect(() => {
     const idraw = sharedStore?.get('idraw');
+    let currentKeys: string[] = [];
     if (inPageOverview === true) {
-      refContentActiveKeys.current = [pageTreeKey];
       sharedEvent.trigger('resetEditingView', { type: 'back-root', position: null });
       setSelectedPageUUIDs([]);
+      currentKeys = [pageTreeKey];
+      setActiveKeys(currentKeys);
       idraw?.disable('selectInGroup');
     } else {
       const pageKeys: string[] = [];
@@ -133,9 +136,10 @@ export const PanelPage = (props: PanelPageProps) => {
       }
       setSelectedPageUUIDs(pageKeys);
       idraw?.enable('selectInGroup');
-      refContentActiveKeys.current = [pageTreeKey, elementTreeKey];
+      currentKeys = [pageTreeKey, elementTreeKey];
+      setActiveKeys(currentKeys);
     }
-    resetContentHeight();
+    resetContentHeight(currentKeys);
   }, [height, inPageOverview]);
 
   useEffect(() => {
@@ -208,7 +212,7 @@ export const PanelPage = (props: PanelPageProps) => {
       label: (
         <div className={headerClassName} style={{ height: headerHeight }}>
           <div style={{ display: 'flex' }}>
-            <span style={{ marginRight: 10 }}>Pages</span>
+            <span style={{ marginRight: 10 }}>{moduleLocale.pages}</span>
             <Button
               className={headerBtnClassName}
               style={{ marginLeft: '10px' }}
@@ -222,7 +226,13 @@ export const PanelPage = (props: PanelPageProps) => {
             />
           </div>
           <div style={{ display: 'flex' }}>
-            <AddPageButton inPageOverview={inPageOverview} parentModName={modName} sharedEvent={sharedEvent} sharedStore={sharedStore} />
+            <AddPageButton
+              inPageOverview={inPageOverview}
+              parentModName={modName}
+              sharedEvent={sharedEvent}
+              sharedStore={sharedStore}
+              getPageTemplates={getPageTemplates}
+            />
           </div>
         </div>
       ),
@@ -251,14 +261,6 @@ export const PanelPage = (props: PanelPageProps) => {
                   type: 'update',
                   payload
                 });
-              }}
-              onOperationToggle={({}) => {
-                // updateElementInList(uuid, { operations }, state.editingData.elements);
-                // const elementTree = getElementTree(editingData);
-                // dispatch({
-                //   type: 'update',
-                //   payload: { editingData: { ...editingData }, elementTree }
-                // });
               }}
               onSelect={(e) => {
                 if (e?.positions.length === 1) {
@@ -335,7 +337,7 @@ export const PanelPage = (props: PanelPageProps) => {
           <span className={headerTitleClassName}>{getCurrentName()}</span>
         </div>
       ),
-      children: inPageOverview ? null : (
+      children: (
         <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
           <div className={contentClassName} style={{ height: elementTreeHeight }}>
             {elementTree.length > 0 ? (
@@ -344,7 +346,7 @@ export const PanelPage = (props: PanelPageProps) => {
                 height={elementTreeHeight}
                 treeData={elementTree}
                 selectedKeys={selectedUUIDs}
-                expandedKeys={expandedElementKeys}
+                // expandedKeys={expandedElementKeys}
                 onTitleChange={({ uuid, value }) => {
                   updateElementInList(uuid, { name: value }, state.editingData.elements);
                   const elementTree = getElementTree(editingData);
@@ -423,14 +425,16 @@ export const PanelPage = (props: PanelPageProps) => {
       >
         <Collapse
           ghost
+          collapsible="icon"
           items={items}
           size="small"
-          defaultActiveKey={refContentActiveKeys.current}
+          activeKey={activeKeys}
           onChange={(e) => {
             if (Array.isArray(e)) {
-              refContentActiveKeys.current = [...e];
+              const currentKeys = [...e];
+              setActiveKeys(currentKeys);
+              resetContentHeight(currentKeys);
             }
-            resetContentHeight();
           }}
         />
       </div>

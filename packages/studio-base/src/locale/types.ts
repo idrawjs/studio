@@ -26,6 +26,11 @@ export interface Locale<T = LocaleCode> {
     hidden: string;
     visible: string;
   };
+  ElementDesign: {
+    element: string;
+    layout: string;
+    global: string;
+  };
   ElementDetail: {
     basicAttributes: string;
     borderAttribute: string;

@@ -30,6 +30,7 @@ export {
   IconBorderRight,
   IconBorderTop,
   IconCheck,
+  IconCheckCircle,
   IconCircle,
   IconCloseCircle,
   IconCode,

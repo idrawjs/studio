@@ -9,6 +9,7 @@ const localeValues: Locale = {
     exportJSONFile: 'Export JSON file',
     exportImage: 'Export image',
     preferences: 'Preferences',
+    material: 'Material',
     rect: 'Rect',
     circle: 'Circle',
     text: 'Text',
@@ -16,7 +17,8 @@ const localeValues: Locale = {
     html: 'HTML',
     svg: 'SVG',
     group: 'Group',
-    devicePixelRatio: 'Device pixel ratio'
+    devicePixelRatio: 'Device pixel ratio',
+    materialTempate: 'Material templates'
   },
   Toolbar: {
     layers: 'Layers',
@@ -24,6 +26,13 @@ const localeValues: Locale = {
     attributes: 'Attributes',
     hand: 'Hand tool',
     centerContent: 'Center content'
+  },
+  PanelPage: {
+    pages: 'Pages',
+    addPage: 'Add page',
+    overview: 'Overview',
+    pcPageTemplates: 'PC page templates',
+    mobilePageTemplates: 'Mobile page templates'
   },
   contextMenu: {
     copy: 'Copy',
