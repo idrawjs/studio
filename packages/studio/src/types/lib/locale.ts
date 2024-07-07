@@ -11,6 +11,7 @@ export interface Locale<T = LocaleCode> {
     exportJSONFile: string;
     exportImage: string;
     preferences: string;
+    material: string;
     rect: string;
     circle: string;
     text: string;
@@ -19,6 +20,7 @@ export interface Locale<T = LocaleCode> {
     svg: string;
     group: string;
     devicePixelRatio: string;
+    materialTempate: string;
   };
   Toolbar: {
     layers: string;
@@ -26,6 +28,13 @@ export interface Locale<T = LocaleCode> {
     attributes: string;
     hand: string;
     centerContent: string;
+  };
+  PanelPage: {
+    pages: string;
+    addPage: string;
+    overview: string;
+    pcPageTemplates: string;
+    mobilePageTemplates: string;
   };
   contextMenu: {
     copy: string;

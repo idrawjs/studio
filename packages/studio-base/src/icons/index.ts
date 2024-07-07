@@ -11,6 +11,7 @@ import IconBorderLeft from './border-left';
 import IconBorderRight from './border-right';
 import IconBorderTop from './border-top';
 import IconCheck from './check';
+import IconCheckCircle from './check-circle';
 import IconCircle from './circle';
 import IconCloseCircle from './close-circle';
 import IconConstrain from './constrain';
@@ -88,6 +89,7 @@ export {
   IconBorderRight,
   IconBorderTop,
   IconCheck,
+  IconCheckCircle,
   IconCircle,
   IconCloseCircle,
   IconCode,

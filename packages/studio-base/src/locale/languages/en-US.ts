@@ -24,6 +24,11 @@ const localeValues: Locale = {
     hidden: 'Hidden',
     visible: 'Visible'
   },
+  ElementDesign: {
+    element: 'Element',
+    layout: 'Layout',
+    global: 'Global'
+  },
   ElementDetail: {
     basicAttributes: 'Basic',
     borderAttribute: 'Border',

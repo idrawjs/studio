@@ -24,7 +24,9 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     prefiexName,
     onEditGroupElement,
     useContextMenuOptions = useInnerContextMenuOptions,
-    handleKeyboard = handleInnerKeyboard
+    handleKeyboard = handleInnerKeyboard,
+    getPageTemplates,
+    getMaterialTemplates
   } = props;
   const [state, dispatch] = useReducer(createStudioReducer, createStudioContextStateByProps(props));
 
@@ -122,7 +124,15 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
 
   return useMemo(() => {
     return (
-      <ConfigProvider localeCode={state.localeCode} container={refDashboard.current} topPrefix={prefiexName} themeMode={state.themeMode}>
+      <ConfigProvider
+        localeCode={state.localeCode}
+        // container={container}
+        topPrefix={prefiexName}
+        themeMode={state.themeMode}
+        getContainer={() => {
+          return refDashboard.current || document.body;
+        }}
+      >
         <Provider value={{ state, dispatch }}>
           <Dashboard
             logo={logo}
@@ -138,9 +148,11 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
             sharedStore={refSharedStore.current as SharedStore}
             useContextMenuOptions={useContextMenuOptions}
             handleKeyboard={handleKeyboard}
+            getPageTemplates={getPageTemplates}
+            getMaterialTemplates={getMaterialTemplates}
           />
         </Provider>
       </ConfigProvider>
     );
-  }, [prefiexName, width, height, state, dispatch, refDashboard]);
+  }, [prefiexName, width, height, state, dispatch]);
 });
