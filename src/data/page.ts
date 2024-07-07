@@ -1,5 +1,6 @@
 import type { GetTemplates, GetTemplatesOptions, TemplateItem } from '@idraw/studio';
-import { basePath } from './base';
+import { parseBasePath } from './base';
+const basePath = parseBasePath('/static/page');
 
 const pageTemplateList: Array<TemplateItem> = [
   'tpl-blank.json',
