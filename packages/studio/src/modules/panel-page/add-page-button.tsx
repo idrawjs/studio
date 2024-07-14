@@ -4,7 +4,7 @@ import classnames from 'classnames';
 import { ConfigContext, generateClassName, IconFileAdd } from '@idraw/studio-base';
 import { Button, Drawer, message } from 'antd';
 import { calcElementListSize, deepCloneElement } from 'idraw';
-import type { PointSize } from 'idraw';
+import type { PointSize, Element } from 'idraw';
 import type { SharedEvent, SharedStore, GetTemplates } from '../../types';
 import { useLocale } from '../../locale';
 import { TemplatePreview, templatePreivewDrawerStyles } from '../template-preview';
@@ -74,7 +74,7 @@ export const AddPageButton = (props: AddPageButtonProps) => {
               }
               sharedEvent.trigger('addPage', {
                 element: {
-                  ...elem,
+                  ...(elem as Element<'group'>),
                   ...start
                 },
                 inPageOverview

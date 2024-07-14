@@ -15,6 +15,8 @@ import IconImage from '../../icons/image';
 import IconPath from '../../icons/path';
 import IconHTML from '../../icons/html';
 import IconArrowRight from '../../icons/arrow-right';
+import IconLock from '../../icons/lock';
+import IconUnlock from '../../icons/unlock';
 
 import IconCloseCircle from '../../icons/close-circle';
 
@@ -181,16 +183,16 @@ export const TreeNode = (props: TreeNodeProps) => {
     onGoToGroup?.({ uuid, position });
   };
 
-  // const onClickToggleLock = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
-  //   e.stopPropagation();
-  //   e.preventDefault();
-  //   onOperationToggle?.({
-  //     uuid: nodeKey,
-  //     operations: {
-  //       lock: !operations.lock
-  //     }
-  //   });
-  // };
+  const onClickToggleLock = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.stopPropagation();
+    e.preventDefault();
+    onOperationToggle?.({
+      uuid: nodeKey,
+      operations: {
+        locked: !operations.locked
+      }
+    });
+  };
 
   return useMemo(() => {
     refTitle.current = title;
@@ -237,11 +239,11 @@ export const TreeNode = (props: TreeNodeProps) => {
               <IconVisible className={iconClassName} onClick={onClickToggleVisible} />
             )}
 
-            {/* {operations.lock ? (
-            <IconLock className={iconClassName} onClick={onClickToggleLock} />
-          ) : (
-            <IconUnlock className={iconClassName} onClick={onClickToggleLock} />
-          )} */}
+            {operations.locked ? (
+              <IconLock className={iconClassName} onClick={onClickToggleLock} />
+            ) : (
+              <IconUnlock className={iconClassName} onClick={onClickToggleLock} />
+            )}
             {/* <IconEdit className={iconClassName} onClick={onClickToEdit} /> */}
             <IconCloseCircle className={iconClassName} onClick={onClickToDelete} />
           </span>

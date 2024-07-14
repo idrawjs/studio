@@ -34,6 +34,10 @@ const localeValues: Locale = {
     pcPageTemplates: 'PC页面模板',
     mobilePageTemplates: '移动页面模板'
   },
+  TemplatePreview: {
+    add: '添加',
+    cancel: '取消'
+  },
   contextMenu: {
     copy: '复制',
     paste: '粘贴',

@@ -238,7 +238,7 @@ export const Sketch = (props: SketchProps) => {
       const { w, h, detail } = element;
       const data = refData.current;
       data.elements = [...data.elements, ...[element]];
-      const { children, ...restDetail } = detail;
+      const { children = [], ...restDetail } = detail;
       let editingData: Data = {
         elements: element.detail.children,
         layout: {
@@ -261,6 +261,7 @@ export const Sketch = (props: SketchProps) => {
       }
 
       const elementTree = getElementTree(editingData);
+      idraw.cancelElements();
       idraw.centerContent({ data: editingData });
       dispatch({
         type: 'update',

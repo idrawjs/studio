@@ -58,6 +58,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const [moduleLocale] = useLocale('PanelPage');
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
   const refInPageOverview = useRef<boolean>(inPageOverview);
+  const refPreviousSelectedUUIDs = useRef<string[]>([]);
 
   const getSelectedPageKeys = () => {
     const keys: string[] = [];
@@ -161,7 +162,7 @@ export const PanelPage = (props: PanelPageProps) => {
   };
 
   useEffect(() => {
-    sharedEvent.on('scrollToLayer', ({ uuid }) => {
+    const scrollToLayer = ({ uuid }: { uuid: string }) => {
       if (uuid) {
         refElementTree.current?.scrollTo({
           key: uuid,
@@ -169,8 +170,24 @@ export const PanelPage = (props: PanelPageProps) => {
           // offset: 0
         });
       }
-    });
+    };
+    sharedEvent.on('scrollToLayer', scrollToLayer);
+    return () => {
+      sharedEvent.off('scrollToLayer', scrollToLayer);
+    };
   }, []);
+
+  useEffect(() => {
+    if (selectedUUIDs.length === 1) {
+      if (refPreviousSelectedUUIDs.current[0] !== selectedUUIDs[0]) {
+        refElementTree.current?.scrollTo({
+          key: selectedUUIDs[0],
+          align: 'auto'
+        });
+      }
+    }
+    refPreviousSelectedUUIDs.current = [...selectedUUIDs];
+  }, [selectedUUIDs]);
 
   useEffect(() => {
     if (!selectedUUIDs[0]) {
@@ -362,6 +379,10 @@ export const PanelPage = (props: PanelPageProps) => {
                     type: 'update',
                     payload: { editingData: { ...editingData }, elementTree }
                   });
+                  const idraw = sharedStore.get('idraw');
+                  if (operations.locked === true) {
+                    idraw?.cancelElements();
+                  }
                 }}
                 onSelect={(e) => {
                   if (!selectedUUIDs?.includes(e.uuids[0])) {

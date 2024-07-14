@@ -17,14 +17,15 @@ export interface PreviewItemProps {
   height: number;
   onMount?: (e: { idraw: iDraw }) => void;
   item: TemplateItem;
-  onSelect: (e: { element: Element<'group'> | null }) => void;
+  onSelect: (e: { element: Element | null }) => void;
+  onPreview: (e: { element: Element | null }) => void;
 }
 
 export const PreviewItem = (props: PreviewItemProps) => {
-  const { parentModName, className, style, width, height, onMount, item, onSelect, ...divAttrs } = props;
+  const { parentModName, className, style, width, height, onMount, item, onSelect, onPreview, ...divAttrs } = props;
   const refDom = useRef<HTMLDivElement | null>(null);
   const refIDraw = useRef<iDraw | null>(null);
-  const refPageElement = useRef<Element<'group'> | null>(item.element);
+  const refPageElement = useRef<Element | null>(item.element);
   const rootClassName = generateClassName(parentModName, modName);
   const nameClassName = generateClassName(parentModName, modName, 'name');
   const actionClassName = generateClassName(parentModName, modName, 'action');
@@ -105,9 +106,20 @@ export const PreviewItem = (props: PreviewItemProps) => {
           <div ref={refDom}></div>
           <div className={actionClassName}>
             <Button.Group size="large">
-              {/* <Button size="large" type="primary">
-                <IconVisible style={{ fontSize: 20 }} />
-              </Button> */}
+              <Button size="large" type="primary">
+                <IconVisible
+                  style={{ fontSize: 20 }}
+                  onClick={() => {
+                    const element = refPageElement.current;
+                    if (element) {
+                      element.name = item.name;
+                    }
+                    onPreview({
+                      element
+                    });
+                  }}
+                />
+              </Button>
               <Button size="large" type="primary">
                 <IconCheckCircle
                   style={{ fontSize: 20 }}
@@ -128,5 +140,5 @@ export const PreviewItem = (props: PreviewItemProps) => {
         </div>
       </Spin>
     );
-  }, [loading, errorText, item]);
+  }, [loading, errorText, item, onPreview]);
 };

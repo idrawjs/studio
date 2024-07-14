@@ -19,9 +19,11 @@
 .@{mod-template-preview}-footer {
   margin: 0 auto;
   padding-bottom: 40px;
-  display: block;
+  display: flex;
   width: 100%;
   text-align: center;
+  justify-content: center;
+  align-items: center;
 }
 
 .@{mod-template-preview}-item {
@@ -83,4 +85,18 @@
   border-radius: 6px;
   max-height: 100%;
   overflow: auto;
+}
+
+.@{mod-template-preview}-detail {
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+  justify-content: center;
+  align-items: center;
+  .@{mod-template-preview}-detail-canvas {
+    display: flex;
+  }
+  .@{mod-template-preview}-detail-action {
+    display: flex;
+  }
 }
