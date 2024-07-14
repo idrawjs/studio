@@ -36,6 +36,10 @@ export interface Locale<T = LocaleCode> {
     pcPageTemplates: string;
     mobilePageTemplates: string;
   };
+  TemplatePreview: {
+    add: string;
+    cancel: string;
+  };
   contextMenu: {
     copy: string;
     paste: string;

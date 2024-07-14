@@ -34,6 +34,10 @@ const localeValues: Locale = {
     pcPageTemplates: 'PC page templates',
     mobilePageTemplates: 'Mobile page templates'
   },
+  TemplatePreview: {
+    add: 'Add',
+    cancel: 'Cancel'
+  },
   contextMenu: {
     copy: 'Copy',
     paste: 'Paste',

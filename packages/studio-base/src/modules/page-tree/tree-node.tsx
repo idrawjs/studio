@@ -171,7 +171,7 @@ export const TreeNode = (props: TreeNodeProps) => {
   //   onOperationToggle?.({
   //     uuid: nodeKey,
   //     operations: {
-  //       lock: !operations.lock
+  //       locked: !operations.locked
   //     }
   //   });
   // };
