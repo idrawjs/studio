@@ -82,7 +82,7 @@ export const ScaleSelector = (props: ScaleSelectorProps) => {
 
   return useMemo(() => {
     return (
-      <Dropdown className={classnames(rootClassName, className)} menu={menuProps}>
+      <Dropdown className={classnames(rootClassName, className)} menu={menuProps} placement="bottom">
         <Button icon={<IconScale />} size="small">{`${formatNumber(parseFloat(value || '1') * 100)}%`}</Button>
       </Dropdown>
     );

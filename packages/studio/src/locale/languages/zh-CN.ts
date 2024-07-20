@@ -25,7 +25,9 @@ const localeValues: Locale = {
     ruler: '标尺',
     attributes: '属性',
     hand: '拖拽工具',
-    centerContent: '内容居中'
+    centerContent: '内容居中',
+    redo: '重做',
+    undo: '撤销'
   },
   PanelPage: {
     pages: '页面',

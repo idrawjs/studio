@@ -9,6 +9,7 @@ type WrapOptions = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle' | '
   generateClassName: (...args: string[]) => string;
   position: ElementPosition;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
+  onContextMenu?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   selectedKeys: string[];
 };
 
@@ -27,7 +28,7 @@ export function wrapTreeViewData(elementTree: ElementTreeData, opts: WrapOptions
 }
 
 const wrapTreeViewNode = (treeNode: ElementTreeNode, opts: WrapOptions) => {
-  const { parentModName, onTitleChange, onOperationToggle, onDelete, onSelect, onGoToGroup, position, selectedKeys } = opts;
+  const { parentModName, onTitleChange, onOperationToggle, onDelete, onSelect, onContextMenu, onGoToGroup, position, selectedKeys } = opts;
   const node: ElementTreeViewNode = {
     key: treeNode.key,
     // title: treeNode.title,
@@ -45,6 +46,7 @@ const wrapTreeViewNode = (treeNode: ElementTreeNode, opts: WrapOptions) => {
         onOperationToggle={onOperationToggle}
         onDelete={onDelete}
         onSelect={onSelect}
+        onContextMenu={onContextMenu}
         onGoToGroup={onGoToGroup}
         isSelected={selectedKeys?.includes(treeNode.key)}
       />

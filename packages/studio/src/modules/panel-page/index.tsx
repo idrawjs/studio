@@ -54,7 +54,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const headerClassName = generateClassName(modName, 'header');
   const headerTitleClassName = generateClassName(modName, 'header', 'title');
   const headerBtnClassName = generateClassName(modName, 'header', 'btn');
-  const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
+  const [contextMenuOptions, updateContextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
   const [moduleLocale] = useLocale('PanelPage');
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
   const refInPageOverview = useRef<boolean>(inPageOverview);
@@ -387,6 +387,15 @@ export const PanelPage = (props: PanelPageProps) => {
                 onSelect={(e) => {
                   if (!selectedUUIDs?.includes(e.uuids[0])) {
                     selectElementsByPositions(e.positions);
+                  }
+                }}
+                onContextMenu={(e) => {
+                  if (!selectedUUIDs?.includes(e.uuids[0])) {
+                    selectElementsByPositions(e.positions);
+                    const selectedElement = findElementFromListByPosition(e.positions[0], editingData.elements);
+                    if (selectedElement) {
+                      updateContextMenuOptions({ selectedElements: [selectedElement] });
+                    }
                   }
                 }}
                 onDrop={(e) => {

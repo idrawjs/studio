@@ -7,8 +7,8 @@ import type { StudioProps, SharedEventMap, SharedStorage, SharedEvent, SharedSto
 import { createSharedDefaultStorage } from './shared/store';
 import { initActionEvent } from './shared/event';
 import { useContextMenuOptions as useInnerContextMenuOptions } from './modules/context-menu';
-
 import { handleKeyboard as handleInnerKeyboard } from './modules/hot-key';
+import { SnapshotRecorder } from './shared/snapshot-recorder';
 
 export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
   const {
@@ -37,6 +37,10 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
       defaultStorage: createSharedDefaultStorage()
     })
   );
+  const refSnapshotRecorder = useRef<SnapshotRecorder>(new SnapshotRecorder());
+  if (!refSharedStore.current?.get('snapshotRecorder')) {
+    refSharedStore.current?.set('snapshotRecorder', refSnapshotRecorder.current);
+  }
 
   useEffect(() => {
     if (defaultEditMode === 'page') {

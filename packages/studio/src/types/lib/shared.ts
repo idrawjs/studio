@@ -3,6 +3,7 @@ import type { Data, ElementType, Element, ElementPosition, RecursivePartial } fr
 import type { StudioState, StudioActionType } from './context';
 import type { LocaleCode } from './locale';
 import type { StudioThemeMode } from './context';
+import { SnapshotRecorder } from '../../shared/snapshot-recorder';
 
 interface clipboardMap {
   'copy-elements': Element[];
@@ -16,6 +17,7 @@ export interface SharedStorage {
     data: clipboardMap[keyof clipboardMap] | any;
   };
   selectedUUIDs: string[];
+  snapshotRecorder: SnapshotRecorder | null;
 }
 
 export type SharedStore = Store<SharedStorage>;
@@ -54,6 +56,8 @@ export interface SharedEventMap {
   paste: void;
   cut: void;
   delete: void;
+  undo: void;
+  redo: void;
   scrollToLayer: { uuid: string };
   switchTheme: { theme: StudioThemeMode };
   changeLocale: { locale: LocaleCode };

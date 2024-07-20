@@ -34,7 +34,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
   const headerTitleClassName = generateClassName(modName, 'header', 'title');
   const headerBtnClassName = generateClassName(modName, 'header', 'btn');
   // const footerClassName = generateClassName(modName, 'footer');
-  const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
+  const [contextMenuOptions, updateContextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   const getCurrentName = () => {
     if (state.editingDataPosition.length === 0) {
@@ -149,6 +149,15 @@ export const PanelLayer = (props: PanelLayerProps) => {
               onSelect={(e) => {
                 if (!selectedUUIDs?.includes(e.uuids[0])) {
                   selectElementsByPositions(e.positions);
+                }
+              }}
+              onContextMenu={(e) => {
+                if (!selectedUUIDs?.includes(e.uuids[0])) {
+                  selectElementsByPositions(e.positions);
+                  const selectedElement = findElementFromListByPosition(e.positions[0], editingData.elements);
+                  if (selectedElement) {
+                    updateContextMenuOptions({ selectedElements: [selectedElement] });
+                  }
                 }
               }}
               onDrop={(e) => {

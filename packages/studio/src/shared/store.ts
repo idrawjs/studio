@@ -7,6 +7,7 @@ export function createSharedDefaultStorage(): SharedStorage {
       type: 'default',
       data: null
     },
-    selectedUUIDs: []
+    selectedUUIDs: [],
+    snapshotRecorder: null
   };
 }

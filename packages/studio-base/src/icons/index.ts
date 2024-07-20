@@ -42,6 +42,7 @@ import IconHeart from './heart';
 import IconHome from './home';
 import IconHTML from './html';
 import IconIndent from './indent';
+import IconInternational from './international';
 import IconImage from './image';
 import IconInvisible from './invisible';
 import IconLayer from './layer';
@@ -120,6 +121,7 @@ export {
   IconHome,
   IconHTML,
   IconIndent,
+  IconInternational,
   IconImage,
   IconInvisible,
   IconLayer,

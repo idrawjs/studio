@@ -28,6 +28,8 @@ export interface Locale<T = LocaleCode> {
     attributes: string;
     hand: string;
     centerContent: string;
+    redo: string;
+    undo: string;
   };
   PanelPage: {
     pages: string;
