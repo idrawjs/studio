@@ -132,4 +132,33 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
       }
     }
   });
+
+  sharedEvent.on('undo', () => {
+    const idraw = sharedStore?.get('idraw');
+    const snapshotRecorder = sharedStore.get('snapshotRecorder');
+    const data = snapshotRecorder?.undo(idraw?.getData());
+    if (data) {
+      sharedEvent?.trigger('resetEditingData', {
+        editingData: {
+          ...idraw?.getData(),
+          ...data
+        }
+      });
+      idraw?.cancelElements();
+    }
+  });
+  sharedEvent.on('redo', () => {
+    const idraw = sharedStore?.get('idraw');
+    const snapshotRecorder = sharedStore.get('snapshotRecorder');
+    const data = snapshotRecorder?.redo(idraw?.getData());
+    if (data) {
+      sharedEvent?.trigger('resetEditingData', {
+        editingData: {
+          ...idraw?.getData(),
+          ...data
+        }
+      });
+      idraw?.cancelElements();
+    }
+  });
 }

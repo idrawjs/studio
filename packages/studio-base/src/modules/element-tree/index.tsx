@@ -23,6 +23,7 @@ export type ElementTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperatio
   onExpand?: (keys: string[], e: { expanded: boolean; nativeEvent: React.PointerEvent; node: TreeDataNode }) => void;
   defaultExpandAll?: boolean;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
+  onContextMenu?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onDrop?: (e: { from: ElementPosition; to: ElementPosition }) => void;
   onDelete?: (e: { uuid: string }) => void;
   onGoToGroup?: (e: { uuid: string; position: ElementPosition }) => void;
@@ -43,6 +44,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     onTitleChange,
     onOperationToggle,
     onSelect,
+    onContextMenu,
     selectedKeys,
     onDrop,
     defaultExpandedKeys,
@@ -66,6 +68,10 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     const wrappedTreeData = wrapTreeViewData(treeData || [], {
       parentModName: modName,
       generateClassName,
+      onSelect: (e) => {
+        onSelect?.(e);
+      },
+      onContextMenu,
       onTitleChange,
       onOperationToggle,
       onDelete: onElementDelete,

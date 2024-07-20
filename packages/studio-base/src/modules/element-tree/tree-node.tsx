@@ -37,6 +37,7 @@ export interface TreeNodeProps {
   onOperationToggle?: (e: { uuid: string; operations: ElementOperations }) => void;
   onDelete?: (e: { uuid: string }) => void;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
+  onContextMenu?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onGoToGroup?: (e: { uuid: string; position: ElementPosition }) => void;
   isSelected: boolean;
 }
@@ -55,7 +56,7 @@ export const TreeNode = (props: TreeNodeProps) => {
     onTitleChange,
     onOperationToggle,
     onDelete,
-    onSelect,
+    onContextMenu,
     onGoToGroup,
     operations,
     isSelected
@@ -146,11 +147,10 @@ export const TreeNode = (props: TreeNodeProps) => {
     const nowTime = Date.now();
     const countTime = nowTime - clickTime.current;
     clickTime.current = nowTime;
-
-    onSelect?.({
-      uuids: [uuid],
-      positions: [position]
-    });
+    // onSelect?.({
+    //   uuids: [uuid],
+    //   positions: [position]
+    // });
     if (countTime <= 300 && countTime > 0) {
       e.stopPropagation();
       e.preventDefault();
@@ -194,6 +194,14 @@ export const TreeNode = (props: TreeNodeProps) => {
     });
   };
 
+  const onNodeContextMenu = (e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    e.preventDefault();
+    onContextMenu?.({
+      uuids: [uuid],
+      positions: [position]
+    });
+  };
+
   return useMemo(() => {
     refTitle.current = title;
     function getIcon(type?: ElementType) {
@@ -225,6 +233,7 @@ export const TreeNode = (props: TreeNodeProps) => {
         onClick={onClickTitle}
         onMouseOver={onNodeMouseOver}
         onMouseLeave={onNodeMouseLeave}
+        onContextMenu={onNodeContextMenu}
       >
         <span className={titleClassName}>
           {getIcon(type)}
@@ -259,6 +268,10 @@ export const TreeNode = (props: TreeNodeProps) => {
               onClick={onTitleInputClick}
               onKeyDown={onTitleInputKeyDown}
               onChange={onTitleInputChange}
+              onContextMenu={(e) => {
+                e.stopPropagation();
+                e.preventDefault();
+              }}
               // addonAfter={<IconCheck onClick={onTitleInputOk} />}
             />
           </span>

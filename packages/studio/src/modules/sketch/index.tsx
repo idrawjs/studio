@@ -1,7 +1,7 @@
 import React, { useRef, useContext, useMemo, useEffect } from 'react';
 import classnames from 'classnames';
 import { iDraw, findElementsFromListByPositions, eventKeys, getElementPositionFromList, findElementFromListByPosition, calcElementCenter } from 'idraw';
-import type { Data, ElementPosition, Element } from 'idraw';
+import type { Data, ElementPosition, Element, IDrawEvent } from 'idraw';
 import { ConfigContext, getElementTree, getPageTree } from '@idraw/studio-base';
 import type { PageTreeData } from '@idraw/studio-base';
 import type { CSSProperties } from 'react';
@@ -35,7 +35,7 @@ export const Sketch = (props: SketchProps) => {
   const refEditingData = useRef<Data>(state.editingData);
   const refData = useRef<Data>(state.data);
   const refSelectedUUIDs = useRef<string[]>([]);
-  const [contextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
+  const [contextMenuOptions, updateContextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
   useEffect(() => {
     refEditingDataPosition.current = [...state.editingDataPosition];
@@ -83,6 +83,20 @@ export const Sketch = (props: SketchProps) => {
 
     const listenDataChange = (e: { data: Data; type: string }) => {
       const { data, type } = e;
+      const snapshotRecorder = sharedStore.get('snapshotRecorder');
+      // recording snapshot
+      if (snapshotRecorder) {
+        if (!snapshotRecorder.hasBeforeSnapshot()) {
+          snapshotRecorder.setBeforeData({
+            elements: e.data.elements
+          });
+        }
+        if (e.type !== 'setData') {
+          snapshotRecorder.do({
+            elements: e.data.elements
+          });
+        }
+      }
 
       const editingData = refEditingData.current;
       if (['addElement', 'updateElement', 'deleteElement', 'moveElement', 'dragElement', 'resizeElement'].includes(type)) {
@@ -136,6 +150,10 @@ export const Sketch = (props: SketchProps) => {
           elementTree: newTreeData
         }
       });
+    };
+
+    const listenContextMenu = (e: IDrawEvent[typeof eventKeys.CONTEXT_MENU]) => {
+      updateContextMenuOptions({ selectedElements: e.selectedElements || [] });
     };
 
     const createElementCallback = (e: SharedEventMap['createElement']) => {
@@ -228,7 +246,7 @@ export const Sketch = (props: SketchProps) => {
           type: 'update',
           payload: { editingData: { ...editingData }, elementTree }
         });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       }
     };
 
@@ -344,7 +362,7 @@ export const Sketch = (props: SketchProps) => {
         type: 'update',
         payload
       });
-      // idraw.trigger(eventKeys.clearSelect, {});
+      // idraw.trigger(eventKeys.CLEAR_SELECT, {});
     };
 
     const resetEditingViewCallback = (e: SharedEventMap['resetEditingView']) => {
@@ -381,7 +399,7 @@ export const Sketch = (props: SketchProps) => {
           }
         });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       } else if (type === 'go-to-group' && position) {
         // update new editing data
         const newEditingDataPosition = [...position];
@@ -398,7 +416,7 @@ export const Sketch = (props: SketchProps) => {
           }
         });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       } else if (type === 'go-to-next-group' && position) {
         // update new editing data
         const newEditingDataPosition = [...editingDataPosition, ...position];
@@ -415,7 +433,7 @@ export const Sketch = (props: SketchProps) => {
           }
         });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       } else if (type === 'back-one' && editingDataPosition.length > 0) {
         const newEditingDataPosition = [...editingDataPosition];
         newEditingDataPosition.pop();
@@ -437,7 +455,7 @@ export const Sketch = (props: SketchProps) => {
         //   offsetY: 0
         // });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       } else if (type === 'back-root') {
         // update new editing data
         const newEditingDataPosition: ElementPosition = [];
@@ -458,7 +476,7 @@ export const Sketch = (props: SketchProps) => {
         //   offsetY: 0
         // });
         idraw.centerContent({ data: newEditingData });
-        idraw.trigger(eventKeys.clearSelect, {});
+        idraw.trigger(eventKeys.CLEAR_SELECT, {});
       }
     };
 
@@ -496,7 +514,7 @@ export const Sketch = (props: SketchProps) => {
       //   offsetY: 0
       // });
       idraw.centerContent({ data: newEditingData });
-      idraw.trigger(eventKeys.clearSelect, {});
+      idraw.trigger(eventKeys.CLEAR_SELECT, {});
     };
 
     const resetEditingDataCallback = (e: SharedEventMap['resetEditingData']) => {
@@ -509,13 +527,14 @@ export const Sketch = (props: SketchProps) => {
           elementTree: newTreeData
         }
       });
-      idraw.trigger(eventKeys.clearSelect, {});
+      idraw.trigger(eventKeys.CLEAR_SELECT, {});
     };
 
-    idraw.on(eventKeys.select, listenMiddlewareEventSelect);
-    idraw.on(eventKeys.change, listenDataChange);
-    idraw.on(eventKeys.scale, listenMiddlewareEventScale);
-    idraw.on(eventKeys.textChange, listenMiddlewareEventTextChange);
+    idraw.on(eventKeys.SELECT, listenMiddlewareEventSelect);
+    idraw.on(eventKeys.CHANGE, listenDataChange);
+    idraw.on(eventKeys.SCALE, listenMiddlewareEventScale);
+    idraw.on(eventKeys.TEXT_CHANGE, listenMiddlewareEventTextChange);
+    idraw.on(eventKeys.CONTEXT_MENU, listenContextMenu);
     sharedEvent.on('createElement', createElementCallback);
     sharedEvent.on('addElement', addElementCallback);
     sharedEvent.on('deleteElement', deleteElementCallback);
@@ -546,16 +565,18 @@ export const Sketch = (props: SketchProps) => {
 
     return () => {
       refHasFirstDraw.current = false;
-      idraw.off(eventKeys.select, listenMiddlewareEventSelect);
-      idraw.off(eventKeys.change, listenDataChange);
-      idraw.off(eventKeys.scale, listenMiddlewareEventScale);
-      idraw.off(eventKeys.textChange, listenMiddlewareEventTextChange);
+      idraw.off(eventKeys.SELECT, listenMiddlewareEventSelect);
+      idraw.off(eventKeys.CHANGE, listenDataChange);
+      idraw.off(eventKeys.SCALE, listenMiddlewareEventScale);
+      idraw.off(eventKeys.TEXT_CHANGE, listenMiddlewareEventTextChange);
+      idraw.off(eventKeys.CONTEXT_MENU, listenContextMenu);
       // sharedEvent.off('createElement', createElementCallback);
       // sharedEvent.off('addElement', addElementCallback);
       // sharedEvent.off('deleteElement', deleteElementCallback);
       // sharedEvent.off('resetEditingView', resetEditingViewCallback);
       // sharedEvent.off('resetData', resetDataCallback);
       sharedStore.set('idraw', null);
+      sharedStore.set('snapshotRecorder', null);
     };
   }, []);
 

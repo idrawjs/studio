@@ -25,7 +25,9 @@ const localeValues: Locale = {
     ruler: 'Ruler',
     attributes: 'Attributes',
     hand: 'Hand tool',
-    centerContent: 'Center content'
+    centerContent: 'Center content',
+    redo: 'Redo',
+    undo: 'Undo'
   },
   PanelPage: {
     pages: 'Pages',

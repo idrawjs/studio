@@ -1,35 +1,50 @@
 import type { MenuProps } from 'antd';
+import { useState } from 'react';
 import { useLocale } from '../locale';
-import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../types';
+import type { SharedEvent, SharedStore, HookUseContextMenuOptions, UpdateContextMenuOptions } from '../types';
+
+const MenuItem = (props: { label: React.ReactNode; suffix?: React.ReactNode }) => {
+  const { label, suffix } = props;
+  return (
+    <span style={{ display: 'inline-flex', width: 180, flexDirection: 'row', justifyContent: 'space-between' }}>
+      <span style={{ display: 'inline-flex' }}>{label}</span>
+      <span style={{ display: 'inline-flex', opacity: 0.5 }}>{suffix}</span>
+    </span>
+  );
+};
 
 export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }) => {
   const [moduleLocale] = useLocale('contextMenu');
   const { sharedEvent } = opts;
-  const items: MenuProps['items'] = [
+  const defaultItems: MenuProps['items'] = [
     {
-      label: moduleLocale.copy,
+      label: <MenuItem label={moduleLocale.copy} suffix={<span>Ctrl+C</span>} />,
       key: 'copy',
+      disabled: true,
       onClick: () => {
         sharedEvent.trigger('copy');
       }
     },
     {
-      label: moduleLocale.paste,
-      key: 'paste-here',
+      label: <MenuItem label={moduleLocale.paste} suffix={<span>Ctrl+V</span>} />,
+      key: 'paste',
+      disabled: true,
       onClick: () => {
         sharedEvent.trigger('paste');
       }
     },
     {
-      label: moduleLocale.cut,
+      label: <MenuItem label={moduleLocale.cut} suffix={<span>Ctrl+X</span>} />,
       key: 'cut',
+      disabled: true,
       onClick: () => {
         sharedEvent.trigger('cut');
       }
     },
     {
-      label: moduleLocale.delete,
+      label: <MenuItem label={moduleLocale.delete} suffix={<span>Del</span>} />,
       key: 'delete',
+      disabled: true,
       onClick: () => {
         sharedEvent.trigger('delete');
       }
@@ -51,7 +66,19 @@ export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedE
     //   }
     // }
   ];
-  return [items];
+  const [items, setItems] = useState<Required<MenuProps>['items']>(defaultItems);
+
+  const updateContextMenuOptions: UpdateContextMenuOptions = (opts) => {
+    const { selectedElements } = opts;
+    items?.forEach((item) => {
+      if (item && ['copy', 'paste', 'cut', 'delete'].includes(item?.key as string)) {
+        (item as any).disabled = selectedElements?.length > 0 ? false : true;
+      }
+    });
+    setItems([...items]);
+  };
+
+  return [items, updateContextMenuOptions];
 };
 
 // export function createContextMenuOptions() {

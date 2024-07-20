@@ -5,6 +5,7 @@ import { Button, type ButtonProps, Tooltip } from 'antd';
 import { generateClassName, IconLayer, IconSetting, IconRuler, IconDrag, IconAim } from '@idraw/studio-base';
 import type { SharedEvent, SharedStore } from '../../types';
 import { useLocale } from '../../locale';
+import { ActionMenu } from './action-menu';
 
 const modName = 'mod-toolbar';
 
@@ -25,7 +26,7 @@ export interface ToolbarProps {
 }
 
 export const Toolbar = (props: ToolbarProps) => {
-  const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedStore } = props;
+  const { className, style, openLeftSider, openRightSider, onClickToggleLayer, onClickToggleSetting, sharedEvent, sharedStore } = props;
   // const [mode, setMode] = useState<string>('select');
   const iconStyle = { fontSize: 16 };
   const rootClassName = generateClassName(modName);
@@ -101,6 +102,7 @@ export const Toolbar = (props: ToolbarProps) => {
               }}
             />
           </Tooltip>
+          <ActionMenu sharedEvent={sharedEvent} sharedStore={sharedStore} />
         </div>
       </div>
     );
