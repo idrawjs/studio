@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@idraw/studio':
-        specifier: 0.4.0-alpha.33
-        version: 0.4.0-alpha.33(antd@5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(idraw@0.4.0-beta.33)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: 0.4.0-alpha.35
+        version: 0.4.0-alpha.35(antd@5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(idraw@0.4.0-beta.34)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       antd:
-        specifier: ^5.19.1
-        version: 5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+        specifier: ^5.19.3
+        version: 5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       idraw:
-        specifier: 0.4.0-beta.33
-        version: 0.4.0-beta.33
+        specifier: 0.4.0-beta.34
+        version: 0.4.0-beta.34
       react:
         specifier: ^18.3.1
         version: 18.3.1
@@ -25,8 +25,8 @@ importers:
         version: 18.3.1(react@18.3.1)
     devDependencies:
       '@types/node':
-        specifier: ^20.14.10
-        version: 20.14.10
+        specifier: ^20.14.11
+        version: 20.14.11
       '@types/react':
         specifier: ^18.3.3
         version: 18.3.3
@@ -35,22 +35,22 @@ importers:
         version: 18.3.0
       '@vitejs/plugin-react':
         specifier: ^4.3.1
-        version: 4.3.1(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))
+        version: 4.3.1(vite@5.3.4(@types/node@20.14.11)(less@4.2.0))
       less:
         specifier: ^4.2.0
         version: 4.2.0
       prettier:
-        specifier: ^3.3.2
-        version: 3.3.2
+        specifier: ^3.3.3
+        version: 3.3.3
       typescript:
         specifier: ^5.5.3
         version: 5.5.3
       vite:
-        specifier: ^5.3.3
-        version: 5.3.3(@types/node@20.14.10)(less@4.2.0)
+        specifier: ^5.3.4
+        version: 5.3.4(@types/node@20.14.11)(less@4.2.0)
       vite-node:
-        specifier: ^1.6.0
-        version: 1.6.0(@types/node@20.14.10)(less@4.2.0)
+        specifier: ^2.0.3
+        version: 2.0.3(@types/node@20.14.11)(less@4.2.0)
 
 packages:
 
@@ -175,6 +175,10 @@ packages:
 
   '@babel/runtime@7.24.7':
     resolution: {integrity: sha512-UwgBRMjJP+xv857DCngvqXI3Iq6J4v0wXmwc6sapg+zyhbwmQX67LUEFrkK5tbyJ30jGuG3ZvWpBiB9LCy1kWw==}
+    engines: {node: '>=6.9.0'}
+
+  '@babel/runtime@7.24.8':
+    resolution: {integrity: sha512-5F7SDGs1T72ZczbRwbGO9lQi0NLjQxzl6i4lJxLxfW9U5UluCSyEJeniWvnhl3/euNiqQVbo8zruhsDfid0esA==}
     engines: {node: '>=6.9.0'}
 
   '@babel/template@7.24.6':
@@ -337,47 +341,47 @@ packages:
     cpu: [x64]
     os: [win32]
 
-  '@idraw/board@0.4.0-beta.33':
-    resolution: {integrity: sha512-mv4Kbt3nmyJXRkCy60/0QeK4tybeRibN4zqIQpRMHdZdNXeltCpIQoIr+2Q9iu+UYekYUte6zTHgV8lqEpWlzw==}
+  '@idraw/board@0.4.0-beta.34':
+    resolution: {integrity: sha512-CWxzmV3BLwO7UP+h6Gvt8rsqwbBAklfxEtsRlB3rCUROJ8/n9Ovy67A/hLoLyNdvIKBDQtKLEdp2Dxig9yAFYA==}
     peerDependencies:
-      '@idraw/renderer': ^0.4.0-beta.33
-      '@idraw/util': ^0.4.0-beta.33
+      '@idraw/renderer': ^0.4.0-beta.34
+      '@idraw/util': ^0.4.0-beta.34
 
-  '@idraw/core@0.4.0-beta.33':
-    resolution: {integrity: sha512-ksPtcuijFf+Eu9Aobs8ujyl4atCJugSrOaj+WrpLTc6goizTGZcXwwIZMOnnFbNOnyJDB/VVU5xchaunPjsXqQ==}
+  '@idraw/core@0.4.0-beta.34':
+    resolution: {integrity: sha512-hYGNqT40DLoqtHH4JA0Hg7UbziWa60Jx0YszxSNlOP7tIzBhcNlWjVR8ZNpourEw4ibVniE5IsuGiSWgP/BPHw==}
     peerDependencies:
-      '@idraw/board': ^0.4.0-beta.33
-      '@idraw/renderer': ^0.4.0-beta.33
-      '@idraw/util': ^0.4.0-beta.33
+      '@idraw/board': ^0.4.0-beta.34
+      '@idraw/renderer': ^0.4.0-beta.34
+      '@idraw/util': ^0.4.0-beta.34
 
-  '@idraw/renderer@0.4.0-beta.33':
-    resolution: {integrity: sha512-GXJI8xT13GfzWTammN6Y2sfZR2lMa2SgMCYKhHdfsXOp6p0nTDCEtIi1tVtfJMrrf8pyZ1WoRkIA0p+5gVBGTQ==}
+  '@idraw/renderer@0.4.0-beta.34':
+    resolution: {integrity: sha512-Kiv365GmxZYl0kJRJUhdmOZOW7SjI/GDi91Hj4/2ZZs8s6JmPbf8Ux25/7BfrAlb698gtTfZKwy+TNzVIy0a0A==}
     peerDependencies:
-      '@idraw/util': ^0.4.0-beta.33
+      '@idraw/util': ^0.4.0-beta.34
 
-  '@idraw/studio-base@0.4.0-alpha.33':
-    resolution: {integrity: sha512-Xxd3wHLKxmzb/JORNhrdm7uetraExTg6Nz6zA1ht2AbCMJc0YtItw1sv4JsetRy4Ys1TTTSUbxgxNIi9RjnJrw==}
+  '@idraw/studio-base@0.4.0-alpha.35':
+    resolution: {integrity: sha512-HRNXv/24IXhxrzvcZhtCWzO2nrbI0wbMFWG9/VFIIW4zTRdaVMZeEv8tUSQWnwJfrVtDsI94sRZq8iAvvI4HGg==}
     peerDependencies:
       '@rc-component/color-picker': ^1.5.3
-      antd: ^5.18.3
+      antd: ^5.19.3
       classnames: ^2.3.2
-      idraw: ^0.4.0-beta.33
+      idraw: ^0.4.0-beta.34
       react: ^18.3.1
       react-dom: ^18.3.1
 
-  '@idraw/studio@0.4.0-alpha.33':
-    resolution: {integrity: sha512-UFz9DIVv4efTJNx5a8RVw8CfCOqYwxK0g8//Dw4Rsd6codprT8HNUT/ES0UTfSgLRiaelSktQkvy3F2VanK+eA==}
+  '@idraw/studio@0.4.0-alpha.35':
+    resolution: {integrity: sha512-cX9P2n2F0srmGUkbtqIXbIoc5y3o6UWaNk+3Vf4KiubISjbW0n2AzjVIuBSkPsUziv1g/vSTet3l2Tc2DX2l4g==}
     peerDependencies:
-      antd: ^5.18.3
-      idraw: ^0.4.0-beta.33
+      antd: ^5.19.3
+      idraw: ^0.4.0-beta.34
       react: ^18.3.1
       react-dom: ^18.3.1
 
-  '@idraw/types@0.4.0-beta.33':
-    resolution: {integrity: sha512-dgWsdD3E2su29IyBCt/kCa5/O4K05deob/3P4Ev+6jBGfENcsrfu8fQsxeO8MY2vdiCHMIi/AJqNhy2Id4zFKQ==}
+  '@idraw/types@0.4.0-beta.34':
+    resolution: {integrity: sha512-Mg39tX2uEkehbvc3qoNp0OgpCz1QN8R2tmZytFXQrfIequpu88Flxw89ERUlwNVP/0IV2noLlxaa1WXRkzGmZw==}
 
-  '@idraw/util@0.4.0-beta.33':
-    resolution: {integrity: sha512-Net8DFa6/O85pLCJGZQ1TUI4q339doqEFWWEgrYqu8XI1snTLhju+K1+mozuEWoU0fru4GMUvgI/4awOF5P7Ng==}
+  '@idraw/util@0.4.0-beta.34':
+    resolution: {integrity: sha512-FzNUa3hikjm2jKZA6ZO/vYe7QRQJgm5/QC6xKlpsnRiO008vmO0bizrFo2Lty7nzzQhUnZNZppmUQWoaoRODFw==}
 
   '@jridgewell/gen-mapping@0.3.5':
     resolution: {integrity: sha512-IzL8ZoEDIBRWEzlCcRhOaCupYyN5gdIK+Q6fbFdPDg6HqX6jpkItn7DFIpW9LQzXG6Df9sA7+OKnq0qlz/GaQg==}
@@ -556,8 +560,8 @@ packages:
   '@types/estree@1.0.5':
     resolution: {integrity: sha512-/kYRxGDLWzHOB7q+wtSUQlFrtcdUccpfy+X+9iMBpHK8QLLhx2wIPYuS5DYtR9Wa/YlZAbIovy7qVdB1Aq6Lyw==}
 
-  '@types/node@20.14.10':
-    resolution: {integrity: sha512-MdiXf+nDuMvY0gJKxyfZ7/6UFsETO7mGKF54MVD/ekJS6HdFtpZFBgrh6Pseu64XTb2MLyFPlbW6hj8HYRQNOQ==}
+  '@types/node@20.14.11':
+    resolution: {integrity: sha512-kprQpL8MMeszbz6ojB5/tU8PLN4kesnN8Gjzw349rDlNgsSzg90lAVj3llK99Dh7JON+t9AuscPPFW6mPbTnSA==}
 
   '@types/prop-types@15.7.12':
     resolution: {integrity: sha512-5zvhXYtRNRluoE/jAp4GVsSduVUzNWKkOZrCDBWYtE7biZywwdC2AcEzg+cSMLFRfVgeAFqpfNabiPjxFddV1Q==}
@@ -578,8 +582,8 @@ packages:
     resolution: {integrity: sha512-VT0ZI6kZRdTh8YyJw3SMbYm/u+NqfsAxEpWO0Pf9sq8/e94WxxOpPKx9FR1FlyCtOVDNOQ+8ntlqFxiRc+r5qA==}
     engines: {node: '>=4'}
 
-  antd@5.19.1:
-    resolution: {integrity: sha512-ogGEUPaamSZ2HFGvlyLBNfxZ0c4uX5aqEIwMtmqRTPNjcLY/k+qdMmdWrMMiY1CDJ3j1in5wjzQTvREG+do65g==}
+  antd@5.19.3:
+    resolution: {integrity: sha512-rhGI6yyZ4dA2MWl9bfO0MZjtNwWdzITpp3u7pKLiQpTjJYFlpF5wDFgGaG1or3sqyBihvqcO/OF1hSggmWczbQ==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -639,6 +643,15 @@ packages:
       supports-color:
         optional: true
 
+  debug@4.3.5:
+    resolution: {integrity: sha512-pt0bNEmneDIvdL1Xsd9oDQ/wrQRkXDT4AUWlNZNPKvW5x/jyO9VFXkJUP07vQ2upmw5PlaITaPKc31jK13V+jg==}
+    engines: {node: '>=6.0'}
+    peerDependencies:
+      supports-color: '*'
+    peerDependenciesMeta:
+      supports-color:
+        optional: true
+
   electron-to-chromium@1.4.783:
     resolution: {integrity: sha512-bT0jEz/Xz1fahQpbZ1D7LgmPYZ3iHVY39NcWWro1+hA2IvjiPeaXtfSqrQ+nXjApMvQRE2ASt1itSLRrebHMRQ==}
 
@@ -683,8 +696,8 @@ packages:
     resolution: {integrity: sha512-4fCk79wshMdzMp2rH06qWrJE4iolqLhCUH+OiuIgU++RB0+94NlDL81atO7GX55uUKueo0txHNtvEyI6D7WdMw==}
     engines: {node: '>=0.10.0'}
 
-  idraw@0.4.0-beta.33:
-    resolution: {integrity: sha512-X1ASiRU6J8xgdzEHwKuzjiSOFr6ywywuTu1f5RjAsIf7pxP+29cjwb4ZB9SJxK6A8szwnu6RoiqgOcWyd2NnxQ==}
+  idraw@0.4.0-beta.34:
+    resolution: {integrity: sha512-Lra/2kD//UbIFVm7UzLrrqIhmbvZhVuKJbBnXE3kvaxxgU/vm3m/HcHtYIRJR2JzvJep/ifpxgazplutfoGcXg==}
 
   image-size@0.5.5:
     resolution: {integrity: sha512-6TDAlDPZxUFCv+fuOkIoXT/V/f3Qbq8e37p+YOiYrUv3v9cc3/6x78VdfPgFVaB9dZYeLUfKgHRebpkm/oP2VQ==}
@@ -768,8 +781,8 @@ packages:
     resolution: {integrity: sha512-0vzE+lAiG7hZl1/9I8yzKLx3aR9Xbof3fBHKunvMfOCYAtMhrsnccJY2iTURb9EZd5+pLuiNV9/c/GZJOHsgIw==}
     engines: {node: ^10 || ^12 || >=14}
 
-  prettier@3.3.2:
-    resolution: {integrity: sha512-rAVeHYMcv8ATV5d508CFdn+8/pHPpXeIid1DdrPwXnaAdH7cqjVbpJaT5eq4yRAFU/lsbwYwSF/n5iNrdJHPQA==}
+  prettier@3.3.3:
+    resolution: {integrity: sha512-i2tDNA0O5IrMO757lfrdQZCc2jPNDVntV0m/+4whiDfWaTKfMNgR7Qz0NAeGz/nRqF4m5/6CLzbP4/liHt12Ew==}
     engines: {node: '>=14'}
     hasBin: true
 
@@ -874,8 +887,8 @@ packages:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
 
-  rc-picker@4.6.7:
-    resolution: {integrity: sha512-ZntxLH863jdNPZq2i6e2+1iXpRfYKHjNfUGgoObA1YExuWAnTCHpZzOkBuS43GnVcnp2MPDp78pH9OZJFd2hLw==}
+  rc-picker@4.6.9:
+    resolution: {integrity: sha512-kwQq5xDNJ1VcX7pauLlVBiuQorpZGUwA/YczVJTO1e33YsTyDuVjaQkYAiAupXbEPUBCU3doGZo0J25HGq2ZOQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
       date-fns: '>= 2.x'
@@ -919,8 +932,8 @@ packages:
       react: '>=16.0.0'
       react-dom: '>=16.0.0'
 
-  rc-select@14.15.0:
-    resolution: {integrity: sha512-BDqnDLhhm/8VyyyDlX7ju06S75k6ObJvbsN86zqZ4SY1Fu2ANQxeSWPo7pnwx5nwA5JgG+HcQevtddAgsdeBVQ==}
+  rc-select@14.15.1:
+    resolution: {integrity: sha512-mGvuwW1RMm1NCSI8ZUoRoLRK51R2Nb+QJnmiAvbDRcjh2//ulCkxeV6ZRFTECPpE1t2DPfyqZMPw90SVJzQ7wQ==}
     engines: {node: '>=8.x'}
     peerDependencies:
       react: '*'
@@ -985,8 +998,8 @@ packages:
       react: '*'
       react-dom: '*'
 
-  rc-upload@4.5.2:
-    resolution: {integrity: sha512-QO3ne77DwnAPKFn0bA5qJM81QBjQi0e0NHdkvpFyY73Bea2NfITiotqJqVjHgeYPOJu5lLVR32TNGP084aSoXA==}
+  rc-upload@4.6.0:
+    resolution: {integrity: sha512-Zr0DT1NHw/ApxrP7UAoxOtGaVYuzarrrCVr0ld7RiEFsKX07uFhE1EpCBxwL11ruFn89GMcshOKWp+s6FLyAlA==}
     peerDependencies:
       react: '>=16.9.0'
       react-dom: '>=16.9.0'
@@ -1069,9 +1082,13 @@ packages:
     resolution: {integrity: sha512-QjVjwdXIt408MIiAqCX4oUKsgU2EqAGzs2Ppkm4aQYbjm+ZEWEcW4SfFNTr4uMNZma0ey4f5lgLrkB0aX0QMow==}
     engines: {node: '>=4'}
 
-  throttle-debounce@5.0.0:
-    resolution: {integrity: sha512-2iQTSgkkc1Zyk0MeVrt/3BvuOXYPl/R8Z0U2xxo9rjwNciaHDG3R+Lm6dh4EeUci49DanvBnuqI6jshoQQRGEg==}
+  throttle-debounce@5.0.2:
+    resolution: {integrity: sha512-B71/4oyj61iNH0KeCamLuE2rmKuTO5byTOSVwECM5FA7TiAiAW+UqTKZ9ERueC4qvgSttUhdmq1mXC3kJqGX7A==}
     engines: {node: '>=12.22'}
+
+  tinyrainbow@1.2.0:
+    resolution: {integrity: sha512-weEDEq7Z5eTHPDh4xjX789+fHfF+P8boiFB+0vbWzpbnbsEr/GRaohi/uMKxg8RZMXnl1ItAi/IUHWMsjDV7kQ==}
+    engines: {node: '>=14.0.0'}
 
   to-fast-properties@2.0.0:
     resolution: {integrity: sha512-/OaKK0xYrs3DmxRYqL/yDc+FxFUVYhDlXMhRmv3z915w2HF1tnN1omB354j8VUGO/hbRzyD6Y3sA7v7GS/ceog==}
@@ -1097,13 +1114,13 @@ packages:
     peerDependencies:
       browserslist: '>= 4.21.0'
 
-  vite-node@1.6.0:
-    resolution: {integrity: sha512-de6HJgzC+TFzOu0NTC4RAIsyf/DY/ibWDYQUcuEA84EMHhcefTUGkjFHKKEJhQN4A+6I0u++kr3l36ZF2d7XRw==}
+  vite-node@2.0.3:
+    resolution: {integrity: sha512-14jzwMx7XTcMB+9BhGQyoEAmSl0eOr3nrnn+Z12WNERtOvLN+d2scbRUvyni05rT3997Bg+rZb47NyP4IQPKXg==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
 
-  vite@5.3.3:
-    resolution: {integrity: sha512-NPQdeCU0Dv2z5fu+ULotpuq5yfCS1BzKUIPhNbP3YBfAMGJXbt2nS+sbTFu+qchaqWTD+H3JK++nRwr6XIcp6A==}
+  vite@5.3.4:
+    resolution: {integrity: sha512-Cw+7zL3ZG9/NZBB8C+8QbQZmR54GwqIz+WMI4b3JgdYJvX+ny9AjJXqkGQlDXSXRP9rP0B4tbciRMOVEKulVOA==}
     engines: {node: ^18.0.0 || >=20.0.0}
     hasBin: true
     peerDependencies:
@@ -1146,7 +1163,7 @@ snapshots:
 
   '@ant-design/cssinjs@1.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@emotion/hash': 0.8.0
       '@emotion/unitless': 0.7.5
       classnames: 2.5.1
@@ -1162,7 +1179,7 @@ snapshots:
     dependencies:
       '@ant-design/colors': 7.1.0
       '@ant-design/icons-svg': 4.4.2
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1170,12 +1187,12 @@ snapshots:
 
   '@ant-design/react-slick@1.1.2(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       json2mq: 0.2.0
       react: 18.3.1
       resize-observer-polyfill: 1.5.1
-      throttle-debounce: 5.0.0
+      throttle-debounce: 5.0.2
 
   '@babel/code-frame@7.24.6':
     dependencies:
@@ -1289,6 +1306,10 @@ snapshots:
     dependencies:
       regenerator-runtime: 0.14.1
 
+  '@babel/runtime@7.24.8':
+    dependencies:
+      regenerator-runtime: 0.14.1
+
   '@babel/template@7.24.6':
     dependencies:
       '@babel/code-frame': 7.24.6
@@ -1391,44 +1412,44 @@ snapshots:
   '@esbuild/win32-x64@0.21.5':
     optional: true
 
-  '@idraw/board@0.4.0-beta.33(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33)':
+  '@idraw/board@0.4.0-beta.34(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34)':
     dependencies:
-      '@idraw/renderer': 0.4.0-beta.33(@idraw/util@0.4.0-beta.33)
-      '@idraw/util': 0.4.0-beta.33
+      '@idraw/renderer': 0.4.0-beta.34(@idraw/util@0.4.0-beta.34)
+      '@idraw/util': 0.4.0-beta.34
 
-  '@idraw/core@0.4.0-beta.33(@idraw/board@0.4.0-beta.33(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33))(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33)':
+  '@idraw/core@0.4.0-beta.34(@idraw/board@0.4.0-beta.34(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34))(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34)':
     dependencies:
-      '@idraw/board': 0.4.0-beta.33(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33)
-      '@idraw/renderer': 0.4.0-beta.33(@idraw/util@0.4.0-beta.33)
-      '@idraw/util': 0.4.0-beta.33
+      '@idraw/board': 0.4.0-beta.34(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34)
+      '@idraw/renderer': 0.4.0-beta.34(@idraw/util@0.4.0-beta.34)
+      '@idraw/util': 0.4.0-beta.34
 
-  '@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33)':
+  '@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34)':
     dependencies:
-      '@idraw/util': 0.4.0-beta.33
+      '@idraw/util': 0.4.0-beta.34
 
-  '@idraw/studio-base@0.4.0-alpha.33(@rc-component/color-picker@1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(classnames@2.5.1)(idraw@0.4.0-beta.33)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@idraw/studio-base@0.4.0-alpha.35(@rc-component/color-picker@1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(classnames@2.5.1)(idraw@0.4.0-beta.34)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@rc-component/color-picker': 1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      antd: 5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      antd: 5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
-      idraw: 0.4.0-beta.33
+      idraw: 0.4.0-beta.34
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@idraw/studio@0.4.0-alpha.33(antd@5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(idraw@0.4.0-beta.33)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@idraw/studio@0.4.0-alpha.35(antd@5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(idraw@0.4.0-beta.34)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@idraw/studio-base': 0.4.0-alpha.33(@rc-component/color-picker@1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(classnames@2.5.1)(idraw@0.4.0-beta.33)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@idraw/studio-base': 0.4.0-alpha.35(@rc-component/color-picker@1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(antd@5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(classnames@2.5.1)(idraw@0.4.0-beta.34)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/color-picker': 1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      antd: 5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      antd: 5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
-      idraw: 0.4.0-beta.33
+      idraw: 0.4.0-beta.34
       is-hotkey: 0.2.0
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@idraw/types@0.4.0-beta.33': {}
+  '@idraw/types@0.4.0-beta.34': {}
 
-  '@idraw/util@0.4.0-beta.33': {}
+  '@idraw/util@0.4.0-beta.34': {}
 
   '@jridgewell/gen-mapping@0.3.5':
     dependencies:
@@ -1449,7 +1470,7 @@ snapshots:
 
   '@rc-component/async-validator@5.0.4':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
 
   '@rc-component/color-picker@1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
@@ -1462,18 +1483,18 @@ snapshots:
 
   '@rc-component/context@1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
   '@rc-component/mini-decimal@1.1.0':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
 
   '@rc-component/mutate-observer@1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1481,7 +1502,7 @@ snapshots:
 
   '@rc-component/portal@1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1489,7 +1510,7 @@ snapshots:
 
   '@rc-component/qrcode@1.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1497,7 +1518,7 @@ snapshots:
 
   '@rc-component/tour@1.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/portal': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
@@ -1507,7 +1528,7 @@ snapshots:
 
   '@rc-component/trigger@2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/portal': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1587,7 +1608,7 @@ snapshots:
 
   '@types/estree@1.0.5': {}
 
-  '@types/node@20.14.10':
+  '@types/node@20.14.11':
     dependencies:
       undici-types: 5.26.5
 
@@ -1602,14 +1623,14 @@ snapshots:
       '@types/prop-types': 15.7.12
       csstype: 3.1.3
 
-  '@vitejs/plugin-react@4.3.1(vite@5.3.3(@types/node@20.14.10)(less@4.2.0))':
+  '@vitejs/plugin-react@4.3.1(vite@5.3.4(@types/node@20.14.11)(less@4.2.0))':
     dependencies:
       '@babel/core': 7.24.6
       '@babel/plugin-transform-react-jsx-self': 7.24.6(@babel/core@7.24.6)
       '@babel/plugin-transform-react-jsx-source': 7.24.6(@babel/core@7.24.6)
       '@types/babel__core': 7.20.5
       react-refresh: 0.14.2
-      vite: 5.3.3(@types/node@20.14.10)(less@4.2.0)
+      vite: 5.3.4(@types/node@20.14.11)(less@4.2.0)
     transitivePeerDependencies:
       - supports-color
 
@@ -1617,13 +1638,13 @@ snapshots:
     dependencies:
       color-convert: 1.9.3
 
-  antd@5.19.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  antd@5.19.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
       '@ant-design/colors': 7.1.0
       '@ant-design/cssinjs': 1.21.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/icons': 5.3.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@ant-design/react-slick': 1.1.2(react@18.3.1)
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@ctrl/tinycolor': 3.6.1
       '@rc-component/color-picker': 1.5.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@rc-component/mutate-observer': 1.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1648,12 +1669,12 @@ snapshots:
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-notification: 5.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-pagination: 4.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rc-picker: 4.6.7(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-picker: 4.6.9(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-progress: 4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-rate: 2.13.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-segmented: 2.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rc-select: 14.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-select: 14.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-slider: 10.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-steps: 6.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-switch: 4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1663,12 +1684,12 @@ snapshots:
       rc-tooltip: 6.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-tree: 5.8.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-tree-select: 5.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      rc-upload: 4.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-upload: 4.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       scroll-into-view-if-needed: 3.1.0
-      throttle-debounce: 5.0.0
+      throttle-debounce: 5.0.2
     transitivePeerDependencies:
       - date-fns
       - luxon
@@ -1718,6 +1739,10 @@ snapshots:
   dayjs@1.11.11: {}
 
   debug@4.3.4:
+    dependencies:
+      ms: 2.1.2
+
+  debug@4.3.5:
     dependencies:
       ms: 2.1.2
 
@@ -1775,13 +1800,13 @@ snapshots:
       safer-buffer: 2.1.2
     optional: true
 
-  idraw@0.4.0-beta.33:
+  idraw@0.4.0-beta.34:
     dependencies:
-      '@idraw/board': 0.4.0-beta.33(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33)
-      '@idraw/core': 0.4.0-beta.33(@idraw/board@0.4.0-beta.33(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33))(@idraw/renderer@0.4.0-beta.33(@idraw/util@0.4.0-beta.33))(@idraw/util@0.4.0-beta.33)
-      '@idraw/renderer': 0.4.0-beta.33(@idraw/util@0.4.0-beta.33)
-      '@idraw/types': 0.4.0-beta.33
-      '@idraw/util': 0.4.0-beta.33
+      '@idraw/board': 0.4.0-beta.34(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34)
+      '@idraw/core': 0.4.0-beta.34(@idraw/board@0.4.0-beta.34(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34))(@idraw/renderer@0.4.0-beta.34(@idraw/util@0.4.0-beta.34))(@idraw/util@0.4.0-beta.34)
+      '@idraw/renderer': 0.4.0-beta.34(@idraw/util@0.4.0-beta.34)
+      '@idraw/types': 0.4.0-beta.34
+      '@idraw/util': 0.4.0-beta.34
 
   image-size@0.5.5:
     optional: true
@@ -1858,17 +1883,17 @@ snapshots:
       picocolors: 1.0.1
       source-map-js: 1.2.0
 
-  prettier@3.3.2: {}
+  prettier@3.3.3: {}
 
   prr@1.0.1:
     optional: true
 
   rc-cascader@3.27.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       array-tree-filter: 2.1.0
       classnames: 2.5.1
-      rc-select: 14.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-select: 14.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-tree: 5.8.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1876,7 +1901,7 @@ snapshots:
 
   rc-checkbox@3.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1884,7 +1909,7 @@ snapshots:
 
   rc-collapse@3.7.3(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1893,7 +1918,7 @@ snapshots:
 
   rc-dialog@9.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/portal': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1903,7 +1928,7 @@ snapshots:
 
   rc-drawer@7.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/portal': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1913,7 +1938,7 @@ snapshots:
 
   rc-dropdown@4.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1922,7 +1947,7 @@ snapshots:
 
   rc-field-form@2.2.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/async-validator': 5.0.4
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1930,7 +1955,7 @@ snapshots:
 
   rc-image@7.9.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/portal': 1.1.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-dialog: 9.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1941,7 +1966,7 @@ snapshots:
 
   rc-input-number@9.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/mini-decimal': 1.1.0
       classnames: 2.5.1
       rc-input: 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1951,7 +1976,7 @@ snapshots:
 
   rc-input@1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1959,7 +1984,7 @@ snapshots:
 
   rc-mentions@2.14.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-input: 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1971,7 +1996,7 @@ snapshots:
 
   rc-menu@9.14.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1982,7 +2007,7 @@ snapshots:
 
   rc-motion@2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -1990,7 +2015,7 @@ snapshots:
 
   rc-notification@5.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -1999,7 +2024,7 @@ snapshots:
 
   rc-overflow@1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2008,15 +2033,15 @@ snapshots:
 
   rc-pagination@4.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  rc-picker@4.6.7(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rc-picker@4.6.9(dayjs@1.11.11)(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-overflow: 1.3.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2029,7 +2054,7 @@ snapshots:
 
   rc-progress@4.0.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2037,7 +2062,7 @@ snapshots:
 
   rc-rate@2.13.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2045,7 +2070,7 @@ snapshots:
 
   rc-resize-observer@1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2054,16 +2079,16 @@ snapshots:
 
   rc-segmented@2.3.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  rc-select@14.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rc-select@14.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2075,7 +2100,7 @@ snapshots:
 
   rc-slider@10.6.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2083,7 +2108,7 @@ snapshots:
 
   rc-steps@6.0.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2091,7 +2116,7 @@ snapshots:
 
   rc-switch@4.1.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2099,7 +2124,7 @@ snapshots:
 
   rc-table@7.45.7(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/context': 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2110,7 +2135,7 @@ snapshots:
 
   rc-tabs@15.1.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-dropdown: 4.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-menu: 9.14.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2122,7 +2147,7 @@ snapshots:
 
   rc-textarea@1.7.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-input: 1.5.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2132,7 +2157,7 @@ snapshots:
 
   rc-tooltip@6.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       '@rc-component/trigger': 2.2.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       classnames: 2.5.1
       react: 18.3.1
@@ -2140,9 +2165,9 @@ snapshots:
 
   rc-tree-select@5.22.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
-      rc-select: 14.15.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      rc-select: 14.15.1(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-tree: 5.8.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2150,7 +2175,7 @@ snapshots:
 
   rc-tree@5.8.8(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-motion: 2.9.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2158,9 +2183,9 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  rc-upload@4.5.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
+  rc-upload@4.6.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       react: 18.3.1
@@ -2168,14 +2193,14 @@ snapshots:
 
   rc-util@5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       react-is: 18.3.1
 
   rc-virtual-list@3.14.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
-      '@babel/runtime': 7.24.7
+      '@babel/runtime': 7.24.8
       classnames: 2.5.1
       rc-resize-observer: 1.4.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       rc-util: 5.43.0(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -2254,7 +2279,9 @@ snapshots:
     dependencies:
       has-flag: 3.0.0
 
-  throttle-debounce@5.0.0: {}
+  throttle-debounce@5.0.2: {}
+
+  tinyrainbow@1.2.0: {}
 
   to-fast-properties@2.0.0: {}
 
@@ -2272,13 +2299,13 @@ snapshots:
       escalade: 3.1.2
       picocolors: 1.0.1
 
-  vite-node@1.6.0(@types/node@20.14.10)(less@4.2.0):
+  vite-node@2.0.3(@types/node@20.14.11)(less@4.2.0):
     dependencies:
       cac: 6.7.14
-      debug: 4.3.4
+      debug: 4.3.5
       pathe: 1.1.2
-      picocolors: 1.0.1
-      vite: 5.3.3(@types/node@20.14.10)(less@4.2.0)
+      tinyrainbow: 1.2.0
+      vite: 5.3.4(@types/node@20.14.11)(less@4.2.0)
     transitivePeerDependencies:
       - '@types/node'
       - less
@@ -2289,13 +2316,13 @@ snapshots:
       - supports-color
       - terser
 
-  vite@5.3.3(@types/node@20.14.10)(less@4.2.0):
+  vite@5.3.4(@types/node@20.14.11)(less@4.2.0):
     dependencies:
       esbuild: 0.21.5
       postcss: 8.4.39
       rollup: 4.18.0
     optionalDependencies:
-      '@types/node': 20.14.10
+      '@types/node': 20.14.11
       fsevents: 2.3.3
       less: 4.2.0
 
