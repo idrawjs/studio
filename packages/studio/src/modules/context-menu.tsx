@@ -1,5 +1,5 @@
 import type { MenuProps } from 'antd';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useLocale } from '../locale';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions, UpdateContextMenuOptions } from '../types';
 
