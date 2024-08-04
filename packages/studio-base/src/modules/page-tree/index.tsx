@@ -24,6 +24,7 @@ export type PageTreeProps = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationTo
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onDrop?: (e: { from: ElementPosition; to: ElementPosition }) => void;
   onDelete?: (e: { uuid: string }) => void;
+  reverse?: boolean;
 };
 
 const treePosToElementPosition = (pos: string) => {
@@ -32,12 +33,52 @@ const treePosToElementPosition = (pos: string) => {
   return elemPos;
 };
 
+function reverseElementPosition(position: ElementPosition, treeData: PageTreeData, opts?: { isToPosition: boolean }): ElementPosition {
+  const newPosition: ElementPosition = [];
+  for (let i = 0; i < position.length; i++) {
+    const index = position[i];
+    let reverseIndex = -1;
+    if (index === 0) {
+      reverseIndex = treeData.length - 1;
+    } else if (index >= treeData.length - 1) {
+      reverseIndex = 0;
+    } else {
+      reverseIndex = treeData.length - 1 - index;
+    }
+    newPosition.push(reverseIndex);
+  }
+
+  if (opts?.isToPosition === true) {
+    if (newPosition.length > 0) {
+      newPosition[newPosition.length - 1] += 1;
+    }
+  }
+  return newPosition;
+}
+
 export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
-  const { height, className, style, treeData, onTitleChange, onOperationToggle, onSelect, selectedKeys, onDrop, defaultExpandedKeys, expandedKeys, onDelete } =
-    props;
+  const {
+    height,
+    className,
+    style,
+    treeData,
+    onTitleChange,
+    onOperationToggle,
+    onSelect,
+    selectedKeys,
+    onDrop,
+    defaultExpandedKeys,
+    expandedKeys,
+    onDelete,
+    // reverse // TODO
+    reverse = true
+  } = props;
   const onSelectNode: TreeProps['onSelect'] = (selectedKeys, info) => {
     const pos = treePosToElementPosition(info.node.pos);
-    const positions: ElementPosition[] = [pos];
+    let positions: ElementPosition[] = [pos];
+    if (reverse === true) {
+      positions = [reverseElementPosition(pos, treeData || [])];
+    }
     const uuids = [selectedKeys[0]] as string[];
     onSelect?.({ uuids, positions });
   };
@@ -54,7 +95,8 @@ export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
       onOperationToggle,
       onDelete: onElementDelete,
       position: [],
-      selectedKeys: selectedKeys || []
+      selectedKeys: selectedKeys || [],
+      reverse: !!reverse
     });
 
     return (
@@ -94,7 +136,14 @@ export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
           } else if (node.dragOver === true) {
             to.push(0);
           }
-          onDrop?.({ from, to });
+          let resultFrom = from;
+          let resultTo = to;
+          if (reverse === true) {
+            resultFrom = reverseElementPosition(from, treeData || []);
+            resultTo = reverseElementPosition(to, treeData || [], { isToPosition: true });
+          }
+
+          onDrop?.({ from: resultFrom, to: resultTo });
         }}
       />
     );

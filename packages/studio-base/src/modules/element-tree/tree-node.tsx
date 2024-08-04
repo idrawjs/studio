@@ -231,8 +231,8 @@ export const TreeNode = (props: TreeNodeProps) => {
         style={style}
         className={classnames(rootClassName, className, isSelected ? selectedClassName : null)}
         onClick={onClickTitle}
-        onMouseOver={onNodeMouseOver}
-        onMouseLeave={onNodeMouseLeave}
+        // onMouseOver={onNodeMouseOver}
+        // onMouseLeave={onNodeMouseLeave}
         onContextMenu={onNodeContextMenu}
       >
         <span className={titleClassName}>

@@ -7,7 +7,7 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
   const { sharedEvent, sharedStore } = opts;
 
   sharedEvent.on('copy', () => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     const selectedUUIDs = sharedStore.get('selectedUUIDs');
     const data = idraw?.getData();
     if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
@@ -22,7 +22,7 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
   });
 
   sharedEvent.on('paste', () => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     const clipboardCache = sharedStore.get('clipboard');
     const selectedUUIDs = sharedStore.get('selectedUUIDs');
 
@@ -78,7 +78,7 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
   });
 
   sharedEvent.on('cut', () => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     const selectedUUIDs = sharedStore.get('selectedUUIDs');
     const data = idraw?.getData();
     if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
@@ -106,11 +106,11 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
         elementTree
       }
     });
-    idraw?.trigger(eventKeys.clearSelect);
+    idraw?.trigger(eventKeys.CLEAR_SELECT);
   });
 
   sharedEvent.on('delete', () => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     const selectedUUIDs = sharedStore.get('selectedUUIDs');
     const data = idraw?.getData();
     if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
@@ -128,14 +128,14 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
             elementTree
           }
         });
-        idraw?.trigger(eventKeys.clearSelect);
+        idraw?.trigger(eventKeys.CLEAR_SELECT);
       }
     }
   });
 
   sharedEvent.on('undo', () => {
-    const idraw = sharedStore?.get('idraw');
-    const snapshotRecorder = sharedStore.get('snapshotRecorder');
+    const idraw = sharedStore?.getStatic('idraw');
+    const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
     const data = snapshotRecorder?.undo(idraw?.getData());
     if (data) {
       sharedEvent?.trigger('resetEditingData', {
@@ -148,8 +148,8 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
     }
   });
   sharedEvent.on('redo', () => {
-    const idraw = sharedStore?.get('idraw');
-    const snapshotRecorder = sharedStore.get('snapshotRecorder');
+    const idraw = sharedStore?.getStatic('idraw');
+    const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
     const data = snapshotRecorder?.redo(idraw?.getData());
     if (data) {
       sharedEvent?.trigger('resetEditingData', {

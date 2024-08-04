@@ -71,17 +71,17 @@ export const PanelPage = (props: PanelPageProps) => {
   const [selectedPageUUIDs, setSelectedPageUUIDs] = useState<string[]>(getSelectedPageKeys());
 
   useEffect(() => {
-    const idraw = sharedStore.get('idraw');
-    const listenSelectedPage = (e: { uuids: string[] }) => {
+    const idraw = sharedStore.getStatic('idraw');
+    const listenSelectedPage = (e: { uuids?: string[] }) => {
       if (refInPageOverview.current === true) {
         const { uuids = [] } = e;
         setSelectedPageUUIDs([...uuids]);
       }
     };
-    idraw?.on(eventKeys.select, listenSelectedPage);
+    idraw?.on(eventKeys.SELECT, listenSelectedPage);
 
     return () => {
-      idraw?.off(eventKeys.select, listenSelectedPage);
+      idraw?.off(eventKeys.SELECT, listenSelectedPage);
     };
   }, []);
 
@@ -90,12 +90,6 @@ export const PanelPage = (props: PanelPageProps) => {
       const pageUUID = pageTree[editingDataPosition[0]]?.uuid;
       if (pageUUID && !selectedPageUUIDs.includes(pageUUID)) {
         setSelectedPageUUIDs([pageUUID]);
-        // setTimeout(() => {
-        //   // TODO
-        //   refPageTree.current?.scrollTo({
-        //     key: pageUUID
-        //   });
-        // }, 300);
       }
     }
   }, [editingDataPosition]);
@@ -121,7 +115,7 @@ export const PanelPage = (props: PanelPageProps) => {
   };
 
   useEffect(() => {
-    const idraw = sharedStore?.get('idraw');
+    const idraw = sharedStore?.getStatic('idraw');
     let currentKeys: string[] = [];
     if (inPageOverview === true) {
       sharedEvent.trigger('resetEditingView', { type: 'back-root', position: null });
@@ -157,7 +151,7 @@ export const PanelPage = (props: PanelPageProps) => {
   };
 
   const selectElementsByPositions = (positions: ElementPosition[]) => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     idraw?.selectElementsByPositions(positions);
   };
 
@@ -281,9 +275,9 @@ export const PanelPage = (props: PanelPageProps) => {
               }}
               onSelect={(e) => {
                 if (e?.positions.length === 1) {
-                  const idraw = sharedStore.get('idraw');
-                  idraw?.trigger(eventKeys.select, { uuids: [] });
-                  idraw?.trigger(eventKeys.clearSelect);
+                  const idraw = sharedStore.getStatic('idraw');
+                  idraw?.trigger(eventKeys.SELECT, { uuids: [] });
+                  idraw?.trigger(eventKeys.CLEAR_SELECT);
                   if (inPageOverview) {
                     if (!selectedPageUUIDs?.includes(e.uuids[0])) {
                       selectElementsByPositions(e.positions);
@@ -379,7 +373,7 @@ export const PanelPage = (props: PanelPageProps) => {
                     type: 'update',
                     payload: { editingData: { ...editingData }, elementTree }
                   });
-                  const idraw = sharedStore.get('idraw');
+                  const idraw = sharedStore.getStatic('idraw');
                   if (operations.locked === true) {
                     idraw?.cancelElements();
                   }

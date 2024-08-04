@@ -5,8 +5,19 @@
 .@{base-element-tree} {
   // fix antd style
   &.ant-tree {
+    // padding: 10px 0;
+
+    &.ant-tree-directory {
+      .ant-tree-treenode:before {
+        bottom: 0;
+      }
+    }
     .ant-tree-iconEle {
       display: none;
+    }
+
+    .ant-tree-treenode {
+      padding-bottom: 0;
     }
 
     .ant-tree-title {
@@ -33,9 +44,10 @@
     position: relative;
     display: -webkit-box;
     float: inline-start;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 28px;
     overflow: hidden;
-    height: 24px;
-    padding-left: 24px;
     white-space: initial;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
@@ -50,20 +62,12 @@
     left: 0;
     right: 0;
     display: inline-flex;
-    // display: none;
     float: inline-start;
-    // overflow: hidden;
-    // white-space: nowrap;
-    // text-overflow: ellipsis;
-
-    // &.@{base-element-tree}-node-title-input-active {
-    //   display: flex;
-    // }
   }
 
   .@{base-element-tree}-node-title-icon {
     position: absolute;
-    top: 6px;
+    top: 8px;
     left: 6px;
     font-size: 12px;
     display: inline-flex;

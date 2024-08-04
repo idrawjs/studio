@@ -1,5 +1,5 @@
 import type { MenuProps } from 'antd';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useLocale } from '../locale';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions, UpdateContextMenuOptions } from '../types';
 
@@ -13,12 +13,21 @@ const MenuItem = (props: { label: React.ReactNode; suffix?: React.ReactNode }) =
   );
 };
 
+type InnerContextMenuItem = {
+  name: string;
+  hotKey: string;
+  key: string;
+  disabled: boolean;
+  onClick: () => void;
+};
+
 export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }) => {
   const [moduleLocale] = useLocale('contextMenu');
   const { sharedEvent } = opts;
-  const defaultItems: MenuProps['items'] = [
+  const defaultInnerItems: InnerContextMenuItem[] = [
     {
-      label: <MenuItem label={moduleLocale.copy} suffix={<span>Ctrl+C</span>} />,
+      name: moduleLocale.copy,
+      hotKey: 'Ctrl+C',
       key: 'copy',
       disabled: true,
       onClick: () => {
@@ -26,7 +35,8 @@ export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedE
       }
     },
     {
-      label: <MenuItem label={moduleLocale.paste} suffix={<span>Ctrl+V</span>} />,
+      name: moduleLocale.paste,
+      hotKey: 'Ctrl+V',
       key: 'paste',
       disabled: true,
       onClick: () => {
@@ -34,7 +44,8 @@ export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedE
       }
     },
     {
-      label: <MenuItem label={moduleLocale.cut} suffix={<span>Ctrl+X</span>} />,
+      name: moduleLocale.cut,
+      hotKey: 'Ctrl+X',
       key: 'cut',
       disabled: true,
       onClick: () => {
@@ -42,79 +53,46 @@ export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedE
       }
     },
     {
-      label: <MenuItem label={moduleLocale.delete} suffix={<span>Del</span>} />,
+      name: moduleLocale.delete,
+      hotKey: 'Del',
       key: 'delete',
       disabled: true,
       onClick: () => {
         sharedEvent.trigger('delete');
       }
     }
-    // {
-    //   label: moduleLocale.bringToFront,
-    //   key: 'bring-to-front',
-    //   disabled: true,
-    //   onClick: () => {
-    //     console.log('bring-to-front');
-    //   }
-    // },
-    // {
-    //   label: moduleLocale.sendToBack,
-    //   key: 'send-to-back',
-    //   disabled: true,
-    //   onClick: () => {
-    //     console.log('send-to-back');
-    //   }
-    // }
   ];
-  const [items, setItems] = useState<Required<MenuProps>['items']>(defaultItems);
+
+  const innerItemsToViewItems = (list: InnerContextMenuItem[]) => {
+    const newItems = list.map((innerItem) => {
+      const name = (moduleLocale as any)[innerItem?.key as any] || innerItem.name;
+      const newItem = {
+        label: <MenuItem label={name} suffix={<span>{innerItem.hotKey}</span>} />,
+        key: innerItem.key,
+        disabled: innerItem.disabled,
+        onClick: innerItem.onClick
+      };
+      return newItem;
+    });
+    return newItems;
+  };
+
+  const [innerItems, setInnerItems] = useState<InnerContextMenuItem[]>(defaultInnerItems);
+  const [items, setItems] = useState<Required<MenuProps>['items']>(innerItemsToViewItems(innerItems));
+
+  useEffect(() => {
+    setItems(innerItemsToViewItems(innerItems));
+  }, [innerItems, moduleLocale]);
 
   const updateContextMenuOptions: UpdateContextMenuOptions = (opts) => {
     const { selectedElements } = opts;
-    items?.forEach((item) => {
+    innerItems?.forEach((item) => {
       if (item && ['copy', 'paste', 'cut', 'delete'].includes(item?.key as string)) {
         (item as any).disabled = selectedElements?.length > 0 ? false : true;
       }
     });
-    setItems([...items]);
+    setInnerItems([...innerItems]);
   };
 
   return [items, updateContextMenuOptions];
 };
-
-// export function createContextMenuOptions() {
-//   const items: MenuProps['items'] = [
-//     {
-//       label: 'Copy',
-//       key: 'copy',
-//       disabled: true,
-//       onClick: () => {
-//         console.log('copy');
-//       }
-//     },
-//     {
-//       label: 'Paste here',
-//       key: 'paste-here',
-//       disabled: true,
-//       onClick: () => {
-//         console.log('paste-here');
-//       }
-//     },
-//     {
-//       label: 'Bring to front',
-//       key: 'bring-to-front',
-//       disabled: true,
-//       onClick: () => {
-//         console.log('bring-to-front');
-//       }
-//     },
-//     {
-//       label: 'Send to back',
-//       key: 'send-to-back',
-//       disabled: true,
-//       onClick: () => {
-//         console.log('send-to-back');
-//       }
-//     }
-//   ];
-//   return items;
-// }

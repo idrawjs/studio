@@ -11,18 +11,28 @@ type WrapOptions = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle' | '
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   onContextMenu?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   selectedKeys: string[];
+  reverse: boolean;
 };
 
 export function wrapTreeViewData(elementTree: ElementTreeData, opts: WrapOptions): ElementTreeViewData {
   const tree: ElementTreeViewData = [];
-  const { position } = opts;
+  const { position, reverse } = opts;
   if (Array.isArray(elementTree)) {
     const pos = [...position];
-    elementTree.forEach((node, i) => {
-      pos.push(i);
-      tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
-      pos.pop();
-    });
+    if (reverse === true) {
+      for (let i = elementTree.length - 1; i >= 0; i--) {
+        const node = elementTree[i];
+        pos.push(i);
+        tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      }
+    } else {
+      elementTree.forEach((node, i) => {
+        pos.push(i);
+        tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      });
+    }
   }
   return tree;
 }
@@ -55,11 +65,20 @@ const wrapTreeViewNode = (treeNode: ElementTreeNode, opts: WrapOptions) => {
   };
   if (Array.isArray(treeNode.children)) {
     const pos = [...position];
-    treeNode.children.forEach((child, i) => {
-      pos.push(i);
-      node.children.push(wrapTreeViewNode(child, { ...opts, ...{ position: [...pos] } }));
-      pos.pop();
-    });
+    if (opts.reverse === true) {
+      for (let i = treeNode.children.length - 1; i >= 0; i--) {
+        const child = treeNode.children[i];
+        pos.push(i);
+        node.children.push(wrapTreeViewNode(child, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      }
+    } else {
+      treeNode.children.forEach((child, i) => {
+        pos.push(i);
+        node.children.push(wrapTreeViewNode(child, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      });
+    }
   }
   return node;
 };

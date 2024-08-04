@@ -40,7 +40,7 @@ export const Toolbar = (props: ToolbarProps) => {
   const moduleLocale = useModuleLocale();
 
   useEffect(() => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     if (toggleRuler === true) {
       idraw?.enable('ruler');
     } else {
@@ -49,7 +49,7 @@ export const Toolbar = (props: ToolbarProps) => {
   }, [toggleRuler]);
 
   useEffect(() => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     idraw?.setMode(toggleDrag ? 'drag' : 'select');
   }, [toggleDrag]);
 
@@ -97,7 +97,7 @@ export const Toolbar = (props: ToolbarProps) => {
               type="text"
               icon={<IconAim style={{ ...iconStyle, fontSize: 20 }} />}
               onClick={() => {
-                const idraw = sharedStore.get('idraw');
+                const idraw = sharedStore.getStatic('idraw');
                 idraw?.centerContent();
               }}
             />

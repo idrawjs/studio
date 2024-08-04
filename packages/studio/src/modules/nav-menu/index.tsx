@@ -60,7 +60,7 @@ export const NavMenu = (props: NavMenuProps) => {
   const disabledAddElement = !!(editMode === 'page' && (pageTree.length === 0 || isPageOverview));
 
   const resetDevicePixelRatio = (radio: number) => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     idraw?.resize({
       devicePixelRatio: radio
     });
@@ -114,7 +114,7 @@ export const NavMenu = (props: NavMenuProps) => {
             key: 'export-json-file',
             label: moduleLocale.exportJSONFile,
             onClick: () => {
-              const idraw = sharedStore.get('idraw');
+              const idraw = sharedStore.getStatic('idraw');
               const data = idraw?.getData({ compact: true });
               if (data) {
                 const text = JSON.stringify(data);
@@ -234,7 +234,7 @@ export const NavMenu = (props: NavMenuProps) => {
   ];
 
   const refreshSelectedKeys = () => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     const newSelectedKeys: string[] = [];
     if (idraw) {
       const { viewSizeInfo } = idraw.getViewInfo();

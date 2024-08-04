@@ -64,7 +64,7 @@ export const AddPageButton = (props: AddPageButtonProps) => {
                 return;
               }
               const elem = deepCloneElement(element);
-              const idraw = sharedStore.get('idraw');
+              const idraw = sharedStore.getStatic('idraw');
               const data = idraw?.getData();
               const start: PointSize = { x: 0, y: 0 };
               if (idraw && Array.isArray(data?.elements)) {

@@ -61,7 +61,7 @@ export const Sketch = (props: SketchProps) => {
     idraw.enable('ruler');
     refIDraw.current = idraw;
 
-    const listenMiddlewareEventSelect = (e: { uuids: string[]; positions: ElementPosition[] }) => {
+    const listenMiddlewareEventSelect = (e: { uuids?: string[]; positions?: ElementPosition[] }) => {
       const editingData = refEditingData.current;
       let { uuids } = e;
       if (uuids?.length === 1 && refSelectedUUIDs.current?.length === 1 && uuids[0] === refSelectedUUIDs.current[0]) {
@@ -69,7 +69,7 @@ export const Sketch = (props: SketchProps) => {
       }
 
       const { positions } = e;
-      if (positions && Array.isArray(positions)) {
+      if (positions && Array.isArray(positions) && positions.length > 0) {
         const elems = findElementsFromListByPositions(positions, editingData.elements);
         uuids = elems.map((e: { uuid: any }) => e.uuid);
       }
@@ -83,7 +83,7 @@ export const Sketch = (props: SketchProps) => {
 
     const listenDataChange = (e: { data: Data; type: string }) => {
       const { data, type } = e;
-      const snapshotRecorder = sharedStore.get('snapshotRecorder');
+      const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
       // recording snapshot
       if (snapshotRecorder) {
         if (!snapshotRecorder.hasBeforeSnapshot()) {
@@ -279,18 +279,19 @@ export const Sketch = (props: SketchProps) => {
       }
 
       const elementTree = getElementTree(editingData);
-      idraw.cancelElements();
-      idraw.centerContent({ data: editingData });
+      // idraw.cancelElements();
+      // idraw.centerContent({ data: editingData });
       dispatch({
         type: 'update',
         payload: {
           data: { ...data },
-          editingData: editingData,
+          // editingData: editingData,
           elementTree,
           pageTree,
           editingDataPosition
         }
       });
+      sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: [pageTree.length - 1] });
     };
 
     const deletePageCallback = (e: SharedEventMap['deletePage']) => {
@@ -315,54 +316,15 @@ export const Sketch = (props: SketchProps) => {
       const pageTree = getElementTree(data);
       payload.data = { ...data };
       payload.pageTree = pageTree;
-
-      if (refEditingDataPosition.current.length === 1 && index === refEditingDataPosition.current[0]) {
-        let nextPage = data?.elements?.[index];
-        let pageIndex = index;
-        while (!nextPage?.extends?.isPage && pageIndex > 0) {
-          pageIndex--;
-          nextPage = data?.elements?.[pageIndex];
-        }
-        if (nextPage) {
-          const { children, ...restDetail } = (nextPage as Element<'group'>).detail;
-          const newEditingData: Data = {
-            elements: children || [],
-            layout: {
-              x: 0,
-              y: 0,
-              w: nextPage.w,
-              h: nextPage.h,
-              detail: restDetail,
-              operations: {
-                position: 'relative'
-              }
-            }
-          };
-
-          const elementTree = getElementTree(newEditingData);
-          payload.editingData = newEditingData;
-          payload.editingDataPosition = [pageIndex];
-          payload.elementTree = elementTree;
-          idraw.centerContent({ data: newEditingData });
-        } else {
-          payload.editingData = { elements: [] };
-          payload.editingDataPosition = [];
-          payload.elementTree = [];
-        }
-      } else if (refEditingDataPosition.current.length === 0) {
-        payload.editingData = { ...data };
-      }
-
-      if (pageTree.length === 0) {
-        payload.elementTree = [];
-        payload.editingDataPosition = [];
-        payload.editingData = { elements: [] };
-      }
       dispatch({
         type: 'update',
         payload
       });
-      // idraw.trigger(eventKeys.CLEAR_SELECT, {});
+      let selectPageIndex = refEditingDataPosition.current[0] || 0;
+      if (selectPageIndex >= index) {
+        selectPageIndex -= 1;
+        sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: [selectPageIndex || 0] });
+      }
     };
 
     const resetEditingViewCallback = (e: SharedEventMap['resetEditingView']) => {
@@ -400,6 +362,9 @@ export const Sketch = (props: SketchProps) => {
         });
         idraw.centerContent({ data: newEditingData });
         idraw.trigger(eventKeys.CLEAR_SELECT, {});
+        const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
+        snapshotRecorder?.clear();
+        snapshotRecorder?.setBeforeData(newEditingData);
       } else if (type === 'go-to-group' && position) {
         // update new editing data
         const newEditingDataPosition = [...position];
@@ -417,6 +382,10 @@ export const Sketch = (props: SketchProps) => {
         });
         idraw.centerContent({ data: newEditingData });
         idraw.trigger(eventKeys.CLEAR_SELECT, {});
+
+        const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
+        snapshotRecorder?.clear();
+        snapshotRecorder?.setBeforeData(newEditingData);
       } else if (type === 'go-to-next-group' && position) {
         // update new editing data
         const newEditingDataPosition = [...editingDataPosition, ...position];
@@ -434,6 +403,10 @@ export const Sketch = (props: SketchProps) => {
         });
         idraw.centerContent({ data: newEditingData });
         idraw.trigger(eventKeys.CLEAR_SELECT, {});
+
+        const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
+        snapshotRecorder?.clear();
+        snapshotRecorder?.setBeforeData(newEditingData);
       } else if (type === 'back-one' && editingDataPosition.length > 0) {
         const newEditingDataPosition = [...editingDataPosition];
         newEditingDataPosition.pop();
@@ -456,6 +429,10 @@ export const Sketch = (props: SketchProps) => {
         // });
         idraw.centerContent({ data: newEditingData });
         idraw.trigger(eventKeys.CLEAR_SELECT, {});
+
+        const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
+        snapshotRecorder?.clear();
+        snapshotRecorder?.setBeforeData(newEditingData);
       } else if (type === 'back-root') {
         // update new editing data
         const newEditingDataPosition: ElementPosition = [];
@@ -477,6 +454,10 @@ export const Sketch = (props: SketchProps) => {
         // });
         idraw.centerContent({ data: newEditingData });
         idraw.trigger(eventKeys.CLEAR_SELECT, {});
+
+        const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
+        snapshotRecorder?.clear();
+        snapshotRecorder?.setBeforeData(newEditingData);
       }
     };
 
@@ -561,7 +542,7 @@ export const Sketch = (props: SketchProps) => {
       refHasFirstDraw.current = true;
     }
 
-    sharedStore.set('idraw', idraw);
+    sharedStore.setStatic('idraw', idraw);
 
     return () => {
       refHasFirstDraw.current = false;
@@ -575,8 +556,8 @@ export const Sketch = (props: SketchProps) => {
       // sharedEvent.off('deleteElement', deleteElementCallback);
       // sharedEvent.off('resetEditingView', resetEditingViewCallback);
       // sharedEvent.off('resetData', resetDataCallback);
-      sharedStore.set('idraw', null);
-      sharedStore.set('snapshotRecorder', null);
+      sharedStore.setStatic('idraw', null);
+      sharedStore.setStatic('snapshotRecorder', null);
     };
   }, []);
 
