@@ -1,6 +1,6 @@
 {
   "name": "@idraw/studio",
-  "version": "0.4.0-alpha.35",
+  "version": "0.4.0-alpha.36",
   "main": "dist/index.js",
   "module": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -21,7 +21,7 @@
   "license": "MIT",
   "dependencies": {
     "@rc-component/color-picker": "^1.5.3",
-    "@idraw/studio-base": "workspace:^0.4.0-alpha.35",
+    "@idraw/studio-base": "workspace:^0.4.0-alpha.36",
     "classnames": "^2.5.1",
     "is-hotkey": "^0.2.0"
   },
