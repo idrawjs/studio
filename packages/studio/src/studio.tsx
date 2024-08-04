@@ -38,8 +38,8 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     })
   );
   const refSnapshotRecorder = useRef<SnapshotRecorder>(new SnapshotRecorder());
-  if (!refSharedStore.current?.get('snapshotRecorder')) {
-    refSharedStore.current?.set('snapshotRecorder', refSnapshotRecorder.current);
+  if (!refSharedStore.current?.getStatic('snapshotRecorder')) {
+    refSharedStore.current?.setStatic('snapshotRecorder', refSnapshotRecorder.current);
   }
 
   useEffect(() => {

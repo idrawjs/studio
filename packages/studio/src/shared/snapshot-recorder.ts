@@ -75,6 +75,7 @@ interface SnapshotRecorderEventMap {
   do: { canUndo: boolean; canRedo: boolean };
   undo: { canUndo: boolean; canRedo: boolean };
   redo: { canUndo: boolean; canRedo: boolean };
+  clear: void;
 }
 
 export class SnapshotRecorder {
@@ -120,12 +121,15 @@ export class SnapshotRecorder {
   clear() {
     this.#doStack = [];
     this.#undoStack = [];
+    this.#beforeSnapshot = null;
+    this.#event.trigger('clear');
   }
 
   destroy() {
     this.clear();
     this.#doStack = null as any;
     this.#undoStack = null as any;
+    this.#beforeSnapshot = null;
     this.#event.clear();
     this.#event.destroy();
     this.#event = null as any;

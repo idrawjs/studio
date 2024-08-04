@@ -11,16 +11,21 @@ interface clipboardMap {
 }
 
 export interface SharedStorage {
-  idraw: IDraw | null;
+  // idraw: IDraw | null;
   clipboard: {
     type: keyof clipboardMap | string;
     data: clipboardMap[keyof clipboardMap] | any;
   };
   selectedUUIDs: string[];
+  // snapshotRecorder: SnapshotRecorder | null;
+}
+
+export interface SharedStatic {
+  idraw: IDraw | null;
   snapshotRecorder: SnapshotRecorder | null;
 }
 
-export type SharedStore = Store<SharedStorage>;
+export type SharedStore = Store<SharedStorage, SharedStatic>;
 
 export interface SharedEventMap {
   dispatch: { type: StudioActionType; payload: Partial<StudioState> };

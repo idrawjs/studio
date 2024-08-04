@@ -5,8 +5,20 @@
 .@{base-page-tree} {
   // fix antd style
   &.ant-tree {
+    // padding: 10px 0;
+
+    &.ant-tree-directory {
+      .ant-tree-treenode:before {
+        bottom: 0;
+      }
+    }
+
     .ant-tree-iconEle {
       display: none;
+    }
+
+    .ant-tree-treenode {
+      padding-bottom: 0;
     }
 
     .ant-tree-title {
@@ -34,8 +46,9 @@
     display: -webkit-box;
     float: inline-start;
     overflow: hidden;
-    height: 24px;
-    padding-left: 24px;
+    height: 28px;
+    line-height: 28px;
+    padding-left: 28px;
     white-space: initial;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
@@ -63,7 +76,7 @@
 
   .@{base-page-tree}-node-title-icon {
     position: absolute;
-    top: 6px;
+    top: 8px;
     left: 6px;
     font-size: 14px;
     display: inline-flex;

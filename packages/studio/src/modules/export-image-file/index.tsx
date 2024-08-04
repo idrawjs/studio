@@ -45,7 +45,7 @@ export const ExportFile = (props: ExportFileProps) => {
   const [form] = Form.useForm();
 
   const resetImage = useCallback((pixelRatio: number) => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     if (!idraw) {
       return;
     }

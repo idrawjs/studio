@@ -10,18 +10,28 @@ type WrapOptions = Pick<TreeNodeProps, 'onTitleChange' | 'onOperationToggle' | '
   position: ElementPosition;
   onSelect?: (e: { uuids: string[]; positions: ElementPosition[] }) => void;
   selectedKeys: string[];
+  reverse: boolean;
 };
 
 export function wrapTreeViewData(elementTree: PageTreeData, opts: WrapOptions): PageTreeViewData {
   const tree: PageTreeViewData = [];
-  const { position } = opts;
+  const { position, reverse } = opts;
   if (Array.isArray(elementTree)) {
     const pos = [...position];
-    elementTree.forEach((node, i) => {
-      pos.push(i);
-      tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
-      pos.pop();
-    });
+    if (reverse === true) {
+      for (let i = elementTree.length - 1; i >= 0; i--) {
+        const node = elementTree[i];
+        pos.push(i);
+        tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      }
+    } else {
+      elementTree.forEach((node, i) => {
+        pos.push(i);
+        tree.push(wrapTreeViewNode(node, { ...opts, ...{ position: [...pos] } }));
+        pos.pop();
+      });
+    }
   }
   return tree;
 }

@@ -31,7 +31,7 @@ export const ActionMenu = (props: ActionMenuProps) => {
   };
 
   useEffect(() => {
-    const snapshotRecorder = sharedStore.get('snapshotRecorder');
+    const snapshotRecorder = sharedStore.getStatic('snapshotRecorder');
     const doCallback = (e: { canRedo: boolean; canUndo: boolean }) => {
       setCanRedo(e.canRedo);
       setCanUndo(e.canUndo);
@@ -44,10 +44,17 @@ export const ActionMenu = (props: ActionMenuProps) => {
       setCanRedo(e.canRedo);
       setCanUndo(e.canUndo);
     };
+
+    const clearCallback = () => {
+      setCanRedo(false);
+      setCanUndo(false);
+    };
+
     if (snapshotRecorder) {
       snapshotRecorder.on('do', doCallback);
       snapshotRecorder.on('undo', undoCallback);
       snapshotRecorder.on('redo', redoCallback);
+      snapshotRecorder.on('clear', clearCallback);
     }
 
     return () => {
@@ -55,6 +62,7 @@ export const ActionMenu = (props: ActionMenuProps) => {
         snapshotRecorder.off('do', doCallback);
         snapshotRecorder.off('undo', undoCallback);
         snapshotRecorder.off('redo', redoCallback);
+        snapshotRecorder.off('clear', clearCallback);
       }
     };
   }, []);

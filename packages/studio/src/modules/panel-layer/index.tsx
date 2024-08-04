@@ -45,7 +45,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
   };
 
   const selectElementsByPositions = (positions: ElementPosition[]) => {
-    const idraw = sharedStore.get('idraw');
+    const idraw = sharedStore.getStatic('idraw');
     idraw?.selectElementsByPositions(positions);
   };
 
@@ -168,8 +168,13 @@ export const PanelLayer = (props: PanelLayerProps) => {
 
                 const targetElem = findElementFromListByPosition(e.to, editingData.elements);
                 if (targetElem) {
-                  targetElem.x = 0;
-                  targetElem.y = 0;
+                  // TODO
+                  if (e.to.length === e.to.length) {
+                    // TODO
+                  } else {
+                    targetElem.x = 0;
+                    targetElem.y = 0;
+                  }
                 }
 
                 const elementTree = getElementTree(editingData);

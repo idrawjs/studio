@@ -111,9 +111,8 @@ export const SolidColorPicker: React.FC<ColorPickerProps> = ({ value = '', onCha
         className={className}
         value={new Color(value)}
         onChange={(data) => {
-          const hex8 = `#${data.toHex8().toUpperCase()}`;
-          const hex = hex8.endsWith('FF') ? `#${data.toHex().toUpperCase()}` : hex8;
-
+          const hex8 = `${data.toHexString().toUpperCase()}`;
+          const hex = hex8.length === 9 && hex8.endsWith('FF') ? `${data.toHexString().toUpperCase()}` : hex8;
           onChange?.(hex);
         }}
       />
