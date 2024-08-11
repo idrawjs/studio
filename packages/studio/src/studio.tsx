@@ -22,6 +22,7 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
     defaultSelectedElementUUIDs,
     defaultEditMode,
     prefiexName,
+    reverseTree,
     onEditGroupElement,
     useContextMenuOptions = useInnerContextMenuOptions,
     handleKeyboard = handleInnerKeyboard,
@@ -147,6 +148,7 @@ export const Studio = React.forwardRef((props: StudioProps, ref: any) => {
             height={height}
             style={style}
             className={className}
+            reverseTree={reverseTree}
             defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
             sharedEvent={refSharedEvent.current as SharedEvent}
             sharedStore={refSharedStore.current as SharedStore}

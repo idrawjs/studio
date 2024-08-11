@@ -20,10 +20,11 @@ export interface AddPageButtonProps {
   sharedStore: SharedStore;
   inPageOverview: boolean;
   getPageTemplates?: GetTemplates;
+  disabled: boolean;
 }
 
 export const AddPageButton = (props: AddPageButtonProps) => {
-  const { className, style, parentModName, inPageOverview, sharedEvent, sharedStore, getPageTemplates } = props;
+  const { className, style, parentModName, inPageOverview, sharedEvent, sharedStore, getPageTemplates, disabled } = props;
   const rootClassName = generateClassName(parentModName, modName);
   const [moduleLocale] = useLocale('PanelPage');
   const { getContainer } = useContext(ConfigContext);
@@ -38,6 +39,7 @@ export const AddPageButton = (props: AddPageButtonProps) => {
           type="text"
           style={style}
           className={classnames(rootClassName, className)}
+          disabled={disabled}
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();

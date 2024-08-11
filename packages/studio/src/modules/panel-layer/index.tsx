@@ -15,13 +15,14 @@ export interface PanelLayerProps {
   height: number;
   style?: CSSProperties;
   // defaultSelectedElementUUIDs?: string[];
+  reverseTree: boolean;
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
   useContextMenuOptions: HookUseContextMenuOptions;
 }
 
 export const PanelLayer = (props: PanelLayerProps) => {
-  const { className, style, height, sharedStore, sharedEvent, useContextMenuOptions } = props;
+  const { className, style, height, sharedStore, sharedEvent, reverseTree, useContextMenuOptions } = props;
   const { state, dispatch } = useContext(Context);
   const { elementTree, selectedUUIDs, editingData } = state;
 
@@ -128,6 +129,7 @@ export const PanelLayer = (props: PanelLayerProps) => {
             <ElementTree
               ref={refTree}
               height={elementsHeight}
+              reverse={reverseTree}
               treeData={elementTree}
               selectedKeys={selectedUUIDs}
               onTitleChange={({ uuid, value }) => {

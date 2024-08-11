@@ -22,6 +22,7 @@ export interface PanelPageProps {
   sharedEvent: SharedEvent;
   useContextMenuOptions: HookUseContextMenuOptions;
   getPageTemplates?: GetTemplates;
+  reverseTree: boolean;
 }
 
 const pageTreeKey = 'page-tree';
@@ -31,7 +32,7 @@ const pageTreeHeightRatio = 1;
 const elementTreeHeightRatio = 3;
 
 export const PanelPage = (props: PanelPageProps) => {
-  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions, getPageTemplates } = props;
+  const { className, style, height, defaultSelectedElementUUIDs = [], sharedStore, sharedEvent, useContextMenuOptions, getPageTemplates, reverseTree } = props;
   const { state, dispatch } = useContext(Context);
   const { pageTree, elementTree, selectedUUIDs, editingData, editingDataPosition, data } = state;
 
@@ -73,7 +74,7 @@ export const PanelPage = (props: PanelPageProps) => {
   useEffect(() => {
     const idraw = sharedStore.getStatic('idraw');
     const listenSelectedPage = (e: { uuids?: string[] }) => {
-      if (refInPageOverview.current === true) {
+      if (inPageOverview === true) {
         const { uuids = [] } = e;
         setSelectedPageUUIDs([...uuids]);
       }
@@ -83,7 +84,7 @@ export const PanelPage = (props: PanelPageProps) => {
     return () => {
       idraw?.off(eventKeys.SELECT, listenSelectedPage);
     };
-  }, []);
+  }, [inPageOverview]);
 
   useEffect(() => {
     if (editingDataPosition.length === 1 && pageTree.length > 0) {
@@ -127,7 +128,10 @@ export const PanelPage = (props: PanelPageProps) => {
       const pageKeys: string[] = [];
       if (pageTree.length > 0) {
         pageKeys.push(pageTree[0].uuid);
-        sharedEvent.trigger('resetEditingView', { type: 'go-to-page', position: [0] });
+        sharedEvent.trigger('resetEditingView', {
+          type: 'go-to-page',
+          position: reverseTree === true ? [pageTree.length > 0 ? pageTree.length - 1 : 0] : [0]
+        });
       }
       setSelectedPageUUIDs(pageKeys);
       idraw?.enable('selectInGroup');
@@ -238,6 +242,7 @@ export const PanelPage = (props: PanelPageProps) => {
           </div>
           <div style={{ display: 'flex' }}>
             <AddPageButton
+              disabled={inPageOverview}
               inPageOverview={inPageOverview}
               parentModName={modName}
               sharedEvent={sharedEvent}
@@ -253,6 +258,7 @@ export const PanelPage = (props: PanelPageProps) => {
             <PageTree
               ref={refPageTree}
               height={pageTreeHeight}
+              reverse={reverseTree}
               treeData={pageTree}
               selectedKeys={selectedPageUUIDs}
               onTitleChange={({ uuid, value }) => {
@@ -355,6 +361,7 @@ export const PanelPage = (props: PanelPageProps) => {
               <ElementTree
                 ref={refElementTree}
                 height={elementTreeHeight}
+                reverse={reverseTree}
                 treeData={elementTree}
                 selectedKeys={selectedUUIDs}
                 // expandedKeys={expandedElementKeys}
