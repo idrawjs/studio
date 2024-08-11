@@ -77,8 +77,7 @@ export const ElementTree = React.forwardRef((props: ElementTreeProps, ref: any) 
     onDelete,
     onExpand,
     onGoToGroup,
-    // reverse // TODO
-    reverse = true
+    reverse
   } = props;
 
   const onSelectNode: TreeProps['onSelect'] = (skeys, info) => {

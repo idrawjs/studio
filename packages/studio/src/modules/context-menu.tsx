@@ -87,7 +87,7 @@ export const useContextMenuOptions: HookUseContextMenuOptions = (opts: { sharedE
   const updateContextMenuOptions: UpdateContextMenuOptions = (opts) => {
     const { selectedElements } = opts;
     innerItems?.forEach((item) => {
-      if (item && ['copy', 'paste', 'cut', 'delete'].includes(item?.key as string)) {
+      if (item && ['copy', 'cut', 'delete'].includes(item?.key as string)) {
         (item as any).disabled = selectedElements?.length > 0 ? false : true;
       }
     });

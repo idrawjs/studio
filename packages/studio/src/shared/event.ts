@@ -1,7 +1,18 @@
-import { findElementsFromList, deepCloneElement, getElementPositionFromList, eventKeys } from 'idraw';
+import { findElementsFromList, deepCloneElement, getElementPositionFromList, eventKeys, parseFileToBase64, loadImage, createUUID } from 'idraw';
 import { getElementTree } from '@idraw/studio-base';
 import type { Data, Element } from 'idraw';
 import type { SharedEvent, SharedStore } from '../types';
+import { parseClipboardReadList, type ClipboardReadItem } from '../util/clipboard';
+
+function createInput() {
+  const input = document.createElement('input');
+  input.style.position = 'fixed';
+  input.style.top = `-999999px`;
+  input.style.left = `-999999px`;
+  input.style.opacity = '0';
+  document.body.appendChild(input);
+  return input;
+}
 
 export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }) {
   const { sharedEvent, sharedStore } = opts;
@@ -9,72 +20,61 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
   sharedEvent.on('copy', () => {
     const idraw = sharedStore.getStatic('idraw');
     const selectedUUIDs = sharedStore.get('selectedUUIDs');
-    const data = idraw?.getData();
+    let data = idraw?.getData();
+    let text: string | null = null;
     if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
       const elements = findElementsFromList(selectedUUIDs, data.elements);
       if (elements.length > 0) {
-        sharedStore.set('clipboard', {
-          type: 'copy-elements',
-          data: elements
-        });
+        text = JSON.stringify(elements);
       }
     }
+    if (text) {
+      const input = createInput();
+      input.value = text;
+      input.focus();
+      input.select();
+      document.execCommand('copy');
+      input.remove();
+    }
+
+    return;
+    // const idraw = sharedStore.getStatic('idraw');
+    // const selectedUUIDs = sharedStore.get('selectedUUIDs');
+    // const data = idraw?.getData();
+    // if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
+    //   const elements = findElementsFromList(selectedUUIDs, data.elements);
+    //   if (elements.length > 0) {
+    //     sharedStore.set('clipboard', {
+    //       type: 'copy-elements',
+    //       data: elements
+    //     });
+    //   }
+    // }
   });
 
   sharedEvent.on('paste', () => {
-    const idraw = sharedStore.getStatic('idraw');
-    const clipboardCache = sharedStore.get('clipboard');
-    const selectedUUIDs = sharedStore.get('selectedUUIDs');
-
-    if (idraw && ['copy-elements', 'cut-elements'].includes(clipboardCache?.type) && Array.isArray(clipboardCache.data)) {
-      const elements: Element[] = clipboardCache.data;
-      const targetElements: Element[] = [];
-      if (clipboardCache.type === 'copy-elements') {
-        for (let i = 0; i < elements.length; i++) {
-          if (elements[i]) {
-            const elem = elements[i];
-            const target = deepCloneElement(elem);
-            target.name = `${target.name} copy`;
-            targetElements.push(target);
-          }
-        }
-      } else if (clipboardCache.type === 'cut-elements') {
-        for (let i = 0; i < elements.length; i++) {
-          if (elements[i]) {
-            const elem = elements[i];
-            const target = deepCloneElement(elem);
-            target.name = `${target.name}`;
-            targetElements.push(target);
-          }
-        }
-      }
-      const data = idraw?.getData() as Data;
-      const position = getElementPositionFromList(selectedUUIDs[0], data?.elements || []);
-      if (position.length > 0) {
-        position[position.length - 1]++;
-      }
-      targetElements.forEach((elem) => {
-        idraw.addElement(elem, { position });
-      });
-      const editingData = idraw?.getData() as Data;
-      const elementTree = getElementTree(editingData);
-
-      sharedEvent.trigger('dispatch', {
-        type: 'update',
-        payload: {
-          editingData,
-          elementTree
-        }
-      });
-      idraw.selectElement(targetElements[0].uuid);
-      setTimeout(() => {
-        sharedEvent.trigger('scrollToLayer', {
-          uuid: targetElements[0].uuid
-        });
-      }, 100);
-
-      // console.log('paste: elements ====== ', elements);
-    }
+    return;
+    const input = createInput();
+    input.addEventListener('paste', () => {
+      // pasteFromClipboardReadList(
+      //   [
+      //     {
+      //       type: 'text',
+      //       text: input.value
+      //     }
+      //   ],
+      //   opts
+      // );
+      // input.remove();
+    });
+    // input.addEventListener('change', () => {
+    //   console.log('change.value  ------- ', input.value);
+    // });
+    setTimeout(() => {
+      input.focus();
+      const result = document.execCommand('paste', false);
+      console.log('exec-cmd-result : ', result);
+    }, 1000);
   });
 
   sharedEvent.on('cut', () => {
@@ -84,12 +84,13 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
     if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length > 0) {
       const elements = findElementsFromList(selectedUUIDs, data.elements);
 
-      if (elements.length > 0) {
-        sharedStore.set('clipboard', {
-          type: 'cut-elements',
-          data: elements.map((elem) => deepCloneElement(elem))
-        });
-      }
+      const text = JSON.stringify(elements);
+      const input = createInput();
+      input.value = text;
+      input.focus();
+      input.select();
+      document.execCommand('copy');
+      input.remove();
 
       elements.forEach((elem) => {
         idraw?.deleteElement(elem.uuid);
@@ -161,4 +162,94 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
       idraw?.cancelElements();
     }
   });
+}
+
+async function pasteFromClipboardReadList(items: ClipboardReadItem[], opts: { sharedEvent: SharedEvent; sharedStore: SharedStore }) {
+  const { sharedEvent, sharedStore } = opts;
+  const idraw = sharedStore.getStatic('idraw');
+  const selectedUUIDs = sharedStore.get('selectedUUIDs');
+
+  let elements: Element[] = [];
+
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    if (item.type === 'text' && item.text) {
+      const text = item.text;
+      if (text.startsWith('[{') && text.endsWith('}]')) {
+        try {
+          elements = JSON.parse(text) as Element[];
+        } catch (err) {
+          console.warn(err);
+        }
+      }
+    } else if (item.type === 'file' && item.file) {
+      const { file } = item;
+      if (file.type?.startsWith('image/')) {
+        const base64 = (await parseFileToBase64(file)) as string;
+        const image = await loadImage(base64);
+
+        // TODO
+        const imageElem: Element<'image'> = {
+          uuid: createUUID(),
+          type: 'image',
+          x: 0,
+          y: 0,
+          w: image.width,
+          h: image.height,
+          detail: {
+            src: base64
+          }
+        };
+        elements.push(imageElem);
+      }
+    }
+  }
+
+  if (elements.length > 0 && idraw) {
+    const targetElements: Element[] = [];
+    for (let i = 0; i < elements.length; i++) {
+      if (elements[i]) {
+        const elem = elements[i];
+        const target = deepCloneElement(elem as Element);
+        target.name = `${target.name} copy`;
+        targetElements.push(target);
+      }
+    }
+
+    if (targetElements.length > 0) {
+      const data = idraw?.getData() as Data;
+      const position = getElementPositionFromList(selectedUUIDs[0], data?.elements || []);
+      if (position.length > 0) {
+        position[position.length - 1]++;
+      }
+      targetElements.forEach((elem) => {
+        idraw.addElement(elem, { position });
+      });
+      const editingData = idraw?.getData() as Data;
+      const elementTree = getElementTree(editingData);
+
+      sharedEvent.trigger('dispatch', {
+        type: 'update',
+        payload: {
+          editingData,
+          elementTree
+        }
+      });
+      idraw.selectElement(targetElements[0].uuid);
+      setTimeout(() => {
+        sharedEvent.trigger('scrollToLayer', {
+          uuid: targetElements[0].uuid
+        });
+      }, 100);
+    }
+  }
+}
+
+export function generatePasteEventCallback(opts: { sharedStore: SharedStore; sharedEvent: SharedEvent }) {
+  const callback = async (e: ClipboardEvent) => {
+    const items = await parseClipboardReadList(e);
+    await pasteFromClipboardReadList(items, opts);
+  };
+
+  return callback;
 }

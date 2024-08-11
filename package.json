@@ -1,6 +1,6 @@
 {
   "private": false,
-  "version": "0.4.0-alpha.36",
+  "version": "0.4.0-alpha.37",
   "workspaces": [
     "packages/*"
   ],
@@ -21,7 +21,7 @@
     "upgrade:version": "npm run version:reset && pnpm i"
   },
   "dependencies": {
-    "idraw": "0.4.0-beta.36",
+    "idraw": "0.4.0-beta.37",
     "antd": "5.19.3"
   },
   "devDependencies": {

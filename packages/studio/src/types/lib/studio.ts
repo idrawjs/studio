@@ -4,7 +4,6 @@ import type { LocaleCode, StudioData } from '@idraw/studio-base';
 import type { DashboardProps } from '../../modules';
 import type { SharedEvent, SharedStore } from './shared';
 import type { StudioActionType, StudioState, StudioThemeMode, StudioEditMode } from './context';
-import type { GetTemplates } from './template';
 
 export type StudioProps = Omit<DashboardProps, 'sharedEvent' | 'sharedStore' | 'useContextMenuOptions' | 'handleKeyboard'> &
   Pick<Partial<DashboardProps>, 'useContextMenuOptions' | 'handleKeyboard'> & {

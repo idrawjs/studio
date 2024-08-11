@@ -10,6 +10,7 @@ import { Sketch } from '../sketch';
 // import SplitPane from '../split-pane';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions, GetTemplates } from '../../types';
 import { Context } from '../context';
+import { generatePasteEventCallback } from '../../shared/event';
 
 const modName = 'mod-dashboard';
 const leftSiderDefaultWidth = 240;
@@ -24,6 +25,7 @@ export interface DashboardProps {
   logo?: React.ReactNode;
   navigationMenu?: React.ReactNode;
   navigationCenter?: React.ReactNode;
+  reverseTree?: boolean;
   defaultSelectedElementUUIDs?: string[];
   sharedStore: SharedStore;
   sharedEvent: SharedEvent;
@@ -55,7 +57,8 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
     useContextMenuOptions,
     handleKeyboard,
     getPageTemplates,
-    getMaterialTemplates
+    getMaterialTemplates,
+    reverseTree
   } = props;
   const { state } = useContext(Context);
   const { editMode } = state;
@@ -69,9 +72,14 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
       }
       handleKeyboard(e, { sharedEvent, sharedStore });
     };
+
+    const pasteCallback = generatePasteEventCallback({ sharedStore, sharedEvent });
+
     window.addEventListener('keydown', hotKeyCallback);
+    window.addEventListener('paste', pasteCallback);
     return () => {
       window.removeEventListener('keydown', hotKeyCallback);
+      window.removeEventListener('paste', pasteCallback);
     };
   }, []);
 
@@ -182,6 +190,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
                   <PanelPage
                     height={height - headerHeight}
                     className={leftClassName}
+                    reverseTree={!!reverseTree}
                     defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
                     sharedEvent={sharedEvent}
                     sharedStore={sharedStore}
@@ -192,6 +201,7 @@ export const Dashboard = forwardRef<HTMLDivElement, DashboardProps>((props: Dash
                   <PanelLayer
                     height={height - headerHeight}
                     className={leftClassName}
+                    reverseTree={!!reverseTree}
                     // defaultSelectedElementUUIDs={defaultSelectedElementUUIDs}
                     sharedEvent={sharedEvent}
                     sharedStore={sharedStore}

@@ -9,16 +9,17 @@ export const handleKeyboard = (
   }
 ) => {
   const { sharedEvent } = opts;
+  // if (isHotkey('mod+v', e)) {
+  //   sharedEvent.trigger('paste');
+  // } else
   if (isHotkey('mod+c', e)) {
-    sharedEvent.trigger('copy', undefined);
-  } else if (isHotkey('mod+v', e)) {
-    sharedEvent.trigger('paste', undefined);
+    sharedEvent.trigger('copy');
   } else if (isHotkey('mod+x', e)) {
-    sharedEvent.trigger('cut', undefined);
+    sharedEvent.trigger('cut');
   } else if (isHotkey('del', e)) {
-    sharedEvent.trigger('delete', undefined);
+    sharedEvent.trigger('delete');
   } else if (isHotkey('backspace', e)) {
-    sharedEvent.trigger('delete', undefined);
+    sharedEvent.trigger('delete');
   } else if (isHotkey('mod+s', e)) {
     console.log('Save ... '); //  TODO
   }
