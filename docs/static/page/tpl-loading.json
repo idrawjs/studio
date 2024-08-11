@@ -464,7 +464,7 @@
       },
       {
         "uuid": "ecb52e4d-2ecb-b88d-de13-708870f0061f",
-        "name": "Travenor",
+        "name": "Loading",
         "x": 121,
         "y": 385,
         "w": 133,
@@ -472,7 +472,7 @@
         "angle": 0,
         "type": "text",
         "detail": {
-          "text": "Travenor",
+          "text": "Loading",
           "fontFamily": "Geometr415 Blk BT",
           "fontSize": 34,
           "textAlign": "left",
