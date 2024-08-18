@@ -116,6 +116,9 @@ export function wrapPageData(data: Data | StudioData): StudioData {
           children: data.elements,
           ...(w === 0 || h === 0 ? { overflow: 'visible' } : {})
         },
+        operations: {
+          rotatable: false
+        },
         extends: {
           isPage: true
         }

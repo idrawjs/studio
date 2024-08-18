@@ -1,10 +1,10 @@
 import React, { useContext, useEffect, useMemo, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { generateClassName, ElementTree, getElementTree, IconDoubleLeft, IconLeft } from '@idraw/studio-base';
+import { generateClassName, ElementTree, getElementTree } from '@idraw/studio-base';
 import { updateElementInList, moveElementPosition, getGroupQueueFromList, findElementFromListByPosition } from 'idraw';
 import type { ElementPosition } from 'idraw';
-import { Dropdown, Button } from 'antd';
+import { Dropdown } from 'antd';
 import { Context } from '../context';
 import type { SharedEvent, SharedStore, HookUseContextMenuOptions } from '../../types';
 
@@ -32,18 +32,18 @@ export const PanelLayer = (props: PanelLayerProps) => {
   const rootClassName = generateClassName(modName);
   const contentClassName = generateClassName(modName, 'content');
   const headerClassName = generateClassName(modName, 'header');
-  const headerTitleClassName = generateClassName(modName, 'header', 'title');
-  const headerBtnClassName = generateClassName(modName, 'header', 'btn');
+  // const headerTitleClassName = generateClassName(modName, 'header', 'title');
+  // const headerBtnClassName = generateClassName(modName, 'header', 'btn');
   // const footerClassName = generateClassName(modName, 'footer');
   const [contextMenuOptions, updateContextMenuOptions] = useContextMenuOptions({ sharedEvent, sharedStore });
 
-  const getCurrentName = () => {
-    if (state.editingDataPosition.length === 0) {
-      return '';
-    }
-    const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
-    return elem?.name || elem?.type || '';
-  };
+  // const getCurrentName = () => {
+  //   if (state.editingDataPosition.length === 0) {
+  //     return '';
+  //   }
+  //   const elem = findElementFromListByPosition(state.editingDataPosition, state.data.elements);
+  //   return elem?.name || elem?.type || '';
+  // };
 
   const selectElementsByPositions = (positions: ElementPosition[]) => {
     const idraw = sharedStore.getStatic('idraw');
@@ -75,15 +75,16 @@ export const PanelLayer = (props: PanelLayerProps) => {
     }
   }, [selectedUUIDs, editingData]);
 
-  const onClickBackRootEdit = () => {
-    sharedEvent.trigger('resetEditingView', { type: 'back-root', position: null });
-  };
+  // const onClickBackRootEdit = () => {
+  //   sharedEvent.trigger('resetEditingView', { type: 'back-root', position: null });
+  // };
 
-  const onClickBackOne = () => {
-    sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
-  };
+  // const onClickBackOne = () => {
+  //   sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
+  // };
 
-  const headerHeight = 32;
+  // const headerHeight = 32;
+  const headerHeight = 0;
   const elementsHeight = height - headerHeight;
 
   return useMemo(() => {
@@ -113,17 +114,17 @@ export const PanelLayer = (props: PanelLayerProps) => {
           e.preventDefault();
         }}
       >
-        <div className={headerClassName} style={{ height: headerHeight }}>
-          <Button
+        {/* <div className={headerClassName} style={{ height: headerHeight }}>
+           <Button
             className={headerBtnClassName}
             size="small"
             icon={<IconDoubleLeft />}
             disabled={!(state.editingDataPosition.length > 0)}
             onClick={onClickBackRootEdit}
           />
-          <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(state.editingDataPosition.length > 0)} onClick={onClickBackOne} />
+          <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(state.editingDataPosition.length > 0)} onClick={onClickBackOne} />  
           <span className={headerTitleClassName}>{getCurrentName()}</span>
-        </div>
+        </div> */}
         <Dropdown menu={{ items: contextMenuOptions }} trigger={['contextMenu']}>
           <div className={contentClassName}>
             <ElementTree

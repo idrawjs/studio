@@ -27,7 +27,7 @@ export function createStudioContextStateByProps(props?: StudioProps): StudioStat
   }
 
   if (props?.defaultEditMode === 'page' && editingDataPosition.length !== 1 && pageTree.length > 0) {
-    editingDataPosition = [0];
+    editingDataPosition = props.reverseTree === true ? [pageTree.length > 0 ? pageTree.length - 1 : 0] : [0];
   }
 
   editingData = cloneEditingDataByPosition(editingDataPosition, data);

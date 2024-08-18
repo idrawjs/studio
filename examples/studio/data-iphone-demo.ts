@@ -3975,6 +3975,9 @@ const data: Data = {
         overflow: 'hidden',
         background: '#FFFFFF'
       },
+      operations: {
+        rotatable: false
+      },
       extends: {
         isPage: true
       }
@@ -5648,6 +5651,9 @@ const data: Data = {
         ],
         overflow: 'hidden',
         background: '#FFFFFF'
+      },
+      operations: {
+        rotatable: false
       },
       extends: {
         isPage: true

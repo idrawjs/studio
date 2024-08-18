@@ -1,5 +1,5 @@
 import isHotkey from 'is-hotkey';
-import type { SharedEvent, SharedStore } from '../types';
+import type { SharedEvent, SharedStore, SharedEventMap } from '../types';
 
 export const handleKeyboard = (
   e: KeyboardEvent,
@@ -20,6 +20,16 @@ export const handleKeyboard = (
     sharedEvent.trigger('delete');
   } else if (isHotkey('backspace', e)) {
     sharedEvent.trigger('delete');
+  } else if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.code)) {
+    const map: Record<string, SharedEventMap['arrowMoveElement']['type']> = {
+      ArrowUp: 'arrow-up',
+      ArrowDown: 'arrow-down',
+      ArrowLeft: 'arrow-left',
+      ArrowRight: 'arrow-right'
+    };
+    sharedEvent.trigger('arrowMoveElement', {
+      type: map[e.code]
+    });
   } else if (isHotkey('mod+s', e)) {
     console.log('Save ... '); //  TODO
   }

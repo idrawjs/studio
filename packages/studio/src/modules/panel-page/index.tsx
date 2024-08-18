@@ -1,7 +1,17 @@
 import React, { useContext, useEffect, useMemo, useState, useRef } from 'react';
 import type { CSSProperties } from 'react';
 import classnames from 'classnames';
-import { generateClassName, ElementTree, PageTree, getElementTree, IconDoubleLeft, IconLeft, IconLayout, getPageTree } from '@idraw/studio-base';
+import {
+  generateClassName,
+  ElementTree,
+  PageTree,
+  getElementTree,
+  // IconDoubleLeft,
+  // IconLeft,
+  IconLayout,
+  getPageTree,
+  reversePagePosition
+} from '@idraw/studio-base';
 import { updateElementInList, moveElementPosition, getGroupQueueFromList, findElementFromListByPosition, eventKeys } from 'idraw';
 import type { ElementPosition } from 'idraw';
 import { Dropdown, Button, Collapse, Empty } from 'antd';
@@ -60,6 +70,7 @@ export const PanelPage = (props: PanelPageProps) => {
   const [inPageOverview, setInPageOverview] = useState<boolean>(false);
   const refInPageOverview = useRef<boolean>(inPageOverview);
   const refPreviousSelectedUUIDs = useRef<string[]>([]);
+  const refReversedEditingPosition = useRef<ElementPosition>(reversePagePosition(editingDataPosition, pageTree));
 
   const getSelectedPageKeys = () => {
     const keys: string[] = [];
@@ -88,12 +99,13 @@ export const PanelPage = (props: PanelPageProps) => {
 
   useEffect(() => {
     if (editingDataPosition.length === 1 && pageTree.length > 0) {
+      refReversedEditingPosition.current = reversePagePosition(editingDataPosition, pageTree);
       const pageUUID = pageTree[editingDataPosition[0]]?.uuid;
       if (pageUUID && !selectedPageUUIDs.includes(pageUUID)) {
         setSelectedPageUUIDs([pageUUID]);
       }
     }
-  }, [editingDataPosition]);
+  }, [editingDataPosition, pageTree]);
 
   const resetContentHeight = (keys: string[]) => {
     const totalRatio = pageTreeHeightRatio + elementTreeHeightRatio;
@@ -127,10 +139,11 @@ export const PanelPage = (props: PanelPageProps) => {
     } else {
       const pageKeys: string[] = [];
       if (pageTree.length > 0) {
-        pageKeys.push(pageTree[0].uuid);
+        const position = reverseTree === true ? [pageTree.length > 0 ? pageTree.length - 1 : 0] : [0];
+        pageKeys.push(pageTree[position[0]].uuid);
         sharedEvent.trigger('resetEditingView', {
           type: 'go-to-page',
-          position: reverseTree === true ? [pageTree.length > 0 ? pageTree.length - 1 : 0] : [0]
+          position
         });
       }
       setSelectedPageUUIDs(pageKeys);
@@ -208,17 +221,17 @@ export const PanelPage = (props: PanelPageProps) => {
     }
   }, [selectedUUIDs, editingData]);
 
-  const onClickBackPageRootEdit = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    if (editingDataPosition.length > 1) {
-      sharedEvent.trigger('resetEditingView', { type: 'go-to-group', position: [editingDataPosition[0]] });
-    }
-  };
+  // const onClickBackPageRootEdit = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   if (editingDataPosition.length > 1) {
+  //     sharedEvent.trigger('resetEditingView', { type: 'go-to-group', position: [editingDataPosition[0]] });
+  //   }
+  // };
 
-  const onClickBackOne = (e: React.MouseEvent) => {
-    e.stopPropagation();
-    sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
-  };
+  // const onClickBackOne = (e: React.MouseEvent) => {
+  //   e.stopPropagation();
+  //   sharedEvent.trigger('resetEditingView', { type: 'back-one', position: null });
+  // };
 
   const items: CollapseProps['items'] = [
     {
@@ -341,7 +354,7 @@ export const PanelPage = (props: PanelPageProps) => {
       collapsible: inPageOverview ? 'disabled' : undefined,
       label: (
         <div className={headerClassName} style={{ height: headerHeight }}>
-          <div style={{ display: 'inline-flex' }}>
+          {/* <div style={{ display: 'inline-flex' }}>
             <Button
               className={headerBtnClassName}
               size="small"
@@ -350,7 +363,7 @@ export const PanelPage = (props: PanelPageProps) => {
               onClick={onClickBackPageRootEdit}
             />
             <Button className={headerBtnClassName} size="small" icon={<IconLeft />} disabled={!(editingDataPosition.length > 1)} onClick={onClickBackOne} />
-          </div>
+          </div> */}
           <span className={headerTitleClassName}>{getCurrentName()}</span>
         </div>
       ),

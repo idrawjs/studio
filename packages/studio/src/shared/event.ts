@@ -1,4 +1,15 @@
-import { findElementsFromList, deepCloneElement, getElementPositionFromList, eventKeys, parseFileToBase64, loadImage, createUUID } from 'idraw';
+import {
+  findElementsFromList,
+  deepCloneElement,
+  getElementPositionFromList,
+  eventKeys,
+  parseFileToBase64,
+  loadImage,
+  createUUID,
+  getElementPositionMapFromList,
+  findElementQueueFromListByPosition,
+  calcPointMoveElementInGroup
+} from 'idraw';
 import { getElementTree } from '@idraw/studio-base';
 import type { Data, Element } from 'idraw';
 import type { SharedEvent, SharedStore } from '../types';
@@ -160,6 +171,43 @@ export function initActionEvent(opts: { sharedEvent: SharedEvent; sharedStore: S
         }
       });
       idraw?.cancelElements();
+    }
+  });
+
+  sharedEvent.on('arrowMoveElement', ({ type }) => {
+    // TODO
+    const idraw = sharedStore.getStatic('idraw');
+    const selectedUUIDs = sharedStore.get('selectedUUIDs');
+    const data = idraw?.getData();
+    console.log('xxxx ------ ');
+    if (data && Array.isArray(selectedUUIDs) && selectedUUIDs.length === 1) {
+      const elements = data.elements || [];
+      const uuid = selectedUUIDs[0];
+      const positionMap = getElementPositionMapFromList([uuid], elements);
+      const position = positionMap[uuid];
+      if (Array.isArray(position) && position.length > 0) {
+        const groupQueue = findElementQueueFromListByPosition(position, elements) as Element<'group'>[];
+        const elem = groupQueue.pop() as unknown as Element;
+        const start = { x: 0, y: 0 };
+        const end = { x: 0, y: 0 };
+
+        // TODO
+        if (type === 'arrow-up') {
+          end.y -= 1;
+        } else if (type === 'arrow-down') {
+          end.y += 1;
+        } else if (type === 'arrow-left') {
+          end.x -= 1;
+        } else if (type === 'arrow-right') {
+          end.x += 1;
+        }
+
+        const { moveX, moveY } = calcPointMoveElementInGroup(start, end, groupQueue);
+        // TODO
+        elem.x += moveX;
+        elem.y += moveY;
+        idraw?.updateElement(elem);
+      }
     }
   });
 }

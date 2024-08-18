@@ -11,13 +11,11 @@ interface clipboardMap {
 }
 
 export interface SharedStorage {
-  // idraw: IDraw | null;
   clipboard: {
     type: keyof clipboardMap | string;
     data: clipboardMap[keyof clipboardMap] | any;
   };
   selectedUUIDs: string[];
-  // snapshotRecorder: SnapshotRecorder | null;
 }
 
 export interface SharedStatic {
@@ -39,6 +37,9 @@ export interface SharedEventMap {
   };
   deleteElement: {
     uuid: string;
+  };
+  arrowMoveElement: {
+    type: 'arrow-up' | 'arrow-down' | 'arrow-left' | 'arrow-right';
   };
   addPage: {
     element: Element<'group'>;

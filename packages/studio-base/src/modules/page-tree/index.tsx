@@ -33,7 +33,7 @@ const treePosToElementPosition = (pos: string) => {
   return elemPos;
 };
 
-function reverseElementPosition(position: ElementPosition, treeData: PageTreeData, opts?: { isToPosition: boolean }): ElementPosition {
+export function reversePagePosition(position: ElementPosition, treeData: PageTreeData, opts?: { isToPosition: boolean }): ElementPosition {
   const newPosition: ElementPosition = [];
   for (let i = 0; i < position.length; i++) {
     const index = position[i];
@@ -77,7 +77,7 @@ export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
     const pos = treePosToElementPosition(info.node.pos);
     let positions: ElementPosition[] = [pos];
     if (reverse === true) {
-      positions = [reverseElementPosition(pos, treeData || [])];
+      positions = [reversePagePosition(pos, treeData || [])];
     }
     const uuids = [selectedKeys[0]] as string[];
     onSelect?.({ uuids, positions });
@@ -139,8 +139,8 @@ export const PageTree = React.forwardRef((props: PageTreeProps, ref: any) => {
           let resultFrom = from;
           let resultTo = to;
           if (reverse === true) {
-            resultFrom = reverseElementPosition(from, treeData || []);
-            resultTo = reverseElementPosition(to, treeData || [], { isToPosition: true });
+            resultFrom = reversePagePosition(from, treeData || []);
+            resultTo = reversePagePosition(to, treeData || [], { isToPosition: true });
           }
 
           onDrop?.({ from: resultFrom, to: resultTo });

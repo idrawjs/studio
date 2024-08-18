@@ -13,7 +13,7 @@ import { generateClassName } from '../../css';
 const { DirectoryTree } = Tree;
 const modName = 'base-element-tree';
 
-function reverseElementPosition(position: ElementPosition, treeData: ElementTreeData, opts?: { isToPosition: boolean }): ElementPosition {
+export function reverseElementPosition(position: ElementPosition, treeData: ElementTreeData, opts?: { isToPosition: boolean }): ElementPosition {
   const newPosition: ElementPosition = [];
   let targetNodeList: ElementTreeNode[] = treeData;
   for (let i = 0; i < position.length; i++) {
